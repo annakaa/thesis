@@ -1,0 +1,194 @@
+\documentclass
+[   oneside,         % oneside/twoside : Einseitiger oder zweiseitiger Druck?
+    12pt,            % Bezug: 12-Punkt Schriftgre
+    DIV15,           % Randaufteilung, siehe Dokumentation "KOMA"-Script
+    BCOR17mm,        % Bindekorrektur: Innen 17mm Platz lassen. Copyshop-getestet.
+    headsepline,     % Unter Kopfzeile Trennlinie (aus: headnosepline)
+    footsepline,     % ber Fuzeile Trennlinie (aus: footnosepline)
+    openright,       % Neue Kapitel im zweiseitigen Druck rechts beginnen lassen
+    a4paper,         % Seitenformat A4
+    abstracton,      % Abstract einbinden
+	english,
+    listof=totoc,version=first,      % Div. Verzeichnisse ins Inhaltsverzeichnis aufnehmen
+    bibliography=totoc,version=first,        % Literaturverzeichnis ins Inhaltsverzeichnis aufnehmen
+    titlepage,       % Titelseite aktivieren
+    headinclude,     % Seiten-Head in die Satzspiegelberechnung mit einbeziehen
+    footexclude,     % Seiten-Foot nicht in die Satzspiegelberechnung mit einbeziehen
+    numbers=noenddot,version=first % Gliederungsnummern ohne abschlieenden Punkt darstellen
+]   {scrreprt}       % Dokumentenstil: "Report" aus dem KOMA-Skript-Paket
+
+\usepackage[active]{srcltx}
+%\usepackage[activate=normal]{pdfcprot} % Optischer Randausgleich -> pdflatex!
+\usepackage{ifthen}
+%\usepackage[english,ngerman]{babel}
+\usepackage[english]{babel}
+%\usepackage{ngerman}
+%\usepackage[fixlanguage]{babelbib}
+%\setbiblanguage{english}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[T1]{url}
+\usepackage{ae}
+\usepackage[final]{graphicx}
+\usepackage[automark]{scrpage2}
+\usepackage{setspace}
+\usepackage{floatflt} 
+\usepackage{rotating} 
+\usepackage{wrapfig}
+\usepackage{subfig}
+\usepackage{graphicx}
+%\usepackage[first,light]{draftcopy} % Fr Probedruck
+\usepackage[plainpages=false,pdfpagelabels,hypertexnames=false]{hyperref}
+\usepackage{pdfpages}	%include pdf files
+\usepackage{listings} %include sourcecode
+\usepackage{color}
+\definecolor{commentgreen}{rgb}{0,0.5,0}
+\usepackage{multirow}
+\usepackage{verbatim}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{enumitem}
+\usepackage{setspace}
+\usepackage{array}
+\usepackage{nomencl}
+% \usepackage[table]{xcolor}
+\usepackage{longtable}
+\usepackage{url}
+%\usepackage{paralist}
+%\usepackage{subcaption}
+
+%\usepackage{textcomp}  %mit \textcent geht Cent-Symbol
+
+
+
+
+% Tiefe der Kapitelnummerierung beeinflussen
+\setcounter{secnumdepth}{3} % Tiefe der Nummerierung
+\setcounter{tocdepth}{3}    % Tiefe des Inhaltsverzeichnisses
+
+% Hier in die zweite geschweifte Klammer jeweils
+% die persnlichen Daten eintragen:
+\newcommand{\artderausarbeitung}{PhD Thesis}
+\newcommand{\namedesautors}{Anna Marie Kruspe}
+\newcommand{\inventarisierungsnummer}{}
+
+\newcommand{\markup}[1]{\textbf{#1}}
+
+% Seitenlayout festlegen. Hier nichts ndern!
+\pagestyle{scrplain}
+\ihead[]{\headmark}
+\ohead[]{\pagemark}
+\chead[]{}
+\ifoot[]{\scriptsize \inventarisierungsnummer}
+\ofoot[]{\scriptsize \artderausarbeitung\ \namedesautors}
+\cfoot[]{}
+\renewcommand{\titlepagestyle}{scrheadings}
+\renewcommand{\partpagestyle}{scrheadings}
+\renewcommand{\chapterpagestyle}{scrheadings}
+\renewcommand{\indexpagestyle}{scrheadings}
+
+% Abschnittsweise Nummerierung anstatt fortlaufend. Hier nichts ndern!
+\makeatletter
+\@addtoreset{equation}{chapter}
+\@addtoreset{figure}{chapter}
+\@addtoreset{table}{chapter}
+\renewcommand\theequation{\thechapter.\@arabic\c@equation}
+\renewcommand\thefigure{\thechapter.\@arabic\c@figure}
+\renewcommand\thetable{\thechapter.\@arabic\c@table}\makeatother
+
+% Quelltextrahmen, klein. Hier nichts ndern!
+\newsavebox{\inhaltkl}
+\def\rahmenkl{\sbox{\inhaltkl}\bgroup\small\renewcommand{\baselinestretch}{1}\vbox\bgroup\hsize\textwidth}
+\def\endrahmenkl{\par\vskip-\lastskip\egroup\egroup\fboxsep3mm%
+\framebox[\textwidth][l]{\usebox{\inhaltkl}}}
+
+% Quelltextrahmen, normale Groesse. Hier nichts ndern!
+\newsavebox{\inhalt}
+\def\rahmen{\sbox{\inhalt}\bgroup\renewcommand{\baselinestretch}{1}\vbox\bgroup\hsize\textwidth}
+\def\endrahmen{\par\vskip-\lastskip\egroup\egroup\fboxsep3mm%
+\framebox[\textwidth][l]{\usebox{\inhalt}}}
+
+
+% Sonstige Befehlsdefinitionen hier ablegen.
+\newcommand{\entspricht}{\stackrel{\wedge}{=}}
+\definecolor{light-gray}{gray}{0.95}
+\addto\captionsenglish{\renewcommand{\contentsname}{Table of Contents}}
+%\makenomenclature
+\makeglossary
+
+\begin{document}
+\onehalfspacing
+\clubpenalty=10000
+\widowpenalty=10000
+\input{chapter/TitlePage.tex}
+
+
+% Inhaltsverzeichnis
+\cleardoublepage % Seitenumbruch erzwingen vor nderung des Nummerierungsstils
+\footnotesize
+%\begin{otherlanguage}[english]
+\pagenumbering{roman} % Nummerierung der Seiten ab hier: i, ii, iii, iv...
+\pagestyle{scrheadings} % Ab hier mit Kopf- und Fusszeile
+
+\normalsize
+\input{chapter/Abstract.tex}
+\input{chapter/Acknowledgements.tex}
+\footnotesize
+\tableofcontents
+
+% Die einzelnen Kapitel
+\cleardoublepage % Seitenumbruch erzwingen vor nderung des Nummerierungsstils
+\normalsize
+
+\pagenumbering{arabic} % Nummerierung der Seiten ab hier: 1, 2, 3, 4...
+\input{chapter/Introduction.tex}
+\input{chapter/StateOfTheArt.tex}
+\input{chapter/TechnicalBackground.tex}
+\input{chapter/DataSets.tex}
+\input{chapter/Phonerec.tex}
+\input{chapter/Langid.tex}
+\input{chapter/KWS.tex}
+\input{chapter/Applications.tex}
+\input{chapter/Conclusion.tex}
+\input{chapter/Future.tex}
+
+
+%TODO: contributions...?
+
+% Literaturverzeichnis
+\addcontentsline{toc}{chapter}{Bibliography}
+\cleardoublepage
+\footnotesize
+\ihead[]{Bibliography}
+\bibliographystyle{IEEEbib}
+\bibliography{literatur} 
+\normalsize
+
+% Abbildungsverzeichnis
+\addcontentsline{toc}{chapter}{List of Figures}
+\cleardoublepage
+\ihead[]{List of Figures}
+\listoffigures
+
+% Tabellenverzeichnis
+\addcontentsline{toc}{chapter}{List of Tables}
+\cleardoublepage
+\ihead[]{List of Tables}
+\listoftables
+
+% Abkürzungsverzeichnis
+\input{chapter/ListOfAbbreviations.tex}
+
+% Anhang
+\input{chapter/Appendix.tex}
+
+% Selbstständigkeitserklärung
+\input{chapter/Declaration.tex}
+
+% Thesen
+\input{chapter/Theses.tex}
+
+\end{appendix}
+
+\end{document}
+

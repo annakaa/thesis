@@ -1,0 +1,63 @@
+%\addtocontents{toc}{\protect\clearpage}
+\chapter{Data sets} \label{chap:datasets}
+This chapter contains descriptions of all the data sets (or corpora) used over the course of this thesis. They are grouped into speech-only data sets, data sets of unaccompanied (=a-capella) singing, and data sets of full musical pieces with singing (``real-world'' data sets).
+
+\section{Speech data sets}
+\subsection{TIMIT}
+\textit{TIMIT} is, presumably, the most widely used corpus in speech recognition research \cite{timit}. It was developed in ??? and consists of ??? English-language audio recordings of native speakers with annotations on the phoneme, word, and sentence levels. The corpus is split into a training and a test section, with the training section containing 4620 utterances, and the test section containing 1680. Each of those utterances has a duration of a few seconds.\\
+The phoneme annotations follow the ??? model of ??? phonemes.
+%wo benutzt?
+
+\subsection{NIST Language identification corpora}
+
+
+\subsection{OGI Language identification corpus}
+%aufräumen!!
+For comparison, we also tested our algorithm on  the \textit{OGI Multi-language Telephone Speech Corpus (OGIMultilang)} \cite{ogimultilang}, using all recordings for the three previously mentioned languages. This gives us 3,177 utterances in sum with more varying durations (1-60 seconds). For experiments on longer recordings, results on these individual utterances were aggregated for each speaker, producing 118 documents per language (354 in sum).\\
+
+
+
+\begin{table}[htdp]
+  \caption{{\it Amounts of data in the three used data sets: Sum duration on top, number of utterances in italics.}}
+  \begin{center}
+    \begin{tabular}{|c||c|c|c|}\hline
+    \textbf{hh:mm:ss} & \multirow{2}{*}{\textbf{NIST2003LRE}} & \multirow{2}{*}{\textbf{OGIMultilang}} & \multirow{2}{*}{\textbf{YTAcap}}\\
+    \textbf{\textit{\#Utterances}} & & & \\ \hline \hline 
+    \multirow{2}{*}{English} & 00:59:08 & 05:13:17 &  08:04:25 \\
+    & \textit{240} & \textit{1912} & \textit{1975} \\ \hline 
+    \multirow{2}{*}{German} & 00:59:35 & 02:52:27 & 04:18:57 \\
+    & \textit{240} & \textit{1059} & \textit{1052} \\ \hline 
+    \multirow{2}{*}{Spanish} & 00:59:44 & 03:05:45 & 07:21:55 \\
+    & \textit{240} & \textit{1151} & \textit{1810} \\ \hline 
+    \end{tabular}
+  \end{center}
+  \label{tab:datasets}
+\end{table}
+
+\section{A-Capella singing data sets}
+\subsection{YouTube data set}
+As opposed to the speech case, there are no standardized corpora for sung language identification. For the sung language identification experiments, A-capella audio files were therefore extracted from \textit{YouTube}\footnote{\url{http://www.youtube.com}, Last checked: 05/16/13} videos. This was done for three languages: English, German, and Spanish. The author collected between 116 (258min) and 196 (480min) examples per language. These were mostly videos of amateur singers freely performing songs without accompaniment. Therefore, they are of highly varying quality and often contain background noise. Most of the performers contributed only a single song, with just a few providing up to three. In this way, we aim to avoid effects where the classifier recognizes the singer's voice instead of the language.\\
+Special attention was paid to musical style. Rap, opera singing, and other specific singing styles were excluded. All the songs performed in these videos were pop songs. Different musical styles can have a high impact on language classification results. The author tried to limit this influence as much as possible by choosing recordings of pop music instead of language-specific genres (such as latin american music).\\
+%For some experiments, they were split up into segments of 10-20 seconds at silent points (3,156 ``utterances'' in sum).\\
+
+\subsection{Hansen's vocal track data set}
+This is one of the data sets used for keyword spotting and phoneme recognition. It was first presented in \cite{jens}. It consists of the vocal tracks of 19 commercial English-language pop songs. They are studio quality with some post-processing applied (EQ, compression, reverb). Some of them contain choir singing. These 19 songs are split up into ??? clips that roughly represent lines in the song lyrics.\\
+Twelve of the songs were annotated with time-aligned phonemes. The phoneme set is the one used in CMU Sphinx\footnote{\url{http://cmusphinx.sourceforge.net/}} and TIMIT \cite{timit} and contains 39 phonemes. All of the songs were annotated with word-level transcriptions. This is the only one of the singing data sets that has full manual annotations, which are assumed to be reliable and can be used as ground truth.\\
+For comparison, recordings of spoken recitations of all song lyrics were also made. These were all performed by the same speaker (the author).\\
+
+\subsection{DAMP data set}
+As described, Hansen's data set is very small and therefore not suited to training phoneme models for singing. As a much larger source of unaccompanied singing, the \textit{DAMP} data set, which is freely available from Stanford University\footnote{\url{https://ccrma.stanford.edu/damp/}}\cite{phdthesis:jeffreysmith}, was employed. This data set contains more than 34,000 recordings of amateur singing of full songs with no background music, which were obtained from the \textit{Smule Sing!} karaoke app. Each performance is labeled with metadata such as the gender of the singer, the region of origin, the song title, etc. The singers performed 301 English-language pop songs. The recordings have good sound quality with little background noise, but come from a lot of different recording conditions.\\
+No lyrics annotations are available for this data set, but the textual lyrics can be obtained from the \textit{Smule Sing!} website\footnote{\url{http://www.smule.com/songs}}. These are, however, not aligned in any way. Such an alignment was performed automatically on the word and phoneme levels (see section \ref{}).
+
+%Matt's data set??
+
+\subsection{Choosing keywords}
+
+
+\section{``Real-world'' data sets}
+\subsection{QMUL Expletive data set}
+This data set consists of 80 popular songs which were collected at Queen Mary University, most of them Hip Hop. 711 instances of 48 expletives were annotated on these songs. In addition, the matching textual, unaligned lyrics were retrieved from the internet.
+
+\subsection{``69 Love Songs" data set}
+``69 Love Songs'' is a 3-CD album by the band ``The Magnetic Fields'', which was released in ??? and named one of the ???. It contains 69 songs in various musical styles and instrumentations, performed by a variety of musicians, including 4??? vocalists. The total duration is ???. The data set is interesting for the purposes of this work because the songs' lyrics all cover a similar theme - namely, love. A word count on the lyrics shows, for example, that the word ``love'' itself occurs \~225 times in these songs.\\
+Unaligned lyrics were retrieved from ???. A thorough semantic analysis can be found in \cite{beghtol}.

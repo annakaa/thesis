@@ -1,0 +1,43 @@
+\chapter{State of the art}	\label{chap:sota}
+\section{From speech to singing}
+Singing presents a number of challenges for language identification when compared to pure speech \cite{goto_alignment}. To mention a few examples:
+\begin{description}
+ \item[Larger pitch fluctuations] A singing voice varies its pitch to a much higher degree than a speaking voice. It often also has very different spectral properties.
+ \item[Higher pronunciation variation] Singers are often forced by the music to pronounce certain sounds and words differently than if they were speaking them.
+ \item[Larger time variations] In singing, sounds are often prolonged for a certain amount of time to fit them to the music. Conversely, they can also be shortened or left out completely.
+ \item[Different vocabulary] In musical lyrics, words and phrases often differ from normal conversation texts. Certain words and phrases have different probabilities (e.g. higher focus on emotional topics in singing).
+ \item[Background music] adds irrelevant data (for language identification) to the signal, which acts as an interfering factor to the algorithms. It therefore should be removed or suppressed prior to the language identification, e.g. by source separation algorithms.
+ \end{description}
+ %Mehr Beispiele aus Goto-Kapitel
+Most of the experiments in this work were performed on unaccompanied singing in order to remove this last difficulty for the moment.
+
+\section{Phoneme recognition}
+\subsection{Phoneme recognition in speech}
+\subsection{Phoneme recognition in singing}
+As described in \cite{loscos}, \cite{goto_alignment}, and \cite{kruspe_kws1}, there are significant differences between speech and singing audio, such as pitch and harmonics, vibrato, phoneme durations and pronunciation. These factors make phoneme recognition on singing more difficult than on speech. It has only been a topic of research for the past few years. \\
+Fujihara et al. first presented an approach using Probabilistic Spectral Templates to model phonemes in \cite{fujihara_phonemes}. The phoneme models are gender-specific and only model five vowels, but also work for singing with instrumental accompaniment. The best result is $65\%$ correctly classified frames. \\
+In \cite{gruhne}, Gruhne et al. describe a classical approach that employs feature extraction and various machine learning algorithms to classify singing into 15 phoneme classes. It also includes a step that removes non-harmonic components from the signal. The best result of $58\%$ correctly classified frames is achieved with Support Vector Machine (SVM) classifiers. The approach is expanded upon in \cite{szepannek}. \\
+Mesaros presented a complex approach that is based on Hidden Markov Models which are trained on Mel-Frequency Cepstral Coefficients (MFCCs) and then adapted to singing using three phoneme classes separately \cite{mesaros1}\cite{mesaros2}. The approach also employs language modeling and has options for vocal separation and gender and voice adaptation. The achieved phoneme error rate on unaccompanied singing is $1.06$ without adaptation and $0.8$ with singing adaptation using 40 phonemes (the error rate greater than one means that there were more insertion, deletion, or substitution errors than phoneme instances). The results also improve when using gender-specific adaptation (to an average of $0.81\%$) and even more when language modeling is included (to $0.67\%$). \\
+Hansen presents a system in \cite{jens} which combines the results of two Multilayer Perceptrons (MLPs), one using MFCC features and one using TRAP (Temporal Pattern) features. Training is done with a small amount of singing data. Viterbi decoding is then performed on the resulting posterior probabilities. On a set of 27 phonemes, this approach achieves a recall of up to $48\%$.
+
+\section{Forced alignment}
+\subsection{Forced alignment in speech}
+\subsection{Forced alignment in singing}
+
+
+\section{Language identification}
+\subsection{Language identification in speech}
+\subsection{Language identification in singing}
+So far, only a few approaches to perform language identification on singing have been proposed.\\
+Schwenninger et al. \cite{schwenninger} use MFCC features, but do not mention how they perform their actual model training. They test different pre-processing techniques, such as vocal/non-vocal segmentation, distortion reduction, and azimuth discrimination. None of these techniques seem to improve the over-all results. They achieve an accuracy of 68\% on a-capella music for two languages (English and German).\\
+The approach of Tsai and Wang \cite{tsai_wang} follows a traditional PPRLM flow. After vocal/non-vocal segmentation using GMMs, they run their data through acoustic models using vector tokenization. One acoustic model for each language is used. The results are then processed by bigram language models, again for each language. The language model score is used for a maximum likelihood decision to determine the language. They achieve results of 70\% accuracy for two languages (English and Mandarin) on pop music.\\
+Mehrabani and Hansen \cite{mehrabani} also use a PPRLM system, with the difference that all combinations of acoustic and language models are tested. Their scores are combined by a classifier to determine the final language. This results in a score of 78\% for a-capella music in three languages (English, Hindi, and Mandarin). Combining this technique with prosodic data improved the result even further.\\
+Finally, Chandrasekhar et al.\cite {chandrasekhar} try to determine the language for music videos using both audio and video features. They achieve accuracies of close to 50\% for 25 languages. It is interesting to note that European languages seem to achieve much lower accuracies than Asian and Arabic ones. English, French, German, Spanish and Italian rank below 40\%, while languages like Nepali, Arabic, and Pashto achieve accuracies above 60\%.
+
+
+\section{Keyword spotting}
+%\subsection{Keyword spotting in speech}
+%\subsection{Keyword spotting in singing}
+%SPEECH HERE
+To the best of the author's knowledge, no keyword spotting systems for singing existed prior to this work.
+
