@@ -3,7 +3,17 @@
 %audio - pre-processing - feat. extraction - machine learning
 % unseen audio - pre-processing - feat. extraction  - run through model - result
 \section{Audio features}
-%mfcc, sdc, trap; mention filterbank feats...?
+%mfcc, sdc, (rasta-)plp, trap; mention filterbank feats...?
+%TODO: write intro
+\subsection{Perceptive Linear Predictive features (PLPs)} PLP features, first introduced in \cite{hermansky90}, are among the most frequently used features in speech processing. They are based on the idea to use knowledge about human perception to emphasize important speech information in spectra while minimizing the differences between speakers. We use a model order of 13 in two experiments and one of 32 in another. Deltas and double deltas between frames are also calculated. We test PLPs with and without RASTA pre-processing \cite{rasta_plp}.
+\subsection{Mel-Frequency Cepstral Coefficients (MFCCs)} Just like PLPs, MFCCs are frequently used in all disciplines of automatic speech recognition \cite{zissman}. We kept 20 cepstral coefficients for model training. Additionally, we calculated deltas and double deltas.
+\subsection{Shifted Delta Cepstrum (SDCs)} Shifted Delta Cepstrum features were first described in \cite{bielefeld} and have since been successfully used for speaker verification and language identification tasks on pure speech data \cite{torres} \cite{campbell} \cite{allen}. They are calculated on MFCC vectors and take their temporal evolution into account. Their configuration is described by the four parameter $N-d-P-k$, where $N$ is the number of cepstral coefficients for each frame, $d$ is the time context (in frames) for the delta calculation, $k$ is the number of delta blocks to use, and $P$ is the shift between consecutive blocks. The delta cepstrals are then calculated as:
+\begin{equation}
+\Delta c(t) = c(t+iP+d)+c(t+iP-d), 0<=i<=k
+\end{equation}
+with $c \in [0, N-1]$ as the previously extracted cepstral coefficients. The resulting $k$ delta cepstrals for each frame are concatenated to form a single SDC vector of the length $kN$. We used the common parameter combination $N=7, d=1, P=3, k=7$.
+\subsection{TempoRal Patterns (TRAP)}
+
 \section{Machine learning algorithms}
 This section describes the various machine learning algorithms employed throughout this thesis. Gaussian Mixture Models (GMMs), Hidden Markov Models (HMMs), and Support Vector Machines (SVMs) are three traditional approaches that are used as the basis of many new approaches, and were used for several starting experiments. i-Vector processing is a relatively new, more sophisticated approach that bundles several other machine learning techniques.\\
 In recent years, Deep Learning has become the standard for machine learning applications \cite{}. This chapter also describes two of those new approaches that were used in this work: Deep Neural Networks (DNNs) and Deep Belief Networks (DBNs).
@@ -12,11 +22,38 @@ In recent years, Deep Learning has become the standard for machine learning appl
 \subsection{Hidden Markov Models}
 \subsection{Support Vector Machines}
 \subsection{i-Vector processing}
+I-Vector (identity vector) extraction was first introduced in \cite{Dehak2011} and has since become a state-of-the-art technique for various speech processing tasks, such as speaker verification, speaker recognition, and language identification \cite{Martinez2011}. To our knowledge, it has not been used for any Music Information Retrieval tasks before. \\
+The main idea behind i-vectors is that all training utterances contain some common trends, which effectively add irrelevance to the data in respect to training. Using i-vector extraction, this irrelevance can be filtered out, while only the unique parts of the data relevant to the task at hand remain. The dimensionality of the training data is massively reduced, which also makes the training less computationally expensive. As a side effect, all feature matrices are transformed to i-vectors of equal length, eliminating problems that are caused by varying utterance lengths.\\
+Mathematically, this assumption can be expressed as:
+\begin{equation}
+M(u) = m+Tw
+\end{equation}
+In this equation, $M(u)$ is the GMM supervector for utterance $u$. The supervector approach was first presented in \cite{reynolds00} and has since been successfully applied to a number of speech recognition problems. A music example can be found in \cite{Charbuillet2011}. $m$ represents the language- and channel-independent component of $u$ and is estimated using a Universal Background Model (UBM). $T$ is a low-rank matrix modeling the relevant language- and channel-related variability, the so-called Total Variability Matrix. Finally, $w$ is a normally distributed latent variable vector: The i-vector for utterance $u$.
+
+\paragraph*{Step 1: UBM training} A Universal Background Model (UBM) is trained using Gaussian Mixture Models (GMMs) from all utterances. This UBM models the characteristics that are common to all of them.
+\paragraph*{Step 2: Statistics extraction} 0th and 1st order Baum-Welch statistics are calculated for each of the utterances from the UBM according to:
+\begin{equation}
+N_c(u)=\sum_{t=1}^{L} P(c|y_t,\Omega)
+\end{equation}
+\begin{equation}
+\widetilde{F_c}(u)=\sum_{t=1}^{L} P(c|y_t,\Omega)(y_t-m_c)
+\end{equation}
+where $u={y_1,y_2,...,y_L}$ denotes an utterance with $L$ frames, $c=1,...,C$ denotes the index of the Gaussian component, $\Omega$ denotes the UBM,  $m_c$ is the mean of the UBM mixture component $c$, and $P(c|y_t,\Omega)$ denotes the posterior probability that the frame $y_t$ was generated by mixture component $c$. As the equation shows, the 1st order statistics are centered around the mean of each mixture component.\\
+\paragraph*{Step 3: T matrix training}
+Using the Baum-Welch statistics for all utterances, the Total Variability Matrix $T$ is now trained iteratively according to:
+\begin{equation}\label{equ:trainT}
+w = (I+T^t \Sigma^{-1} N (u) T)^{-1}T^t \Sigma^{-1} \widetilde{F}(u)
+\end{equation}
+using Expectation Maximization.
+\paragraph*{Step 4: Actual i-vector extraction}
+Finally, an i-vector $w$ can be extracted for each utterance using equation \ref{equ:trainT} again. This can also be done for unseen utterances, using a previously trained $T$.
+
+
 \subsection{Artificial Neural Networks}
 \subsubsection{Deep Neural Networks}
 \subsubsection{Deep Belief Networks}
 \section{Evaluation}
-\subsection{Evaluation of phoneme recognition tasks}
+\subsection{Evaluation of phoneme recognition and alignment tasks}
 %alignment?
 \subsection{Evaluation of language identification tasks}
 \subsection{Evaluation of keyword spotting tasks}

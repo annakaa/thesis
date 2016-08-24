@@ -13,10 +13,10 @@ The phoneme annotations follow the ??? model of ??? phonemes.
 
 \subsection{OGI Language identification corpus}
 %aufräumen!!
-For comparison, we also tested our algorithm on  the \textit{OGI Multi-language Telephone Speech Corpus (OGIMultilang)} \cite{ogimultilang}, using all recordings for the three previously mentioned languages. This gives us 3,177 utterances in sum with more varying durations (1-60 seconds). For experiments on longer recordings, results on these individual utterances were aggregated for each speaker, producing 118 documents per language (354 in sum).\\
+For comparison, the algorithms in this work were also tested on the \textit{OGI Multi-language Telephone Speech Corpus (OGIMultilang)} \cite{ogimultilang}, using all recordings for the three previously mentioned languages. There are 3,177 utterances in sum with more varying durations (1-60 seconds). For experiments on longer recordings, results on these individual utterances were aggregated for each speaker, producing 118 documents per language (354 in sum).\\
 
 
-
+%Tabelle nennen!
 \begin{table}[htdp]
   \caption{{\it Amounts of data in the three used data sets: Sum duration on top, number of utterances in italics.}}
   \begin{center}
@@ -50,6 +50,14 @@ As described, Hansen's data set is very small and therefore not suited to traini
 No lyrics annotations are available for this data set, but the textual lyrics can be obtained from the \textit{Smule Sing!} website\footnote{\url{http://www.smule.com/songs}}. These are, however, not aligned in any way. Such an alignment was performed automatically on the word and phoneme levels (see section \ref{}).
 
 %Matt's data set??
+
+\subsection{Aji's synthesized singing data set}
+Since it was not feasible to hand-annotate a large data set over the course of this work, another approach was the automatic generation of sung audio. The advantage of this approach is that the results can be assumed to be perfectly aligned to the given phonemes.\\
+For the generation of this data set, ??? recordings from the previously described \textit{DAMP} data set were selected. Their phonemes were automatically aligned, and an automatic transcription of the melody was performed. These two sources of data were then aligned to each other. This alignment did not need to be perfect, it just needed to produce a plausible combination of melody line and phonemes.\\
+The result of this step was then fed into the \textit{Sinsy}\cite{}\footnote{\url{}} singing synthesizer to generate new singing recordings. This synthesizer provided one female singing voice. The resulting recordings are good in quality and relatively natural sounding, but appear to have a slight accent.\\
+The whole generation process of this data set was performed in collaboration with Adam Aji.
+
+
 
 \subsection{Choosing keywords}
 
