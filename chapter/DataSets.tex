@@ -4,8 +4,8 @@ This chapter contains descriptions of all the data sets (or corpora) used over t
 
 \section{Speech data sets}
 \subsection{TIMIT}
-\textit{TIMIT} is, presumably, the most widely used corpus in speech recognition research \cite{timit}. It was developed in ??? and consists of ??? English-language audio recordings of native speakers with annotations on the phoneme, word, and sentence levels. The corpus is split into a training and a test section, with the training section containing 4620 utterances, and the test section containing 1680. Each of those utterances has a duration of a few seconds.\\
-The phoneme annotations follow the ??? model of ??? phonemes.
+\textit{TIMIT} is, presumably, the most widely used corpus in speech recognition research \cite{timit}. It was developed in 1993 and consists of 6300 English-language audio recordings of 630 native speakers with annotations on the phoneme, word, and sentence levels. The corpus is split into a training and a test section, with the training section containing 4620 utterances, and the test section containing 1680. Each of those utterances has a duration of a few seconds.\\
+The phoneme annotations follow a model similar to ARPABET and contain 61 different phonemes \cite{Zue1990}.
 %wo benutzt?
 
 \subsection{NIST Language identification corpora}
@@ -17,8 +17,8 @@ For comparison, the algorithms in this work were also tested on the \textit{OGI 
 
 
 %Tabelle nennen!
-\begin{table}[htdp]
-  \caption{{\it Amounts of data in the three used data sets: Sum duration on top, number of utterances in italics.}}
+\begin{table}[htp]
+  \caption{{Amounts of data in the three used data sets: Sum duration on top, number of utterances in italics.}}
   \begin{center}
     \begin{tabular}{|c||c|c|c|}\hline
     \textbf{hh:mm:ss} & \multirow{2}{*}{\textbf{NIST2003LRE}} & \multirow{2}{*}{\textbf{OGIMultilang}} & \multirow{2}{*}{\textbf{YTAcap}}\\
@@ -67,5 +67,5 @@ The whole generation process of this data set was performed in collaboration wit
 This data set consists of 80 popular songs which were collected at Queen Mary University, most of them Hip Hop. 711 instances of 48 expletives were annotated on these songs. In addition, the matching textual, unaligned lyrics were retrieved from the internet.
 
 \subsection{``69 Love Songs" data set}
-``69 Love Songs'' is a 3-CD album by the band ``The Magnetic Fields'', which was released in ??? and named one of the ???. It contains 69 songs in various musical styles and instrumentations, performed by a variety of musicians, including 4??? vocalists. The total duration is ???. The data set is interesting for the purposes of this work because the songs' lyrics all cover a similar theme - namely, love. A word count on the lyrics shows, for example, that the word ``love'' itself occurs \~225 times in these songs.\\
-Unaligned lyrics were retrieved from ???. A thorough semantic analysis can be found in \cite{beghtol}.
+``69 Love Songs'' is a 3-CD album by the band ``The Magnetic Fields'', which was released in 1999 and named one of the \textit{Rolling Stone}'s 500 Greatest Albums of All Time in 2012 \cite{rollingstone}. It contains 69 songs in various musical styles and instrumentations, performed by a variety of musicians, including five vocalists. The total duration is 2 hours and 52 minutes. The data set is interesting for the purposes of this work because the songs' lyrics all cover a similar theme - namely, love. A word count on the lyrics shows, for example, that the word ``love'' itself occurs \~225 times in these songs.\\
+Unaligned lyrics were retrieved from \url{http://stephinsongs.wiw.org}. A thorough semantic analysis can be found in \cite{book:beghtol}.
