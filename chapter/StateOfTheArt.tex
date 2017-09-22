@@ -41,12 +41,37 @@ The final system was proposed by Hansen in 2012 \cite{jens}. It also employs a c
 The results of both MLP classifiers are combined via a fusion classifier, also an MLP. Then, Viterbi decoding is performed on its output.\\
 The approach is trained and tested on a data set of 12 vocal tracks of pop songs, which were manually annotated with a set of 27 phonemes. The combined system achieves a recall of $.48$, compared to $.45$ and $.42$ for the individual MFCC and TRAP classifiers respectively. This confirms the assumption that the two features complement each other. The phoneme-wise results further corroborate this.
 
-\section{Forced alignment and retrieval}
+\section{Lyrics-to-audio alignment}
 %\subsection{Forced alignment in speech}
 %\subsection{Forced alignment in singing}
 %mesaros
 %Three techniques for im- proving automatic synchronization between music and lyrics: Fricative detection, filler model, and novel feature vectors for vocal activity detection
+In contrast to the other tasks discussed in this chapter, the task of lyrics-to-audio alignment has been the focus of many more publications. A comprehensive overview until 2012 is given in \cite{goto_alignment}.\\
+A first approach was presented in 1999 by Loscos et al. \cite{Loscos1999}. The standard forced alignment approach from speech recognition is adapted for singing. MFCCs are extracted first, and then a left-to-right HMM is employed to perform alignment via Viterbi decoding. Some modifications are made to the Viterbi algorithm to allow for low-delay alignment. The approach is trained and tested on a very small (22 minutes) database of unaccompanied singing, but no quantitative results are given.\\
+\medskip
+\cite{Iskandar:2006} \cite{Wang2004} \cite{}  \\ %2. lyrically-paper 
+\medskip
+\cite{fujihara_alignment} \cite{fujihara} \cite{goto_alignment} \\
+\medskip
+\cite{WongSW07} \\ %cantonese
+\medskip
+\cite{LeeC08} \\ %segmentation-based
+\medskip
+\cite{mauch_alignment2010} \cite{mauch_alignment2} \\
+\medskip
+\cite{mesaros_alignment} \\ %mention other mesaros papers
+\medksip
+\cite{gong_alignment} \\
+\medskip
+\cite{dzhambazov_alignment}
+
+
+
+\section{Lyrics retrieval}
+%HOSOYA???
 %RETRIEVAL: Mesaros!!!
+
+
 
 \section{Language identification}
 \subsection{Language identification in speech}
@@ -80,11 +105,17 @@ Also in 2011, Chandrasekhar et al. presented a very interesting approach for lan
 
 \section{Keyword spotting}
 %\subsection{Keyword spotting in speech}
+%Igor Sz? oke, Petr Schwarz, Pavel Matejka, Luk?as Bur-get, Martin Karafi? at, Michal Fapso, and Jan Cernock`y.Comparison of keyword spotting approaches for infor- mal continuous speech. In Interspeech, pages 633?636, 2005.
 %\subsection{Keyword spotting in singing}
 %SPEECH HERE
 %pedro!!
 Keyword spotting in singing was first attempted in 2008 by Fujihara et al. \cite{hyperlinking_lyrics}. Their approach employs a phoneme recognition step first, which is again based on the vocal re-synthesis method first described in \cite{fujihara_identification}. MFCCs and power features are extracted from the re-synthesized singing and used as inputs to a phoneme model, similar to Gruhne's phoneme recognition approach mentioned above in \ref{sec:sota_phone}.  Three phoneme models are compared: One trained on pure speech and adapted with a small set of singing recordings, one adapted with all recordings, and one trained directly on singing. Viterbi decoding is then performed using keyword-filler HMMs (see \ref{sec:tech_kwfhmm}) to detect candidate segments where keywords may occur. These segments are then re-scored through the filler HMM to verify the occurrence.\\
-The method is tested on 79 unaccompanied Japanese-language songs from the RWC database \cite{rwc}. The Phoneme Error Rate is $.73$ for the acoustic models trained on speech, $.67$ for the adapted models, and $.49$ for the models trained on singing (it should be mentioned that the same songs were used for training and testing, although a cross-validation experiment appears to show that the effect is negligible). The (link success rate???) for detecting the keywords is $.3$. The authors show that the ??? depends highly on the number of phonemes in the considered keyword, with longer keywords being easier to detect.
-
+The method is tested on 79 unaccompanied Japanese-language songs from the RWC database \cite{rwc}. The Phoneme Error Rate is $.73$ for the acoustic models trained on speech, $.67$ for the adapted models, and $.49$ for the models trained on singing (it should be mentioned that the same songs were used for training and testing, although a cross-validation experiment appears to show that the effect is negligible). The employed evaluation measure is ``link success rate'', describing the percentage of detected phrases that were linked correctly to other occurrences of the phrase in the data set. In that sense, it is a sort of accuracy measure. The link success rate for detecting the keywords is $.3$. The authors show that the result depends highly on the number of phonemes in the considered keyword, with longer keywords being easier to detect.\\
+\medskip
+In 2012, Mercado et al. presented an approach to keyword spotting in singing based on a different principle: Dynamic Time Warping (DTW) between a sung query and the requested phrase in the song recording. In particular, Statistical Sub-sequence DTW is the algorithm employed for this purpose. MFCCs are used as feature inputs, then the costs of the warping paths are calculated from all possible starting points to obtain candidate segments, which are then further refined to find the most likely position.\\
+The approach is tested on a set of vocal tracks of 19 pop songs (see Section \ref{sec:data_hansen}) as the references, and phrase recordings by amateur singers as the queries, but no quantitative results are given. The disadvantage of this approach lies in the necessity for audio recordings of the key phrases, which need to have at least similar timing and pitch as the reference phrases.\\
+\medskip
+Finally, Dzhambazov et al. developed a score-aided approach to keyword spotting in 2015 \cite{dzhambazov_ismir}. A user needs to select a keyword phrase and a single recording in which this phrase occurs. The keyword is then modeled acoustically by concatenating recordings of the constituent phonemes (so-called acoustic keyword spotting). Similar to Mercado's approach, Sub-Sequence DTW is then performed between the acoustic template and all starting positions in the reference recording to obtain candidate segments. These segments are then refined by aligning the phonemes to the score in these positions to model their durations. This is done by using Dynamic Bayesian Network HMMs. Then, Viterbi decoding is performed to re-score the candidate segments and obtain the best match.\\
+The approach is tested on a small set of unaccompanied Turkish-language recordings of traditional Makam music. The Mean Average Precision (MAP) for the best match is $.08$ for the DTW approach only, and $.05$ for the combined approach. For the top-6 results, the MAP is $.26$ and $.38$ respectively.
 
 
