@@ -48,10 +48,12 @@ The approach is trained and tested on a data set of 12 vocal tracks of pop songs
 %Three techniques for im- proving automatic synchronization between music and lyrics: Fricative detection, filler model, and novel feature vectors for vocal activity detection
 In contrast to the other tasks discussed in this chapter, the task of lyrics-to-audio alignment has been the focus of many more publications. A comprehensive overview until 2012 is given in \cite{goto_alignment}.\\
 A first approach was presented in 1999 by Loscos et al. \cite{Loscos1999}. The standard forced alignment approach from speech recognition is adapted for singing. MFCCs are extracted first, and then a left-to-right HMM is employed to perform alignment via Viterbi decoding. Some modifications are made to the Viterbi algorithm to allow for low-delay alignment. The approach is trained and tested on a very small (22 minutes) database of unaccompanied singing, but no quantitative results are given.\\
+The first attempt to synchronize lyrics to polyphonic recordings was made by Wang et al. in 2004 \cite{Wang2004}. They propose a system, named ``LyricAlly'', to provide line-level alignments for karaoke applications. Their approach is heavily based on musical structure analysis. First, the hierarchical rhythm structure of the song is estimated. The result is combined with an analysis of the chords and then used to split the song into sections, based on a chorus detection algorithm. Second, Vocal Activity Detection (VAD) using HMMs is performed on each section. Then, sections of the text lyrics are assigned to the detected sections (e.g. verses, choruses). In the next step, the algorithm determines whether the individual lines of the lyrics match up with the vocal sections detected by the VAD step. If they do not, grouping or partitioning is performed. This is based on the assumption that lyrics match up to rhythmic bars as determined by the hierarchical rhythm analysis. The expected duration of each section and line is estimated using a Gaussian distributions of phoneme durations from a singing data set. In this manner, lines of text are aligned to the detected vocal segments. The approach is tested on 20 manually annotated pop songs. On the line level, the average error is $.58$ seconds for the starting points and $-.48$ seconds for the durations. The system components are analyzed in more detail in \cite{lyrically}.\\
+In 2006, the same team also presented an approach that also performs rhythm and bar analysis to facilitate syllable-level alignment \cite{Iskandar:2006}. For the phoneme recognition step, an acoustic model is trained on speech data and adapted to singing using the previously mentioned 20 songs. The possible syllable positions in the alignment step are constrained to the note segments detected in the rhythm analysis step. Due to annotator disagreement on the syllable level, the evaluation is performed on the word level. On three example songs, the average synchronization error rate is $.19$ when allowing for a tolerance of 1/4 bar.\\  
 \medskip
-\cite{Iskandar:2006} \cite{Wang2004} \cite{}  \\ %2. lyrically-paper 
-\medskip
-\cite{fujihara_alignment} \cite{fujihara} \cite{goto_alignment} \\
+An approach which does not require in-depth music analysis was presented by Fujihara et al. in 2006 \cite{fujihara_alignment}. A straightforward Viterbi alignment method from speech recognition is refined by introducing three singing-specific pre-processing steps: Accompaniment sound reduction, Vocal Activity Detection, and phoneme model adaptation.\\
+For accompaniment reduction, the previously mentioned harmonic re-synthesis algorithm from \cite{fujihara_identification} is used again. 
+\cite{fujihara} \cite{goto_alignment} \\
 \medskip
 \cite{WongSW07} \\ %cantonese
 \medskip
@@ -60,7 +62,7 @@ A first approach was presented in 1999 by Loscos et al. \cite{Loscos1999}. The s
 \cite{mauch_alignment2010} \cite{mauch_alignment2} \\
 \medskip
 \cite{mesaros_alignment} \\ %mention other mesaros papers
-\medksip
+\medskip
 \cite{gong_alignment} \\
 \medskip
 \cite{dzhambazov_alignment}
@@ -69,6 +71,7 @@ A first approach was presented in 1999 by Loscos et al. \cite{Loscos1999}. The s
 
 \section{Lyrics retrieval}
 %HOSOYA???
+%WangLC2003
 %RETRIEVAL: Mesaros!!!
 
 
