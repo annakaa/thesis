@@ -52,7 +52,9 @@ The first attempt to synchronize lyrics to polyphonic recordings was made by Wan
 In 2006, the same team also presented an approach that also performs rhythm and bar analysis to facilitate syllable-level alignment \cite{Iskandar:2006}. For the phoneme recognition step, an acoustic model is trained on speech data and adapted to singing using the previously mentioned 20 songs. The possible syllable positions in the alignment step are constrained to the note segments detected in the rhythm analysis step. Due to annotator disagreement on the syllable level, the evaluation is performed on the word level. On three example songs, the average synchronization error rate is $.19$ when allowing for a tolerance of 1/4 bar.\\  
 \medskip
 An approach which does not require in-depth music analysis was presented by Fujihara et al. in 2006 \cite{fujihara_alignment}. A straightforward Viterbi alignment method from speech recognition is refined by introducing three singing-specific pre-processing steps: Accompaniment sound reduction, Vocal Activity Detection, and phoneme model adaptation.\\
-For accompaniment reduction, the previously mentioned harmonic re-synthesis algorithm from \cite{fujihara_identification} is used again. 
+For accompaniment reduction, the previously mentioned harmonic re-synthesis algorithm from \cite{fujihara_identification} is used again. For Vocal Activity Detection, a HMM is trained on a small set of unaccompanied singing using LPC-derived MFCCs and $F_0$ differences as features. The HMM can be parameterized to control the rejection rate. For the phoneme model adaptation, three consecutive steps are tested: Adaptation to a clean singing voice, adaptation to a singing voice segregated with the accompaniment reduction method, and on-the-fly adaptation to a specific singer. MFCC features are used for the Viterbi alignment.\\
+Ten Japanese pop songs are used for testing
+
 \cite{fujihara} \cite{goto_alignment} \\
 \medskip
 \cite{WongSW07} \\ %cantonese
