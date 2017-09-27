@@ -4,16 +4,19 @@ This chapter contains descriptions of all the data sets (or corpora) used over t
 
 \section{Speech data sets}
 \subsection{TIMIT}
-\textit{TIMIT} is, presumably, the most widely used corpus in speech recognition research \cite{timit}. It was developed in 1993 and consists of 6300 English-language audio recordings of 630 native speakers with annotations on the phoneme, word, and sentence levels. The corpus is split into a training and a test section, with the training section containing 4620 utterances, and the test section containing 1680. Each of those utterances has a duration of a few seconds.\\
+\textit{TIMIT} is, presumably, the most widely used corpus in speech recognition research \cite{timit}. It was developed in 1993 and consists of 6300 English-language audio recordings of 630 native speakers with annotations on the phoneme, word, and sentence levels. The corpus is split into a training and a test section, with the training section containing 4620 utterances, and the test section containing 1680. Each of those utterances has a duration of a few seconds. The recordings are sampled at $16,000 Hz$ and are mono channel.\\
 The phoneme annotations follow a model similar to ARPABET and contain 61 different phonemes \cite{Zue1990}.
 %wo benutzt?
 
 \subsection{NIST Language identification corpora}
+The National Institute for Standards and Technology (NIST) regularly runs various speech recognition challenges, one of them being the Language Recognition Evaluation (LRE) task, which is offered every two to four years \footnote{\url{https://www.nist.gov/itl/iad/mig/language-recognition}}. To this end, they publish training and evaluation corpora of speech in several languages. They consist of short segments (up to 35 seconds) of free telephone speech by many different speakers. The recordings are mono channel with a sampling rate of $8000 Hz$.\\
+The corpus for the 2003 challenge was used in this work for comparison of language identification algorithms against speech data \cite{nist2003lre}. Only the English-, German-, and Spanish-language subsets were chosen, since those languages are covered by the corresponding singing dataset. To balance out the languages, 240 recordings were used for each of them, making up around 1 hour of material.
 
-
-\subsection{OGI Language identification corpus}
+\subsection{OGI Multi-Language Telephone Speech Corpus}
 %aufräumen!!
-For comparison, the algorithms in this work were also tested on the \textit{OGI Multi-language Telephone Speech Corpus (OGIMultilang)} \cite{ogimultilang}, using all recordings for the three previously mentioned languages. There are 3,177 utterances in sum with more varying durations (1-60 seconds). For experiments on longer recordings, results on these individual utterances were aggregated for each speaker, producing 118 documents per language (354 in sum).\\
+In 1992, the Oregon Institute for for Science and Technology (OGI) also published a multilingual corpus of telephone recordings, called the OGI Multi-Language Telephone Speech Corpus, to facilitate multi-language ASR research. Just like the NIST corpora, it has become widely used for speech recognition tasks. Again, the English-, German-, and Spanish-language subsets were used in this work. They each consist of more than 1000 recordings per language of up to $50$ seconds duration, making up a total of about three to five hours. In contrast to the NIST corpus, the recordings are somewhat less ``clean'' with regards to accents and background noise; the sampling rate is also $8000 Hz$ on mono channel.  For experiments on longer recordings, results on these individual utterances were aggregated for each speaker, producing 118 documents per language (354 in sum).\\
+
+
 
 
 %Tabelle nennen!
@@ -34,14 +37,15 @@ For comparison, the algorithms in this work were also tested on the \textit{OGI 
   \label{tab:datasets}
 \end{table}
 
-\section{A-Capella singing data sets}
+\section{Singing data sets}
 \subsection{YouTube data set}
-As opposed to the speech case, there are no standardized corpora for sung language identification. For the sung language identification experiments, A-capella audio files were therefore extracted from \textit{YouTube}\footnote{\url{http://www.youtube.com}, Last checked: 05/16/13} videos. This was done for three languages: English, German, and Spanish. The author collected between 116 (258min) and 196 (480min) examples per language. These were mostly videos of amateur singers freely performing songs without accompaniment. Therefore, they are of highly varying quality and often contain background noise. Most of the performers contributed only a single song, with just a few providing up to three. In this way, we aim to avoid effects where the classifier recognizes the singer's voice instead of the language.\\
-Special attention was paid to musical style. Rap, opera singing, and other specific singing styles were excluded. All the songs performed in these videos were pop songs. Different musical styles can have a high impact on language classification results. The author tried to limit this influence as much as possible by choosing recordings of pop music instead of language-specific genres (such as latin american music).\\
-%For some experiments, they were split up into segments of 10-20 seconds at silent points (3,156 ``utterances'' in sum).\\
+As opposed to the speech case, there are no standardized corpora for sung language identification. For the sung language identification experiments, files of unaccompanied singing were therefore extracted from \textit{YouTube}\footnote{\url{http://www.youtube.com}, Last checked: 05/16/13} videos. This was done for three languages: English, German, and Spanish. The corpus consists of between 116 (258min) and 196 (480min) examples per language. These were mostly videos of amateur singers freely performing songs without accompaniment. Therefore, they are of highly varying quality and often contain background noise. The audio was downloaded in the natively provided quality, but then downsampled to $8000 Hz$ and averaged to a mono channel for uniformity and for compatibility with the speech corpora for language identification. Most of the performers contributed only a single song, with just a few providing up to three. This was done to avoid effects where the classifier recognizes the singer's voice instead of the language.\\
+Special attention was paid to musical style. Rap, opera singing, and other specific singing styles were excluded. All the songs performed in these videos were pop songs. Different musical styles can have a high impact on language classification results. The author tried to limit this influence as much as possible by choosing recordings of pop music instead of language-specific genres (such as Latin American music).\\
+For some experiments, they were split up into segments of 10-20 seconds at silent points (3,156 ``utterances'' in sum).\\
+An overview of the amounts of data in the three corpora for language identification is given in Table \ref{tab:datasets}.
 
 \subsection{Hansen's vocal track data set}
-This is one of the data sets used for keyword spotting a\subsection{Choosing keywords}nd phoneme recognition. It was first presented in \cite{jens}. It consists of the vocal tracks of 19 commercial English-language pop songs. They are studio quality with some post-processing applied (EQ, compression, reverb). Some of them contain choir singing. These 19 songs are split up into ??? clips that roughly represent lines in the song lyrics.\\
+This is one of the data sets used for keyword spotting and phoneme recognition. It was first presented in \cite{jens}. It consists of the vocal tracks of 19 commercial English-language pop songs. They are studio quality with some post-processing applied (EQ, compression, reverb). Some of them contain choir singing. These 19 songs are split up into 920 clips that roughly represent lines in the song lyrics.\\
 Twelve of the songs were annotated with time-aligned phonemes. The phoneme set is the one used in CMU Sphinx\footnote{\url{http://cmusphinx.sourceforge.net/}} and TIMIT \cite{timit} and contains 39 phonemes. All of the songs were annotated with word-level transcriptions. This is the only one of the singing data sets that has full manual annotations, which are assumed to be reliable and can be used as ground truth.\\
 For comparison, recordings of spoken recitations of all song lyrics were also made. These were all performed by the same speaker (the author).\\
 
@@ -53,8 +57,8 @@ No lyrics annotations are available for this data set, but the textual lyrics ca
 
 \subsection{Aji's synthesized singing data set}
 Since it was not feasible to hand-annotate a large data set over the course of this work, another approach was the automatic generation of sung audio. The advantage of this approach is that the results can be assumed to be perfectly aligned to the given phonemes.\\
-For the generation of this data set, ??? recordings from the previously described \textit{DAMP} data set were selected. Their phonemes were automatically aligned, and an automatic transcription of the melody was performed. These two sources of data were then aligned to each other. This alignment did not need to be perfect, it just needed to produce a plausible combination of melody line and phonemes.\\
-The result of this step was then fed into the \textit{Sinsy}\cite{}\footnote{\url{}} singing synthesizer to generate new singing recordings. This synthesizer provided one female singing voice. The resulting recordings are good in quality and relatively natural sounding, but appear to have a slight accent.\\
+For the generation of this data set, recordings from the previously described \textit{DAMP} data set were used. Their phonemes were automatically aligned, and an automatic transcription of the melody was performed. These two sources of data were then aligned to each other. This alignment did not need to be perfect, it just needed to produce a plausible combination of melody line and phonemes. For some songs in the dataset, these steps did not produce acceptable results and they had to be discarded, resulting in a corpus of 5163 recordings with phoneme and melody transcriptions.\\
+The result of this step was then fed into the \textit{Sinsy}\cite{sinsy}\footnote{\url{http://sinsy.jp/)}} singing synthesizer to generate new singing recordings. This synthesizer uses HMMs trained on MFCCs, $F_0$, and vibrato parameters for syllable-level synthesis, and provides one female singing voice. The resulting recordings are good in quality and relatively natural sounding, but appear to have a slight accent.\\
 The whole generation process of this data set was performed in collaboration with Adam Aji.
 
 %\subsection{Choosing keywords}
