@@ -62,6 +62,43 @@ The selection of songs is not balanced, with performances ranging between 21 and
 \end{description}
 %Matt's data set??
 
+\subsection{Structure of the final corpus}
+%TODO: INTEGRATE!!!
+\begin{description}
+
+\item[Training data sets] In order to generate training data sets, we decided to balance the data by songs so that certain songs (and their phoneme distributions) would not be overrepresented. The least represented song in the original data set has 20 recordings. We therefore chose 20 to 23 recordings per song at random to generate a training data set, which we named \textbf{DampB}. For each song, as many different singers as possible were selected. Additionally, recordings with more ``Loves'' (user approval) were more likely to be selected (however, a large percentage of the original data set did not have such ratings). This resulted in a data set of 6,902 recordings.\\
+ We then repeated this process, but only took recordings by singers of one gender into account. In this way, we created data sets of recordings by female and male singers only, which we named \textbf{DampF} and \textbf{DampM} respectively. Due to the gender split, there were fewer recordings of some of the songs available. Male singers in particular are underrepresented in the original data set. Therefore, \textbf{DampF} contains 6,564 recordings, while \textbf{DampM} contains 4,534. These sizes are roughly in the same range as for the mixed-gender data set, which enables the comparison of models trained on all three.
+ \item[Test data sets] For testing new algorithms, we also created two small test data sets from the original \textit{DAMP} data set. These are, again, split by gender, and contain one recording per song, resulting in 301 recordings for the female data set and 300 for the male one (since there was one song with not enough available male recordings). We call them \textbf{DampTestF} and \textbf{DampTestM} respectively.\\
+ For mixed-gender training, we suggest simply performing the testing on both test data sets.
+\end{description}
+A structured overview is given in table \ref{tab:corpus}.
+
+\begin{table}
+ \begin{center}
+ \begin{tabular}{|c||c|c|}
+  \hline
+   \textbf{Gender} & \textbf{Training} & \textbf{Test} \\
+  \hline
+  \hline
+  Both & DampB & \\
+  & (6,902) & \\
+  \hline
+  Female & DampF & DampTestF \\
+  & (6,654) & (301) \\
+  \hline
+  Male & DampM & DampTestM \\
+  & (4,534) & (300) \\
+  \hline
+ \end{tabular}
+\end{center}
+\vspace{-10pt}
+ \caption{Overview of the structure of the \textit{DAMP}-based phonetically annotated corpora, number of recordings in brackets.}
+ \label{tab:corpus}
+\vspace{10pt}
+\end{table}
+
+
+
 \subsection{Aji's synthesized singing data set}
 Since it was not feasible to hand-annotate a large data set over the course of this work, another approach was the automatic generation of sung audio. The advantage of this approach is that the results can be assumed to be perfectly aligned to the given phonemes.\\
 For the generation of this data set, recordings from the previously described \textit{DAMP} data set were used. Their phonemes were automatically aligned, and an automatic transcription of the melody was performed. These two sources of data were then aligned to each other. This alignment did not need to be perfect, it just needed to produce a plausible combination of melody line and phonemes. For some songs in the dataset, these steps did not produce acceptable results and they had to be discarded, resulting in a corpus of 5163 recordings with phoneme and melody transcriptions.\\
