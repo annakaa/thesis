@@ -1,5 +1,5 @@
 \chapter{Singing phoneme recognition} \label{chap:phonerec}
-\section{Phoneme recognition using models trained on speech}
+\section{Phoneme recognition using models trained on speech} \label{sec:phonerec_timit}
 %timit
 %hmm
 %dnn 1024x850x1024
@@ -40,7 +40,7 @@ It can be assumed that models trained on better-matching conditions (i.e. singin
 %phonerec tested on:
 % matched set, acap, dampf
 %problem: correct instead of w_per!!
-%A first idea to solve the lack of large singing data sets was the use of synthesized singing. For these experiments, the \textit{SYNTH} data set described in section \ref{subsec:data_synth} was employed. As mentioned, this corpus contains vocal versions of pop songs synthesized with a female voice.\\
+%A first idea to solve the lack of large singing data sets was the use of synthesized singing. For these experiments, the \textit{SYNTH} data set described in section \ref{subsec:data_synth}ï¿½was employed. As mentioned, this corpus contains vocal versions of pop songs synthesized with a female voice.\\
 %A DNN of the same dimensions as before (1024x850x1024) was trained on the training portion, and then tested on the test portion of \textit{SYNTH}, on the \textit{ACAP} data set, and on the \textit{DAMPTest} sets. The results are displayed in figure \ref{fig:res_synth}.\\
 
 %non-matched: not good (but better than timit??)
@@ -135,54 +135,52 @@ Nevertheless, it is interesting to see that both pitch shifting and time stretch
 %phonerec tested on:
 % acap, dampf/m
 %alignment tested on acap; also: hmms!!
+In this section, the most salient tested approach for phoneme recognition in singing is presented. For this method, acoustic models were trained on actual singing recordings. A large set of such recordings was already available from the \textit{DAMP} corpus, but no annotations were included with them. Such annotations were generated automatically from text lyrics available on the internet. In the following subsections, this process is described in detail, some variants are tested, and experiments with these new models are presented. 
 
 \subsection{Corpus construction}
 
-%pre-existing; copy old paragraphs here
-As a basis for our phonetically annotated data set, we used the \textit{DAMP} data set, which is freely available from Stanford University\footnote{\url{https://ccrma.stanford.edu/damp/}}\cite{phdthesis:jeffreysmith}. This data set contains more than 34,000 recordings of amateur singing of full songs (3 to 5 minutes duration) with no background music, which were obtained from the \textit{Smule Sing!} karaoke app. Each performance is labeled with metadata such as the gender of the singer, the region of origin, the song title, etc. The singers performed 301 different English language pop songs. The recordings have good sound quality with little background noise, but come from a lot of different recording conditions.
 
 
 \begin{figure*}
  \begin{center}
                 \includegraphics[width=.8\textwidth]{images/overview_bootstrap.png}
                 \caption{An overview of the alignment process. The right-hand part represents the optional bootstrapping.}
-                \label{fig:process}
+                \label{fig:damp_alignment_process}
                  \end{center}
  \end{figure*}
-No lyrics annotations are available for this data set, but we obtained the textual lyrics from the \textit{Smule Sing!} website\footnote{\url{http://www.smule.com/songs}}.  All of them were English-language songs. These lyrics were mapped to their phonetic content using the CMU Pronouncing Dictionary\footnote{\url{http://www.speech.cs.cmu.edu/cgi-bin/cmudict}} with some manual additions of unusual words. This dictionary has a phoneme set of 39 phonemes.\\
-We then performed an automatic alignment of these lyrics to the \textit{DAMP} audio.\\
-As a basis, a monophonic HMM acoustic model trained on the \textit{Timit} speech corpus was used \cite{timit}. The model training and the alignment were done using the HTK framework \cite{htk}, which uses Viterbi alignment as its algorithm. MFCCs and their deltas and double-deltas were used as features. Alignment was performed on the word and phoneme levels. This is the same principle of so-called ``Forced Alignment" that is commonly used in Automatic Speech Recognition \cite{book:jurafsky} (although it is usually done on shorter utterances). \\
-On top of this, we carried out several different alignment strategies:
+ 
+As mentioned above, no lyrics annotations are available for the \textit{DAMP} data set, but the textual lyrics can be obtained from the \textit{Smule Sing!} website\footnote{\url{http://www.smule.com/songs}}.  All of them were English-language songs. These lyrics were mapped to their phonetic content using the CMU Pronouncing Dictionary\footnote{\url{http://www.speech.cs.cmu.edu/cgi-bin/cmudict}} with some manual additions of unusual words. As with the other data sets, this dictionary has a phoneme set of 39 phonemes (also see appendix \ref{app:phonemes}).\\
+An automatic alignment of these lyrics to the \textit{DAMP} audio was then performed using the HMM acoustic models trained on \textit{TIMIT} (see section \ref{sec:phonerec_timit}). Viterbi alignment was performed on the word and phoneme levels using the HTK framework, using MFCCs and their deltas and double-deltas as features. This is the same principle of so-called ``Forced Alignment" that is commonly used in Automatic Speech Recognition \cite{book:jurafsky} (although it is usually done on shorter utterances). \\
+Several different alignment strategies were carried out:
 \begin{description}
-\item[Monophones vs. Triphones] We tested aligning both monophones (i.e. one state per phoneme) and triphones (i.e. three states per triphone modeling the start, middle, and end phases). Since \textit{Timit} only contains monophone annotations, this was done by first splitting the phoneme time frames evenly through three, and then re-training the \textit{Timit} acoustic model and re-aligning the data set (with the assumption that the transitions between the triphone states would be ``pulled'' to the correct times).  
-\item[One-pass alignment vs. Bootstrapping] On top of a one-pass alignment using the Viterbi algorithm, we also investigated whether the acoustic models could be bootstrapped to improve the alignment. To clarify: We first performed the alignment on the \textbf{Damp} data sets using the \textit{Timit} models described above, then trained acoustic models on the resulting phoneme annotations. Then, those models were used to re-align the \textbf{Damp} data, which was again used to train another model. This was done over three iterations.\\
-A modified version of the alignment algorithm was used for doing alignment with the models trained on the \textbf{Damp} data sets. This approach is based on doing Dynamic Time Warping on the generated phoneme posteriorgrams without punishing very long states. This is similar to the approach described in \cite{kruspe_lyrics_retrieval}.
+	%TODO: TIMIT Triphone results???
+\item[Monophones vs. Triphones] Both monophone (i.e. one state per phoneme) and triphone (i.e. three states per triphone modeling the start, middle, and end phases) were tested. Since \textit{TIMIT} only contains monophone annotations, this was done by first splitting the phoneme time frames evenly through three, and then re-training the \textit{TIMIT} acoustic model and re-aligning the data set (with the assumption that the transitions between the triphone states would be ``pulled'' to the correct times).  
+\item[One-pass alignment vs. Bootstrapping] On top of a one-pass alignment using the Viterbi algorithm, bootstrapping the acoustic models to improve the alignment was also. To clarify:The alignment was first performed on the \textbf{DAMP} data sets using the \textit{TIMIT} models described above, then acoustic models were trained on the resulting phoneme annotations. Then, those models were used to re-align the \textbf{DAMP} data, which was again used to train another model. This was done over three iterations.\\
+A modified version of the alignment algorithm was used for doing alignment with the models trained on the \textbf{DAMP} data sets. This approach is based on doing Dynamic Time Warping on the generated phoneme posteriorgrams without punishing very long states. This is similar to the approach described in \ref{sec:alignment_dtw}.
 \end{description}
-A graphical overview of the alignment process is given in figure \ref{fig:process}.\\
-Of course, errors cannot be avoided when doing automatic forced alignment. All in all, there were now four combinations of these strategies, which we compared. In section \ref{sec:validation}, we describe how this alignment procedure was validated and what strategies performed best.\\
-Since there is usually a large number of recordings of the same song, we considered using this information to improve the alignment results, e.g. by averaging timestamps over the alignments of several recordings. We did not do this in this work because recordings tend to have different offsets from the beginning (i.e. silence in the beginning), and the singers also do not necessarily pronounce phonemes at the same time. This might be an avenue for future research, though.
-\section{Validation}\label{sec:validation}
-Validating the phoneme annotations created in this way is not trivial since there is no ground truth to base them on. We therefore used a two-pronged approach: We first tested the same alignment algorithm on a different, small, manually annotated data set. Second, we trained new acoustic models on the newly generated training data sets. We then performed phoneme recognition on the test data sets, and compared the results to the expected phoneme strings (which are known since we have the matching lyrics).
-\subsection{Validation data}\label{subsec:validation_data}
-For testing the alignment approach, we used a small data set of the vocal tracks of 15 pop songs, which were hand-annotated with phonemes and words. This data set was first presented in \cite{jens}. We call it \textit{ACAP}.
-%Despite the small size, we provide results on this data set for comparison with our previous approaches, and because the ground truth annotations can be assumed to be correct (in contrast with the automatically generated annotations of the \textit{Damp}-based data sets).
-%problem: no valid ground truth
+A graphical overview of the alignment process is given in figure \ref{fig:damp_alignment_process}.\\
+Of course, errors cannot be avoided when doing automatic forced alignment. All in all, there were now four combinations of these strategies, which were compared. The next section describes how this alignment procedure was validated and what strategies performed best.\\
+Since there is usually a large number of recordings of the same song, an approach using this information to improve the alignment results was also considered, e.g. by averaging time stamps over the alignments of several recordings. This was not done in this work because recordings tend to have different offsets from the beginning (i.e. silence in the beginning), and the singers also do not necessarily pronounce phonemes at the same time. This might be an avenue for future research, though.
+
+%\subsection{Validation}\label{sec:validation}
+%Validating the phoneme annotations created in this way is not trivial since there is no ground truth to base them on. Therefore, a two-pronged approach was employed: The same alignment algorithm was first tested on the small, manually annotated \textit{ACAP} data set. Second, new acoustic models were trained on the newly generated training data sets. Then, phoneme recognition was performed on the test data sets, and the results were compared to the expected phoneme strings (which are known from the matching lyrics).
+
 \subsection{Alignment validation}
-We first tested the same alignment approach that was used to create the new \textit{DAMP}-based data sets on the \textit{ACAP} data set. To recap: This approach employs models trained on the \textit{Timit} speech corpus, which are used for Viterbi alignment of the known phonemes to the singing. The result of this is then compared to the manual annotations by calculating the difference between each expected and predicted phoneme transition. 
+The alignment approach that was used to create the new \textit{DAMP}-based data sets was first tested on the \textit{ACAP} data set. To recap: This approach employs models trained on the \textit{TIMIT} speech corpus, which are used for Viterbi alignment of the known phonemes to the singing. The result of this is then compared to the manual annotations by calculating the difference between each expected and predicted phoneme transition. As mentioned in \ref{sec:phonerec_timit} and shown in figure \ref{fig:res_alignment}, the mean alignment error for this first approach is $.16$ seconds.\\
 
 %TODO: other figure
 \begin{figure}
 	\begin{center}
 		\includegraphics[width=.4\textwidth]{images/res_alignment.png}
-		\caption{Mean alignment error in seconds on the \textit{ACAP} data set. \textit{Timit} shows the result for the same models used for aligning the new \textit{DAMP}-based data sets.}
+		\caption{Mean alignment error in seconds on the \textit{ACAP} data set. \textit{TIMIT} shows the result for the same models used for aligning the new \textit{DAMP}-based data sets.}
 		\label{fig:res_alignment}
 	\end{center}
 \end{figure}
 
 
-We then tested various models trained on the new \textbf{DampB}, \textbf{DampF}, and \textbf{DampM} training data sets for the same task. The results are also shown in figure \ref{fig:res_alignment}.\\
-Models trained on the monophonic alignments of \textbf{DampB} and \textbf{DampF/M} perform slightly better at this task with mean errors of $0.15$ and $0.13$ seconds respectively (for the gender-specific models, those values were only calculated for the songs of the matching gender in \textit{ACAP}). The triphone version of \textbf{DampB} performs even better, with a mean error of $0.1$. We believe this might be because dedicatedly training the model for the start and end parts of phonemes might make the alignment approach more accurate at finding start and end points.\\
-Finally, we also tested the model trained on \textbf{DampB} over three iterations. This model performs much worse at this task. This might happen because errors in the original alignment of the phonemes may become amplified over these iterations.
+Various models trained on the new \textbf{DampB}, \textbf{DampF}, and \textbf{DampM} training data sets were then tested for the same task. The results are also shown in figure \ref{fig:res_alignment}.\\
+Models trained on the monophonic alignments of \textbf{DampB} and \textbf{DampF/M} perform slightly better at this task with mean errors of $0.15$ and $0.13$ seconds respectively (for the gender-specific models, those values were only calculated for the songs of the matching gender in \textit{ACAP}). The triphone version of \textbf{DampB} performs even better, with a mean error of $0.1$. This might happen because dedicatedly training the model for the start and end parts of phonemes might make the alignment approach more accurate at finding start and end points.\\
+Finally, a model trained on \textbf{DampB} over three iterations was also tested for alignment. This model performs much worse at this task. This might happen because errors in the original alignment of the phonemes may become amplified over these iterations.
 
 
 \begin{figure*}
@@ -213,7 +211,7 @@ Finally, we also tested the model trained on \textbf{DampB} over three iteration
 	\caption{Mean phoneme recognition results on the \textbf{DampTest} data sets using acoustic models trained on \textit{Timit} and the new \textit{DAMP}-based data sets.}\label{fig:res_phonerec}
 \end{figure*}
 
-\subsection{Validation of phoneme recognition}
+\subsection{Phoneme recognition}
 To obtain a clearer picture of the quality of the new data sets, we also performed phoneme recognition experiments on both \textit{ACAP} and the \textbf{DampTest} corpora. This was possible even though there are no manual annotations for the \textbf{DampTest} sets because the expected phonemes are available from the textual lyrics. The phoneme error rate and the weighted phoneme error rate were used as evaluation measures (see \cite{kruspe_phonerec}).\\
 The results for \textit{ACAP} are shown in figure \ref{fig:res_phonerec_acap}. In general, models trained on \textbf{DampB} performed much better at phoneme recognition than those trained on \textit{Timit}. Compared to these speech-based models, the phoneme error rate falls from $1.06$ to $0.77$, while the weighted phoneme error rate falls from $0.8$ to $0.59$. As can be seen from both evaluation measures, using triphone alignments instead of monophones does not improve the results in this case. This contrasts with the better alignment results. We think this might happen because more classes cause more confusion in the model, even though the triphone results were downmapped to monophones for calculating the evaluation measures.\\
 As already seen in the alignment validation results, training models on \textbf{DampB} over three iterations actually degrades the result (``DampB (3)''). Again, we suspect that this happens because phoneme alignment errors become amplified in this way. Interestingly, this does not seem to happen for the triphone models, perhaps because the three classes per phoneme help to alleviate each other's errors.\\
