@@ -100,11 +100,11 @@ A structured overview is given in table \ref{tab:corpus}.
 
 
 
-\subsection{Aji's synthesized singing data set}
-Since it was not feasible to hand-annotate a large data set over the course of this work, another approach was the automatic generation of sung audio. The advantage of this approach is that the results can be assumed to be perfectly aligned to the given phonemes.\\
-For the generation of this data set, recordings from the previously described \textit{DAMP} data set were used. Their phonemes were automatically aligned, and an automatic transcription of the melody was performed. These two sources of data were then aligned to each other. This alignment did not need to be perfect, it just needed to produce a plausible combination of melody line and phonemes. For some songs in the dataset, these steps did not produce acceptable results and they had to be discarded, resulting in a corpus of 5163 recordings with phoneme and melody transcriptions.\\
-The result of this step was then fed into the \textit{Sinsy}\cite{sinsy}\footnote{\url{http://sinsy.jp/)}} singing synthesizer to generate new singing recordings. This synthesizer uses HMMs trained on MFCCs, $F_0$, and vibrato parameters for syllable-level synthesis, and provides one female singing voice. The resulting recordings are good in quality and relatively natural sounding, but appear to have a slight accent.\\
-The whole generation process of this data set was performed in collaboration with Adam Aji.
+%\subsection{Aji's synthesized singing data set} \label{subsec:data_synth}
+%Since it was not feasible to hand-annotate a large data set over the course of this work, another approach was the automatic generation of sung audio. The advantage of this approach is that the results can be assumed to be perfectly aligned to the given phonemes.\\
+%For the generation of this data set, recordings from the previously described \textit{DAMP} data set were used. Their phonemes were automatically aligned, and an automatic transcription of the melody was performed. These two sources of data were then aligned to each other. This alignment did not need to be perfect, it just needed to produce a plausible combination of melody line and phonemes. For some songs in the dataset, these steps did not produce acceptable results and they had to be discarded, resulting in a corpus of 5163 recordings with phoneme and melody transcriptions.\\
+%The result of this step was then fed into the \textit{Sinsy}\cite{sinsy}\footnote{\url{http://sinsy.jp/)}} singing synthesizer to generate new singing recordings. This synthesizer uses HMMs trained on MFCCs, $F_0$, and vibrato parameters for syllable-level synthesis, and provides one female singing voice. The resulting recordings are good in quality and relatively natural sounding, but appear to have a slight accent.\\
+%The whole generation process of this data set was performed in collaboration with Adam Aji. The data set will be referred to as \textit{SYNTH}.
 
 %\subsection{Choosing keywords}
 
