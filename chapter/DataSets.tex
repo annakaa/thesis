@@ -50,7 +50,7 @@ Twelve of the songs were annotated with time-aligned phonemes. The phoneme set i
 For comparison, recordings of spoken recitations of all song lyrics were also made. These were all performed by the same speaker (the author).\\
 This data set will be referred to as \textit{ACAP}.
 
-\subsection{DAMP data set}
+\subsection{DAMP data set} \label{sec:data_damp}
 As described, Hansen's data set is very small and therefore not suited to training phoneme models for singing. As a much larger source of unaccompanied singing, the \textit{DAMP} data set, which is freely available from Stanford University\footnote{\url{https://ccrma.stanford.edu/damp/}}\cite{phdthesis:jeffreysmith}, was employed. This data set contains more than 34,000 recordings of amateur singing of full songs with no background music, which were obtained from the \textit{Smule Sing!} karaoke app. Each performance is labeled with metadata such as the gender of the singer, the region of origin, the song title, etc. The singers performed 301 English-language pop songs. The recordings have good sound quality with little background noise, but come from a lot of different recording conditions. They were originally provided in OGG format at a sampling rate of $22,050 Hz$ (mono channel), but were also converted to wave format and downsampled to $16,000 Hz$ for compatibility.\\
 No lyrics annotations are available for this data set, but the textual lyrics can be obtained from the \textit{Smule Sing!} website\footnote{\url{http://www.smule.com/songs}}. These are, however, not aligned in any way. Such an alignment was performed automatically on the word and phoneme levels (see section \ref{sec:phonerec_acap}).\\
 The selection of songs is not balanced, with performances ranging between 21 and 2038 instances. Female performances are also much more frequent than male ones, and gender often plays a role when training and evaluating models. For these reasons, several subsets of the dataset were composed by hand:
@@ -58,7 +58,8 @@ The selection of songs is not balanced, with performances ranging between 21 and
 \item[DampB] {Contains 20 full recordings per song (6000 in sum), both male and female.}
 \item[DampBB] {Same as before, but phoneme instances were discarded until they were balanced and a maximum of 250,000 frames per phoneme where left, where possible. This data set is about 4\% the size of \textit{DampB}.}
 \item[DampBB\_small] {Same as before, but phoneme instances were discarded until they were balanced and 60,000 frames per phoneme were left (a bit fewer than the amount contained in \textit{TIMIT}). This data set is about half the size of \textit{DampBB}.}
-\item[DampFB and DampMB] {Using 20 full recordings per song and gender (6000 each), these data sets were then reduced in the same way as \textit{DampBB}. \textit{DampFB} is roughly the same size, \textit{DampMB} is a bit smaller because there are fewer male recordings.}
+\item[DampF and DampM] {Each of these data sets contains 20 full recordings per song performed by singers of one gender, female and male respectively (6000 each).}
+\item[DampFB and DampMB] {Starting from \textit{DampF} and \textit{DampM}, these data sets were then reduced in the same way as \textit{DampBB}. \textit{DampFB} is roughly the same size, \textit{DampMB} is a bit smaller because there are fewer male recordings.}
 \item[DampTestF and DampTestM] {Contains one full recording per song and gender (300 each). These data sets were used for testing. There is no overlap with any of the training data sets.}
 \end{description}
 %Matt's data set??

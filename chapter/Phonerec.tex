@@ -20,12 +20,12 @@ It can be assumed that models trained on better-matching conditions (i.e. singin
 
 \begin{figure*}
 	\centering
-	\begin{subfigure}[t]{0.4\textwidth}
+	\begin{subfigure}[t]{0.5\textwidth}
 		\includegraphics[width=\textwidth]{images/res_timit_per.png}
 		\caption{Phoneme error rate}
 		
 	\end{subfigure}%
-	\begin{subfigure}[t]{0.4\textwidth}
+	\begin{subfigure}[t]{0.5\textwidth}
 		\includegraphics[width=\textwidth]{images/res_timit_wper.png}
 		\caption{Weighted phoneme error rate}
 	\end{subfigure}
@@ -108,12 +108,12 @@ In detail, the modifications were performed in the following way:
 
 \begin{figure*}
 	\centering
-	\begin{subfigure}[t]{0.4\textwidth}
+	\begin{subfigure}[t]{0.5\textwidth}
 		\includegraphics[width=\textwidth]{images/res_songify_per.png}
 		\caption{Phoneme error rate}
 		
 	\end{subfigure}%
-	\begin{subfigure}[t]{0.4\textwidth}
+	\begin{subfigure}[t]{0.5\textwidth}
 		\includegraphics[width=\textwidth]{images/res_songify_wper.png}
 		\caption{Weighted phoneme error rate}
 	\end{subfigure}
@@ -153,9 +153,9 @@ As mentioned above, no lyrics annotations are available for the \textit{DAMP} da
 An automatic alignment of these lyrics to the \textit{DAMP} audio was then performed using the HMM acoustic models trained on \textit{TIMIT} (see section \ref{sec:phonerec_timit}). Viterbi alignment was performed on the word and phoneme levels using the HTK framework, using MFCCs and their deltas and double-deltas as features. This is the same principle of so-called ``Forced Alignment" that is commonly used in Automatic Speech Recognition \cite{book:jurafsky} (although it is usually done on shorter utterances). \\
 Several different alignment strategies were carried out:
 \begin{description}
-	%TODO: TIMIT Triphone results???
+
 \item[Monophones vs. Triphones] Both monophone (i.e. one state per phoneme) and triphone (i.e. three states per triphone modeling the start, middle, and end phases) were tested. Since \textit{TIMIT} only contains monophone annotations, this was done by first splitting the phoneme time frames evenly through three, and then re-training the \textit{TIMIT} acoustic model and re-aligning the data set (with the assumption that the transitions between the triphone states would be ``pulled'' to the correct times).  
-\item[One-pass alignment vs. Bootstrapping] On top of a one-pass alignment using the Viterbi algorithm, bootstrapping the acoustic models to improve the alignment was also. To clarify:The alignment was first performed on the \textbf{DAMP} data sets using the \textit{TIMIT} models described above, then acoustic models were trained on the resulting phoneme annotations. Then, those models were used to re-align the \textbf{DAMP} data, which was again used to train another model. This was done over three iterations.\\
+\item[One-pass alignment vs. Bootstrapping] On top of a one-pass alignment using the Viterbi algorithm, bootstrapping the acoustic models to improve the alignment was also. To clarify:The alignment was first performed on the \textit{DAMP} data sets using the \textit{TIMIT} models described above, then acoustic models were trained on the resulting phoneme annotations. Then, those models were used to re-align the \textit{DAMP} data, which was again used to train another model. This was done over three iterations.\\
 A modified version of the alignment algorithm was used for doing alignment with the models trained on the \textbf{DAMP} data sets. This approach is based on doing Dynamic Time Warping on the generated phoneme posteriorgrams without punishing very long states. This is similar to the approach described in \ref{sec:alignment_dtw}.
 \end{description}
 A graphical overview of the alignment process is given in figure \ref{fig:damp_alignment_process}.\\
@@ -185,12 +185,12 @@ Finally, a model trained on \textbf{DampB} over three iterations was also tested
 
 \begin{figure*}
 	\centering
-	\begin{subfigure}[t]{0.3\textwidth}
+	\begin{subfigure}[t]{0.5\textwidth}
 		\includegraphics[width=\textwidth]{images/res_phonerec_acap.png}
 		\caption{Phoneme error rate}
 		
 	\end{subfigure}%
-	\begin{subfigure}[t]{0.3\textwidth}
+	\begin{subfigure}[t]{0.5\textwidth}
 		\includegraphics[width=\textwidth]{images/res_phonerec_acap_w.png}
 		\caption{Weighted phoneme error rate}
 	\end{subfigure}
@@ -199,29 +199,50 @@ Finally, a model trained on \textbf{DampB} over three iterations was also tested
 
 \begin{figure*}
 	\centering
-	\begin{subfigure}[t]{0.3\textwidth}
+	\begin{subfigure}[t]{0.5\textwidth}
 		\includegraphics[width=\textwidth]{images/res_phonerec.png}
 		\caption{Phoneme error rate}
 		
 	\end{subfigure}%
-	\begin{subfigure}[t]{0.3\textwidth}
+	\begin{subfigure}[t]{0.5\textwidth}
 		\includegraphics[width=\textwidth]{images/res_phonerec_w.png}
 		\caption{Weighted phoneme error rate}
 	\end{subfigure}
-	\caption{Mean phoneme recognition results on the \textbf{DampTest} data sets using acoustic models trained on \textit{Timit} and the new \textit{DAMP}-based data sets.}\label{fig:res_phonerec}
+	\caption{Mean phoneme recognition results on the \textit{DampTest} data sets using acoustic models trained on \textit{TIMIT} and the new \textit{DAMP}-based data sets.}\label{fig:res_phonerec}
+\end{figure*}
+
+
+\begin{figure*}
+	\centering
+	\begin{subfigure}[t]{0.5\textwidth}
+		\includegraphics[width=\textwidth]{images/res_phonerec_sizes.png}
+		\caption{Phoneme error rate}
+		
+	\end{subfigure}%
+	\begin{subfigure}[t]{0.5\textwidth}
+		\includegraphics[width=\textwidth]{images/res_phonerec_sizes_w.png}
+		\caption{Weighted phoneme error rate}
+	\end{subfigure}
+	\caption{Mean phoneme recognition results on the \textit{DampTest} data sets using acoustic models trained on \textit{TIMIT} and the new \textit{DAMP}-based data sets.}\label{fig:res_phonerec_sizes}
 \end{figure*}
 
 \subsection{Phoneme recognition}
-To obtain a clearer picture of the quality of the new data sets, we also performed phoneme recognition experiments on both \textit{ACAP} and the \textbf{DampTest} corpora. This was possible even though there are no manual annotations for the \textbf{DampTest} sets because the expected phonemes are available from the textual lyrics. The phoneme error rate and the weighted phoneme error rate were used as evaluation measures (see \cite{kruspe_phonerec}).\\
-The results for \textit{ACAP} are shown in figure \ref{fig:res_phonerec_acap}. In general, models trained on \textbf{DampB} performed much better at phoneme recognition than those trained on \textit{Timit}. Compared to these speech-based models, the phoneme error rate falls from $1.06$ to $0.77$, while the weighted phoneme error rate falls from $0.8$ to $0.59$. As can be seen from both evaluation measures, using triphone alignments instead of monophones does not improve the results in this case. This contrasts with the better alignment results. We think this might happen because more classes cause more confusion in the model, even though the triphone results were downmapped to monophones for calculating the evaluation measures.\\
-As already seen in the alignment validation results, training models on \textbf{DampB} over three iterations actually degrades the result (``DampB (3)''). Again, we suspect that this happens because phoneme alignment errors become amplified in this way. Interestingly, this does not seem to happen for the triphone models, perhaps because the three classes per phoneme help to alleviate each other's errors.\\
-The results for the same procedure on the \textbf{DampTest} sets are shown in figure \ref{fig:res_phonerec}. Results over \textbf{DampTestF} and \textbf{DampTestM} were averaged. This figure additionally shows the results for models trained on the gender-specific \textbf{DampF} and \textbf{DampM} data sets. These models were only tested on \textbf{DampTestF} and \textbf{DampTestM} respectively, and then the results were averaged.\\
-We can observe the same general trend for these results: The phoneme error rate falls from $1.3$ to $0.87$ when compared to models trained on \textit{Timit}, with the weighted phoneme error rate decreasing from $0.93$ to $0.65$. Using triphones does not contribute to the result, and neither does the three-iteration bootstrapping process for training acoustic models. Interestingly, not even the gender-specific models improve the result. As already described in \cite{kruspe_phonerec}, this effect might occur because the range of pitch and expressions is much wider in singing than in speech, and therefore gender-specific models may not actually learn as much added helpful information.
+After validating the alignment strategy, phoneme recognition experiments were performed on both the \textit{ACAP} and the \textit{DampTest} corpora. This was possible even though there are no manual annotations for the \textit{DampTest} sets because the expected phonemes are available from the textual lyrics. Again, the phoneme error rate and the weighted phoneme error rate were used as evaluation measures (see \ref{sec:tech_eval}).\\
+The results for \textit{ACAP} are shown in figure \ref{fig:res_phonerec_acap}. In general, models trained on \textit{DampB} performed much better at phoneme recognition than those trained on \textit{TIMIT}. Compared to these speech-based models, the phoneme error rate falls from $1.06$ to $0.77$, while the weighted phoneme error rate falls from $0.8$ to $0.59$. As can be seen from both evaluation measures, using triphone alignments instead of monophones does not improve the results in this case, contrasting with the better alignment results. This might happen because more classes cause more confusion in the model, even though the triphone results were downmapped to monophones for calculating the evaluation measures. As in the alignment results, using gender-specific models does not provide an advantage over a mixed model. (Results for the gender-specific models were only evaluated on songs of the matching gender).\\
+As already seen in the alignment validation results, training models on \textbf{DampB} over three iterations actually degrades the result. Again, this might happens because phoneme alignment errors become amplified in this way. Interestingly, the effect is not as strong for the triphone models, perhaps because the three classes per phoneme help to alleviate each other's errors.\\
 
+The results for the same procedure on the \textit{DampTest} sets are shown in figure \ref{fig:res_phonerec}. Results over \textit{DampTestF} and \textit{DampTestM} were averaged.
+The same general trend can be observed for these results: The phoneme error rate falls from $1.3$ to $0.83$ when compared to models trained on \textit{TIMIT}, with the weighted phoneme error rate decreasing from $0.93$ to $0.64$. Using triphones does not contribute to the result, and neither does the three-iteration bootstrapping process for training acoustic models. As in the \textit{ACAP} results, not even the gender-specific models improve the result. This effect might occur because the range of pitch and expressions is much wider in singing than in speech, and therefore gender-specific models may not actually learn as much added helpful information. Other experiments indicated that gender-specific models also do not improve the results when using triphones or three alignment iterations as with the mixed-gender training data.\\
 
+Going forward, monophonic models trained on mixed-gender data (i.e. \textit{DampB}) appear to be the best and simplest solution. To gain insight into the role of the composition of the training data set, more experiments were conducted with the variants of \textit{DampB} described in section \ref{sec:data_damp}. The results are shown in figure \ref{fig:res_phonerec_sizes}.\\
+
+When using the smaller, more balanced version of \textit{DampB} (\textit{DampBB}), the results become somewhat worse, but not much, with a phoneme error rate of $.85$, and a weighted phoneme error rate of $0.66$. This is particularly interesting because this data set is only 4\% the size of the bigger one and training is therefore much faster. With the smallest data set which is only half the size of \textit{DampBB}, the change is similar: The Phoneme Error Rate rises to $.89$, the Weighted Phoneme Error Rate to $..68$. This proves that...
+
+%ACAP - figure??
+The results on the \textit{Acap} data set show a similar improvement, but are better in general. The percentage of correctly classified frames jumps from  $12\%$ to $22\%$, $25\%$, and $27\%$ for \textit{DampBB\_small}, \textit{DampB}, and \textit{DampBB} respectively. The weighted phoneme error rate sinks from $0.8$ to $0.69$, $0.61$, and $0.56$. Since this data set is has been annotated by hand and is completely different material from the training data sets, we are confident that our approach is able to model the properties of each phoneme, rather than reproducing the model that was used for aligning the singing training sets. The somewhat better values might be caused by these more accurate annotations, too, or by the fact that these are recordings of professional singers who enunciate more clearly.
 
 \subsection{Error sources}
-Of course, with an automatic alignment algorithm like this, errors cannot be avoided. To acquire a clearer picture of the reasons for the various misalignments, we had a closer look at the audio data where they occurred. Some sources of error repeatedly stuck out:
+Of course, with an automatic alignment algorithm like this, errors cannot be avoided. To acquire a clearer picture of the reasons for the various misalignments, the audio data where they occurred was analyzed more closely. Some sources of error repeatedly stuck out:
 %\begin{compactdesc}
 \begin{description}
  \item[Unclear enunciation]{Some singers pronounced words very unclearly, often focusing more on musical performance than on the lyrics.}
