@@ -166,12 +166,12 @@ Since there is usually a large number of recordings of the same song, an approac
 %Validating the phoneme annotations created in this way is not trivial since there is no ground truth to base them on. Therefore, a two-pronged approach was employed: The same alignment algorithm was first tested on the small, manually annotated \textit{ACAP} data set. Second, new acoustic models were trained on the newly generated training data sets. Then, phoneme recognition was performed on the test data sets, and the results were compared to the expected phoneme strings (which are known from the matching lyrics).
 
 \subsection{Alignment validation}
-The alignment approach that was used to create the new \textit{DAMP}-based data sets was first tested on the \textit{ACAP} data set. To recap: This approach employs models trained on the \textit{TIMIT} speech corpus, which are used for Viterbi alignment of the known phonemes to the singing. The result of this is then compared to the manual annotations by calculating the difference between each expected and predicted phoneme transition. As mentioned in \ref{sec:phonerec_timit} and shown in figure \ref{fig:res_alignment}, the mean alignment error for this first approach is $.16$ seconds.\\
+The alignment approach that was used to create the new \textit{DAMP}-based data sets was first tested on the \textit{ACAP} data set. To recap: This approach employs models trained on the \textit{TIMIT} speech corpus, which are used for Viterbi alignment of the known phonemes to the singing. The result of this is then compared to the manual annotations by calculating the difference between each expected and predicted phoneme transition. As mentioned in \ref{sec:phonerec_timit} and shown in figure \ref{fig:res_alignment}, the mean alignment error for this first approach is $.16$ seconds for the triphone case, and $.17$ for monophones.\\
 
 %TODO: other figure
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=.4\textwidth]{images/res_alignment.png}
+		\includegraphics[width=.8\textwidth]{images/res_alignment.png}
 		\caption{Mean alignment error in seconds on the \textit{ACAP} data set. \textit{TIMIT} shows the result for the same models used for aligning the new \textit{DAMP}-based data sets.}
 		\label{fig:res_alignment}
 	\end{center}
@@ -179,8 +179,8 @@ The alignment approach that was used to create the new \textit{DAMP}-based data 
 
 
 Various models trained on the new \textbf{DampB}, \textbf{DampF}, and \textbf{DampM} training data sets were then tested for the same task. The results are also shown in figure \ref{fig:res_alignment}.\\
-Models trained on the monophonic alignments of \textbf{DampB} and \textbf{DampF/M} perform slightly better at this task with mean errors of $0.15$ and $0.13$ seconds respectively (for the gender-specific models, those values were only calculated for the songs of the matching gender in \textit{ACAP}). The triphone version of \textbf{DampB} performs even better, with a mean error of $0.1$. This might happen because dedicatedly training the model for the start and end parts of phonemes might make the alignment approach more accurate at finding start and end points.\\
-Finally, a model trained on \textbf{DampB} over three iterations was also tested for alignment. This model performs much worse at this task. This might happen because errors in the original alignment of the phonemes may become amplified over these iterations.
+Models trained on the monophonic alignments of \textbf{DampB} perform slightly better at this task with mean errors of $0.15$ seconds. For the gender-specific models, the error was only calculated for the songs of the matching gender in \textit{ACAP}, resulting in the same average value. Since the gender-specific models do not produce better results, the other experiments were conducted on the mixed training set only. The triphone version of \textbf{DampB} performs even better at alignment, with a mean error of $0.1$. This might happen because dedicatedly training the model for the start and end parts of phonemes might make the alignment approach more accurate at finding start and end points.\\
+Finally, a model trained on \textbf{DampB} over three iterations was also tested for alignment. This model performs much worse at this task with a mean alignment error of $0.26$. This might happen because errors in the original alignment of the phonemes may become amplified over these iterations. The effect is not as pronounced for the triphone version, but it is still present.
 
 
 \begin{figure*}
