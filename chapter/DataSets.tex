@@ -1,3 +1,7 @@
+%TODO: clean up damp section
+%TODO: keywords!
+
+
 %\addtocontents{toc}{\protect\clearpage}
 \chapter{Data sets} \label{chap:datasets}
 This chapter contains descriptions of all the data sets (or corpora) used over the course of this thesis. They are grouped into speech-only data sets, data sets of unaccompanied (=a-capella) singing, and data sets of full musical pieces with singing (``real-world'' data sets).
@@ -14,7 +18,8 @@ The corpus for the 2003 challenge was used in this work for comparison of langua
 
 \subsection{OGI Multi-Language Telephone Speech Corpus}
 %aufräumen!!
-In 1992, the Oregon Institute for for Science and Technology (OGI) also published a multilingual corpus of telephone recordings, called the OGI Multi-Language Telephone Speech Corpus, to facilitate multi-language ASR research. Just like the NIST corpora, it has become widely used for speech recognition tasks. Again, the English-, German-, and Spanish-language subsets were used in this work. They each consist of more than 1000 recordings per language of up to $50$ seconds duration, making up a total of about three to five hours. In contrast to the NIST corpus, the recordings are somewhat less ``clean'' with regards to accents and background noise; the sampling rate is also $8000 Hz$ on mono channel.  For experiments on longer recordings, results on these individual utterances were aggregated for each speaker, producing 118 documents per language (354 in sum).\\
+In 1992, the Oregon Institute for for Science and Technology (OGI) also published a multilingual corpus of telephone recordings, called the OGI Multi-Language Telephone Speech Corpus, to facilitate multi-language ASR research. Just like the NIST corpora, it has become widely used for speech recognition tasks. Again, the English-, German-, and Spanish-language subsets were used in this work. They each consist of more than 1000 recordings per language of up to $50$ seconds duration, making up a total of about three to five hours. In contrast to the NIST corpus, the recordings are somewhat less ``clean'' with regards to accents and background noise; the sampling rate is also $8000 Hz$ on mono channel.\\
+In many experiments, languages were balanced out by randomly discarding utterances to obtain equal numbers. For experiments on longer recordings, results on individual utterances were aggregated for each speaker and also balanced down to the lowest number, producing 118 documents per language (354 in sum).\\
 
 
 
@@ -24,14 +29,22 @@ In 1992, the Oregon Institute for for Science and Technology (OGI) also publishe
   \caption{{Amounts of data in the three used data sets: Sum duration on top, number of utterances in italics.}}
   \begin{center}
     \begin{tabular}{|c||c|c|c|}\hline
-    \textbf{hh:mm:ss} & \multirow{2}{*}{\textbf{NIST2003LRE}} & \multirow{2}{*}{\textbf{OGIMultilang}} & \multirow{2}{*}{\textbf{YTAcap}}\\
-    \textbf{\textit{\#Utterances}} & & & \\ \hline \hline 
-    \multirow{2}{*}{English} & 00:59:08 & 05:13:17 &  08:04:25 \\
-    & \textit{240} & \textit{1912} & \textit{1975} \\ \hline 
-    \multirow{2}{*}{German} & 00:59:35 & 02:52:27 & 04:18:57 \\
-    & \textit{240} & \textit{1059} & \textit{1052} \\ \hline 
-    \multirow{2}{*}{Spanish} & 00:59:44 & 03:05:45 & 07:21:55 \\
-    & \textit{240} & \textit{1151} & \textit{1810} \\ \hline 
+    \textbf{hh:mm:ss} & \multirow{4}{*}{\textbf{NIST2003LRE}} & \multirow{4}{*}{\textbf{OGIMultilang}} & \multirow{4}{*}{\textbf{YTAcap}}\\
+    \textbf{\textit{\#Utterances}} & & & \\
+    \textbf{\textit{\#Speakers}} & & & \\ 
+    \textbf{{$\varnothing$ Duration/Speaker}} & & & \\ \hline \hline 
+    \multirow{4}{*}{English} & 00:59:08 & 05:13:17 &  08:04:25 \\
+    & \textit{240} & \textit{1912} & \textit{1975} \\
+     & - & 200 & 196 \\ 
+     & - & 00:01:34 & 00:02:28 \\ \hline 
+    \multirow{4}{*}{German} & 00:59:35 & 02:52:27 & 04:18:57 \\
+    & \textit{240} & \textit{1059} & \textit{1052} \\ 
+     & - & 118 & 116 \\ 
+     & - & 00:01:28 & 00:02:14 \\ \hline 
+    \multirow{4}{*}{Spanish} & 00:59:44 & 03:05:45 & 07:21:55 \\
+    & \textit{240} & \textit{1151} & \textit{1810} \\ 
+     & - & 129 & 185 \\ 
+     & - & 00:01:26 & 00:02:43 \\ \hline 
     \end{tabular}
   \end{center}
   \label{tab:datasets}
@@ -41,7 +54,7 @@ In 1992, the Oregon Institute for for Science and Technology (OGI) also publishe
 \subsection{YouTube data set}
 As opposed to the speech case, there are no standardized corpora for sung language identification. For the sung language identification experiments, files of unaccompanied singing were therefore extracted from \textit{YouTube}\footnote{\url{http://www.youtube.com}, Last checked: 05/16/13} videos. This was done for three languages: English, German, and Spanish. The corpus consists of between 116 (258min) and 196 (480min) examples per language. These were mostly videos of amateur singers freely performing songs without accompaniment. Therefore, they are of highly varying quality and often contain background noise. The audio was downloaded in the natively provided quality, but then downsampled to $8000 Hz$ and averaged to a mono channel for uniformity and for compatibility with the speech corpora for language identification. Most of the performers contributed only a single song, with just a few providing up to three. This was done to avoid effects where the classifier recognizes the singer's voice instead of the language.\\
 Special attention was paid to musical style. Rap, opera singing, and other specific singing styles were excluded. All the songs performed in these videos were pop songs. Different musical styles can have a high impact on language classification results. The author tried to limit this influence as much as possible by choosing recordings of pop music instead of language-specific genres (such as Latin American music).\\
-For some experiments, they were split up into segments of 10-20 seconds at silent points (3,156 ``utterances'' in sum).\\
+For many experiments, they were split up into segments of 10-20 seconds at silent points (3,156 ``utterances'' in sum). In most cases, these segments were then balanced for the languages by randomly discarding superfluous segments. In other experiments, a balanced set of the whole songs was used (i.e. 116 songs per language).\\
 An overview of the amounts of data in the three corpora for language identification is given in Table \ref{tab:datasets}.
 
 \subsection{Hansen's vocal track data set}
