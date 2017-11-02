@@ -1,4 +1,3 @@
-%TODO: Zahlen updaten
 %TODO: Erwähnen, welche balancierten Subsets genutzt wurden
 
 \chapter{Language identification} \label{chap:langid}
@@ -73,7 +72,7 @@ In the first experiment, MLP and SVM models were trained on randomly selected fo
 \end{figure}
 
 The results for the MLP training on the \textit{NIST2003LRE}, \textit{OGIMultilang}, and \textit{YTAcap} data sets are shown in figure \ref{fig:lid_exp1}. \\
-As shown in figure \ref{fig:}, the MLP did not produce good results on the \textit{NIST2003LRE} database for any of the feature combinations. \textit{NIST2003LRE} is the smallest of the data sets by a large margin. Since a relatively high-dimensional model was used, this is probably a case of overtraining. The i-vector processing step reduces the training data even further, thus aggravating the problem.\\
+As shown in figure \ref{fig:lid_exp1_nist}, the MLP did not produce good results on the \textit{NIST2003LRE} database for any of the feature combinations. \textit{NIST2003LRE} is the smallest of the data sets by a large margin. Since a relatively high-dimensional model was used, this is probably a case of overtraining. The i-vector processing step reduces the training data even further, thus aggravating the problem.\\
 The \textit{OGIMultilang} data set contains roughly 4 times as much data as the \textit{NIST2003LRE} set. With enough data, training an MLP classifier works a lot better. Without i-vector processing, this approach still only reach about 52\% accuracy. i-Vector extraction improves the system massively. The best feature configurations are RASTA-PLP (82\%), PLP (80\%), and COMB (80\%).\\
 As with all other experiments, the task becomes harder when attempted on singing data. The results on the \textit{YTAcap} data set are somewhat worse than those on \textit{OGIMultilang}, even though they contain a similar amount of data. The best result without i-vector extraction is still obtained using the COMB feature configuration at 56\%. Similar to the \textit{OGIMultilang} experiment, i-vector extraction yields a large improvement. COMB remains the best configuration, now at 77\%.\\
 
@@ -100,11 +99,11 @@ As with all other experiments, the task becomes harder when attempted on singing
 
 Figure \ref{fig:lid_exp1a} shows the results for the SVM models trained on the same data sets. In general, these models appear to be able to capture the language boundaries better.\\
 In contrast to the MLP experiment, SVMs produced good results on the \textit{NIST2003LRE} data set for all of the features. They seem to be able to discriminate very well on this small, clean data set. The best result with i-vector processing is $86\%$ for MFCC features. When using i-vectors, 93\% are achieved with PLP features. This may, in fact, be close to the upper bound for the classification here, which might be caused by annotation errors or ambiguous data.\\
-The \textit{OGIMultilang} corpus is bigger and more varied than the \textit{NIST2003LRE} corpus, which makes it harder to classify. As shown, the high-dimensional pure features did not perform as well, with a maximum of 68\% for MFCCs and RASTA-PLPs with 36 coefficients. Using i-vector extraction improved the result by a large margin. Feature-wise, PLPs with or without RASTA processing seem to work best at a result of 83\%. 
+The \textit{OGIMultilang} corpus is bigger and more varied than the \textit{NIST2003LRE} corpus, which makes it harder to classify. As shown, the high-dimensional pure features did not perform as well, with a maximum of 68\% for MFCCs and RASTA-PLPs with 36 coefficients. Using i-vector extraction improved the result by a large margin. Feature-wise, PLPs without RASTA processing seem to work best at a result of 82\%. 
 %CHECK!!!
 MFCC and SDC features did not work quite as well, but did not hurt the result either when combined with PLPs (COMB result). It is interesting to see that the i-vector extraction decreased the results for MFCCs, the feature that worked best without it.\\
 %CHECK!!
-Similar to the \textit{OGIMultilang} corpus, the \textit{YTAcap} corpus provides very complex and varied data. The same effects occur on the direct feature training here, too: RASTA-PLPs with 36 coefficients provide the best results, but the accuracy is not very high at 68\%. i-vector extraction once again serves to improve the result. The highest result when using i-vector extraction is 73\% when using PLP without RASTA processing or the COMB configuration.
+Similar to the \textit{OGIMultilang} corpus, the \textit{YTAcap} corpus provides very complex and varied data. The same effects occur on the direct feature training here, too: RASTA-PLPs with 36 coefficients provide the best results, but the accuracy is not very high at 68\%. i-vector extraction once again serves to improve the result. The highest results when using i-vector extraction are 75\% when using PLP without RASTA processing or 77\% for the COMB configuration.
 
 \subsection{Experiments with unknown speakers}
 
@@ -132,7 +131,7 @@ In order to find out what influence the speaker characteristics had on the resul
 
 The results are shown in figure \ref{fig:lid_exp2}. In general, all configurations performed worse, indicating that some of the characteristics learned by the models come from the speakers rather than the languages. Apart from this, the general trends for the features remain the same, and i-vector extraction still improves the over-all results.\\
 
-On the \textit{OGIMultilang} corpus, the best result is still obtained with RASTA-PLP features and i-vector processing, but the accuracy falls by around 8 percent points to $75\%$. On \textit{YTAcap}, the effect is even worse: From an accuracy of $73\%$ with the mixed condition, the result decreases to $61\%$ for the separated condition. The reason for this is probably the wider signal variety in singing as opposed to speech; additionally, \textit{YTAcap} also possesses a wider range of recording conditions than the controlled telephone conditions of \textit{OGIMultilang}. Arguably, the solution for this effect would be the use of larger training data sets, which would be able to cover these acoustic and performance conditions better. Conversely, as the previous results show, the approach functions better when an application scenario can be limited to a range of known speakers, or at least recording conditions (as in the \textit{NIST2003LRE} experiment).
+On the \textit{OGIMultilang} corpus, the best result is still obtained with RASTA-PLP features and i-vector processing, but the accuracy falls by around 8 percent points to $75\%$. On \textit{YTAcap}, the effect is even worse: From an accuracy of $77\%$ with the mixed condition, the result decreases to $61\%$ for the separated condition. The reason for this is probably the wider signal variety in singing as opposed to speech; additionally, \textit{YTAcap} also possesses a wider range of recording conditions than the controlled telephone conditions of \textit{OGIMultilang}. Arguably, the solution for this effect would be the use of larger training data sets, which would be able to cover these acoustic and performance conditions better. Conversely, as the previous results show, the approach functions better when an application scenario can be limited to a range of known speakers, or at least recording conditions (as in the \textit{NIST2003LRE} experiment).
 
 
 %TODO: info about speakers and material per speaker
@@ -196,7 +195,7 @@ Then, Support Vector Machine (SVM) models were trained on the calculated statist
 Again, all results in the were obtained using 5-fold cross-validation - i.e., SVMs were trained on 4/5 of each corpus, then the remaining 1/5 was classified with the model. This was done 5 times until each song/speaker document had been classified.
 
 \subsection{Language identification using document-wise phoneme statistics}
-In the first experiments, SVM classifiers were trained on the document-wise phoneme statistics, and classification was also performed on a document-wise basis (i.e., only one mean and one variance vector per document). The results are shown in figure \ref{fig:res_stat} in terms of accuracy (average retrieval when all documents are classified into exactly one language).\\
+In the first experiments, SVM classifiers were trained on the document-wise phoneme statistics, and classification was also performed on a document-wise basis (i.e., only one mean and one variance vector per document). The results are shown in figure \ref{fig:lid_statistics_res1} in terms of accuracy (average retrieval when all documents are classified into exactly one language).\\
 On the singing test set, results are worst when using acoustic models trained on \textit{TIMIT} at just $53\%$ accuracy, and become better when using the model trained on the \textit{TIMIT} variant modified for singing or the small selection of the singing training set ($59\%$ each). The best result is achieved when the models are trained on the full singing data set at $63\%$ accuracy.\\
 Surprisingly, the results on the \textit{OGIMultilang} corpus also improve from $75\%$ with the \textit{TIMIT} models to $84\%$ using the \textit{DampB} models. Since \textit{TIMIT} is a very ``clean'' data set, training on the song corpus might provide some more phonetic variety, acting as a sort of data augmentation. This could be especially important in this context where phonemes are recognized in three different languages.\\
 On both corpora, there is no noticeable bias of the confusion matrix - i.e., the confusions are spread out evenly. This is particularly interesting when considering that the acoustic models were trained on English speech or singing only.
@@ -217,8 +216,16 @@ On both corpora, there is no noticeable bias of the confusion matrix - i.e., the
  %       \caption{Results using document-wise phoneme statistics generated with various acoustic models.}\label{fig:res_stat}
 %\end{figure}
 
+\begin{figure*}
+	\begin{center}
+		\includegraphics[width=.5\textwidth]{images/lid_statistics_res1.png}
+		\caption{Results using document-wise phoneme statistics generated with various acoustic models.}
+		\label{fig:lid_statistics_res1}
+	\end{center}
+\end{figure*}
+
 \subsection{Language identification using utterance-wise phoneme statistics}
-Next, language identification was performed with models trained on the statistics of each utterance contained in the document. The recognition process is still performed on the whole document. The results are reported in figure \ref{fig:res_stats}.\\
+Next, language identification was performed with models trained on the statistics of each utterance contained in the document. The recognition process is still performed on the whole document. The results are reported in figure \ref{fig:lid_statistics_res2}.\\
 Phoneme statistics may not be as representative when computed on shorter inputs, but they may provide more information for the backend model training when utilized as a combined feature matrix for a longer document. The results on singing improve slightly to $63\%$ with the acoustic model trained on the small singing corpus (\textit{DampBB\_small}) and decrease slightly for the \textit{DampB} model ($61\%$). However, on the speech corpus, the best result rises to $90\%$.
 %why??
 %\setlength{\belowcaptionskip}{-0.3cm}
@@ -239,12 +246,25 @@ Phoneme statistics may not be as representative when computed on shorter inputs,
   %      \caption{Results using utterance-wise phoneme statistics generated with various acoustic models.}\label{fig:res_stats}
 %\end{figure}
 %\setlength{\belowcaptionskip}{-0.1cm}
+\begin{figure*}
+	\begin{center}
+		\includegraphics[width=.5\textwidth]{images/lid_statistics_res2.png}
+		\caption{Results using utterance-wise phoneme statistics generated with various acoustic models.}
+		\label{fig:lid_statistics_res2}
+	\end{center}
+\end{figure*}
 
 \subsection{For comparison: Results for the i-vector approach}
-For comparison, models from the previous approach were also trained on the same time scales. I-vectors are calculated on the utterance- or the document-wise scale. This is done for PLP and MFCC features. The resulting i-vectors are then used to train SVMs in the same manner as in the previous experiments. (The difference here is that the models are already trained on the aggregated i-vectors, either with those for a whole document or with all i-vectors of the utterances constituting each document aggregated). The results are shown in figure \ref{fig:res_ivec}.\\
+For comparison, models from the previous approach were also trained on the same time scales. I-vectors were calculated on the utterance- or the document-wise scale. This was done for PLP and MFCC features. The resulting i-vectors were then used to train SVMs in the same manner as in the previous experiments. (The difference here is that the models are already trained on the aggregated i-vectors, either with those for a whole document or with all i-vectors of the utterances constituting each document aggregated). The results are shown in figure \ref{fig:lid_statistics_res3}.\\
 The best result obtained on \textit{YTAcap} corpus is $68\%$ accuracy. This is only 5 percent points higher than the presented approach, which is much easier to implement. On the \textit{OGIMultilang} data set, the difference is only 3 percent points ($93\%$). Of course, the advantage of the i-vector approach is that it can also be performed on much shorter inputs.\\
 
-
+\begin{figure*}
+	\begin{center}
+		\includegraphics[width=.5\textwidth]{images/lid_statistics_res3.png}
+		\caption{Results using utterance- and document-wise i-vectors calculated on PLP and MFCC features.}
+		\label{fig:lid_statistics_res3}
+	\end{center}
+\end{figure*}
 %\begin{figure}[h]
  %       \centering
 %        \begin{subfigure}[b]{0.25\textwidth}
