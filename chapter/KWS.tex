@@ -26,7 +26,7 @@ On the hand-annotated \textit{ACAP} test set, the difference is even more pronou
         \begin{subfigure}[t]{0.4\textwidth}
                 \includegraphics[width=\textwidth]{images/kws_exp1_acap.png}
                 \caption{Keyword spotting results on the \textit{ACAP} data set.}
-                \label{fig:kws_exp2}
+                \label{fig:kws_exp1a}
         \end{subfigure}
         \caption{$F_1$ measures for keyword spotting results using posteriorgrams generated with various acoustic models.}
           \end{figure}
@@ -70,14 +70,14 @@ One potential source of error are sequences of phonemes that overlap with keywor
 
 
 
-\section{Keyword spotting using duration-informed keyword-filler HMMs}
-As mentioned above, a high recall is easily achievable with the described approach, but the comparatively low precision decreases the over-all result. Therefore, using additional information to sort out false positives would be a helpful next step.\\
-One such source of information are the durations of the detected phonemes. As shown in figure \ref{fig:phone_durations}, each phoneme in the \textit{TIMIT} speech database has a fairly fixed duration. In singing, the vowels' durations vary a lot, but the consonants' are still quite predictable. Standard HMMs do not impose any restrictions on the state durations, resulting in a geometric distribution which does not correspond to naturally observed phoneme durations. \\
-As first described in \cite{ferguson}, introducing restrictions on state durations can improve the recognition results. In \cite{juang}, Juang et al. present two basic approaches for duration modeling in HMMs: Internal duration modeling and Post-processor duration modeling.\\
+%\section{Keyword spotting using duration-informed keyword-filler HMMs}
+%As mentioned above, a high recall is easily achievable with the described approach, but the comparatively low precision decreases the over-all result. Therefore, using additional information to sort out false positives would be a helpful next step.\\
+%One such source of information are the durations of the detected phonemes. As shown in figure \ref{fig:phone_durations}, each phoneme in the \textit{TIMIT} speech database has a fairly fixed duration. In singing, the vowels' durations vary a lot, but the consonants' are still quite predictable. Standard HMMs do not impose any restrictions on the state durations, resulting in a geometric distribution which does not correspond to naturally observed phoneme durations. \\
+%As first described in \cite{ferguson}, introducing restrictions on state durations can improve the recognition results. In \cite{juang}, Juang et al. present two basic approaches for duration modeling in HMMs: Internal duration modeling and Post-processor duration modeling.\\
 
-In internal duration modeling, the durations are incorporated directly into the Viterbi alignment. This means that the Viterbi output will already be a state sequence that is optimal with regards to the a-priori phoneme duration knowledge. It is, however, computationally expensive. In previous experiments \cite{kruspe_kws2}, this approach did not produce better results than the much easier to implement post-processor duration modeling. Therefore, this section will focus on that approach.\\
+%In internal duration modeling, the durations are incorporated directly into the Viterbi alignment. This means that the Viterbi output will already be a state sequence that is optimal with regards to the a-priori phoneme duration knowledge. It is, however, computationally expensive. In previous experiments \cite{kruspe_kws2}, this approach did not produce better results than the much easier to implement post-processor duration modeling. Therefore, this section will focus on that approach.\\
 
-When using post-processor duration modeling, knowledge about plausible phoneme durations is imposed on the result of the Viterbi alignment, the obtained state sequence. This is computationally cheap, but only results in a new likelihood score for the obtained sequence and does not provide better possible state sequences. The state sequence obtained from the Viterbi alignment is afterwards re-scored as described in section \ref{sec:tech_duration_modeling}, and all occurrences of the keyword with a score below a certain threshold are discarded.
+%When using post-processor duration modeling, knowledge about plausible phoneme durations is imposed on the result of the Viterbi alignment, the obtained state sequence. This is computationally cheap, but only results in a new likelihood score for the obtained sequence and does not provide better possible state sequences. The state sequence obtained from the Viterbi alignment is afterwards re-scored as described in section \ref{sec:tech_duration_modeling}, and all occurrences of the keyword with a score below a certain threshold are discarded.
 
 
 
@@ -92,35 +92,9 @@ When using post-processor duration modeling, knowledge about plausible phoneme d
 % results kws - esp. interesting because short
 %---auto alignment error source
 
-In this paper, we trained new acoustic models on a large corpus of unaccompanied singing recordings. Since no annotations for these existed, we first had to automatically align lyrics to them. The new models could then directly be trained on these automatic annotations. To our knowledge, this has not been done before for singing.
+In this chapter, an approach for keyword spotting using the new acoustic models trained on singing was described. This was done by extracting phoneme posteriorgrams generated with these new models from the audio and then running them through a keyword-filler approach to detect 15 keywords. The resulting $F_1$ measure rises from $0.35$ for the models trained on speech (\textit{TIMIT}) to $0.47$ for the new models. This result is especially interesting because most of the keywords have few phonemes.Gender-dependent models perform slightly better than mixed-gender models of the same size.\\
+This approach was only tested with MFCC features. As preliminary experiments suggest \cite{kruspe_kws1}, other features like TRAP or PLP may work better on singing. So-called log-mel filterbank features have also been used successfully with DNNs \cite{hinton}. Another interesting factor is the size and configuration of the classifiers, of which only one was tested (after a small grid search to validate this choice). Other experiments also suggest that incorporating certain phoneme duration information into the recognition can improve the over-all results \cite{kruspe_kws2}.\\
+As in the phoneme recognition experiments, there is only a slight amount of improvement between the acoustic model trained on all 6000 songs of the \textit{DAMP} data set and the one trained only on $4\%$ of this data. It would be interesting to find the exact point at which additional training data does not further improve the models. On the evaluation side, a keyword spotting approach that allows for pronunciation variants or sub-words may produce better results. Language modeling might also help to alleviate some of the errors made during phoneme recognition.\\
+These models have not yet been applied to singing with background music, which would be interesting for practical applications. Since this would probably decrease the result when used on big, unlimited data sets, more specified systems would be more manageable, e.g. for specific music styles, sets of songs, keywords, or specialized applications. Searching for whole phrases instead of short keywords could also make the results better usable in practice.\\
+As shown in \cite{mesaros_alignment} and \cite{goto_alignment} and in the next chapter, alignment of textual lyrics and singing already works well. A combined approach that also employs textual information could be very practical.
 
-We trained three different models with mixed gender recordings: One on 6000 full recordings of 301 songs, one on just 4\% of this data, and one which was balanced by phonemes and is roughly half the size of the medium-sized one. We then tested their performance on two other subsets of the same corpus which did not overlap with the training data, and on a small unrelated data set of commercial vocal tracks which were hand-annotated.
-
-In all cases, the three new models showed a strong improvement over those trained only on speech. Even the model trained on the smallest set produced a jump in correctly classified frames from $13\%$ to $19\%$, and in weighted phoneme error rate from $0.9$ to $0.77$ on the large test set. With the model trained on the medium-sized data set, we obtained $23\%$ correct frames and a weighted phoneme error rate of $0.65$. With the biggest one, the weighted phoneme error rate falls to $0.6$. The results are similar on the small hand-annotated test set.
-
-We also tested acoustic models with 8 context frames, and models trained on gender-specific data. Neither of them showed improvement over the first ones.
-
-We then performed keyword spotting for 15 keywords on phoneme posteriorgrams generated with these new models using a keyword-filler approach. The resulting $F_1$ measure rises from $0.35$ for the models trained on speech to $0.47$ for our new models. This result is especially interesting because most of the keywords have few phonemes. For keyword spotting, gender-dependent models perform slightly better than mixed-gender models of the same size.
-
-%\vspace{-5px}
-
-\section{Future work}\label{sec:future}
-%plp?
-%other feats?
-%find out where exactly improvement ends
-%full recordings - maybe reduced set?
-% pronunciation variants
-%language modeling
-%alignment works well - 
-%combine with textual information?
-%phrase spotting
-%bigger models
-%use on polyphonic data
-% maybe specific sets/keywords/styles/applications?
-So far, we have only tested this approach using MFCC features. As shown in our previous experiments \cite{kruspe_kws1}, other features like TRAP or PLP may work better on singing. So-called log-mel filterbank features have also been used successfully with DNNs \cite{hinton}. Another interesting factor is the size and configuration of the classifiers, of which we have only tested one so far. Since the alignment appears to provide valid training data, we believe the features and model configuration could be the greatest sources of improvement.
-
-We showed that there is only a slight amount of improvement between the model trained on all 6000 songs and the one trained only on $4\%$ of this data. It would be interesting to find the exact point at which additional training data does not further improve the models. On the evaluation side, a keyword spotting approach that allows for pronunciation variants or sub-words may produce better results. Language modeling might also help to alleviate some of the errors made during phoneme recognition.
-
-These models have not yet been applied to singing with background music, which would be interesting for practical applications. Since this would probably decrease the result when used on big, unlimited data sets, more specified systems would be more manageable, e.g. for specific music styles, sets of songs, keywords, or specialized applications. Searching for whole phrases instead of short keywords could also make the results better usable in practice.
-
-As shown in \cite{mesaros_alignment} and \cite{goto_alignment}, alignment of textual lyrics and singing already works well. A combined approach that also employs textual information could be very practical.
