@@ -4,3 +4,6 @@ masatakas neue quellen
 abkürzungen/glossar
 refs
 MAP??
+
+
+retrieval_dtw_process: hinten "alignment" hinzufügen
