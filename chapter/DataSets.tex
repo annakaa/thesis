@@ -1,4 +1,3 @@
-%TODO: clean up damp section
 %TODO: keywords!
 
 
@@ -66,52 +65,65 @@ This data set will be referred to as \textit{ACAP}.
 \subsection{DAMP data set} \label{sec:data_damp}
 As described, Hansen's data set is very small and therefore not suited to training phoneme models for singing. As a much larger source of unaccompanied singing, the \textit{DAMP} data set, which is freely available from Stanford University\footnote{\url{https://ccrma.stanford.edu/damp/}}\cite{phdthesis:jeffreysmith}, was employed. This data set contains more than 34,000 recordings of amateur singing of full songs with no background music, which were obtained from the \textit{Smule Sing!} karaoke app. Each performance is labeled with metadata such as the gender of the singer, the region of origin, the song title, etc. The singers performed 301 English-language pop songs. The recordings have good sound quality with little background noise, but come from a lot of different recording conditions. They were originally provided in OGG format at a sampling rate of $22,050 Hz$ (mono channel), but were also converted to wave format and downsampled to $16,000 Hz$ for compatibility.\\
 No lyrics annotations are available for this data set, but the textual lyrics can be obtained from the \textit{Smule Sing!} website\footnote{\url{http://www.smule.com/songs}}. These are, however, not aligned in any way. Such an alignment was performed automatically on the word and phoneme levels (see section \ref{sec:phonerec_acap}).\\
-The selection of songs is not balanced, with performances ranging between 21 and 2038 instances. Female performances are also much more frequent than male ones, and gender often plays a role when training and evaluating models. For these reasons, several subsets of the dataset were composed by hand:
+The selection of songs is not balanced, with performances ranging between 20 and 2038 instances. Female performances are also much more frequent than male ones, and gender often plays a role when training and evaluating models. For these reasons, several subsets of the dataset were composed by hand.\\
+In order to generate training data sets, the data was balanced by songs so that certain songs (and their phoneme distributions) would not be overrepresented. Since least represented song in the original data set has 20 recordings,  20 to 23 recordings per song were chosen at random to generate a training data set, which was named \textbf{DampB}. For each song, as many different singers as possible were selected. Additionally, recordings with more ``Loves'' (user approval) were more likely to be selected (however, a large percentage of the original data set did not have such ratings). This resulted in a data set of 6,902 recordings.\\
+This process was then repeated, this time only taking recordings by singers of one gender into account. In this way, data sets of recordings by female and male singers only were, named \textbf{DampF} and \textbf{DampM} respectively. Due to the gender split, there were fewer recordings of some of the songs available. Male singers in particular are underrepresented in the original data set. Therefore, \textbf{DampF} contains 6,564 recordings, while \textbf{DampM} contains 4,534. These sizes are roughly in the same range as for the mixed-gender data set, which enables the comparison of models trained on all three.\\
+These three data sets do not contain balanced amounts of phonemes; therefore. subsets of them were created where phoneme frames were discarded until they were balanced and a maximum of 250,000 frames per phoneme were left, where possible. These data set are named \textit{DampBB}, \textit{DampFB}, and \textit{DampMB}, and they are about 4\% the size of their respective source data sets.\\
+Since all of these data sets are still much larger than the \textit{TIMIT} speech corpus, another subset of similar size was created for comparison. On the basis of the balanced \textit{DampBB} data set, phoneme instances were discarded until they were balanced and 60,000 frames per phoneme were left, resulting in the \textit{DampBB\_small} data set.\\
+For testing new algorithms, two small test data sets were created from the original \textit{DAMP} data set. These are, again, split by gender, and contain one recording per song, resulting in 301 recordings for the female data set and 300 for the male one (since there was one song with not enough available male recordings). They are called \textbf{DampTestF} and \textbf{DampTestM} respectively. For mixed-gender training, testing was simply performed on both data sets.\\
+Additionally, 20 phrases from each of the test data sets were manually selected for good singing and recording quality. This was necessary for fine-tuning and analysis of the retrieval algorithms.\\
+
+To sum up:
 \begin{description}
-\item[DampB] {Contains 20 full recordings per song (6000 in sum), both male and female.}
-\item[DampBB] {Same as before, but phoneme instances were discarded until they were balanced and a maximum of 250,000 frames per phoneme where left, where possible. This data set is about 4\% the size of \textit{DampB}.}
-\item[DampBB\_small] {Same as before, but phoneme instances were discarded until they were balanced and 60,000 frames per phoneme were left (a bit fewer than the amount contained in \textit{TIMIT}). This data set is about half the size of \textit{DampBB}.}
-\item[DampF and DampM] {Each of these data sets contains 20 full recordings per song performed by singers of one gender, female and male respectively (6000 each).}
+\item[DampB] {Contains 20 to 23 full recordings per song (more than 6000 in sum), both male and female.}
+\item[DampBB] {Same as before, but phoneme frames were discarded until they were balanced and a maximum of 250,000 frames per phoneme were left, where possible. This data set is about 4\% the size of \textit{DampB}.}
+\item[DampBB\_small] {Same as before, but phoneme frames were discarded until they were balanced and 60,000 frames per phoneme were left (a bit fewer than the amount contained in \textit{TIMIT}). This data set is about half the size of \textit{DampBB}.}
+\item[DampF and DampM] {Each of these data sets contains 20 to 23 full recordings per song performed by singers of one gender, female and male respectively.}
 \item[DampFB and DampMB] {Starting from \textit{DampF} and \textit{DampM}, these data sets were then reduced in the same way as \textit{DampBB}. \textit{DampFB} is roughly the same size, \textit{DampMB} is a bit smaller because there are fewer male recordings.}
 \item[DampTestF and DampTestM] {Contains one full recording per song and gender (300 each). These data sets were used for testing. There is no overlap with any of the training data sets.}
+\item[DampRetrievalF and DampRetrievalM] {20 hand-picked sung phrases from \textit{DampF} and \textit{DampM} of a few seconds duration with good enunciation and good audio quality. These were selected for fine-tuning retrieval approaches. An overview can be found in appendix \ref{app:retrieval}.}
 \end{description}
 %Matt's data set??
+An overview of the amounts of data is given in table \ref{tab:damp_corpora}.
 
-\subsection{Structure of the final corpus}
-%TODO: INTEGRATE!!!
-\begin{description}
 
-\item[Training data sets] In order to generate training data sets, we decided to balance the data by songs so that certain songs (and their phoneme distributions) would not be overrepresented. The least represented song in the original data set has 20 recordings. We therefore chose 20 to 23 recordings per song at random to generate a training data set, which we named \textbf{DampB}. For each song, as many different singers as possible were selected. Additionally, recordings with more ``Loves'' (user approval) were more likely to be selected (however, a large percentage of the original data set did not have such ratings). This resulted in a data set of 6,902 recordings.\\
- We then repeated this process, but only took recordings by singers of one gender into account. In this way, we created data sets of recordings by female and male singers only, which we named \textbf{DampF} and \textbf{DampM} respectively. Due to the gender split, there were fewer recordings of some of the songs available. Male singers in particular are underrepresented in the original data set. Therefore, \textbf{DampF} contains 6,564 recordings, while \textbf{DampM} contains 4,534. These sizes are roughly in the same range as for the mixed-gender data set, which enables the comparison of models trained on all three.
- \item[Test data sets] For testing new algorithms, we also created two small test data sets from the original \textit{DAMP} data set. These are, again, split by gender, and contain one recording per song, resulting in 301 recordings for the female data set and 300 for the male one (since there was one song with not enough available male recordings). We call them \textbf{DampTestF} and \textbf{DampTestM} respectively.\\
- For mixed-gender training, we suggest simply performing the testing on both test data sets.
-\end{description}
-A structured overview is given in table \ref{tab:corpus}.
 
 \begin{table}
  \begin{center}
- \begin{tabular}{|c||c|c|}
+ \begin{tabular}{|c||c|c|c|}
   \hline
-   \textbf{Gender} & \textbf{Training} & \textbf{Test} \\
+    & \textbf{Both genders} & \textbf{Female} & \textbf{Male}\\
   \hline
   \hline
-  Both & DampB & \\
-  & (6,902) & \\
+  \textbf{Full} & DampB & DampF & DampM \\
+  & (6,902) & (6,654) & (4,534)\\
+  & \textit{11:08:34:30} & \textit{10:19:05:27} & \textit{07:13:01:06} \\
+  \hline  
+    \textbf{Balanced} & DampBB & DampFB & DampMB \\
+  & \textit{08:49:02} & \textit{08:29:39} & \textit{05:53:01} \\
   \hline
-  Female & DampF & DampTestF \\
-  & (6,654) & (301) \\
+  \textbf{Reduced} & DampBB\_small & &\\
+  & \textit{04:10:13} & \textit{} & \textit{} \\
   \hline
-  Male & DampM & DampTestM \\
-  & (4,534) & (300) \\
+  \textbf{Test} & & DampTestF & DampTestM \\
+  &  & (301) & (300)\\
+  & & \textit{18:15:43} & \textit{17:58:02} \\
   \hline
- \end{tabular}
+  \textbf{Retrieval} &  & DampRetrievalF & DampRetrievalM \\
+  & & (20) & (20)\\
+  & \textit{} & \textit{01:56} & \textit{01:52} \\
+  \hline
+
+
+ \end{tabular}\label{tab:damp_corpora}
 \end{center}
-\vspace{-10pt}
- \caption{Overview of the structure of the \textit{DAMP}-based phonetically annotated corpora, number of recordings in brackets.}
- \label{tab:corpus}
-\vspace{10pt}
+
+ \caption{Overview of the structure of the \textit{DAMP}-based phonetically annotated data sets, number of recordings in brackets, duration in italics (dd:hh:mm:ss). Note that no number of recordings is given for some data sets because their content was selected phoneme-wise, not song-wise. For retrieval, the recordings are short phrases instead of full songs.}
+ \label{tab:damp_corpora}
 \end{table}
 
+\subsection{Retrieval data set by the author} \label{sec:data_retrieval}
+This is a data set of 90 short lyrics phrases from the \textit{DAMP} data set sung with clear enunciation by the author. The phrases were recorded with a smartphone microphone for testing a demo app for the retrieval algorithm. They were then further utilized to finetune this retrieval algorithm. The recordings are a few seconds in duration with a sampling rate of 16,000 Hz on a mono channel.
 
 
 %\subsection{Aji's synthesized singing data set} \label{subsec:data_synth}
@@ -133,6 +145,28 @@ This data set was first presented in \cite{mauch_alignment2} and is used for ali
 \subsection{Hansen's vocal track data set (polyphonic)} \label{subsec:data_hansen_polyphonic}
 This data sets consists of the songs in the \textit{ACAP} data set described above in section \ref{subsec:data_hansen}, but with instrumental annotations. The annotations are carried over. This data set is also used for alignment evaluation and denoted as \textit{ACAP\_Poly}.
 
+\section{Keywords}
+From the 301 different song lyrics of the \textit{DAMP} data sets, 15 keywords were chosen by semantic content and frequency to test the keyword spotting algorithms. Each keyword occurs in at least 50 of the 301 songs, and also appears in the \textit{ACAP} data set. The keywords are shown in table \ref{tab:keywords}. A list of the number of occurrences in each data set is given in appendix \ref{app:keywords}.
+\begin{table}
+ \small
+ \begin{center}
+ \begin{tabular}{|c|c|}
+  \hline
+   \#Phonemes & Keywords \\
+  \hline
+  2 & eyes \\
+  3 & love, away, time, life, night  \\
+  4 & never, baby, world, think, heart, \\
+   & only, every \\
+  5 & always, little \\
+  \hline
+ \end{tabular}
+\end{center}
+\vspace{-10pt}
+ \caption{All 15 tested keywords, ordered by number of phonemes.}
+ \label{tab:keywords}
+\vspace{10pt}
+\end{table}
 
 %\subsection{``69 Love Songs" data set}
 %``69 Love Songs'' is a 3-CD album by the band ``The Magnetic Fields'', which was released in 1999 and named one of the \textit{Rolling Stone}'s 500 Greatest Albums of All Time in 2012 \cite{rollingstone}. It contains 69 songs in various musical styles and instrumentations, performed by a variety of musicians, including five vocalists. The total duration is 2 hours and 52 minutes. The data set is interesting for the purposes of this work because the songs' lyrics all cover a similar theme - namely, love. A word count on the lyrics shows, for example, that the word ``love'' itself occurs \~225 times in these songs.\\

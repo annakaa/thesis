@@ -142,7 +142,7 @@ In parallel, the lyrics database is prepared by converting it into phoneme seque
  \end{figure}
 
 \vspace{-5pt}
-\paragraph{Symbolic mapping}
+\paragraph{Symbolic mapping} \label{par:symbolic_mapping}
 As described before, starting from the sung recording used as a query, MFCC features are extracted and run through the acoustic model trained on singing to recognize the contained phonemes. This produces a phoneme posteriorgram, such as the one shown in figure \ref{fig:posteriorgram}; i.e., probabilities of each phone over each time frame. These probabilities contain some noise, both due to inaccuracies in the model and due to ambiguities or actual noise in the performance.\\ %Why not HMMSs??
 The following steps are undertaken to obtain a plausible phoneme sequence from the posteriorgram:
 \begin{description}
@@ -207,7 +207,7 @@ Substitution + Insertion weights & 1 & 1 & 1 & .75 & .85 &.9 &.81 &.84 &.9 \\
 \end{table}%
 
 \vspace{-5pt}
-\paragraph{Distance calculation} 
+\paragraph{Distance calculation} \label{par:lev_distance}
 Then, the distances between the extracted phoneme sequence and the ones provided in the lyrics database are calculated.\\
 First, an optional step to speed up the process is introduced. Each sequence's number of vowels is counted in advance, and the same is done for the query sequence. Then, only sequences with roughly the same amount of vowels are compared (with some tolerance). This slightly decreases accuracies, but drastically speeds up the calculation time.\\
 The similarity calculation itself is implemented with a modified Levenshtein distance. Again, the classifier's confusion between phonemes is taken into account. These confusions are used as the Levenshtein weights for substitutions. Surprisingly, using them for insertion weights improves the results as well. This probably happens because of the effect described above: A singer will in many cases vocalize an phoneme as multiple different ones, particularly for vowels with long durations. This will result in an insertion in the detected phoneme sequence, which is not necessarily a ``wrong'' classification by the acoustic model, but does not correspond to the expected sequence for this line of lyrics. For this reason, such insertions should not be harshly penalized. For deletions, the weight is set to $.5$ to balance out the lower insertion and substitution weights.
@@ -224,18 +224,19 @@ The similarity calculation itself is implemented with a modified Levenshtein dis
                  \end{center}
  \end{figure}
 
-%TODO: same eval data...
-\subsection{Experiments and results}
-Table \ref{tab:results} shows an overview over the experimental results. We tested the approach on the three test sets described in section \ref{sec:data} and report the retrieval rates for the Top 1 result (i.e. the one with the lowest Levenshtein distance), the Top 3, and the Top 10 results. Queries were allowed to be one to three consecutive lines of songs, increasing the number of ``virtual'' database entries to around 36,000 (12,000 lines as 1-, 2-, and 3-grams). It should be noted that a result counts as correct when the correct song (out of 300) was detected; this was done as a simplification because the same line of lyrics is often repeated in songs. For possible applications, users are most probably interested in obtaining the correct full song lyrics, rather than a specific line. Picking random results would therefore result in a retrieval rate of $.003$.\\
-We then tested the various improvement steps of the algorithm as follows:
+\subsection{Retrieval experiments: Calibration}
+For calibrating the algorithm's parameters quickly, two smaller data sets were used: \textit{DampRetrieval}, which consists of 20 female and 20 male hand-selected sung segments with clear pronunciation and good audio quality, and \textit{AuthorRetrieval}, which consists of 90 small performances of phrases in the \textit{DAMP} data set by the author. Both are described in sections \ref{subsec:data_damp} and \ref{subsec:data_retrieval}. This was done to ensure that the results were not influenced by flaws in the data set (such as unclear or erroneous pronunciation or bad quality). Lyrics can still come from the whole \textit{DAMP} lyrics set, resulting in 12,000 lines of lyrics from 300 songs.\\
+Table \ref{tab:results_retrieval_phone} shows an overview over the experimental results. Retrieval rates are reported for the Top 1 result (i.e. the one with the lowest Levenshtein distance), the Top 3, and the Top 10 results. Queries were allowed to be one to three consecutive lines of songs, increasing the number of ``virtual'' database entries to around 36,000 (12,000 lines as 1-, 2-, and 3-grams). It should be noted that a result counts as correct when the correct song (out of 300) was detected; this was done as a simplification because the same line of lyrics is often repeated in songs. For possible applications, users are most probably interested in obtaining the correct full song lyrics, rather than a specific line. Picking random results would therefore result in a retrieval rate of $.003$.\\
+The various improvement steps of the algorithm were tested as follows:
 \begin{description}
-\item[Baseline] As a baseline system, we used the most straightforward approach: Directly pick the phonemes with the highest probabilities for each frame from the posteriorgram, group them by consecutive phonemes, and use the result of that for searching the lyrics database with a standard Levenshtein implementation. This results in retrieval rates of $.25$, $.1$, and $.23$ for the Female, Male, and Author test sets respectively.
-\item[Posteriorgram smoothing] This is the same as the baseline approach, but we smooth the posteriorgram along the time axis as described in section \ref{subsec:mapping}. This already improves the result by around $.4$ for each test set.
-\item[Filtering blocks by probabilities and confusions] This includes the last step described in section \ref{subsec:mapping}. The result is improved further by $.13$ to $.25$.
-\item[Substitution and insertion weights] Finally, we use the modified Levenshtein distance as described in section \ref{subsec:distance}. When using the confusion weights for phoneme substitutions only, the result increases further, and even more so when they are also used for the insertion weights. The final Top 1 retrieval rates are $1$, $.75$, and $.81$ for the three test sets respectively.
+\item[Baseline] This is the most straightforward approach: Directly pick the phonemes with the highest probabilities for each frame from the posteriorgram, group them by consecutive phonemes, and use the result of that for searching the lyrics database with a standard Levenshtein implementation. This results in retrieval rates of $.25$, $.1$, and $.23$ for the Female, Male, and Author test sets respectively.
+\item[Posteriorgram smoothing] This is the same as the baseline approach, but the posteriorgram is smoothied along the time axis as described in paragraph \ref{par:symbolic_mapping}. This already improves the result by around $.4$ for each test set.
+\item[Filtering blocks by probabilities and confusions] This includes the last step described in paragraph \ref{par:symbolic_mapping}. The result is improved further by $.13$ to $.25$.
+\item[Substitution and insertion weights] Finally, we use the modified Levenshtein distance as described in paragraph \ref{par:lev_distance}. When using the confusion weights for phoneme substitutions only, the result increases further, and even more so when they are also used for the insertion weights. The final Top 1 retrieval rates are $1$, $.75$, and $.81$ for the three test sets respectively.
 \end{description}
 
-
+\subsection{Retrieval experiments: Full data set}
+The full algorithm was then also run on the full \textit{DampTest} data sets in the same way as the DTW-based approach.
 
 
 \section{Application: Expletive detection}
