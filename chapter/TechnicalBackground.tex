@@ -7,24 +7,105 @@
 \section{Audio features}
 %mfcc, sdc, (rasta-)plp, trap; mention filterbank feats...?
 %TODO: write intro
-\subsection{Perceptive Linear Predictive features (PLPs)} PLP features, first introduced in \cite{hermansky90}, are among the most frequently used features in speech processing. They are based on the idea to use knowledge about human perception to emphasize important speech information in spectra while minimizing the differences between speakers. We use a model order of 13 in two experiments and one of 32 in another. Deltas and double deltas between frames are also calculated. We test PLPs with and without RASTA pre-processing \cite{rasta_plp}.
-\subsection{Mel-Frequency Cepstral Coefficients (MFCCs)} Just like PLPs, MFCCs are frequently used in all disciplines of automatic speech recognition \cite{zissman}. We kept 20 cepstral coefficients for model training. Additionally, we calculated deltas and double deltas.
-\subsection{Shifted Delta Cepstrum (SDCs)} Shifted Delta Cepstrum features were first described in \cite{bielefeld} and have since been successfully used for speaker verification and language identification tasks on pure speech data \cite{torres} \cite{campbell} \cite{allen}. They are calculated on MFCC vectors and take their temporal evolution into account. Their configuration is described by the four parameter $N-d-P-k$, where $N$ is the number of cepstral coefficients for each frame, $d$ is the time context (in frames) for the delta calculation, $k$ is the number of delta blocks to use, and $P$ is the shift between consecutive blocks. The delta cepstrals are then calculated as:
+\subsection{Perceptive Linear Predictive features (PLPs)} 
+PLP features, first introduced in \cite{hermansky90}, are among the most frequently used features in speech processing. They are based on the idea to use knowledge about human perception to emphasize important speech information in spectra while minimizing the differences between speakers. In this work, model orders of 13 and 36 are used. Deltas and double deltas between frames are also calculated. PLPs are tested with and without RASTA pre-processing \cite{rasta_plp}.
+\subsection{Mel-Frequency Cepstral Coefficients (MFCCs)} 
+Just like PLPs, MFCCs are frequently used in all disciplines of automatic speech recognition \cite{zissman}. In this work, 13 or 20 coefficients were kept, depending on the experiment. Additionally, we deltas and double deltas were calculated.
+\subsection{Shifted Delta Cepstrum (SDCs)} 
+Shifted Delta Cepstrum features were first described in \cite{bielefeld} and have since been successfully used for speaker verification and language identification tasks on pure speech data \cite{torres} \cite{campbell} \cite{allen}. They are calculated on MFCC vectors and take their temporal evolution into account. Their configuration is described by the four parameter $N-d-P-k$, where $N$ is the number of cepstral coefficients for each frame, $d$ is the time context (in frames) for the delta calculation, $k$ is the number of delta blocks to use, and $P$ is the shift between consecutive blocks. The delta cepstrals are then calculated as:
 \begin{equation}
 \Delta c(t) = c(t+iP+d)+c(t+iP-d), 0<=i<=k
 \end{equation}
 with $c \in [0, N-1]$ as the previously extracted cepstral coefficients. The resulting $k$ delta cepstrals for each frame are concatenated to form a single SDC vector of the length $kN$. We used the common parameter combination $N=7, d=1, P=3, k=7$.
-\subsection{TempoRal Patterns (TRAP)}
+\subsection{TempoRal Patterns (TRAP)} 
+TRAPs were developed by Hermansky \cite{traps1} \cite{traps2} and have been used successfully in a number of speech recognition tasks. In contrast to MFCCs, which only consider a single spectral frame at a time, TRAPs take the spectral development over time into account. Spectral bands are calculated for a fixed time context around an audio frame. Each band's trajectory is then normalized, windowed, and decorrelated using a DCT. All the DCT coefficients for all bands are concatenated to a single feature vector for the center frame. These coefficients are then usually used to train Neural Networks for phoneme recognition \cite{yan_barnard}\cite{matejka} in order to form TRAP features.  However, in this work, the coefficient vector is used directly as a feature to train various models. Figure \ref{fig:traps} shows the extraction process. In this work, 8 linear spectral bands were extracted with a time context of 20 frames, and the first 8 DCT coefficients were kept.
+\begin{figure}
+ \centerline{\framebox{
+ \includegraphics[width=\columnwidth]{images/trap_extraction.png}}}
+ \caption{TRAP extraction process \cite{jens}}
+ \label{fig:traps}
+\end{figure}
+
 
 \section{Machine learning algorithms}
 This section describes the various machine learning algorithms employed throughout this thesis. Gaussian Mixture Models (GMMs), Hidden Markov Models (HMMs), and Support Vector Machines (SVMs) are three traditional approaches that are used as the basis of many new approaches, and were used for several starting experiments. i-Vector processing is a relatively new, more sophisticated approach that bundles several other machine learning techniques.\\
-In recent years, Deep Learning has become the standard for machine learning applications \cite{}. This chapter also describes two of those new approaches that were used in this work: Deep Neural Networks (DNNs) and Deep Belief Networks (DBNs).
+In recent years, Deep Learning has become the standard for machine learning applications \cite{}. This chapter also describes a new approach that was used extensively in this work: Deep Neural Networks (DNNs).
 
 \subsection{Gaussian Mixture Models}
+%256
 \subsection{Hidden Markov Models}
+
+%TODO: move parts to exp. chapter bc new approach?
 \subsubsection{Duration modeling}
+As described in the next chapter, phonemes in speech have relatively fixed durations. In singing, the vowels' durations vary a lot, but the consonants' are still quite predictable. Standard HMMs do not impose any restrictions on the state durations, resulting in a geometric distribution which does not correspond to naturally observed phoneme durations. \\
+As first shown in \cite{ferguson}, introducing restrictions on state durations can improve the recognition results. In \cite{juang}, Juang et al. present two basic approaches for duration modeling in HMMs: Internal duration modeling and Post-processor duration modeling.\\
+In both approaches, we first need to calculate parametric state duration models for each phoneme \cite{levinson}. Several distributions has been tested for this task (e.g. Gaussian), but Burshtein showed that Gamma distributions are best at modeling naturally occurring phoneme duration distributions \cite{burshtein}:
+\begin{equation}\label{eq:d}
+d(\tau) = K \exp \{ - \alpha \tau \} \tau^{p-1}
+\end{equation}
+where $\tau = 0,1,2,...$ are the possible state durations in frames and $K$ is a normalizing factor. The parameters $\alpha$ and $p$ are estimated according to
+\begin{equation}
+\hat{\alpha} = \frac{E \{\tau\}}{VAR\{\tau\}} , \hat{p} = \frac{E^{2} \{\tau\}}{VAR\{\tau\}}
+\end{equation}
+where $E$ is the distribution mean and $VAR$ is the distribution variance. We estimate $E$ and $VAR$ empirically using a small portion of the singing data that has been annotated with phoneme occurences.
+
+In internal duration modeling, the durations are incorporated directly into the Viterbi alignment. This means that the Viterbi output will already be a state sequence that is optimal with regards to the a-priori phoneme duration knowledge. It is, however, computationally expensive. In previous experiments \cite{kruspe_kws2}, this approach did not produce better results than the much easier to implement post-processor duration modeling. Therefore, this section will focus on that approach.\\
+
+When using post-processor duration modeling, knowledge about plausible phoneme durations is imposed on the result of the Viterbi alignment, the obtained state sequence. This is computationally cheap, but only results in a new likelihood score for the obtained sequence and does not provide better possible state sequences. As described in \cite{juang}, the state sequence obtained from the Viterbi alignment can afterwards be rescored according to:
+\begin{equation} \label{eq:pp_ll}
+ \log \hat{f} = \log f + \gamma \sum_{k=1}^{N} d_{k}(\tau_k) 
+\end{equation}
+where $f$ is the original likelihood of the sequence, $\gamma$ is a weighting factor, $k=1...N$ are the discrete states in the state sequence, $\tau_k$ are their durations, and $d_{k}(\tau_k)$ is, again, the probability of state $k$ being active for the duration $\tau_k$.\\
+Using keyword-filler HMMs, we only obtain one state sequence per utterance, which either contains the keyword or not. It is therefore not possible to compare these likelihood scores and Eq. \ref{eq:pp_ll} cannot be applied directly. To still be able to integrate post-processor duration modeling, the HMM parameters are tuned to obtain a high recall value. Then, the duration likelihood (second half of Eq. \ref{eq:pp_ll}) is calculated for all found occurrences of the keyword and normalized by the number of states taken into account:
+\begin{equation}
+ dl =  \frac{1}{N} \sum_{k=1}^{N} d_{k}(\tau_)
+\end{equation}
+Then all occurrences where $dl$ is below a certain threshold are discarded.
+
+
+
 \subsection{Support Vector Machines}
-%necessary? if yes, see DA
+In all supervised classification tasks, a training data set and a classification data set are provided. Each of these sets consists of previously extracted features of the training entities (or musical pieces in the case of genre classification) and, for the training data set, annotation labels (or genres in the case of genre classification). The training data set is denoted here as pairs of $\left(\mathbf{x}_{i}, y_{i}\right), i=1..l$, with $\textbf{x}_i \in \mathbb{R}^{n}$ being the feature vectors and $y_{i}$ being their assigned classes. The classifier tries to find similarities behind the training data for each label and separation conditions between the labels. With this information, the classifier is then able to assign a label to the classification data entities.\\
+SVMs attempt to solve this problem by grouping the training data vectors $\mathbf{x}_{i}$ and finding separating (hyper-)planes (with the normal vector $\mathbf{w}$ and the offset $b$) between the points of the different classes (or annotation labels) $y_{i}$. In doing so, they try to maximise the margin between the plane and the data points. Additionally, the feature vectors may be transformed into a higher-dimensional space by the function $\phi(\textbf{x}_i)$ to make them more easily separable (as demonstrated in figure \ref{fig:svm_transformation}).\newpage
+In \cite{techreport:practical_svm}, this training process is expressed (for a two-class problem) as:
+\begin{equation*}
+\begin{aligned}
+& \min\limits_{\mathbf{w},b,\xi} & & \frac{1}{2}\mathbf{w}^{T}\mathbf{w} + C \sum\limits_{i=1}^{l}\xi_{i} \\
+& \text{subject to} & & y_{i}(\mathbf{w}^{T} \phi(\mathbf{x}_{i})+b) \geq 1-\xi_{i} , \\
+&&& \xi_{i} \geq 0
+\end{aligned}
+\end{equation*}
+(with $\xi_{i}$ being a slack variable and $C > 0$ being a penalty parameter for the error term, higher $C$s allowing for fewer outliers (\cite{article:intro_svm}).
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.9\textwidth]{images/svm_transformation.png}
+	\caption{A set of data points which cannot be separated linearly in their original form (left), but can be separated after transformation into another space (right) \cite{article:intro_svm}}
+	\label{fig:svm_transformation}
+\end{figure}
+\medskip
+\\
+$K(\mathbf{x}_{i},\mathbf{x}_{j}) \equiv \phi(\mathbf{x}_{i})^{T} \phi(\mathbf{x}_{j})$ is called the \textit{kernel function}. Several variants are possible, e.g. a linear one:
+\begin{equation}
+K(\mathbf{x}_{i},\mathbf{x}_{j}) = \mathbf{x}_{i}^{T}\mathbf{x}_{j}
+\end{equation}
+It is often useful to use a non-linear kernel because the data points may not be linearly separable (even after the transformation into a higher-dimensional space). An example is shown in figure \ref{fig:svm_kernels}. The RBF kernel (Radial Basis Function) is a popular one:
+\begin{equation}
+K(\mathbf{x}_{i},\mathbf{x}_{j}) = e^{-\gamma \parallel \mathbf{x}_{i} - \mathbf{x}_{j} \parallel^{2}}, \gamma > 0
+\end{equation}
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.9\textwidth]{images/svm_kernels.png}
+	\caption{A set of data points which cannot be separated using a linear kernel (left), but can be separated with a polynomial kernel (right) \cite{article:svm_tutorial}}
+	\label{fig:svm_kernels}
+\end{figure}
+\medskip
+\\
+As can be seen from the above equations, $C$ and $\gamma$ are free parameters. Their optimum values depend on the actual training data vectors. In \cite{techreport:practical_svm}, a grid search during each training is suggested to find them. 
+\medskip
+\\
+The presented training process is appropriate for a two-class problem. For multi-class problems, one-vs-one trainings for all combinations of classes are performed. Then,all of the developed classifiers are used for the classification of the evaluation data and a voting strategy is applied to determine the resulting class. This procedure is not quite in agreement with the one used in the feature selection algorithm (IRMFSP, see section \ref{subsec:irmfsp}), as this algorithm selects features to separate all classes at once, rather than on a one-vs-one basis.
+
+
 \subsection{i-Vector processing}
 I-Vector (identity vector) extraction was first introduced in \cite{Dehak2011} and has since become a state-of-the-art technique for various speech processing tasks, such as speaker verification, speaker recognition, and language identification \cite{Martinez2011}. To our knowledge, it has not been used for any Music Information Retrieval tasks before. \\
 The main idea behind i-vectors is that all training utterances contain some common trends, which effectively add irrelevance to the data in respect to training. Using i-vector extraction, this irrelevance can be filtered out, while only the unique parts of the data relevant to the task at hand remain. The dimensionality of the training data is massively reduced, which also makes the training less computationally expensive. As a side effect, all feature matrices are transformed to i-vectors of equal length, eliminating problems that are caused by varying utterance lengths.\\
@@ -54,11 +135,10 @@ Finally, an i-vector $w$ can be extracted for each utterance using equation \ref
 
 
 \subsection{Artificial Neural Networks}
-\subsubsection{Deep Neural Networks}
-\subsubsection{Deep Belief Networks}
+
 \section{Evaluation}
 \subsection{Evaluation of phoneme recognition and alignment tasks}
-%alignment? - duration acc.
+%alignment? - duration acc. - no, mean error
 \subsection{Evaluation of language identification tasks}
 \subsection{Evaluation of keyword spotting tasks}
 

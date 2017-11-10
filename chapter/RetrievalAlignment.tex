@@ -6,11 +6,13 @@ Finally, a practical application for lyrics alignment is presented: Automatic ex
 
 
 \section{HMM-based lyrics-to-audio alignment}\label{sec:ret_hmm}
-For this algorithm, monophone Hidden Markov Models were trained on the \textit{TIMIT} speech data using the HTK framework \cite{htk}. Then, Viterbi alignment was run to align the phonemes to the singing audio. These are the same models used to align lyrics to the \textit{DAMP} audio data to generate the training data set described in section \ref{sec:phonerec_acap}. The results in the \textit{MIREX} challenge are shown in figure \ref{fig:results_align_hmm}.
+For this algorithm, monophone Hidden Markov Models were trained on the \textit{TIMIT} speech data using the HTK framework \cite{htk}. Then, Viterbi alignment was run to align the phonemes to the singing audio. These are the same models used to align lyrics to the \textit{DAMP} audio data to generate the training data set described in section \ref{sec:phonerec_acap}. The results in the \textit{MIREX} challenge are shown in figure \ref{fig:results_align_hmm}. The detailed results for all tested songs are given in appendix \ref{app:mirex_htk}.\\
+On the unaccompanied data set, the mean error is $5.11s$, while the median error is $0.67s$. The large difference comes about because one of the tested songs (``Clocks'') produced high error values in every approach. Considering only the other songs, the highest error is $1.45s$, and all others are lower than $1s$. This is a good result, especially considering that the approach is relatively simple and trained on speech data only. A manual check suggests that the results are usable in practice.\\
+On the accompanied version of the same data set, the average error is $13.96s$ and the median error is $7.64$. On the \textit{Mauch} data set, the mean error is at $17.7s$ and the median error is at $10.14s$. Once again, the error varies widely across the songs. As expected, the result is worse since no measures were taken make the approach robust to background music. Interestingly, other submitted approaches that employ sources separation did not fare much better on this data set either, suggesting that the core algorithm may be better. It would be interesting to see results for the HMM-based algorithm on polyphonic music with a source separation step (or at least a vocal activity detection step) included.\\
 %TODO erklären
 \begin{figure}
  \begin{center}
-                \includegraphics[width=0.8\textwidth]{images/res_align_hmm.png}
+                \includegraphics[width=0.5\textwidth]{images/res_align_hmm.png}
                \caption{\textit{MIREX} results on all three data sets using the HMM-based approach.}
                 \label{fig:results_align_hmm}
                  \end{center}
@@ -39,19 +41,19 @@ As an additional experiment, both the textual lyrics corpus and the sung inputs 
 
 \begin{figure}
 	\centering
-	\begin{subfigure}[t]{0.3\textwidth}
+	\begin{subfigure}[t]{0.5\textwidth}
 		\includegraphics[width=\textwidth]{images/retrieval_posts.png}
 		\caption{Phoneme posteriorgram}
 		
 	\end{subfigure}%
 	%add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc.
 	%(or a blank line to force the subfigure onto a new line)
-	\begin{subfigure}[t]{0.3\textwidth}
+	\begin{subfigure}[t]{0.5\textwidth}
 		\includegraphics[width=\textwidth]{images/retrieval_template.png}
 		\caption{Phoneme template}
 	\end{subfigure}
 
-	\begin{subfigure}[t]{0.3\textwidth}
+	\begin{subfigure}[t]{0.5\textwidth}
 		\includegraphics[width=\textwidth]{images/retrieval_similarity.png}
 		\caption{Similarity matrix with cheapest path (blue)}
 	\end{subfigure}
@@ -59,7 +61,8 @@ As an additional experiment, both the textual lyrics corpus and the sung inputs 
 \end{figure}
 
 \subsection{Alignment experiments}
-\ref{fig:results_align_dtw}
+The results for this approach in the \textit{MIREX} challenge are displayed in figure \ref{fig:results_align_dtw}, with the detailed results given in appendix \ref{app:mirex_dtw}. Overall, errors are much higher than with the HMM-based approach: The mean error is $9.77s$ for the \textit{ACAP} data set, $27.94s$ on the \textit{ACAP\_Poly} data set, and $22.23s$ on the \textit{Mauch} data set. This presumably happens because in contrast to the HMM approach, the algorithm does not have any information about phoneme priors and transition probabilities, neither implicitly nor explicitly. DTW on the posteriorgram is a relatively rudimentary method for performing alignments. Nevertheless, a manual check of the results suggests that the algorithm is still able to produce usable results in many cases, with many song-wise results for the \textit{ACAP} data set still below $1s$. In particular, it works acceptably when the posteriorgram is not too noisy. This is also corroborated by the retrieval results for unaccompanied queries presented in the following.\\
+As a future step, incorporating prior phoneme information (e.g. in the form of DNN-HMMs) could serve to mitigate some of the noise in the posteriorgram caused by model inaccuracies or by background music.
 
 \begin{figure}
  \begin{center}
@@ -76,7 +79,7 @@ In the first experiment, similarity measures were calculated between the lyrics 
 
 \begin{figure}
        \centering
-        \begin{subfigure}[b]{0.3\textwidth}
+        \begin{subfigure}[b]{0.4\textwidth}
 	    \includegraphics[width=\textwidth]{images/retrieval_dtwres_testF.png}
                 \caption{DampTestF}
                 \label{fig:retrieval_dtwres_testF}
@@ -84,7 +87,7 @@ In the first experiment, similarity measures were calculated between the lyrics 
          %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc.
           %(or a blank line to force the subfigure onto a new line)
          \vspace{10px}
-        \begin{subfigure}[b]{0.3\textwidth}
+        \begin{subfigure}[b]{0.4\textwidth}
 	  \includegraphics[width=\textwidth]{images/retrieval_dtwres_testM.png}
                 \caption{DampTestM}
                 \label{fig:retrieval_dtwres_testM}
@@ -103,10 +106,9 @@ For some applications, working with the best N instead of just the very best res
 \vspace{-2px}
 In the second retrieval experiment, the same process was performed on single lines of sung lyrics as inputs (usually a few seconds in duration). Costs were then calculated between the posteriorgrams of these recordings and all 12,000 available lines of lyrics. Lines with fewer than 10 phonemes were not taken into account.\\
 Then, evaluation was performed as to whether a line from the correct song was retrieved in the N-best results. In this way, confusions between repetitions of a line in the same song did not have an impact on the result. However, repetitions of lyrical lines across multiple songs are a possible source of confusion. The results for the female test set are shown in figure \ref{fig:retrieval_dtwres_testF_line}, the ones for the male test set in figure \ref{fig:retrieval_dtwres_testM_line}.
-\setlength{\belowcaptionskip}{-0.3cm}
 \begin{figure}
         \centering
-        \begin{subfigure}[b]{0.3\textwidth}
+        \begin{subfigure}[b]{0.4\textwidth}
 	    \includegraphics[width=\textwidth]{images/retrieval_dtwres_testF_line.png}
                 \caption{DampTestF}
                 \label{fig:retrieval_dtwres_testF_line}
@@ -114,12 +116,11 @@ Then, evaluation was performed as to whether a line from the correct song was re
         %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc.
           %(or a blank line to force the subfigure onto a new line)
           \vspace{10px}
-       \begin{subfigure}[b]{0.3\textwidth}
+       \begin{subfigure}[b]{0.4\textwidth}
 	  \includegraphics[width=\textwidth]{images/retrieval_dtwres_testM_line.png}
                 \caption{DampTestM}
                 \label{fig:retrieval_dtwres_testM_line}
        \end{subfigure}
-        \setlength{\belowcaptionskip}{-0.6cm}
         \caption{Accuracies of the results for lyrics detection on separate lines of sung lyrics for the \textit{DampTest} sets using five different acoustic models, and evaluated on the 1-, 3-, 10-, 50-, and 100-best results.}\label{fig:retrieval_dtwres_line}
 \end{figure}
 
@@ -135,7 +136,7 @@ In parallel, the lyrics database is prepared by converting it into phoneme seque
 %TODO: phoneme seqs erklären
 \begin{figure}
  \begin{center}
-                \includegraphics[width=.45\textwidth]{images/retrieval_phone_overview.png}
+                \includegraphics[width=.8\textwidth]{images/retrieval_phone_overview.png}
                 \caption{Overview of the phoneme-based lyrics retrieval process.}
                 \label{fig:retrieval_phone_overview}
                  \end{center}
@@ -154,29 +155,27 @@ The following steps are undertaken to obtain a plausible phoneme sequence from t
 %listing?
 
   \begin{figure}
-  \setlength{\belowcaptionskip}{0pt}
 
 	\centering
-	\begin{subfigure}[t]{0.25\textwidth}
+	\begin{subfigure}[t]{0.4\textwidth}
 		\includegraphics[width=.8\textwidth]{images/retrieval_phone_block1.png}
 		\caption{Original phoneme sequence}\label{fig:retrieval_phone_block1}
 	\end{subfigure}%
-	\begin{subfigure}[t]{0.3\textwidth}
+	\begin{subfigure}[t]{0.4\textwidth}
 		\includegraphics[width=.8\textwidth]{images/retrieval_phone_block2.png}
 		\caption{Grouped into blocks (with probabilities in italics)}\label{fig:retrieval_phone_block2}
 	\end{subfigure}
-	\begin{subfigure}[t]{0.25\textwidth}
+	\begin{subfigure}[t]{0.4\textwidth}
 		\includegraphics[width=.8\textwidth]{images/retrieval_phone_block3.png}
 		\caption{Filtered result}\label{fig:retrieval_phone_block3}
 	\end{subfigure}
-	\setlength{\belowcaptionskip}{-10pt}
 
 	\caption{Example of the block grouping of the phoneme sequence and subsequent filtering by probabilities and confusions.}\label{fig:retrieval_phone_blocking}
 \end{figure}
 
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=.45\textwidth]{images/retrieval_phone_confusion.png}
+		\includegraphics[width=.8\textwidth]{images/retrieval_phone_confusion.png}
 		\caption{Example of a confusion matrix for an acoustic model. (Note that \textit{[pau]} confusions are set to 0).}
 		\label{fig:retrieval_phone_confusion}
 	\end{center}
@@ -215,14 +214,15 @@ The similarity calculation itself is implemented with a modified Levenshtein dis
 
 
 \subsection{Alignment experiments}
-\ref{fig:results_align_phone}
+\textit{MIREX} results for this approach are shown in figure \ref{fig:results_align_phone}; the detailed results can be found in appendix \ref{app:mirex_phone}. Over-all, this approach produces much lower error values than the other two, and was in fact the winning algorithm in the competition. This confirms that the phoneme detection strategy is a feasible alternative to the HMM-based approach. On the \textit{ACAP} data set, the mean error is at $2.87s$ and the median is $0.26s$. On \textit{ACAP\_Poly}, these values are $7.34s$ and $4.55s$ respectively, and on \textit{Mauch}, they are $9.03s$ and $7.52s$. Once again, the results are much higher on polyphonic data than on unaccompanied singing, for which the models were trained. However, the error is still lower than with the submitted methods that include source separation. Therefore, future experiments that also employ pre-processing of this kind would be very interesting. Looking at the song-wise results, songs with heavier and noisier accompaniment generally receive higher errors than others.
 \begin{figure}
  \begin{center}
-                \includegraphics[width=0.8\textwidth]{images/res_align_phone.png}
+                \includegraphics[width=0.5\textwidth]{images/res_align_phone.png}
                \caption{\textit{MIREX} results on all three data sets using the phoneme-based approach.}
                 \label{fig:results_align_phone}
                  \end{center}
  \end{figure}
+ 
 
 \subsection{Retrieval experiments: Calibration}
 For calibrating the algorithm's parameters quickly, two smaller data sets were used: \textit{DampRetrieval}, which consists of 20 female and 20 male hand-selected sung segments with clear pronunciation and good audio quality, and \textit{AuthorRetrieval}, which consists of 90 small performances of phrases in the \textit{DAMP} data set by the author. Both are described in sections \ref{subsec:data_damp} and \ref{subsec:data_retrieval}. This was done to ensure that the results were not influenced by flaws in the data set (such as unclear or erroneous pronunciation or bad quality). Lyrics can still come from the whole \textit{DAMP} lyrics set, resulting in 12,000 lines of lyrics from 300 songs.\\
@@ -254,7 +254,7 @@ Since textual lyrics are usually easily available on the internet, a new approac
 The data flow is shown in figure \ref{fig:expletive_dataflow}.
 \begin{figure}
 \begin{center}
-                \includegraphics[width=0.4\textwidth]{images/expletive_approach.png}
+                \includegraphics[width=0.6\textwidth]{images/expletive_approach.png}
                 \caption{Data flow in the expletive detection approach.}
                 \label{fig:expletive_dataflow}
                  \end{center}
@@ -263,7 +263,7 @@ The data flow is shown in figure \ref{fig:expletive_dataflow}.
 The alignment was performed using the HMM-based alignment described in section \ref{sec:ret_hmm}, and the DTW alignment from section \ref{sec:ret_post} using the DNN acoustic models trained on \textit{TIMIT} and on \textit{DampB}. Accuracy was then calculated by evaluating how many of the annotated expletives were recognized at their correct timestamps (with various tolerances). The results are shown in figure \ref{fig:expletive_results}.
 \begin{figure}
  \begin{center}
-                \includegraphics[width=0.4\textwidth]{images/expletive_results.png}
+                \includegraphics[width=0.6\textwidth]{images/expletive_results.png}
                \caption{Results for the expletive detection approach at various tolerances.}
                 \label{fig:expletive_results}
                  \end{center}

@@ -60,7 +60,6 @@ An overview of the approach is shown in figure \ref{fig:process_songify}. Five v
 Similarly, MFCCs are extracted from the \textit{TIMIT} Test set and from the \textit{ACAP} data set. The previously trained models are used to recognize phonemes on these test datasets. Viterbi decoding can then be used to generate phoneme sequences. Finally, the results are evaluated.
 
 %TODO: check
-\setlength{\belowcaptionskip}{-0.4cm}
 \begin{figure*}
  \begin{center}
                 \includegraphics[width=0.7\textwidth]{images/process_songify.png}
@@ -68,7 +67,6 @@ Similarly, MFCCs are extracted from the \textit{TIMIT} Test set and from the \te
                 \label{fig:process_songify}
                  \end{center}
  \end{figure*}
- \setlength{\belowcaptionskip}{-0.1cm}
 In order to make the training data more ``song-like'', several variants of this dataset were developed. Table \ref{tab:timit_variants} shows an overview over the five datasets generated from \textit{TIMIT} using three modifications. Dataset $N$ is the original \textit{TIMIT} training set. For dataset $P$, four of the eight blocks of \textit{TIMIT} were pitch-shifted. For dataset $T$, five blocks were time-stretched and vibrato was applied to two of them. In dataset $TP$, the same is done, except with additional pitch-shifting. Finally, dataset $M$ contains a mix of these modified blocks.\\
 In detail, the modifications were performed in the following way:
 
