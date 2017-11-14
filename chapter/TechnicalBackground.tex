@@ -27,14 +27,60 @@ TRAPs were developed by Hermansky \cite{traps1} \cite{traps2} and have been used
 \end{figure}
 
 
-\section{Recognition algorithms}
-This section describes the various recognition algorithms employed throughout this thesis, most of which are Machine Learning methods. 
-%DTW
-Gaussian Mixture Models (GMMs), Hidden Markov Models (HMMs), and Support Vector Machines (SVMs) are three traditional approaches that are used as the basis of many new approaches, and were used for several starting experiments. i-Vector processing is a relatively new, more sophisticated approach that bundles several other machine learning techniques.\\
+\section{Distance calculation}
+\subsection{Dynamic Time Warping}
+Dynamic Time Warping (DTW) is an algorithm for finding an optimal alignment between two time sequences of vectors $X$ and $Y$, which was originally developed for aligning speech sequences to each other \cite{rabiner}. $X$ and $Y$ are not required to have the same length (i.e. $X = (x_1,...,x_M$) and $Y = (y_1,...,y_N) $). To this end, varying durations of parts of each sequence are allowed. The result is a warping path $W = w_1,...,w_K$ where each element represents an alignment of the elements of the two sequences (i.e. $w_k = (m_k,n_k)$ represents the alignment of the elements $x_{m_k}$ and $y_{n_k}$ of $X$ and $Y$).\\
+In classical DTW, the warping path must fulfill three restrictions:
+\begin{description}
+	\item[1. Boundary condition] The warping path must align the whole sequences to each other - i.e. $w_1 = (1,1)$ and $w_K = (M,N)$.
+	\item[2. Step size condition] The warping path may only step sequentially forward in either direction - i.e. $w_{k+1} - w_k \in \{(0,1),(1,0),(1,1)\}$. 
+	\item[3. Monotonicity condition] The warping path cannot skip backwards - i.e. $m_1 \leq m_2 \leq ... \leq m_K$ and $n_1 \leq n_2 \leq ... \leq n_K$. (This is, in fact, already implied by condition 2).
+\end{description}
+A graphic example of such an alignment is given in figure \ref{fig:dtw_example}.\\
+
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{images/dtw_example.png}
+		\caption{Example of a DTW alignment. Alignment between points is represented by the arrows. \cite{meinard_retrieval}}
+		\label{fig:dtw_example}
+	\end{center}
+\end{figure}
+
+A DTW consists of two steps: Cost calculation and path detection. In the cost calculation steps, a local cost $c$ is calculated for all pairs $(x_m, y_n)$, resulting in a cost matrix $C$. An example is shown in figure \ref{fig:dtw_cost}. Common cost functions include the Manhattan distance and the cosine distance (i.e. the complement of the normalized inner product), which was used in this work:
+\begin{equation}
+c(x_m,y_n) =  1 - cos(\theta)
+\end{equation}
+where $\theta$ is the angle between $x_m$ and $y_n$.\\
+
+In the second step, an optimal warping path is calculated on the cost matrix. The cost of a warping path is
+\begin{equation}
+c_W(X,Y) =  \sum_{k=1}^{K} c(x_{m_k}, y_{n_k})
+\end{equation}
+and the optimal warping path is the one with minimal cost - i.e. the DTW cost:
+\begin{equation}
+DTW(X,Y) =  \min\{c_W(X,Y)|W \text{ is a warping path}\}
+\end{equation}
+
+Consequently, the DTW cost can also be used to compare the quality of alignments of one query sequence to multiple other sequences when taking the varying lengths into account.
+%TODO: hier beschreiben?
+The path calculation is commonly solved using a Dynamic Programming algorithm \cite{meinard_retrieval}. In this work, the implementation from \cite{ellis_dtw} is used.
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{images/dtw_cost.png}
+		\caption{Example of a matrix of costs between two sequences $X$ and $Y$ using the Manhattan distance as the local cost measure. \cite{meinard_retrieval}}
+			\label{fig:dtw_cost}
+		\end{center}
+	\end{figure}
+
+
+\subsection{Levenshtein Distance}
+
+\section{Machine learning algorithms}
+This section describes the various Machine Learning algorithms employed throughout this thesis. Gaussian Mixture Models (GMMs), Hidden Markov Models (HMMs), and Support Vector Machines (SVMs) are three traditional approaches that are used as the basis of many new approaches, and were used for several starting experiments. i-Vector processing is a relatively new, more sophisticated approach that bundles several other machine learning techniques.\\
 In recent years, Deep Learning has become the standard for machine learning applications \cite{}. This chapter also describes a new approach that was used extensively in this work: Deep Neural Networks (DNNs).
 
-\subsection{Dynamic Time Warping}
-%!
+
+
 \subsection{Gaussian Mixture Models}
 %256
 %!
