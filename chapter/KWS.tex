@@ -74,10 +74,29 @@ As mentioned above, a high recall is easily achievable with the described approa
 One such source of information are the durations of the detected phonemes. As shown in figure \ref{fig:phone_durations}, each phoneme in the \textit{TIMIT} speech database has a fairly fixed duration. In singing, the vowels' durations vary a lot, but the consonants' are still quite predictable. Standard HMMs do not impose any restrictions on the state durations, resulting in a geometric distribution which does not correspond to naturally observed phoneme durations. \\
 As first described in \cite{ferguson}, introducing restrictions on state durations can improve the recognition results. In \cite{juang}, Juang et al. present two basic approaches for duration modeling in HMMs: Internal duration modeling and Post-processor duration modeling.\\
 
-%todo: DOPPELT!!
+
+In both approaches, parametric state duration models for each phoneme need to be calculated first\cite{levinson}. Several distributions has been tested for this task (e.g. Gaussian), but Burshtein showed that Gamma distributions are best at modeling naturally occurring phoneme duration distributions \cite{burshtein}:
+\begin{equation}\label{eq:d}
+d(\tau) = K \exp \{ - \alpha \tau \} \tau^{p-1}
+\end{equation}
+where $\tau = 0,1,2,...$ are the possible state durations in frames and $K$ is a normalizing factor. The parameters $\alpha$ and $p$ are estimated according to
+\begin{equation}
+\hat{\alpha} = \frac{E \{\tau\}}{VAR\{\tau\}} , \hat{p} = \frac{E^{2} \{\tau\}}{VAR\{\tau\}}
+\end{equation}
+where $E$ is the distribution mean and $VAR$ is the distribution variance. We estimate $E$ and $VAR$ empirically using a small portion of the singing data that has been annotated with phoneme occurrences.
+
 In internal duration modeling, the durations are incorporated directly into the Viterbi alignment. This means that the Viterbi output will already be a state sequence that is optimal with regards to the a-priori phoneme duration knowledge. It is, however, computationally expensive. In previous experiments \cite{kruspe_kws2}, this approach did not produce better results than the much easier to implement post-processor duration modeling. Therefore, this section will focus on that approach.\\
 
-When using post-processor duration modeling, knowledge about plausible phoneme durations is imposed on the result of the Viterbi alignment, the obtained state sequence. This is computationally cheap, but only results in a new likelihood score for the obtained sequence and does not provide better possible state sequences. The state sequence obtained from the Viterbi alignment is afterwards re-scored as described in section \ref{sec:tech_duration_modeling}, and all occurrences of the keyword with a score below a certain threshold are discarded.
+When using post-processor duration modeling, knowledge about plausible phoneme durations is imposed on the result of the Viterbi alignment, the obtained state sequence. This is computationally cheap, but only results in a new likelihood score for the obtained sequence and does not provide better possible state sequences. As described in \cite{juang}, the state sequence obtained from the Viterbi alignment can afterwards be re-scored according to:
+\begin{equation} \label{eq:pp_ll}
+ \log \hat{f} = \log f + \gamma \sum_{k=1}^{N} d_{k}(\tau_k) 
+\end{equation}
+where $f$ is the original likelihood of the sequence, $\gamma$ is a weighting factor, $k=1...N$ are the discrete states in the state sequence, $\tau_k$ are their durations, and $d_{k}(\tau_k)$ is, again, the probability of state $k$ being active for the duration $\tau_k$.\\
+Using keyword-filler HMMs, only one state sequence per utterance is obtained, which either contains the keyword or not. It is therefore not possible to compare these likelihood scores and Eq. \ref{eq:pp_ll} cannot be applied directly. To still be able to integrate post-processor duration modeling, the HMM parameters are tuned to obtain a high recall value. Then, the duration likelihood (second half of Eq. \ref{eq:pp_ll}) is calculated for all found occurrences of the keyword and normalized by the number of states taken into account:
+\begin{equation}
+ dl =  \frac{1}{N} \sum_{k=1}^{N} d_{k}(\tau_)
+\end{equation}
+Then all occurrences where $dl$ is below a certain threshold are discarded.
 
 
 
