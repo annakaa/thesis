@@ -63,7 +63,10 @@ DTW(X,Y) =  \min\{c_W(X,Y)|W \text{ is a warping path}\}
 
 Consequently, the DTW cost can also be used to compare the quality of alignments of one query sequence to multiple other sequences when taking the varying lengths into account.
 %TODO: hier beschreiben?
-The path calculation is commonly solved using a Dynamic Programming algorithm \cite{meinard_retrieval}. In this work, the implementation from \cite{ellis_dtw} is used.
+The path calculation is commonly solved using a Dynamic Programming algorithm \cite{meinard_retrieval}. In this work, the implementation from \cite{ellis_dtw} is used.\\
+
+Subsequence DTW is a variant of this algorithm in which the boundary condition is loosened. This means that the optimal warping path can run along a subsequence of the longer compared sequence instead of the full series. This is more computationally expensive since more paths need to be calculated for comparison.
+
 \begin{figure}
 	\begin{center}
 		\includegraphics[width=0.8\textwidth]{images/dtw_cost.png}
@@ -74,6 +77,34 @@ The path calculation is commonly solved using a Dynamic Programming algorithm \c
 
 
 \subsection{Levenshtein Distance}
+The Levenshtein distance, also called edit distance, is a measure of similarity between two strings (or character sequences). The algorithm was first described by Levenshtein in 1965 \cite{levenshtein} and can also be used to retrieve an optimal alignment (approximate string matching \cite{navarro}). In that sense, it serves a similar purpose as DTW for strings instead of time sequences. This measure is commonly used in the fields of Computational Biology, Natural Language Processing, and signal processing.\\
+
+The distance is the sum of character operations necessary to transform one string into the other. These operations can be substitutions, insertions, or deletions, which may be weighted differently. An example is shown in figure \ref{fig:levenshtein_example}. If each operation has a cost of 1, the Levenshtein distance in this example is 5; if substitutions are weighted with a cost of 2, the distance is 8.\\
+
+Just like DTW, this problem is usually solved efficiently with a Dynamic Programming approach. For two strings $X = (x_1,x_2,...,x_M)$ and $Y = (y_1,y_2,...,y_N)$, the initial step is then defined as
+\begin{equation}
+L(0,0) = 0 , L(i,0) = \sum_{k=1}^{i} I(x_k) , L(0,j) = \sum_{k=1}^{j} D(y_k)
+\end{equation}
+and the recursive step is defined as
+\begin{equation}
+L(i,j) = \min \begin{cases}
+L(i-1,j) + D(y_j)\\
+L(i,j-1) + I(x_i)\\
+L(i-1,j-1) + S(x_i,y_j)
+\end{cases}       
+\end{equation}
+where $L(i,j)$ is the Levenshtein distance at step $(i,j)$ and $D$, $I$, and $S$ are the costs for deletions, insertions, and substitutions respectively \cite{applied_computing}. The over-all Levenshtein distance is $L(M,N)$.
+
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.6\textwidth]{images/levenshtein_example.png}
+		\caption{Example of a Levenshtein distance calculation between the two strings ``INTENTION'' and ``EXECUTION''. Found operations (\textbf{d}eletions, \textbf{i}nsertions, \textbf{s}ubstitutions) are shown at the bottom. \cite{levenshtein_lecture}}
+		\label{fig:levenshtein_example}
+	\end{center}
+\end{figure}
+
+
+
 
 \section{Machine learning algorithms}
 This section describes the various Machine Learning algorithms employed throughout this thesis. Gaussian Mixture Models (GMMs), Hidden Markov Models (HMMs), and Support Vector Machines (SVMs) are three traditional approaches that are used as the basis of many new approaches, and were used for several starting experiments. i-Vector processing is a relatively new, more sophisticated approach that bundles several other machine learning techniques.\\
