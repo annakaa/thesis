@@ -6,17 +6,82 @@
 \section{Audio features}
 %mfcc, sdc, (rasta-)plp, trap; mention filterbank feats...?
 %TODO: write intro
-\subsection{Perceptive Linear Predictive features (PLPs)} 
-PLP features, first introduced in \cite{hermansky90}, are among the most frequently used features in speech processing. They are based on the idea to use knowledge about human perception to emphasize important speech information in spectra while minimizing the differences between speakers. In this work, model orders of 13 and 36 are used. Deltas and double deltas between frames are also calculated. PLPs are tested with and without RASTA pre-processing \cite{rasta_plp}.
 \subsection{Mel-Frequency Cepstral Coefficients (MFCCs)} 
 %!
-Just like PLPs, MFCCs are frequently used in all disciplines of automatic speech recognition \cite{zissman}. In this work, 13 or 20 coefficients were kept, depending on the experiment. Additionally, deltas and double deltas were calculated.
+MFCCs are among the most frequently used audio features in speech recognition and Music Information Retrieval \cite{sahidullah}\cite{meinard_retrieval}. They were first introduced in 1976 by Mermelstein \cite{mermelstein}\cite{davis_mermelstein} based on previous experiments by Bridle and Brown \cite{bridle_brown}.\\
+
+The basic idea behind MFCCs comes from experiments of human auditory perception. Audio signals are transformed into a representation that is based on human perceptual sensitivities. This is done by taking the short-term Fourier transform (STFT) of an audio signal and then mapping the resulting spectrum from a linear frequency scale onto a Mel scale. Then, the Discrete Cosine Transform (DCT) of the resulting log energies is calculated along the frequency axis to decorrelate the spectral band signals. The result is a representation of the various frequencies within the spectrum (i.e. the cepstrum), which can be interpreted as ranging from the spectral envelope to the more fine-grained components. In theory, this makes the result largely independent of the absolute frequencies, but representative of the perceptual content (e.g. phonemes). One point of criticism, however, is the lack of interpretability of the MFC coefficients.\\
+
+In detail, the calculation is performed as follows:
+\begin{description}
+\item[1. Short-term Fourier transform (STFT)] After cutting a signal $x$ into frames (e.g. of $10ms$ duration) and windowing it (e.g. with a Hamming window), the Discrete Fourier Transform (DFT) is calculated for each time frame:
+\begin{equation}
+X(k) = \sum_{n=0}^{N-1} x(n)h(n)e^{-j 2\pi kn/N} ,  k = 0,1,...,N-1
+\end{equation}
+where $h(n)$ is the window and $N$ is the DFT length. For the further calculations, only the power spectrum is used:
+\begin{equation}
+P_i(k) = \frac{1}{N} \mid S_i(k) \mid ^2
+\end{equation}
+
+\item[2. Mel-spectrum calculation] The resulting energies are mapped from the linear frequency scale to a perceptually motivated Mel scale. This is done by convolving the spectrum with a set of $M$ triangular Mel-spaced filters $H_i(k)$, such as the ones shown in figure \ref{fig:mel_filterbanks}. Furthermore, the resulting energy outputs are logarithmized:
+\begin{equation}
+X_i = \log_{10} \left( \sum_{k=0}^{N-1} \mid X(k) \mid \dot H_i(k) \right), i=1,2,...,M
+\end{equation}
+
+\item[3. Discrete Cosine Transform (DCT)] Finally, the Mel-scale spectrum is transformed with a DCT, resulting in the so-called cepstrum:
+\begin{equation}
+C_j = \sum_{i=1}^M X_i \cdot \cos \left( j \cdot (i-1/2) \cdot \frac{\pi}{M} \right), j=1,2,...,J 
+%j \dot (i-1/2) \dot \frac{\pi}{M}
+\end{equation}
+The $J$ MFC coefficients are retained as features. The $0th$ coefficient can be interpreted as a version of the power over all frequency bands, and the $1st$ coefficient as the global energy balance between low and high frequencies \cite{oshaughnessy}.
+
+\end{description}
+
+In this work, 13 coefficients including the $0th$ coefficient are extracted. In addition, deltas and double-deltas are calculated to capture information about the feature's trajectory:
+\begin{equation}
+\Delta(C(n)) = C(n) - C(n-1), \Delta\Delta(C(n)) = \Delta(C(n)) - \Delta(C(n-1))
+\end{equation}
+
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{images/mel_filterbanks.png}
+		\caption{Example of a Mel filterbank. \cite{davis_mermelstein}}
+		\label{fig:mel_filterbanks}
+	\end{center}
+\end{figure}
+
+
+
 \subsection{Shifted Delta Cepstrum (SDCs)} 
-Shifted Delta Cepstrum features were first described in \cite{bielefeld} and have since been successfully used for speaker verification and language identification tasks on pure speech data \cite{torres} \cite{campbell} \cite{allen}. They are calculated on MFCC vectors and take their temporal evolution into account. Their configuration is described by the four parameter $N-d-P-k$, where $N$ is the number of cepstral coefficients for each frame, $d$ is the time context (in frames) for the delta calculation, $k$ is the number of delta blocks to use, and $P$ is the shift between consecutive blocks. The delta cepstrals are then calculated as:
+Shifted Delta Cepstrum features were first described in \cite{bielefeld} and have since been successfully used for speaker verification and language identification tasks on pure speech data \cite{torres} \cite{campbell} \cite{allen}. They are calculated on MFCC vectors and take their temporal evolution into account. This has been shown to improve recognition results since speech and singing naturally have temporal contexts. Their configuration is described by the four parameter $N-d-P-k$, where $N$ is the number of cepstral coefficients for each frame, $d$ is the time context (in frames) for the delta calculation, $k$ is the number of delta blocks to use, and $P$ is the shift between consecutive blocks. The delta cepstrals are then calculated as:
 \begin{equation}
 \Delta c(t) = c(t+iP+d)+c(t+iP-d), 0<=i<=k
 \end{equation}
-with $c \in [0, N-1]$ as the previously extracted cepstral coefficients. The resulting $k$ delta cepstrals for each frame are concatenated to form a single SDC vector of the length $kN$. We used the common parameter combination $N=7, d=1, P=3, k=7$.
+with $c \in [0, N-1]$ as the previously extracted cepstral coefficients. The resulting $k$ delta cepstrals for each frame are concatenated to form a single SDC vector of the length $kN$. In this work, the common parameter combination $N=7, d=1, P=3, k=7$ was used. The calculation is visualized in figure \ref{fig:sdc_example}.
+
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{images/sdc_example.png}
+		\caption{The SDC calculation at frame $t$. \cite{torres}}
+		\label{fig:sdc_example}
+	\end{center}
+\end{figure}
+
+\subsection{Perceptive Linear Predictive features (PLPs)} 
+PLP features, first introduced in \cite{hermansky90}, are also one of the most frequently used features in speech processing, next to MFCCs. They are based on the idea to use knowledge about human perception to emphasize important speech information in spectra while minimizing the differences between speakers.\\
+
+In principle, these ideas are related to those that MFCCs are based on. A comparison of the steps of both algorithms is given in figure \ref{fig:comp_mfcc_plp}. For PLP computation, these steps are as follows:
+\begin{description}
+\item[1. Short-term Fourier transform] As in MFCC extraction, the signal $x$ is segmented into frames, which are then windowed, and the STFT is calculated for each of them. The power spectrum is $X$ is used for further processing.
+\item[2. Bark-spectrum calculation] Similar to the Mel-frequency transformation step, the resulting energies $X$ are mapped to a Bark frequency scale, which is also perceptually motivated (resulting in Bark-scaled energies $X_i$). As described in \cite{hoenig}, there is no necessity for the particular use of a Bark scale, but it is employed for historic reasons. A comparison of the filters of which Mel  and Bark filterbanks are composed is shown in figure \ref{fig:comp_filterbanks}.
+\item[3. Equal loudness pre-emphasis]
+\end{description}
+
+
+
+ In this work, model orders of 13 and 36 are used. Deltas and double deltas between frames are also calculated. PLPs are tested with and without RASTA pre-processing \cite{rasta_plp}.
+
+
 \subsection{TempoRal Patterns (TRAP)} 
 TRAPs were developed by Hermansky \cite{traps1} \cite{traps2} and have been used successfully in a number of speech recognition tasks. In contrast to MFCCs, which only consider a single spectral frame at a time, TRAPs take the spectral development over time into account. Spectral bands are calculated for a fixed time context around an audio frame. Each band's trajectory is then normalized, windowed, and decorrelated using a DCT. All the DCT coefficients for all bands are concatenated to a single feature vector for the center frame. These coefficients are then usually used to train Neural Networks for phoneme recognition \cite{yan_barnard}\cite{matejka} in order to form TRAP features.  However, in this work, the coefficient vector is used directly as a feature to train various models. Figure \ref{fig:traps} shows the extraction process. In this work, 8 linear spectral bands were extracted with a time context of 20 frames, and the first 8 DCT coefficients were kept.
 \begin{figure}
@@ -121,7 +186,7 @@ In recent years, Deep Learning has become the standard for machine learning appl
 \subsection{Support Vector Machines}
 %! clean up
 In all supervised classification tasks, a training data set and a classification data set are provided. Each of these sets consists of previously extracted features of the training entities (or musical pieces in the case of genre classification) and, for the training data set, annotation labels (or genres in the case of genre classification). The training data set is denoted here as pairs of $\left(\mathbf{x}_{i}, y_{i}\right), i=1..l$, with $\textbf{x}_i \in \mathbb{R}^{n}$ being the feature vectors and $y_{i}$ being their assigned classes. The classifier tries to find similarities behind the training data for each label and separation conditions between the labels. With this information, the classifier is then able to assign a label to the classification data entities.\\
-SVMs attempt to solve this problem by grouping the training data vectors $\mathbf{x}_{i}$ and finding separating (hyper-)planes (with the normal vector $\mathbf{w}$ and the offset $b$) between the points of the different classes (or annotation labels) $y_{i}$. In doing so, they try to maximise the margin between the plane and the data points. Additionally, the feature vectors may be transformed into a higher-dimensional space by the function $\phi(\textbf{x}_i)$ to make them more easily separable (as demonstrated in figure \ref{fig:svm_transformation}).\newpage
+SVMs attempt to solve this problem by grouping the training data vectors $\mathbf{x}_{i}$ and finding separating (hyper-)planes (with the normal vector $\mathbf{w}$ and the offset $b$) between the points of the different classes (or annotation labels) $y_{i}$. In doing so, they try to maximize the margin between the plane and the data points. Additionally, the feature vectors may be transformed into a higher-dimensional space by the function $\phi(\textbf{x}_i)$ to make them more easily separable (as demonstrated in figure \ref{fig:svm_transformation}).\newpage
 In \cite{techreport:practical_svm}, this training process is expressed (for a two-class problem) as:
 \begin{equation*}
 \begin{aligned}
@@ -158,7 +223,7 @@ K(\mathbf{x}_{i},\mathbf{x}_{j}) = e^{-\gamma \parallel \mathbf{x}_{i} - \mathbf
 As can be seen from the above equations, $C$ and $\gamma$ are free parameters. Their optimum values depend on the actual training data vectors. In \cite{techreport:practical_svm}, a grid search during each training is suggested to find them. 
 \medskip
 \\
-The presented training process is appropriate for a two-class problem. For multi-class problems, one-vs-one trainings for all combinations of classes are performed. Then,all of the developed classifiers are used for the classification of the evaluation data and a voting strategy is applied to determine the resulting class. This procedure is not quite in agreement with the one used in the feature selection algorithm (IRMFSP, see section \ref{subsec:irmfsp}), as this algorithm selects features to separate all classes at once, rather than on a one-vs-one basis.
+The presented training process is appropriate for a two-class problem. For multi-class problems, one-vs-one trainings for all combinations of classes are performed. Then, all of the developed classifiers are used for the classification of the evaluation data and a voting strategy is applied to determine the resulting class. This procedure is not quite in agreement with the one used in the feature selection algorithm (IRMFSP, see section \ref{subsec:irmfsp}), as this algorithm selects features to separate all classes at once, rather than on a one-vs-one basis.
 
 
 \subsection{i-Vector processing}
