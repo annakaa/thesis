@@ -39,7 +39,8 @@ The $J$ MFC coefficients are retained as features. The $0th$ coefficient can be 
 
 In this work, 13 coefficients including the $0th$ coefficient are extracted. In addition, deltas and double-deltas are calculated to capture information about the feature's trajectory:
 \begin{equation}
-\Delta(C(n)) = C(n) - C(n-1), \Delta\Delta(C(n)) = \Delta(C(n)) - \Delta(C(n-1))
+\Delta(C(n)) = C(n) - C(n-1) \\
+\Delta\Delta(C(n)) = \Delta(C(n)) - \Delta(C(n-1))
 \end{equation}
 
 \begin{figure}
@@ -70,24 +71,74 @@ with $c \in [0, N-1]$ as the previously extracted cepstral coefficients. The res
 \subsection{Perceptive Linear Predictive features (PLPs)} 
 PLP features, first introduced in \cite{hermansky90}, are also one of the most frequently used features in speech processing, next to MFCCs. They are based on the idea to use knowledge about human perception to emphasize important speech information in spectra while minimizing the differences between speakers.\\
 
-In principle, these ideas are related to those that MFCCs are based on. A comparison of the steps of both algorithms is given in figure \ref{fig:comp_mfcc_plp}. For PLP computation, these steps are as follows:
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{images/comp_mfcc_plp.png}
+		\caption{Comparison of the processing steps in MFCC (left) and PLP (right) calculation. \cite{hoenig}}
+		\label{fig:comp_mfcc_plp}
+	\end{center}
+\end{figure}
+In principle, these ideas are related to those that MFCCs are based on, but knowledge about human perception is integrated more extensively. A comparison of the steps of both algorithms is given in figure \ref{fig:comp_mfcc_plp}. For PLP computation, these steps are as follows:
 \begin{description}
 \item[1. Short-term Fourier transform] As in MFCC extraction, the signal $x$ is segmented into frames, which are then windowed, and the STFT is calculated for each of them. The power spectrum is $X$ is used for further processing.
-\item[2. Bark-spectrum calculation] Similar to the Mel-frequency transformation step, the resulting energies $X$ are mapped to a Bark frequency scale, which is also perceptually motivated (resulting in Bark-scaled energies $X_i$). As described in \cite{hoenig}, there is no necessity for the particular use of a Bark scale, but it is employed for historic reasons. A comparison of the filters of which Mel  and Bark filterbanks are composed is shown in figure \ref{fig:comp_filterbanks}.
-\item[3. Equal loudness pre-emphasis]
+\item[2. Bark-spectrum calculation] Similar to the Mel-frequency transformation step, the resulting energies $X$ are mapped to a Bark frequency scale, which is also perceptually motivated (resulting in Bark-scaled energies $X_i$). As described in \cite{woodland} and \cite{hoenig}, there is no necessity for the particular use of a Bark scale, but it is employed for historic reasons. A comparison of the filters of which Mel  and Bark filterbanks are composed is shown in figure \ref{fig:comp_filterbanks}. Furthermore, the coefficients are logarithmized.
+\item[3. Equal loudness pre-emphasis] The filterbank coefficients are weighted with an equal-loudness curve $E(f)$ which simulates the varying sensitivities of human hearing across the frequency range. Figure \ref{fig:eq_loudness} displays such a curve; Makhoul and Cosell presented a numerical approximation \cite{makhoul}. (As mentioned in figure \ref{fig:comp_mfcc_plp}, such a pre-emphasis is sometimes performed as the first step of MFCC calculation as well). This is computed as
+\begin{equation}
+\Xi(f) = X_i(f) \cdot E(f)
+\end{equation}
+\item[4. Intensity - loudness conversion] This steps integrates knowledge about the relationship between the intensity of the signal and its perceived loudness. According to the power law of hearing \cite{stevens}, this relation can be approximated as a cubic root compression:
+\begin{equation}
+\Phi(f)  = \Xi(f)^0.33
+\end{equation}
+\item[5. Autoregressive modeling] An inverse DFT is then applied to the computed loudness signal to obtain an auto-correlation function. Then, the actual linear prediction is implemented with an all-pole model as described in \cite{makhoul2}. Levinson-Durbin recursion is employed to compute the final PLP coefficients from the auto-correlation function.
 \end{description}
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{images/filterbanks_mfcc_plp.png}
+		\caption{Mel-scale (top) and Bark-scale filterbank. \cite{hoenig}}
+		\label{fig:comp_filterbanks}
+	\end{center}
+\end{figure}
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.6\textwidth]{images/eq_loudness.png}
+		\caption{Perceptually motivated equal-loudness weighting function. (The dashed function is used for signals with a Nyquist frequency $>5kHz$). \cite{hoenig}}
+		\label{fig:eq_loudness}
+	\end{center}
+\end{figure}
 
+Later, RASTA filtering was introduced as a step between the Bark-spectrum calculation and the equal loudness pre-emphasis (i.e. steps 2 and 3) \cite{rasta_plp}. This is essentially a bandpass filtering in the log-spectral domain that serves to suppress the slow-changing components of the signal which are commonly caused by the transmission channel rather than the content. The filter is defined as
+\begin{equation}
+H(z) = 0.1 \frac{2+z^{-1}-z^{-3}-2z^{-4}}{z^{-4}\cdot (1-0.98z^{-1})}
+\end{equation}
 
-
- In this work, model orders of 13 and 36 are used. Deltas and double deltas between frames are also calculated. PLPs are tested with and without RASTA pre-processing \cite{rasta_plp}.
+In this work, model orders of 13 and 36 are used. Deltas and double-deltas between frames are also calculated, and PLPs are tested with and without RASTA pre-processing.
 
 
 \subsection{TempoRal Patterns (TRAP)} 
-TRAPs were developed by Hermansky \cite{traps1} \cite{traps2} and have been used successfully in a number of speech recognition tasks. In contrast to MFCCs, which only consider a single spectral frame at a time, TRAPs take the spectral development over time into account. Spectral bands are calculated for a fixed time context around an audio frame. Each band's trajectory is then normalized, windowed, and decorrelated using a DCT. All the DCT coefficients for all bands are concatenated to a single feature vector for the center frame. These coefficients are then usually used to train Neural Networks for phoneme recognition \cite{yan_barnard}\cite{matejka} in order to form TRAP features.  However, in this work, the coefficient vector is used directly as a feature to train various models. Figure \ref{fig:traps} shows the extraction process. In this work, 8 linear spectral bands were extracted with a time context of 20 frames, and the first 8 DCT coefficients were kept.
+TRAPs were developed by Hermansky \cite{traps1} \cite{traps2} and have also been used successfully in a number of speech recognition tasks. In contrast to the other presented features, which, apart from delta calculation, only consider a single spectral frame at a time, TRAPs take the spectral development over time into account. This is visualized in figure \ref{fig:trap_temporal}. \\
+%TODO: figure of phoneme characteristics; read matejka!
+
+In \cite{jens}, a slightly modified method is presented. An overview of the steps necessary for this version of TRAP calculation is given in figure \ref{fig:traps}. In detail, these are:
+\begin{description}
+\item[1. Grouping into spectral bands]  Spectral band signals are extracted from the signal with a triangular Mel-scale filterbank, such as the one presented in figure \ref{fig:mel_filterbanks}. The log-energy of each band is used for further processing.
+\item[2. Normalization and windowing] Each band's trajectory is normalized and windowed (e.g. with $10ms$ Hanning or Hamming windows).
+\item[3. DCT decorrelation] A DCT is applied to each frame to decorrelate its coefficients and obtain a representation of the temporal development. The vectors for each critical band are concatenated
+\item[4. Model training] In traditional TRAP computation, the resulting band coefficients are now used to train a Multilayer Perceptron with a single hidden layer to obtain phoneme probabilities \cite{matejka} . However, as suggested in \cite{jens}, the feature values extracted so far can also be used to train other models, or even be combined with other features beforehand. In \cite{robust_asr}, the authors suggest that a combination with MFCCs works particularly well as these two features cover different sets of characteristics: MFCCs are better at capturing the spectral content, while TRAPs model the temporal progressions better.
+\end{description}
+
+In this work, the coefficient vector is used directly as a feature to train various models. 8 linear spectral bands were extracted with a time context of 20 frames, and the first 8 DCT coefficients were kept.
+
+\begin{figure}
+ \centerline{\framebox{
+ \includegraphics[width=.6\textwidth]{images/trap_temporal.png}}}
+ \caption{The temporal paradigm for TRAP extraction versus conventional features (e.g.MFCC). \cite{traps1}}
+ \label{fig:trap_temporal}
+\end{figure}
 \begin{figure}
  \centerline{\framebox{
  \includegraphics[width=\columnwidth]{images/trap_extraction.png}}}
- \caption{TRAP extraction process \cite{jens}}
+ \caption{TRAP extraction process. \cite{jens}}
  \label{fig:traps}
 \end{figure}
 
