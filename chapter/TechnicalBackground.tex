@@ -116,23 +116,22 @@ In this work, model orders of 13 and 36 are used. Deltas and double-deltas betwe
 
 
 \subsection{TempoRal Patterns (TRAP)} 
-TRAPs were developed by Hermansky \cite{traps1} \cite{traps2} and have also been used successfully in a number of speech recognition tasks. In contrast to the other presented features, which, apart from delta calculation, only consider a single spectral frame at a time, TRAPs take the spectral development over time into account. This is visualized in figure \ref{fig:trap_temporal}. \\
-%TODO: figure of phoneme characteristics; read matejka!
+TRAPs were developed by Hermansky \cite{traps1} \cite{traps2} and have also been used successfully in a number of speech recognition tasks. In contrast to the other presented features, which, apart from delta calculation, only consider a single spectral frame at a time, TRAPs take the spectral development over time into account. This is visualized in figure \ref{fig:trap_temporal}. To demonstrate the feature's suitability for phoneme classification, examples of mean TRAPs for various phonemes in the 5th critical band are shown in figure \ref{fig:phoneme_traps}.\\
 
-In \cite{jens}, a slightly modified method is presented. An overview of the steps necessary for this version of TRAP calculation is given in figure \ref{fig:traps}. In detail, these are:
+In \cite{matejka}, a slightly modified method is presented. An overview of the steps necessary for this version of TRAP calculation is given in figure \ref{fig:traps}. In detail, these are:
 \begin{description}
 \item[1. Grouping into spectral bands]  Spectral band signals are extracted from the signal with a triangular Mel-scale filterbank, such as the one presented in figure \ref{fig:mel_filterbanks}. The log-energy of each band is used for further processing.
-\item[2. Normalization and windowing] Each band's trajectory is normalized and windowed (e.g. with $10ms$ Hanning or Hamming windows).
-\item[3. DCT decorrelation] A DCT is applied to each frame to decorrelate its coefficients and obtain a representation of the temporal development. The vectors for each critical band are concatenated
-\item[4. Model training] In traditional TRAP computation, the resulting band coefficients are now used to train a Multilayer Perceptron with a single hidden layer to obtain phoneme probabilities \cite{matejka} . However, as suggested in \cite{jens}, the feature values extracted so far can also be used to train other models, or even be combined with other features beforehand. In \cite{robust_asr}, the authors suggest that a combination with MFCCs works particularly well as these two features cover different sets of characteristics: MFCCs are better at capturing the spectral content, while TRAPs model the temporal progressions better.
+\item[2. Normalization and windowing] Each band's trajectory is normalized and windowed with relatively long windows (e.g. Hamming windows with a temporal context of $200$ to $1000ms$) to obtain a representation of the temporal development.
+\item[3. DCT decorrelation] A DCT is applied to each frame to decorrelate its coefficients and reduce dimensionality. The vectors for each critical band are concatenated. (In classical TRAP calculation, separate classifiers would be trained for each band in this step).
+\item[4. Model training] In classical TRAP calculation, the resulting band coefficients are now used to train a Multilayer Perceptron with a single hidden layer to obtain phoneme probabilities \cite{matejka} . However, as suggested in \cite{jens}, the feature values extracted so far can also be used to train other models, or even be combined with other features beforehand. In \cite{robust_asr}, the authors suggest that a combination with MFCCs works particularly well as these two features cover different sets of characteristics: MFCCs are better at capturing the spectral content, while TRAPs model the temporal progressions better.
 \end{description}
 
-In this work, the coefficient vector is used directly as a feature to train various models. 8 linear spectral bands were extracted with a time context of 20 frames, and the first 8 DCT coefficients were kept.
+In this work, the coefficient vector is used directly as a feature to train various models. 8 linear spectral bands were extracted with a time context of 20 frames (corresponding to $200ms$), and the first 8 DCT coefficients were kept.
 
 \begin{figure}
  \centerline{\framebox{
  \includegraphics[width=.6\textwidth]{images/trap_temporal.png}}}
- \caption{The temporal paradigm for TRAP extraction versus conventional features (e.g.MFCC). \cite{traps1}}
+ \caption{The temporal paradigm for TRAP extraction versus conventional features (e.g. MFCC). \cite{traps1}}
  \label{fig:trap_temporal}
 \end{figure}
 \begin{figure}
@@ -140,6 +139,14 @@ In this work, the coefficient vector is used directly as a feature to train vari
  \includegraphics[width=\columnwidth]{images/trap_extraction.png}}}
  \caption{TRAP extraction process. \cite{jens}}
  \label{fig:traps}
+\end{figure}
+
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{images/phoneme_traps.png}
+		\caption{Mean TRAPs of various phonemes in the 5th critical band. \cite{traps1}}
+		\label{fig:phoneme_traps}
+	\end{center}
 \end{figure}
 
 
