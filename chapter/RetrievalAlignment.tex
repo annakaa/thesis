@@ -93,7 +93,7 @@ In the first experiment, similarity measures were calculated between the lyrics 
                 \label{fig:retrieval_dtwres_testM}
         \end{subfigure}
 
-        \caption{Accuracies of the results for lyrics detection on the whole song for the \textit{DampTest} sets using five different acoustic models, and evaluated on the 1-, 3-, 10-, 50-, and 100-best results.}\label{fig:retrieval_dtwres}
+        \caption{Accuracies of the results for lyrics detection on the whole song for the \textit{DampTest} sets using the DTW-based approach with five different acoustic models, and evaluated on the 1-, 3-, and 10-best results.}\label{fig:retrieval_dtwres}
 \end{figure}
 
  These results show that phoneme posteriorgrams obtained with models trained on speech data (\textit{TIMIT}) generally produce the lowest results in lyrics retrieval. The difference between the two test sets is especially interesting here: On the male test set, the accuracy for the single best result is $58\%$, while on the female set it is only $39\%$. Previous experiments showed that the phoneme recognition itself performs somewhat worse for female singing inputs. This effect is compounded in these lyrics retrieval results. This may happen because the frequency range of female singing is even further removed from that of speech than the frequency range of male singing is \cite{sundberg}. Even female speech is often performed at the lower end of the female singing frequency range. The frequency range of male singing is better covered when training models on speech recordings (especially when speech recordings of both genders are used).\\
@@ -121,7 +121,7 @@ Then, evaluation was performed as to whether a line from the correct song was re
                 \caption{DampTestM}
                 \label{fig:retrieval_dtwres_testM_line}
        \end{subfigure}
-        \caption{Accuracies of the results for lyrics detection on separate lines of sung lyrics for the \textit{DampTest} sets using five different acoustic models, and evaluated on the 1-, 3-, 10-, 50-, and 100-best results.}\label{fig:retrieval_dtwres_line}
+        \caption{Accuracies of the results for lyrics detection on separate lines of sung lyrics for the \textit{DampTest} sets using the DTW-based approach with five different acoustic models, and evaluated on the 1-, 3-, 10-, 50-, and 100-best results.}\label{fig:retrieval_dtwres_line}
 \end{figure}
 
 Again, a difference between both test sets is visible when generating posteriograms with the \textit{TIMIT} models. The accuracy on the best result is $14\%$ for the male test set, but just $7\%$ for the female test.\\
@@ -237,6 +237,44 @@ The various improvement steps of the algorithm were tested as follows:
 
 \subsection{Retrieval experiments: Full data set}
 The full algorithm was then also run on the full \textit{DampTest} data sets in the same way as the DTW-based approach.
+
+
+\begin{figure}
+	\centering
+	\begin{subfigure}[b]{0.4\textwidth}
+		\includegraphics[width=\textwidth]{images/retrieval_levres_testF.png}
+		\caption{DampTestF}
+		\label{fig:retrieval_levres_testF}
+	\end{subfigure}%
+	%add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc.
+	%(or a blank line to force the subfigure onto a new line)
+	\vspace{10px}
+	\begin{subfigure}[b]{0.4\textwidth}
+		\includegraphics[width=\textwidth]{images/retrieval_levres_testM.png}
+		\caption{DampTestM}
+		\label{fig:retrieval_levres_testM}
+	\end{subfigure}
+	
+	\caption{Accuracies of the results for lyrics detection on the whole song for the \textit{DampTest} sets using the phoneme-based approach with five different acoustic models, and evaluated on the 1-, 3-, and 10-best results.}\label{fig:retrieval_levres}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\begin{subfigure}[b]{0.4\textwidth}
+		\includegraphics[width=\textwidth]{images/retrieval_levres_testF_line.png}
+		\caption{DampTestF}
+		\label{fig:retrieval_levres_testF_line}
+	\end{subfigure}%
+	%add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc.
+	%(or a blank line to force the subfigure onto a new line)
+	\vspace{10px}
+	\begin{subfigure}[b]{0.4\textwidth}
+		\includegraphics[width=\textwidth]{images/retrieval_levres_testM_line.png}
+		\caption{DampTestM}
+		\label{fig:retrieval_levres_testM_line}
+	\end{subfigure}
+	\caption{Accuracies of the results for lyrics detection on separate lines of sung lyrics for the \textit{DampTest} sets using the phoneme-based approach with five different acoustic models, and evaluated on the 1-, 3-, 10-, 50-, and 100-best results.}\label{fig:retrieval_levres_line}
+\end{figure}
 
 
 \section{Application: Expletive detection}
