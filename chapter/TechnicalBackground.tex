@@ -244,19 +244,36 @@ In recent years, Deep Learning has become the standard for machine learning appl
 % presented by Baum
 % good at modeling temporal processes; used in asr a lot (rabiner, young/gales)
 % probabilities can be modeled in different ways (e.g. GMMs, DNNs), still tractable
+% special cases: restrictions to transition matrix
 %invariant to translation (bishop)
 % components: hidden states -> observations , transitions (image)
 % training: Baum-Welch (special case of EM) (and observation computation)
 % hidden state estimation: Viterbi
-% asr: hidden states phones, observations acoustic feature vectors
+% asr: hidden states phones, observations acoustic feature vectors; often left-to-right (non-ergodic)
 Markov models are statistical models of Markov processes - i.e. sequences of states in which the probability of each state only depends on the previous one. In a Hidden Markov Model (HMM), these states are not directly observable, but may be inferred from the models emissions. HMMs were first suggested by Baum et al. around 1970 \cite{baum1}\cite{baum2}\cite{baum3}\cite{baum4}\cite{baum5}. Due to their ability to model temporal processes, they have been employed extensively in ASR \cite{rabiner_hmm1}\cite{rabiner_hmm2}\cite{jelinek}\cite{gales_young_hmm}. Apart from this field, they are also frequently used in Natural Language Processing \cite{manning_schuetze}, Optical Character Recognition \cite{nag}, and Computational Biology \cite{krogh}\cite{durbin}.\\
 
+A HMM consists of four basic components:
+\begin{itemize}
+\item The hidden state nodes $X = (x_1,x_2,...,x_N)$
+\item The corresponding observation (= emission) nodes $Y = (y_1,y_2,...,y_N)$
+\item The transition probabilities between the hidden states, defined by a transition matrix $A \in \mathbb{R}^{N x N}$
+\item The output probabilities $B \in \mathbb{R}^{N x N}$, mapping from the hidden states to the observations
+\end{itemize}
+In the case of speech recognition, the observations are the feature vectors, and the hidden states are the phonemes generating these features. Such a model is visualized in figure \ref{fig:asr_hmm}.
 
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.6\textwidth]{images/asr_hmm.png}
+		\caption{A HMM as it is commonly used in ASR, with phonemes as hidden states and acoustic feature vectors as the observations. $a_12, a_22, a_23,...$ are elements of the transition matrix $A$; $b_2(y1_), b_2(y_2), b_3(y_3)$ are elements of the output probability matrix $B$. \cite{gales_young_hmm}}
+		\label{fig:asr_hmm}
+	\end{center}
+\end{figure}
 
 \subsection{Support Vector Machines}
 %! clean up
 In all supervised classification tasks, a training data set and a classification data set are provided. Each of these sets consists of previously extracted features of the training entities (or musical pieces in the case of genre classification) and, for the training data set, annotation labels (or genres in the case of genre classification). The training data set is denoted here as pairs of $\left(\mathbf{x}_{i}, y_{i}\right), i=1..l$, with $\textbf{x}_i \in \mathbb{R}^{n}$ being the feature vectors and $y_{i}$ being their assigned classes. The classifier tries to find similarities behind the training data for each label and separation conditions between the labels. With this information, the classifier is then able to assign a label to the classification data entities.\\
-SVMs attempt to solve this problem by grouping the training data vectors $\mathbf{x}_{i}$ and finding separating (hyper-)planes (with the normal vector $\mathbf{w}$ and the offset $b$) between the points of the different classes (or annotation labels) $y_{i}$. In doing so, they try to maximize the margin between the plane and the data points. Additionally, the feature vectors may be transformed into a higher-dimensional space by the function $\phi(\textbf{x}_i)$ to make them more easily separable (as demonstrated in figure \ref{fig:svm_transformation}).\newpage
+SVMs attempt to solve this problem by grouping the training data vectors $\mathbf{x}_{i}$ and finding separating (hyper-)planes (with the normal vector $\mathbf{w}$ and the offset $b$) between the points of the different classes (or annotation labels) $y_{i}$. In doing so, they try to maximize the margin between the plane and the data points. Additionally, the feature vectors may be transformed into a higher-dimensional space by the function $\phi(\textbf{x}_i)$ to make them more easily separable (as demonstrated in figure \ref{fig:svm_transformation}).\\
+
 In \cite{techreport:practical_svm}, this training process is expressed (for a two-class problem) as:
 \begin{equation*}
 \begin{aligned}
