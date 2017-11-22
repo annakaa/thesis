@@ -240,6 +240,18 @@ In recent years, Deep Learning has become the standard for machine learning appl
 %!
 \subsection{Hidden Markov Models}
 %!
+% definition - statistical model of Markov processes - i.e. only depends on previous state
+% presented by Baum
+% good at modeling temporal processes; used in asr a lot (rabiner, young/gales)
+% probabilities can be modeled in different ways (e.g. GMMs, DNNs), still tractable
+%invariant to translation (bishop)
+% components: hidden states -> observations , transitions (image)
+% training: Baum-Welch (special case of EM) (and observation computation)
+% hidden state estimation: Viterbi
+% asr: hidden states phones, observations acoustic feature vectors
+Markov models are statistical models of Markov processes - i.e. sequences of states in which the probability of each state only depends on the previous one. In a Hidden Markov Model (HMM), these states are not directly observable, but may be inferred from the models emissions. HMMs were first suggested by Baum et al. around 1970 \cite{baum1}\cite{baum2}\cite{baum3}\cite{baum4}\cite{baum5}. Due to their ability to model temporal processes, they have been employed extensively in ASR \cite{rabiner_hmm1}\cite{rabiner_hmm2}\cite{jelinek}\cite{gales_young_hmm}. Apart from this field, they are also frequently used in Natural Language Processing \cite{manning_schuetze}, Optical Character Recognition \cite{nag}, and Computational Biology \cite{krogh}\cite{durbin}.\\
+
+
 
 \subsection{Support Vector Machines}
 %! clean up
