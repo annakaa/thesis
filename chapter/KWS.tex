@@ -14,16 +14,15 @@ On the hand-annotated \textit{ACAP} test set, the difference is even more pronou
 
 \begin{figure}
         \centering
-        \begin{subfigure}[t]{0.4\textwidth}
+        \begin{subfigure}[t]{0.5\textwidth}
 		 \includegraphics[width=\textwidth]{images/kws_exp1.png}
                 \caption{$F_1$ measures for keyword spotting results on the \textit{DampTest} data sets.}
                 \label{fig:kws_exp1}
 
         \end{subfigure}%
-        \hfill
          %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc.
           %(or a blank line to force the subfigure onto a new line)
-        \begin{subfigure}[t]{0.4\textwidth}
+        \begin{subfigure}[t]{0.5\textwidth}
                 \includegraphics[width=\textwidth]{images/kws_exp1_acap.png}
                 \caption{Keyword spotting results on the \textit{ACAP} data set.}
                 \label{fig:kws_exp1a}
@@ -97,6 +96,26 @@ Using keyword-filler HMMs, only one state sequence per utterance is obtained, wh
  dl =  \frac{1}{N} \sum_{k=1}^{N} d_{k}(\tau_)
 \end{equation}
 Then all occurrences where $dl$ is below a certain threshold are discarded.
+
+
+\begin{figure}
+        \centering
+        \begin{subfigure}[t]{0.5\textwidth}
+		\includegraphics[width=\textwidth]{images/kws_exp4_acap.png}
+                \caption{$F_1$ measures for keyword spotting results on the \textit{ACAP} data set with post-processor duration modeling.}
+                \label{fig:kws_exp4_acap}
+                
+        \end{subfigure}%
+         %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc.
+          %(or a blank line to force the subfigure onto a new line)
+        \begin{subfigure}[t]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{images/kws_exp4.png}
+                \caption{$F_1$ measures for keyword spotting results on the \textit{DampTest} data sets with post-processor duration modeling.}
+                \label{fig:kws_exp4}
+                
+        \end{subfigure}
+        \caption{$F_1$ measures for keyword spotting results using posteriorgrams generated with various acoustic models with post-processor duration modeling.}
+          \end{figure}
 
 
 
