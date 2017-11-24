@@ -199,7 +199,7 @@ Subsequence DTW is a variant of this algorithm in which the boundary condition i
 	\end{figure}
 
 
-\subsection{Levenshtein Distance}
+\subsection{Levenshtein distance}
 The Levenshtein distance, also called edit distance, is a measure of similarity between two strings (or character sequences). The algorithm was first described by Levenshtein in 1965 \cite{levenshtein} and can also be used to retrieve an optimal alignment (approximate string matching \cite{navarro}). In that sense, it serves a similar purpose as DTW for strings instead of time sequences. This measure is commonly used in the fields of Computational Biology, Natural Language Processing, and signal processing.\\
 
 The distance is the sum of character operations necessary to transform one string into the other. These operations can be substitutions, insertions, or deletions, which may be weighted differently. An example is shown in figure \ref{fig:levenshtein_example}. If each operation has a cost of 1, the Levenshtein distance in this example is 5; if substitutions are weighted with a cost of 2, the distance is 8.\\
@@ -454,7 +454,13 @@ Finally, an i-vector $w$ can be extracted for each utterance using equation \ref
 
 
 \subsection{Artificial Neural Networks}
-%!
+Neural Networks have a long research history. Based on an idea by McCullough and Pitts from 1943 \cite{mccullough_pitts}, they were slowly developed into functional algorithms for classification and pattern recognition. Rosenblatt proposed a hardware design for a single-layer perceptron in 1958 \cite{rosenblatt}, while the first multi-layer networks were introduced by Ivakhnenko and Lapa in 1965 \cite{ivakhnenko}. In 1969, Minsky and Papert posited many practical limitations for Neural Networks \cite{minsky_papert}, which led to a decrease in interest.\\
+The introduction of the backpropagation algorithm solved some of these issues and increased the training speed of multilayer networks \cite{werbo}, leading to a wider usage in speech recognition \cite{} and other fields \cite{}. However, other algorithms such as SVMs began to produce better results over time and thus overtook Neural Networks in popularity.\\
+Over time, processing speed of computers increased, and better strategies and hardware for parallel computing became available. This enabled the training of networks with many more layers, allowing for a much better adaptation to many high-dimensional problems \cite{hinton_osindero}. Over the past 10 years, this so-called ``deep learning'' became the state of the art for many machine learning problems \cite{} \cite{} \cite{}.\\
+
+
+
+
 
 \section{Evaluation}
 \subsection{Evaluation of phoneme recognition and alignment tasks}
