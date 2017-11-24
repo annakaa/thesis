@@ -236,6 +236,64 @@ In recent years, Deep Learning has become the standard for machine learning appl
 
 
 \subsection{Gaussian Mixture Models}
+In their basic form, Gaussian Mixture Models (GMMs) are a form of unsupervised learning. Given a set of observations $X = (x_1, x_2, ..., x_N)$, their probability distribution is modeled with a superposition of Gaussian distributions:
+\begin{equation}
+p(x_n | \lambda ) = \sum_{i=1}^M p_i b_i(x)
+\end{equation}
+where $b_i$ are the constituting distributions, $p_i$ are the mixture weights, and $\lambda$ are the model parameters. A visualization is shown in figure \ref{fig:gmm_structure}. If the observations are multidimensional (which is the case for audio features), multivariate Gaussians (with $D$ dimensions) are used for this:
+\begin{equation}
+b_i(x) = \frac{1}{ (2\pi)^{D/2} \det(\Sigma_i)^{1/2}} \exp( \left\{-\frac{1}{2} (x - \mu_i) \Sigma_i^{-1} (x - \mu_i) \right\})
+\end{equation}
+where $\mu_i$ is the mean vector and $\Sigma_i$ is the covariance matrix.\\
+These parameters, together with the mixture weights, define the model:
+\begin{equation}
+\lambda = {p_i, \mu_i, \Sigma_i}, i = 1,...,M
+\end{equation}
+For each observation $o_j$, the contribution of each Gaussian $b_i$ can be calculated as:
+\begin{equation}
+%???
+p_ni = P(i | n) = \frac{b_i P(i)}{P(x_n)} 
+\end{equation}
+The overall likelihood of the model is:
+\begin{equation}
+L = \prod_{n=1}^N P(x_n)
+\end{equation}
+
+In order to find the optimal parameters $\lambda$, the iterative Expectation Maximization (EM) algorithm is commonly used \cite{dempster_laird}. In the expectation step, $L$ is calculated; in the maximization step, the parameters are adapted. This is repeated until convergence. An example of such a training procedure is visualized in figure \ref{fig:gmm_training}.\\
+
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.6\textwidth]{images/gmm_structure.png}
+		\caption{Visualization of a GMM. The Gaussian mixture is the weighted sum of several Gaussian distributions, where $p_i$ are the mixture weights and $b_i$ are the Gaussians. \cite{reynolds_rose}}
+		\label{fig:gmm_structure}
+	\end{center}
+\end{figure}
+
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.6\textwidth]{images/gmm_training.png}
+		\caption{Example of a GMM in two dimensions. Crosses signify the data points, ellipses the three multivariate Gaussians. On the left-hand side, the evolution of the estimated means and covariances of these Gaussians during the EM process is shown;  the right-hand side shows the converged mixture. \cite{numerical_recipes}}
+		\label{fig:gmm_training}
+	\end{center}
+\end{figure}
+
+Gaussian Mixture Models have been used in many areas of machine learning, for example in ASR \cite{reynolds_rose}, in image retrieval \cite{permuter}, in financial modeling \cite{alexander}, and in visual tracking \cite{chen_adebomi}. When used for classification, one GMM is trained for each class separately $S = (s_1, s_2, ..., s_J)$, resulting in $J$ sets of parameters $\lambda$. The likelihood $L_j$ of each class is then determined, and the most likely class is chosen:
+\begin{equation}
+C = \argmax_{1 \leq j \leq J } P(\lambda_j | X) = \argmax_{1 \leq j \leq J} \frac{p(X | \lambda_j) P(\lambda_j)}{p(X)}
+\end{equation}
+(according to Bayes' rule). If all classes and all observations are equally likely, this simplifies to
+\begin{equation}
+C = \argmax_{1 \leq j \leq J } p(X | \lambda_j) 
+\end{equation}
+In practice, log-probabilities are commonly used for numerical reasons, resulting in the calculation:
+\begin{equation}
+C = \argmax_{1 \leq j \leq J} \sum_{n=1}^N p(x_n | \lambda_j)
+\end{equation}
+
+In addition to this direct classification concept, GMMs are often used to model the emission probabilities in Hidden Markov Models.
+
+
+
 %256
 %!
 \subsection{Hidden Markov Models}
@@ -259,15 +317,15 @@ A HMM consists of four basic components:
 \item The transition probabilities between the hidden states, defined by a transition matrix $A \in \mathbb{R}^{N x N}$; additionally, the initial state distribution (i.e. the probability of starting in each state) $\pi \in \mathbb{R}^N$
 \item The emission probabilities $B = (b_1(k), b_2(k), ..., b_N(k))$, mapping from the hidden states to the observations. These can, for example, be Gaussians for continuous outputs $o_t$, or conditional probabilities for discrete $o_t$.
 \end{itemize}
-The transition probabilities, initial state distribution, and emission probabilities define the model $\Lambda$.\\
+The transition probabilities, initial state distribution, and emission probabilities define the model $\lambda$.\\
 
 In the case of speech recognition, the observations are the feature vectors, and the hidden states are the phonemes generating these features. Such a model is visualized in figure \ref{fig:asr_hmm}. Different variants of HMMs can be created by restricting the transition matrix in certain ways; e.g., left-to-right HMMs, which only allow transitions to subsequent states and are often used in speech recognition and handwriting recognition \cite{bishop}. A particularly interesting property of HMMs for speech recognition is their relative invariance to warping along the time axis since states can usually be repeated for arbitrary amounts of time.\\
 
 Three problems commonly need to be solved for problems modeled with HMMs: 
 \begin{description}
-\item[Evaluation] - i.e., how probable is an observation sequence given this model? In mathematical terms, the probability $P(O, I | \Lambda)$ is sought. The most straightforward way to do this would be to calculate this probability for each possible $Y$ of the length $T$ of the observation sequence, but this is very computationally expensive. For this reason, an algorithm called \textit{forward procedure} is used. A forward variable $\alpha$ representing the probability at time $t$ is introduced:
+\item[Evaluation] - i.e., how probable is an observation sequence given this model? In mathematical terms, the probability $P(O, I | \lambda)$ is sought. The most straightforward way to do this would be to calculate this probability for each possible $Y$ of the length $T$ of the observation sequence, but this is very computationally expensive. For this reason, an algorithm called \textit{forward procedure} is used. A forward variable $\alpha$ representing the probability at time $t$ is introduced:
 \begin{equation}
-\alpha_t(i) = P(o_1, o_2, ..., o_t, i_t = q_i | \Lambda )
+\alpha_t(i) = P(o_1, o_2, ..., o_t, i_t = q_i | \lambda )
 \end{equation}
 This can be solved inductively with the initialization
 \begin{equation}
@@ -279,9 +337,9 @@ and the induction step
 \end{equation}
 This is a form of Dynamic Programming.
 
-\item[Training] - i.e., how can the parameters $\Lambda$ be set optimally to maximize the probability of observed sequences? There is no analytical way to compute this, but the so-called \textit{Baum-Welch} algorithm allows for an iterative estimation of the parameters. In order to do this, a backward variable $\beta$ is calculated analogous to $\alpha$ to represent the probability of the sequence from time $t+1$ to the end:
+\item[Training] - i.e., how can the parameters $\Lambda$ be set optimally to maximize the probability of observed sequences? There is no analytical way to compute this, but the so-called \textit{Baum-Welch} algorithm (which is a special case of the Expectation Maximization algorithm) allows for an iterative estimation of the parameters. In order to do this, a backward variable $\beta$ is calculated analogous to $\alpha$ to represent the probability of the sequence from time $t+1$ to the end:
 \begin{equation}
-\beta_t(i) = P(o_{t+1}, o_{t+2}, ..., o_T, i_t = q_i | \Lambda )
+\beta_t(i) = P(o_{t+1}, o_{t+2}, ..., o_T, i_t = q_i | \lambda )
 \end{equation}
 \begin{equation}
 \beta_T(i) = 1, 1 \leq i \leq N
@@ -292,7 +350,7 @@ This is a form of Dynamic Programming.
 
 The probability of a path being in state $q_i$ at $t$ and making a transition to $q_j$ at $t+1$ is then:
 \begin{equation}
-\xi_{t}(i, j) = \frac{\alpha_t(i)a_ij b_j (O_{t+1} \beta_{t+1}(j)}{P(O|\Lambda)}
+\xi_{t}(i, j) = \frac{\alpha_t(i)a_ij b_j (O_{t+1} \beta_{t+1}(j)}{P(O|\lambda)}
 \end{equation}
 This can be used to calculate the expected numbers of transitions and emissions, which can be re-adapted with statistics from the observation sequences and used to adjust $\alpha$ and $\beta$. This process is repeated until convergence.
 
@@ -300,7 +358,7 @@ This can be used to calculate the expected numbers of transitions and emissions,
 
 Again, this problem is broken down by first defining a variable for the probability of being in state $q_i$ at time $t$:
 \begin{equation}
-\gamma_t(i) = P(i_t = q_i | O, \Lambda )
+\gamma_t(i) = P(i_t = q_i | O, \lambda )
 \end{equation}
 and therefore, the most likely state at $t$ is:
 \begin{equation}
@@ -309,7 +367,7 @@ i_t = \argmax_{1 \leq i \leq N}[\gamma_t(i)], 1 \leq t \leq T
 
 Using the forward and backward variables, this can be expressed as
 \begin{equation}
-\gamma_t(i) = \frac{\alpha_t(i) \beta_t(i)}{P(O | \Lambda)}
+\gamma_t(i) = \frac{\alpha_t(i) \beta_t(i)}{P(O | \lambda)}
 \end{equation}
 This problem can be solved efficiently with the \textit{Viterbi algorithm}, which again employs Dynamic Programming.
 \end{description}
