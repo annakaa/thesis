@@ -181,29 +181,49 @@ The following steps are undertaken to obtain a plausible phoneme sequence from t
 	\end{center}
 \end{figure}
 
-\begin{table}[h!tp]
-\footnotesize
-\begin{center}
-\begin{tabular}{|c||c|c|c||c|c|c||c|c|c|}
-\hline
- & \multicolumn{3}{|c|}{Female} & \multicolumn{3}{|c|}{Male} & \multicolumn{3}{|c|}{Author} \\
- & Top1 & Top3 & Top10 & Top1 & Top3 & Top10 & Top1 & Top3 & Top10 \\
-\hline \hline
-Baseline & .25 & .25 & .35 & .1 & .1 & .2 & .1 &.23 &.36 \\
-\hline
-Posteriorgram smoothing & .65 & .7 & .90 & .5 & .65 &.65 &.61 &.67 &.76 \\
-\hline
-Filtering blocks by probabilities and confusions & .8 & .85 &.96 & .75 &.8 &.85 &.74 &.78 &.82 \\
-\hline
-Substitution weights & .9 &.95 &.95 &.65 &.8 &.9 &.76 &.78 &.83 \\
-\hline
-Substitution + Insertion weights & 1 & 1 & 1 & .75 & .85 &.9 &.81 &.84 &.9 \\
-\hline
-\end{tabular}
-\end{center}
-\caption{Results of the retrieval algorithm for three test data sets with various improvement steps.}
-\label{tab:results}
-\end{table}%
+%\begin{table}[h!tp]
+%\footnotesize
+%\begin{center}
+%\begin{tabular}{|c||c|c|c||c|c|c||c|c|c|}
+%\hline
+% & \multicolumn{3}{|c|}{Female} & \multicolumn{3}{|c|}{Male} & \multicolumn{3}{|c|}{Author} \\
+% & Top1 & Top3 & Top10 & Top1 & Top3 & Top10 & Top1 & Top3 & Top10 \\
+%\hline \hline
+%Baseline & .25 & .25 & .35 & .1 & .1 & .2 & .1 &.23 &.36 \\
+%\hline
+%Posteriorgram smoothing & .65 & .7 & .90 & .5 & .65 &.65 &.61 &.67 &.76 \\
+%\hline
+%Filtering blocks by probabilities and confusions & .8 & .85 &.96 & .75 &.8 &.85 &.74 &.78 &.82 \\
+%\hline
+%Substitution weights & .9 &.95 &.95 &.65 &.8 &.9 &.76 &.78 &.83 \\
+%\hline
+%Substitution + Insertion weights & 1 & 1 & 1 & .75 & .85 &.9 &.81 &.84 &.9 \\
+%\hline
+%\end{tabular}
+%\end{center}
+%\caption{Results of the retrieval algorithm for three test data sets with various improvement steps.}
+%\label{tab:results}
+%\end{table}%
+
+  \begin{figure}
+
+	\centering
+	\begin{subfigure}[t]{0.5\textwidth}
+		\includegraphics[width=.8\textwidth]{images/retrieval_calF.png}
+		\caption{DampRetrievalF}\label{fig:retrieval_calF}
+	\end{subfigure}%
+	\begin{subfigure}[t]{0.5\textwidth}
+		\includegraphics[width=.8\textwidth]{images/retrieval_calM.png}
+		\caption{DampRetrievalM}\label{fig:retrieval_calM}
+	\end{subfigure}\\
+	\begin{subfigure}[t]{0.5\textwidth}
+		\includegraphics[width=.8\textwidth]{images/retrieval_calA.png}
+		\caption{AuthorRetrieval}\label{fig:retrieval_calA}
+	\end{subfigure}%
+	
+	\caption{Results of the phoneme-based retrieval algorithm with various improvement steps for three small calibration data sets.}\label{fig:retrieval_cal}
+\end{figure}
+
 
 \vspace{-5pt}
 \paragraph{Distance calculation} \label{par:lev_distance}
@@ -226,7 +246,7 @@ The similarity calculation itself is implemented with a modified Levenshtein dis
 
 \subsection{Retrieval experiments: Calibration}
 For calibrating the algorithm's parameters quickly, two smaller data sets were used: \textit{DampRetrieval}, which consists of 20 female and 20 male hand-selected sung segments with clear pronunciation and good audio quality, and \textit{AuthorRetrieval}, which consists of 90 small performances of phrases in the \textit{DAMP} data set by the author. Both are described in sections \ref{subsec:data_damp} and \ref{subsec:data_retrieval}. This was done to ensure that the results were not influenced by flaws in the data set (such as unclear or erroneous pronunciation or bad quality). Lyrics can still come from the whole \textit{DAMP} lyrics set, resulting in 12,000 lines of lyrics from 300 songs.\\
-Table \ref{tab:results_retrieval_phone} shows an overview over the experimental results. Retrieval rates are reported for the Top 1 result (i.e. the one with the lowest Levenshtein distance), the Top 3, and the Top 10 results. Queries were allowed to be one to three consecutive lines of songs, increasing the number of ``virtual'' database entries to around 36,000 (12,000 lines as 1-, 2-, and 3-grams). It should be noted that a result counts as correct when the correct song (out of 300) was detected; this was done as a simplification because the same line of lyrics is often repeated in songs. For possible applications, users are most probably interested in obtaining the correct full song lyrics, rather than a specific line. Picking random results would therefore result in a retrieval rate of $.003$.\\
+Figure \ref{fig:retrieval_cal} shows an overview over the experimental results. Retrieval rates are reported for the Top 1 result (i.e. the one with the lowest Levenshtein distance), the Top 3, and the Top 10 results. Queries were allowed to be one to three consecutive lines of songs, increasing the number of ``virtual'' database entries to around 36,000 (12,000 lines as 1-, 2-, and 3-grams). It should be noted that a result counts as correct when the correct song (out of 300) was detected; this was done as a simplification because the same line of lyrics is often repeated in songs. For possible applications, users are most probably interested in obtaining the correct full song lyrics, rather than a specific line. Picking random results would therefore result in a retrieval rate of $.003$.\\
 The various improvement steps of the algorithm were tested as follows:
 \begin{description}
 \item[Baseline] This is the most straightforward approach: Directly pick the phonemes with the highest probabilities for each frame from the posteriorgram, group them by consecutive phonemes, and use the result of that for searching the lyrics database with a standard Levenshtein implementation. This results in retrieval rates of $.25$, $.1$, and $.23$ for the Female, Male, and Author test sets respectively.

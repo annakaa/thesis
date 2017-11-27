@@ -228,7 +228,7 @@ FUNCTION {format.names}
   s num.names$ 'numnames :=
   numnames 'namesleft :=
     { namesleft #0 > }
-    { s nameptr "{ff~}{vv~}{ll}{, jj}" format.name$ 't :=
+    { s nameptr "{f.~}{vv~}{ll}{, jj}" format.name$ 't :=
       nameptr #1 >
 	{ namesleft #1 >
 	    { ", " * t * }
@@ -542,7 +542,7 @@ FUNCTION {format.crossref.editor}
     { pop$ " et~al." * }
     { #2 <
 	'skip$
-	{ editor #2 "{ff }{vv }{ll}{ jj}" format.name$ "others" =
+	{ editor #2 "{f. }{vv }{ll}{ jj}" format.name$ "others" =
 	    { " et~al." * }
 	    { " and " * editor #2 "{vv~}{ll}" format.name$ * }
 	  if$

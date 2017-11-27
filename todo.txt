@@ -3,7 +3,17 @@ masatakas neue quellen
 übergänge
 abkürzungen/glossar
 refs
-MAP??
+D MAP?? (höchstens reziproker rang, aber nicht vergleichbar)
+implementierung rausnehmen?
+bild bei hmm mit formeln abgleichen
 
 
 retrieval_dtw_process: hinten "alignment" hinzufügen
+
+
+missing refs:
+sasou 7
+suzuki 8
+chen 17
+fujihara 21
+
