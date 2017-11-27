@@ -454,10 +454,60 @@ Finally, an i-vector $w$ can be extracted for each utterance using equation \ref
 
 
 \subsection{Artificial Neural Networks}
-Neural Networks have a long research history. Based on an idea by McCullough and Pitts from 1943 \cite{mccullough_pitts}, they were slowly developed into functional algorithms for classification and pattern recognition. Rosenblatt proposed a hardware design for a single-layer perceptron in 1958 \cite{rosenblatt}, while the first multi-layer networks were introduced by Ivakhnenko and Lapa in 1965 \cite{ivakhnenko}. In 1969, Minsky and Papert posited many practical limitations for Neural Networks \cite{minsky_papert}, which led to a decrease in interest.\\
+Artificial Neural Networks have a long research history. Based on an idea by McCullough and Pitts from 1943 \cite{mccullough_pitts}, they were slowly developed into functional algorithms for classification and pattern recognition. Rosenblatt proposed a hardware design for a single-layer perceptron in 1958 \cite{rosenblatt}, while the first multi-layer networks were introduced by Ivakhnenko and Lapa in 1965 \cite{ivakhnenko}. In 1969, Minsky and Papert posited many practical limitations for Neural Networks \cite{minsky_papert}, which led to a decrease in interest.\\
 The introduction of the backpropagation algorithm solved some of these issues and increased the training speed of multilayer networks \cite{werbo}, leading to a wider usage in speech recognition \cite{} and other fields \cite{}. However, other algorithms such as SVMs began to produce better results over time and thus overtook Neural Networks in popularity.\\
 Over time, processing speed of computers increased, and better strategies and hardware for parallel computing became available. This enabled the training of networks with many more layers, allowing for a much better adaptation to many high-dimensional problems \cite{hinton_osindero}. Over the past 10 years, this so-called ``deep learning'' became the state of the art for many machine learning problems \cite{nytimes} \cite{} \cite{}.\\
 
+Artifical Neural Networks (ANNs) are inspired by ``real'' Neural Networks - i.e. the human brain and nervous system. They generally consist of neurons, which are nodes that can process inputs and send outputs, and the connections between them. These neurons are grouped in layers: An input layer, an output layer, and a number of hidden layers in between them. Historically, ANNs first had no hidden layers at all; this type of ANN was called ``perceptron''. Later, the addition of one or two hidden layers was introduced and the resulting networks were called ``Multilayer Perceptrons'' (MLPs).
+%check this!
+Networks with no hidden layers are only able to solve linear problems; the introduction of hidden layers added non-linearities to the calculation. Recent ``Deep'' Neural Networks (DNNs) possess three or more hidden layers, leading to an exponential increase of the degrees of freedom and thus the possibility to model much more complex problems.\\
+
+Classical neurons compute a weighted sum $z$ of their inputs $\textbf{x} = (x_1,x_2,...,x_N)$:
+\begin{equation}
+z = b + \sum_{i=1}^N x_i w_i = b + \textbf{w}^T \textbf{x}
+\end{equation}
+%check logit
+where $\textbf{w} = (w_1,w_2,...,w_N)$ is a vector of weights, and $b$ is a constant bias. This result is often called the ``logit''. Then, a nonlinear activation function can be applied. In perceptrons, this was the Heaviside step function, shown in figure \ref{fig:activation_heaviside}, resulting in a binary output:
+\begin{equation}
+y = begin{cases}
+1 \text{if} z \leq 0\\
+0 \text{otherwise}
+\end{cases}       
+\end{equation}
+An activation function commonly used is the sigmoid function, shown in figure \ref{fig:activation_sigmoid}:
+\begin{equation}
+y = \frac{1}{1 + e^{-z}}
+\end{equation}
+Neurons of this type are called ``logistic'' neurons. This function is often applied because it generates a smooth, real-valued output and has easy-to-use derivatives, simplifying the training process.\\
+Rectified linear units (ReLUs) are also used frequently since they train faster than logistic units and retain more information that is relevant in the middle layers (in particular, sparsity for small inputs and lower risk of vanishing or exploding gradients). The function is shown in figure \ref{fig:activation_relu}:
+\begin{equation}
+y = \max(0, z)
+\end{equation}
+In the last layer, a so-called softmax activation function is often applied. This function takes the outputs of all neurons into account, and computes a probability distribution (i.e. all the outputs will sum up to one and represent the likelihood of the corresponding class):
+\begin{equation}
+y_j = \frac{e^{z_j}}{\sum_{k=1}^M e^{z_k}}, 1 \leq j \leq M
+\end{equation}
+where $M$ is the number of output neurons.\\
+
+In addition to the various types of neurons, ANNs themselves can be grouped into a number of types. In their basic configuration, ANNs will have multiple layers of the described neurons where connections are only allowed in one direction. A schematic is shown in figure \ref{fig:feedforward}. This type of network is called ``feed forward'' or, in the context of Deep Learning, a Deep Neural Network (DNN).\\
+If connections that skip back are allowed in the network, the network is called a Recursive Neural Network (RNN). These networks are particularly useful for modeling time-dependent series because they have the ability to ``store'' temporal states in their units. However, they were deemed impractical for a long time because they exhibit the exploding/vanishing gradient problem during training \cite{schmidhuber}. This problem was eventually solved with the introduction of memory cells in place of neurons, in particular Long-Short Term Memory (LSTM) units and Gated Recurrent Units (GRU) \cite{}. Nowadays, RNNs are being used successfully in a number of research tasks \cite{}.\\
+A third type of Neural Network are Convolutional Neural Networks (CNNs). These networks add layers of filters before or in between classical fully-connected layers. The parameters of these filters are trained jointly with the other layers. For this reason, CNNs are able to ``learn'' a feature representation of the input. They were first used in image classification \cite{}, but are now also being used for audio-related tasks such as environmental sound classification \cite{}. A disadvantage of both RNNs and CNNs is the computational complexity of training them, and the requirement for even more training data because they possess even more degrees of freedom than DNNs of comparable sizes.\\
+%woanders?
+In this work, DNNs with sigmoid units in the hidden layers and a softmax output layer were used in phoneme classification tasks.\\
+
+Neural Network training is performed via the backpropagation algorithm. This algorithm is based on the calculation of a cost function, which computes the difference between the network output and the expected output (e.g. the annotated classes in the training data). When using a softmax output layer, the cross-entropy is usually chosen as the cost function:
+\begin{equation}
+C = - \sum_{j=1}^M t_j \log y_j
+\end{equation}
+where $t_j$ is the target value for output unit $j$. Then, the partial derivatives with respect to each logit are calculated:
+\begin{equation}
+\end{equation}
+
+
+%structure
+%types - dnn, cnn, rnn; types of neurons - relu, sigmoid; softmax for cfy
+%training, backprop
+% problems: overtraining -> CoD
 
 
 

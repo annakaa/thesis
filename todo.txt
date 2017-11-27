@@ -6,6 +6,7 @@ refs
 D MAP?? (höchstens reziproker rang, aber nicht vergleichbar)
 implementierung rausnehmen?
 bild bei hmm mit formeln abgleichen
+dimensionality -> goodfellow
 
 
 retrieval_dtw_process: hinten "alignment" hinzufügen
