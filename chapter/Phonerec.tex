@@ -237,7 +237,7 @@ Going forward, monophonic models trained on mixed-gender data (i.e. \textit{Damp
 When using the smaller, more balanced version of \textit{DampB} (\textit{DampBB}), the results become somewhat worse, but not much, with a phoneme error rate of $.85$, and a weighted phoneme error rate of $0.66$. This is particularly interesting because this data set is only 4\% the size of the bigger one and training is therefore much faster. With the smallest data set which is only half the size of \textit{DampBB}, the change is similar: The Phoneme Error Rate rises to $.89$, the Weighted Phoneme Error Rate to $.68$. Since this data set has roughly the same amount of phonemes as \textit{TIMIT}, this proves that the improvement is actually caused by the acoustic properties of the training data, rather than just the larger amount of data. (Of course, this factor also contributes). The reduced versions of \textit{DampF} and \textit{DampM} were tested as well, but once again, they do not provide an improvement over the mixed gender model.\\
 
 
-\subsection{Error sources}
+\subsection{Error sources}\label{subsec:error_sources}
 Of course, with an automatic alignment algorithm like this, errors cannot be avoided. To acquire a clearer picture of the reasons for the various misalignments, the audio data where they occurred was analyzed more closely. Some sources of error repeatedly stuck out:
 %\begin{compactdesc}
 \begin{description}
