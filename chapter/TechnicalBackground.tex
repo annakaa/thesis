@@ -3,6 +3,33 @@
 \section{General processing chain}
 %audio - pre-processing - feat. extraction - machine learning
 % unseen audio - pre-processing - feat. extraction  - run through model - result
+
+The general procedure for the tasks in this work is shown in figures \ref{fig:process_training} and \ref{fig:process_classification}. Using data sets of audio (speech or singing) and matching annotations, models are trained as outlined in figure \ref{fig:process_training}. Then, these models are used to classify unseen audio data in order to generate annotations for them.\\
+In detail, the necessary steps are:
+\begin{description}
+\item[Pre-processing] For the tasks in this work, pre-processing of the audio data is relatively straightforward and consists of normalization of the signal and averaging to a mono channel. Additionally, the audio is downsampled to $16kHz$ because this is the lowest sampling frequency in all the data sets, and downsampling is necessary for compatibility (more detail on the data sets is given in chapter \ref{chap:data}).
+\item[Feature extraction] The audio signal contains a lot of data that is redundant and irrelevant to the tasks. For this reason, many types of so-called feature representations were developed over the years. The features employed in this work are described in the next section.
+\item[Model training] Using both the audio features and the available annotations, models are trained with machine learning algorithms to gain an implicit understanding of the sought-after annotations (i.e. classes). In this work, only supervised learning was employed. The used machine learning methods are described in section \ref{sec:tech_ml}.
+\item[Classification] The trained models can then be used in features extracted from unseen audio data to extract their annotations (= classes).
+\item[Post-processing] In many tasks, the classification results are not used directly, but processed further. In tasks like alignment and retrieval, for example, phoneme probabilities are matched with symbolic phoneme annotations. In these cases, distance calculation methods as described in section \ref{sec:tech_distances} are required.
+\end{description}
+Implementation of these steps for the actual tasks is described in section \ref{sec:tech_systems}.
+
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{images/process_training.png}
+		\caption{Schematic of the training procedure used in the considered tasks.}
+		\label{fig:process_training}
+	\end{center}
+\end{figure}
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{images/process_classification}
+		\caption{Schematic of the classification procedure used in the considered tasks (the model is the one created during training - see figure \ref{fig:process_training}).}
+		\label{fig:process_classification}
+	\end{center}
+\end{figure}
+
 \section{Audio features}
 %mfcc, sdc, (rasta-)plp, trap; mention filterbank feats...?
 %TODO: write intro
@@ -150,7 +177,7 @@ In this work, the coefficient vector is used directly as a feature to train vari
 \end{figure}
 
 
-\section{Distance calculation}
+\section{Distance calculation} \label{sec:tech_distances}
 \subsection{Dynamic Time Warping}
 Dynamic Time Warping (DTW) is an algorithm for finding an optimal alignment between two time sequences of vectors $X$ and $Y$, which was originally developed for aligning speech sequences to each other \cite{rabiner}. $X$ and $Y$ are not required to have the same length (i.e. $X = (x_1,...,x_M$) and $Y = (y_1,...,y_N) $). To this end, varying durations of parts of each sequence are allowed. The result is a warping path $W = w_1,...,w_K$ where each element represents an alignment of the elements of the two sequences (i.e. $w_k = (m_k,n_k)$ represents the alignment of the elements $x_{m_k}$ and $y_{n_k}$ of $X$ and $Y$).\\
 In classical DTW, the warping path must fulfill three restrictions:
@@ -229,7 +256,7 @@ where $L(i,j)$ is the Levenshtein distance at step $(i,j)$ and $D$, $I$, and $S$
 
 
 
-\section{Machine learning algorithms}
+\section{Machine learning algorithms} \label{sec:tech_ml}
 This section describes the various Machine Learning algorithms employed throughout this thesis. Gaussian Mixture Models (GMMs), Hidden Markov Models (HMMs), and Support Vector Machines (SVMs) are three traditional approaches that are used as the basis of many new approaches, and were used for several starting experiments. i-Vector processing is a relatively new, more sophisticated approach that bundles several other machine learning techniques.\\
 In recent years, Deep Learning has become the standard for machine learning applications \cite{}. This chapter also describes a new approach that was used extensively in this work: Deep Neural Networks (DNNs).
 
@@ -587,7 +614,7 @@ However, Goodfellow makes an argument that Deep models operate on a different le
 %\subsection{Evaluation of language identification tasks}
 %\subsection{Evaluation of keyword spotting tasks}
 
-\section{Speech recognition systems and their evaluation}
+\section{Speech recognition systems and their evaluation} \label{sec:tech_systems}
 \subsection{Phoneme recognition}
 \subsection{Forced alignment}
 \subsection{Language identification}
