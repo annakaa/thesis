@@ -455,8 +455,8 @@ Finally, an i-vector $w$ can be extracted for each utterance using equation \ref
 
 \subsection{Artificial Neural Networks}
 Artificial Neural Networks have a long research history. Based on an idea by McCulloch and Pitts from 1943 \cite{mcculloch_pitts}, they were slowly developed into functional algorithms for classification and pattern recognition. Rosenblatt proposed a hardware design for a single-layer perceptron in 1958 \cite{rosenblatt}, while the first multi-layer networks were introduced by Ivakhnenko and Lapa in 1965 \cite{ivakhnenko}. In 1969, Minsky and Papert posited many practical limitations for Neural Networks \cite{minsky_papert}, which led to a decrease in interest.\\
-The introduction of the backpropagation algorithm solved some of these issues and increased the training speed of multilayer networks \cite{werbos}, leading to a wider usage in speech recognition \cite{} and other fields \cite{}. However, other algorithms such as SVMs began to produce better results over time and thus overtook Neural Networks in popularity.\\
-Over time, processing speed of computers increased, and better strategies and hardware for parallel computing became available. This enabled the training of networks with many more layers, allowing for a much better adaptation to many high-dimensional problems \cite{hinton_osindero}. Over the past 10 years, this so-called ``deep learning'' became the state of the art for many machine learning problems \cite{nytimes} \cite{} \cite{}.\\
+The introduction of the backpropagation algorithm solved some of these issues and increased the training speed of multilayer networks \cite{werbos}, leading to a wider usage in speech recognition \cite{waibel_hanazawa} and other fields, such as computer vision \cite{srinivas} and Natural Language Processing \cite{goldberg}. However, other algorithms such as SVMs began to produce better results over time and thus overtook Neural Networks in popularity.\\
+Over time, processing speed of computers increased, and better strategies and hardware for parallel computing became available. This enabled the training of networks with many more layers, allowing for a much better adaptation to many high-dimensional problems \cite{hinton_osindero}. Over the past 10 years, this so-called ``deep learning'' became the state of the art for many machine learning problems \cite{nytimes}\cite{schmidhuber_dl}\cite{deng_hinton_kingsbury}.\\
 
 Artifical Neural Networks (ANNs) are inspired by ``real'' Neural Networks - i.e. the human brain and nervous system. They generally consist of neurons, which are nodes that can process inputs and send outputs, and the connections between them. These neurons are grouped in layers: An input layer, an output layer, and a number of hidden layers in between them. Historically, ANNs first had no hidden layers at all; this type of ANN was called ``perceptron''. Later, the addition of a hidden layer was introduced and the resulting networks were called ``Multilayer Perceptrons'' (MLPs).
 %check this!
@@ -565,9 +565,13 @@ E_C = - \sum_{j=1}^M t_j \log y_j
 %\end{equation}
 \\
 One of the major issues in Neural Networks is that of overfitting: The model adapts too well to the training data and is not able to sufficiently generalize to new data anymore. (In extreme cases, the model simply learns all the training data by heart). This is especially relevant for deep networks because of the many degrees of freedom.\\
-There are several strategies to overcome this problem. One of the most frequently used ones is dropout: During training, nodes in the network are deactivated randomly, effectively resulting in many different network structures and making the whole network robust to variations in the data.\\
-The main sticking point, however, is the amount of data used for training the network. The more variety is available, the lower the risk of overtraining. \cite{goodfellow}
+There are several strategies to overcome this problem. One of the most frequently used regularization strategies is dropout: During training, nodes in the network are deactivated randomly, effectively resulting in many different network structures and making the whole network robust to variations in the data. The main sticking point, however, is the amount of data used for training the network. The more variety is available, the lower the risk of overtraining.\\
+The so-called ``curse of dimensionality'' is a concept that applies to many machine learning algorithms:
+However, Goodfellow makes an argument that Deep models operate on a different level altogether \cite{goodfellow}: Where traditional machine learning methods make an assumption of smoothness of the hidden functions to be represented, Deep models actually attempt to model the underlying structures in a distributed way. This means that information about outputs can be learned in a shared way - i.e., if two classes have something in common, the model is also able to represent this fact. Practically, the many degrees of freedom do not lead to ``learning by heart'', but instead allow for an internal representation of highly complex relationships.
 %!!! hier weiter mit CoD - Goodfellow
+%particularly when seen as feature learning... - non-linear mapping; or representing different features of the input (faces: male vs. female, glasses...)
+% empirical proof
+%also search for degrees of freedom
 
 %structure
 %types - dnn, cnn, rnn; types of neurons - relu, sigmoid; softmax for cfy
@@ -576,14 +580,14 @@ The main sticking point, however, is the amount of data used for training the ne
 
 
 
+%
+%\section{Evaluation}
+%\subsection{Evaluation of phoneme recognition and alignment tasks}
+%%alignment? - duration acc. - no, mean error
+%\subsection{Evaluation of language identification tasks}
+%\subsection{Evaluation of keyword spotting tasks}
 
-\section{Evaluation}
-\subsection{Evaluation of phoneme recognition and alignment tasks}
-%alignment? - duration acc. - no, mean error
-\subsection{Evaluation of language identification tasks}
-\subsection{Evaluation of keyword spotting tasks}
-
-\section{Speech recognition systems}
+\section{Speech recognition systems and their evaluation}
 \subsection{Phoneme recognition}
 \subsection{Forced alignment}
 \subsection{Language identification}
