@@ -1,58 +1,60 @@
-%\addcontentsline{toc}{chapter}{List of Abbreviations and Symbols}
-%\chapter*{Abbreviations}
-
 \cleardoublepage
-\ihead[]{List of Abbreviations and Symbols}
-\addcontentsline{toc}{chapter}{List of Abbreviations and Symbols}
-\renewcommand{\nomname}{List of Abbreviations and Symbols}
-\setlength{\nomlabelwidth}{.20\hsize}
-\renewcommand{\nomlabel}[1]{#1 \dotfill}
-% Zeilenabstnde verkleinern
-\setlength{\nomitemsep}{-\parsep}
-\markboth{\nomname}{\nomname}
+\ihead[]{List of Abbreviations}
+\addcontentsline{toc}{chapter}{List of Abbreviations}
+\chapter*{List of Abbreviations}
 
-\nomenclature{$A_C$}{Class-Wise Accuracy}
-\nomenclature{$A_M$}{Multi-Class Accuracy}
-\nomenclature{ACF}{Auto-Correlation Function}
-\nomenclature{ASE}{Audio Spectral Envelope}
-\nomenclature{BPM}{Beats per minute}
-\nomenclature{CFS}{Correlation-Based Feature Selection}
-\nomenclature{CUIDADO}{Content-based  Unified  Interfaces and Descriptors for  Audio/Music  Databases  available  Online}
-\nomenclature{DCT}{Discrete Cosine Transform}
-\nomenclature{EPCP}{Enhanced Pitch Class Profile}
-\nomenclature{ETD}{Equal-Tempered Deviation}
-\nomenclature{$F$}{$F$ measure}
-\nomenclature{FFT}{Fast Fourier Transform}
-\nomenclature{FIR}{Finite Impulse Response}
-\nomenclature{Fraunhofer IDMT}{Fraunhofer Institute for Digital Media Technology}
-\nomenclature{GMM}{Gaussian Mixture Model}
-\nomenclature{H2A}{Harmonic-to-Attack Ratio}
-\nomenclature{HMM}{Hidden Markov Model}
-\nomenclature{Hz}{Hertz}
-\nomenclature{IRMFSP}{Inertia Ratio Maximization using Feature Space Projection}
-\nomenclature{ITU-T}{International Telecommunication Union, Telecommunication Standardization Sector} 
-\nomenclature{kbps}{Kilobit per second}
-\nomenclature{KEFIR}{Knowledge Expert Framework for Information Retrieval}
-\nomenclature{KNN}{$k$-Nearest Neighbour (Classifier)}
-\nomenclature{LDA}{Linear Discriminant Analysis}
-\nomenclature{MARSYAS}{Music Analysis, Retrieval and Synthesis for Audio Signals}
-\nomenclature{MFCC}{Mel-Frequency Cepstral Coefficient(s)}
-\nomenclature{MIDI}{Musical Instrument Digital Interface}
-\nomenclature{MIR}{Music Information Retrieval}
-\nomenclature{MIREX}{Music Information Retrieval Evaluation eXchange}
-\nomenclature{MPEG}{Moving Picture Experts Group}
-\nomenclature{NN}{Neural Networks}
-\nomenclature{$P$}{Precision}
-\nomenclature{PCA}{Principal Component Analysis}
-\nomenclature{$R$}{Recall}
-\nomenclature{RAS}{Rhythmic Auditory Stimulation}
-\nomenclature{RBF}{Radial Basis Function}
-\nomenclature{SCM}{Spectral Crest Measure}
-\nomenclature{SFM}{Spectral Flatness Measure}
-\nomenclature{SVM}{Support Vector Machine}
-\nomenclature{UNESCO}{United Nations Educational, Scientific and Cultural Organization}
-\nomenclature{ZCR}{Zero-Crossing Rate}
+\begin{longtable}{p{.3\textwidth} p{.7\textwidth}}
+\textbf{ANN} & Artificial Neural Network\\
+\textbf{AR-HMM} & Auto-Regressive HMM\\
+\textbf{ASR} & Automatic Speech Recognition\\
+\textbf{CNN} & Convolutional Neural Network\\
+\textbf{DAMP} & Digital Archive of Mobile Performances\\
+\textbf{DCT} & Discrete Cosine Transform\\
+\textbf{DFT} & Discrete Fourier Transform\\
+\textbf{DNN} & Deep Neural Network\\
+\textbf{DTW} & Dynamic Time Warping\\
+\textbf{EM} & Expectation Maximization\\
+\textbf{$F_0$} & Fundamental frequency\\
+\textbf{$F_1$} & $F_1$ measure\\
+\textbf{FFT} & Fast Fourier Transform\\
+\textbf{FSA} & Finite State Automaton\\
+\textbf{FSM} & Finite State Machine\\
+\textbf{GMM} & Gaussian Mixture Model\\
+\textbf{GRU} & Gated Recurrent Unit\\
+\textbf{HMM} & Hidden Markov Model\\
+\textbf{LPC} & Linear Predictive Coding\\
+\textbf{LRE} & Language Recognition Evaluation\\
+\textbf{LSTM} & Long Short-Term Memory\\
+\textbf{LVCSR} & Large-Vocabulary Continuous Speech Recognition\\
+\textbf{MAP} & Mean Average Precision\\
+\textbf{MFC} & Mel-Frequency Cepstrum\\
+\textbf{MFCC} & Mel-Frequency Cepstral Coefficient(s)\\
+\textbf{MIR} & Music Information Retrieval\\
+\textbf{MIREX} & Music Information Retrieval Evaluation eXchange\\
+\textbf{MLLR} & Maximum Likelihood Linear Regression\\
+\textbf{MLP} & Multilayer Perceptron\\
+\textbf{NIST} & National Institute for Standards and Technology\\
+\textbf{NN} & Neural Network\\
+\textbf{OGI} & Oregon Institute for Science and Technology\\
+\textbf{PER} & Phoneme Error Rate\\
+\textbf{PLP} & Perceptual Linear Prediction\\
+\textbf{PPR} & Parallel Phoneme Recognition\\
+\textbf{PPRLM} & Parallel Phoneme Recognition followed by Language Modeling\\
+\textbf{QMUL} & Queen Mary University of London\\
+\textbf{RASTA} & RelAtive SpecTrA\\
+\textbf{RBF} & Radial Basis Function\\
+\textbf{ReLU} & Rectified Linear Unit\\
+\textbf{RNN} & Recursive Neural Network\\
+\textbf{ROVER} & Recogniser Output Voting Error Reduction\\
+\textbf{SAI} & Stabilized Auditory Images\\
+\textbf{SDC} & Shifted Delta Cepstrum\\
+\textbf{STFT} & Short-term Fourier Transform\\
+\textbf{SVM} & Support Vector Machine\\
+\textbf{TRAP} & TempoRAl Pattern\\
+\textbf{UBM} & Universal Background Model\\
+\textbf{VAD} & Vocal Activity Detection\\
+\textbf{VTHMM} & Variable Time HMM\\
+\textbf{WLPC} & Warped Linear Predictive Coding\\
+%\textbf{WPER} & Weighted Phoneme Error Rate\\
 
-
-% \printglossary
-\printnomenclature
+\end{longtable}

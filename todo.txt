@@ -1,13 +1,17 @@
 tasks beschreiben
-masatakas neue quellen
 übergänge
 abkürzungen/glossar
 refs
 D MAP?? (höchstens reziproker rang, aber nicht vergleichbar)
 implementierung rausnehmen?
 bild bei hmm mit formeln abgleichen
-dimensionality -> goodfellow
-
+curse of dimensionality -> goodfellow
+vektoren fett
+research triphones!!
+add thought about triphones being to variable in singing
+time resolutions!
+phonotactic lid sota - inspiration
+lid figures - y label!!
 
 retrieval_dtw_process: hinten "alignment" hinzufügen
 
