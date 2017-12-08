@@ -12,6 +12,7 @@ add thought about triphones being to variable in singing
 time resolutions!
 phonotactic lid sota - inspiration
 lid figures - y label!!
+why not hmms? - no accounting for phoneme confusions or noisy, long phones; reliable training data? (-> additional source of confusion)
 
 retrieval_dtw_process: hinten "alignment" hinzufügen
 
