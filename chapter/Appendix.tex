@@ -322,7 +322,12 @@ Rehab & Amy Winehouse & Yes \\
 Rolling In The Deep & Adele & Yes \\
 She's Leaving Home & The Beatles & No \\
 Smells Like Teen Spirit & Nirvana & Yes \\
-Sunrise & Norah Jones & Yes \\ \hline
+Sunrise & Norah Jones & Yes \\ 
+This Afternoon & Nickelback & Yes \\
+Trick Me & Kelis & Yes \\
+Umbrella & Rihanna & No \\
+Viva La Vida & Coldplay & Yes\\
+\hline
 \end{tabular}
 \end{center}
 \caption{Songs in the \textit{ACAP} data set.}
@@ -772,7 +777,7 @@ The following table displays the results on the \textit{ACAP} data set in the \t
 \begin{table}[h]
 \begin{center}
 \begin{tabular}{|c||c|c|c|}\hline
-Submission & Mean error & Median error & St. dev. error\\ \hline
+Submission & Mean error (s) & Median error (s) & St. dev. error (s)\\ \hline
 HMM & 13.96 & 7.64	 & 12.73\\
 DTW & 27.94 & 19.58 & 31.86\\
 LEV & 7.34 & 4.55 & 7.71\\
@@ -785,7 +790,112 @@ DMS2 & 10.57 & 2.02 & 23.30\\
 \label{tab:app_mirex1}
 \end{table}%
 
+\begin{table}[h]
+	\begin{center}
+		\begin{tabular}{|c||c|c|c|c|c|}\hline
+			Song & HMM & DTW & LEV & DMS1 & DMS2 \\ \hline
+Clocks & 41.510 	73.56	&	21.89	&	34.71	&	34.71	\\
+I Kissed A Girl & 0.180 	0.27	&	0.14	&	0.16	&	0.16	\\
+Rehab & 0.040 	0.29	&	0.07	&	0.11	&	0.11	\\
+Rolling In The Deep & 0.860 	3.93	&	1.06	&	1.22	&	1.22	\\
+Sunrise & 0.670 	0.47	&	0.76	&	0.36	&	0.36	\\
+This Afternoon & 0.990	1.82	&	0.26	&	1.32	&	1.32	\\
+Trick Me & 0.170 	0.11	&	0.14	&	0.19	&	0.19	\\
+Umbrella & 1.450 	2.04	&	1.3	&	1.72	&	1.72	\\
+Viva La Vida & 0.120 	5.47	&	0.21	&	0.37	&	0.37	\\
+	
+			\hline
+		\end{tabular}
+	\end{center}
+	\caption{Individual \textit{MIREX} song results on the \textit{ACAP} data set.}
+	\label{tab:app_mirex1a}
+\end{table}%
+
 \subsection{Results on the \textit{ACAP\_Poly} data set}
 
-\subsection{Results on the \textit{Mauch} data set}
+\begin{table}[h]
+	\begin{center}
+		\begin{tabular}{|c||c|c|c|}\hline
+			Submission & Mean error (s)& Median error (s) & St. dev. error (s)\\ \hline
+			HMM & 13.96 & 7.64 & 12.73\\
+			DTW & 27.94 & 19.58 & 31.86\\
+			LEV & 7.34 & 4.55 & 7.71\\
+			DMS1 & 26.70 & 14.94 & 29.97\\
+			DMS2 & 10.57 & 2.02 & 23.30\\	
+			\hline
+		\end{tabular}
+	\end{center}
+	\caption{\textit{MIREX} results on the \textit{ACAP\_Poly} data set.}
+	\label{tab:app_mirex2}
+\end{table}%
 
+\begin{table}[h]
+	\begin{center}
+		\begin{tabular}{|c||c|c|c|c|c|}\hline
+			Song & HMM & DTW & LEV & DMS1 & DMS2 \\ \hline
+Clocks	&	42.76	&	107.72	&	22.69	&	65.43	&	76.2	\\
+I Kissed A Girl	&	7.64	&	6.59	&	0.49	&	5.72	&	1.46	\\
+Rehab	&	6.04	&	5.78	&	0.5	&	5.66	&	0.55	\\
+Rolling In The Deep	&	2.99	&	31.66	&	2.66	&	19.39	&	7.53	\\
+Sunrise	&	3.24	&	4.26	&	4.55	&	14.94	&	2.02	\\
+This Afternoon	&	2.65	&	24.2	&	3.29	&	17.31	&	0.7	\\
+Trick Me	&	18.13	&	1.8	&	6.4	&	9.91	&	0.39	\\
+Umbrella	&	16.33	&	49.87	&	5.61	&	95.47	&	2.65	\\
+Viva La Vida	&	25.82	&	19.58	&	19.83	&	6.44	&	3.63	\\
+
+			\hline
+		\end{tabular}
+	\end{center}
+	\caption{Individual \textit{MIREX} song results on the \textit{ACAP\_Poly} data set.}
+	\label{tab:app_mirex1a}
+\end{table}%
+
+\subsection{Results on the \textit{Mauch} data set}
+\begin{table}[h]
+	\begin{center}
+		\begin{tabular}{|c||c|c|c|}\hline
+			Submission & Mean error (s)& Median error (s) & St. dev. error (s)\\ \hline
+			HMM & 17.70 & 10.14 & 17.01\\
+			DTW & 22.23 & 16.38 & 22.08\\
+			LEV & 9.03 & 7.52 & 7.23\\
+			DMS1 & 14.91 & 10.14 & 15.30\\
+			DMS2 & 11.64 & 5.12 & 13.31\\
+			\hline
+		\end{tabular}
+	\end{center}
+	\caption{\textit{MIREX} results on the \textit{Mauch} data set.}
+	\label{tab:app_mirex3}
+\end{table}%
+
+\begin{table}[h]
+	\begin{center}
+		\begin{tabular}{|c||c|c|c|c|c|}\hline
+			Song & HMM & DTW & LEV & DMS1 & DMS2 \\ \hline
+Knowing Me, Knowing You	&	9.4	&	4.25	&	4.72	&	18.91	&	4.31	\\
+Eternal Flame	&	38.27	&	6.68	&	23.56	&	4.01	&	3.08	\\
+Call Me	&	34.34	&	5.98	&	8.37	&	8.11	&	4.08	\\
+Warwick Avenue	&	7.2	&	16.04	&	2.33	&	3.35	&	9.4	\\
+Ordinary World	&	12.78	&	53.46	&	6.8	&	6.25	&	4.32	\\
+Do You Want To	&	5.52	&	18.41	&	2.66	&	5.28	&	42.67	\\
+Toy Soldiers	&	20.05	&	30.37	&	10.32	&	11.15	&	17.6	\\
+Guiding Light	&	66.17	&	94.14	&	28.46	&	35.62	&	48.8	\\
+The Dock Of The Bay	&	0.92	&	1.38	&	1.78	&	3.66	&	0.38	\\
+We Are The Champions	&	6.43	&	18.5	&	6.8	&	9.12	&	5.43	\\
+RM-P082	&	43.13	&	14.4	&	9.91	&	12.43	&	12.21	\\
+RM-P084	&	9.52	&	12.17	&	8.09	&	15.19	&	1.51	\\
+Addicted To Love	&	10.75	&	20.84	&	4.51	&	8.32	&	4.82	\\
+Black Magic Woman	&	39.87	&	16.72	&	15.86	&	21.84	&	16.83	\\
+Cecilia	&	5.94	&	7.43	&	9.36	&	5.18	&	29.23	\\
+Back For Good	&	3.09	&	3.93	&	0.75	&	4.13	&	1.73	\\
+What's Love Got To Do With It	&	10.85	&	6.86	&	10.58	&	30.02	&	9.7	\\
+Africa	&	4.65	&	41.39	&	6.96	&	12.42	&	2.39	\\
+With Or Without You	&	19.57	&	51.36	&	17.84	&	70.16	&	11.79	\\
+She	&	5.61	&	20.24	&	0.94	&	13.05	&	2.48	\\
+
+			
+			\hline
+		\end{tabular}
+	\end{center}
+	\caption{Individual \textit{MIREX} song results on the \textit{Mauch} data set.}
+	\label{tab:app_mirex1a}
+\end{table}%
