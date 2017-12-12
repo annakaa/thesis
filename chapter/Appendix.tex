@@ -9,13 +9,10 @@
 
 \section{Phoneme set}
 The employed phoneme set is \textit{ARPABET}, which is also used in CMU Sphinx\footnote{\url{http://www.speech.cs.cmu.edu/cgi-bin/cmudict}} and in the \textit{TIMIT} annotations. It contains 39 phonemes. The following listing is taken from the Sphinx documentation:
-
-
-\begin{table}[h]
-\caption{Phoneme set used throughout this work.}
+\begin{table}[H!]
 \footnotesize
 \begin{center}
-\begin{tabular}{|c||c|c|c|}
+\begin{tabular}[H!]{|c||c|c|c|}
 \hline
 Phoneme & IPA Symbol & Example & Translation \\ \hline
         aa & \textipa{A} & odd &  aa d \\
@@ -66,10 +63,12 @@ Phoneme & IPA Symbol & Example & Translation \\ \hline
 \end{table}%
 
 \section{Keywords}
-\begin{table}[h]
+\begin{table}[H!]
+		\footnotesize
 \begin{center}
-\begin{tabular}{|c||c|c|c|}
-Keyword & Pronunciation & \#Phonemes & \#Occurrences in \textit{ACAP} & \#Occurrences in \textit{DampTest} \\ \hline
+\begin{tabular}{|c||c|c|c|c|}\hline
+
+Keyword & Pronunciation & \#Phonemes & \#Occ. \textit{ACAP} & \#Occ. \textit{DampTest} \\ \hline
 love & l ah v & 3 & 156 & 748\\
 baby & b ey b iy & 4 & 84 & 467\\
 never & n eh v er & 4  & 106 & 246\\
@@ -85,6 +84,7 @@ away & ah w ey & 3 & 69 & 187\\
 time & t ay m & 3 & 102 & 243\\
 only & ow n l iy & 4 & 58 & 164\\
 little & l ih t ah l & 4 & 53 & 121 \\
+\hline
 \end{tabular}
 \end{center}
 \caption{Set of keywords used in the keyword spotting tasks.}
@@ -96,24 +96,217 @@ little & l ih t ah l & 4 & 53 & 121 \\
 
 \subsection{Links to the \textit{YTAcap} songs}
 The following table lists the IDs of the videos on \texttt{http://www.youtube.com} that were used to generate the \textit{YTAcap} data set for singing language identification. The full URL is formed by pre-pending \texttt{http://www.youtube.com/watch?v=} to the ID. Please note that this list was created in 2012, and videos may not be available any longer.
-\begin{table}[h]
-\begin{center}
-\begin{tabular}{|c|c|c|}
+	\footnotesize
+\begin{longtable}[H!]{|p{.3\textwidth} | p{.3\textwidth} | p{.3\textwidth} |} 
 \hline
 \textbf{English} & \textbf{German} & \textbf{Spanish} \\
 \hline
-0Etj1j0G1HI	&	051PuPcvGXM	&	01rWqAmipLo	\\0V7Am6ZowM0	&	0eU5piFUrh4	&	0NEk0aVONfo	\\1IYjoYG8O6g	&	0vYEgQr6XsM	&	0vGblvchoqw	\\1gN_BXUa1pE	&	1Io79wz1HPg	&	0z73yLt4r2s	\\1uto5cAJ7JE	&	2HTna6FFaf4	&	18kJKv7fZyo	\\2_sFPBAq69E	&	2Tdl6Zxy5BM	&	1IKxPEE52OQ	\\3cjjETCrk5Q	&	2eZV9-goQl4	&	1LVNr2ABe-I	\\3oAawKMZrJ8	&	3hL2GH-XGrg	&	1QzvHBjXUeU	\\4j_kHq_2EqY	&	4YYYjCKbrFA	&	1dtsE0CGk58	\\4yx8bpJXvfE	&	5uA87nebFNo	&	1h0Y2GKmkpU	\\5P30UtOkR98	&	6P_aok_YaF4	&	1lhAwKtC_HA	\\5VtZwpu68bA	&	6mn78r3JTf8	&	1vTMNKD6u0k	\\5sDXzTFDmcw	&	6tdqMoOmb7I	&	25_OmbxR0AE	\\61tZQxgyslU	&	71pTFZKqU00	&	2BGWJT9oWFY	\\6FDRq2UkbU4	&	735rb-y-E9Y	&	2a8G4mIscJw	\\6W-4KM1Bh4w	&	8_MKu_hBH20	&	3AyylrG4j_c	\\6j7qDjXXy5s	&	8tz-fY4_rIY	&	3Q9KbjohXR8	\\6qbrwu-gYXg	&	9-rs2NbvLM8	&	3Uw3uGnBpv8	\\7Ll73o2oPsU	&	9iiNcg1Vo6A	&	3aJo70bfxpI	\\7n1Kurj5DoA	&	A-NDpqmFaZc	&	3id3ij6UTxg	\\8C7XmDFtMd8	&	A0NGgnLy3oA	&	3vDpw2IIIgM	\\8K8-JeThiyk	&	A3TnoPKpCqA	&	4GFTBVMQdsM	\\8mMjQVeGeH0	&	ATeDuGRtBpY	&	58VWYsiumAs	\\8mf1je4N1MM	&	AsiEpUUi3VU	&	5EygGxuaEJw	\\913d-ZUevlM	&	AyUQdo8-ca0	&	5USj1Nh7t1s	\\9KUX0w-wNJI	&	BXqyNQpmWEM	&	5kGsASMR3Vo	\\9nuJnNdEdKc	&	CigIPV_c_JM	&	64jknG0EfPg	\\AQUJ_yvhIpg	&	CkVn3e90ZmQ	&	7DX6fs5zdfw	\\AjqAF-cMhLk	&	E0ZRN6z5Epg	&	8DtHjRYOf-0	\\Bj6YCDLTFw	&	EDTyGgpwsWc	&	8Ff_s83LCq4	\\CM5lkWQHnoE	&	Ea9cDpJIxJE	&	8H5bKJk6j8g	\\CO6QMRV-Rn4	&	Fdx-iIegUq8	&	8JymxjeJxGU	\\CP4Mvx0jtRM	&	GBuf6tJaAsY	&	8ZZ9GvWcYS8	\\CQoADIX6r3c	&	H1iuZFpVqDU	&	9LRMZcABlU8	\\D7q18pMi0BY	&	HZ1RUOHW4vQ	&	9Q2ahLvQdGw	\\D_cF3Xn1oEU	&	JAqGCIYRbMk	&	9iEcH4tvew0	\\DvvnskRPCKQ	&	JmC44NnxID4	&	ALcyPQp6MaE	\\EIi5jrbKETw	&	K7_9KJ1H7so	&	AiZ8uU4JhYo	\\ERLMNVIm3ug	&	Kk8J8Ugzd1A	&	B17oafBr_dI	\\F2h4ABL0FUs	&	KkNeQgwC8e8	&	CVMLShBfiP4	\\FkTTLv_K_-8	&	Krm5-5WDrDE	&	Ck__A5-saNU	\\G3RoSdcy-x4	&	KyLXLJVX1SA	&	DeytgA94IDU	\\G82CvOH8D14	&	L0GHWCNUQK4	&	DfksCfRtSmY	\\Ghk5Cia6ekM	&	LYCTjMAS3Bg	&	DqmgMY-70sI	\\GodyygWDpek	&	LzzUxuq4LCA	&	Dvq5TTBTp40	\\GqCYQMNN0ks	&	MZ43kZPwywg	&	EeTP5XwqSyo	\\GtTgKzOx1gA	&	N7SIGXl6u0o	&	F0TDfVZiOBg	\\Gwz6P2gsp_Y	&	N9lzHVS7_C0	&	F9eL0oxLBjg	\\H3GdU7cLrjo	&	O3jec1vlbOo	&	FEE9KERZovU	\\HMKRY_Jyxks	&	OER2e4-w368	&	GIObQf19GXc	\\HjOC4P9ovjA	&	OuKqZyBIYAo	&	GOEiGQ7RlgQ	\\HurjdE2ry0o	&	PhQzx2IW_G4	&	GP2UomvOUgk	\\I5o7k_x0vwY	&	QA4l_q6HuGw	&	H2mXZIunNpk	\\IBaZQtLKZ_k	&	Qvg1tIaTrc0	&	H5dhyhOcFKI	\\IHOwfQsrjtQ	&	Ra7hF1ZJ_CY	&	IAbXYQlz_v8	\\IZisx1p6QJU	&	TLfitdm7KT0	&	IL0W8DTjkMc	\\IbRpHgNpYsI	&	TUYRUfR3nls	&	JI52mwGIuGs	\\ImsQAWkoxg	&	TnIyQdHRmDI	&	JQTvisnmvKk	\\IpkbpAbkDIg	&	Ts6A6RR3dVQ	&	JVNRdGsa6rw	\\J5ftgv3BHd0	&	Uc97016ScmM	&	JyzGr1pjrZk	\\JHL62QDtTB0	&	V3F7TfiqOcA	&	LaMQ3qGGIEk	\\JMYxs6gooao	&	VRKkQXVYIhk	&	LvX8gZEnqkE	\\JO9wyuVfbD4	&	WGqH91-Vtpk	&	Lz9Ztx04YKg	\\JuXDcCO9Ds4	&	WJvrZP50vts	&	MELXF9E_RUs	\\K1aiMNdrlUg	&	X37jDiiXCM4	&	M_FIpjLG7Ic	\\K9iPEoAbOio	&	X4iwbgRXKvk	&	N2LMCIcSG8w	\\KjC9qUN3yz4	&	_X0SqViRKH4	&	NV6C5BgHpFQ	\\L04SUurMfG0	&	_jgaKt-hh1E	&	NiJcUeB-jkY	\\L8Vl05blL_U	&	_po0UMyKOJ4	&	OCQ9l4oQ5tI	\\Ldft2mDyK3g	&	aB48LiXRxyI	&	OEwXady1LYU	\\Lgqdp7RHS0s	&	adTvK02FcBc	&	OMAjbgbgyqA	\\LjtWvf-Q9rs	&	bTN5ltEqyp8	&	Or_l4D3d2Rk	\\LqVzlJqK63M	&	bgFvyNMgj4Q	&	P0QsWO5CjUA	\\LzzrH4X-Tfg	&	cF1rLiZLCDo	&	P978_D2KU_Y	\\MGburXoemRY	&	cdIKwN0JtHk	&	PNcqRRvtt7Q	\\MW3QgexqaCY	&	dMvUNlprrWc	&	Pm_EUWf_LyI	\\MoCb8KDv9k	&	dma-KHqbhr8	&	Pw-9oSroQNs	\\MvtWociP_18	&	eR16KXkGzA8	&	Q6KEL0_t2-M	\\NFGviYQiFII	&	eaeS-t24PYU	&	Q9g1Nw7ubSI	\\NTLm8D9L6dg	&	eb-psejW3qk	&	QcvV2HwRn_0	\\O-9BotdD9xg	&	f_2L50a7Qf4	&	QeeFDwaaJjQ	\\OA1egRiv2fY	&	fko0ZFgFDy0	&	RJgvf_RMQYU	\\OSJ2vY4iMUw	&	h2bJcbAxLXE	&	S6JYr18vzHQ	\\OkM0bfuJU3o	&	hEqQj4ZskXs	&	S8WdHaepufc	\\OkOQCWKyC7c	&	iJtWrAmSsmk	&	SKH69nNPHPI	\\OykxqG-4BbQ	&	jCx1_wEOBOE	&	SX_GlrVvZrg	\\PRtzf-l2iDk	&	kBg_j4YYLVk	&	SfvMpYwhyc0	\\Pcb7I7-gQNA	&	kgIlQObqDTk	&	SsJIc4KlZoI	\\PlVKF6JJ4xE	&	l4JcgU4ZOMI	&	T7wjg-teZR4	\\PniKj-dSL5A	&	lNKW624AwTc	&	THEGo_JIrSM	\\Q26t_7AopZo	&	lhVHpSUSTLg	&	TykvEinDRQQ	\\QRJ_6JaTGLI	&	llKcF2sy8Kc	&	U4cQIn7fXG4	\\QjKs2Qxmt5c	&	m6ToAmRuW7Q	&	Un2ZSvFgc70	\\Qvm_i0MZHbI	&	mzx3u2SW_tA	&	UoY44kksjV4	\\R-6o0gWkX8U	&	ndw3-gmSGoE	&	Uy9cXGrU8Ro	\\R5UOX4JhlIM	&	oCtjjekZUYg	&	WL-mNud6EqY	\\RNokB071frc	&	ofDDUyZO7Gs	&	Wmygy5VFuGE	\\RrjLqGRwbNs	&	omaowxzbPuc	&	Y1s0SKXFPUo	\\SXDCoYsq3q4	&	oq1kUR8D1LE	&	YBbbXX5eWTI	\\Sb2sTtQYIBs	&	pg0GOlQWirQ	&	YZvbQFojujA	\\TgvmkWsrhUM	&	q4iV_6IHRKk	&	ZOnk4LF6fM	\\TyvpprJ4oiI	&	qu37HjY4Vhw	&	ZhixuUUsX8c	\\Ud_-38UsxWI	&	sKX-c-YW-hU	&	_49Y0j_ehgA	\\UgUgiD5o79c	&	troRgJeGzq0	&	_CKmhhxzv40	\\V9m0xiTKLc0	&	ukpfCgdXrBE	&	aHkR7aIosXk	\\VN49ug6Myc4	&	x3ZXVIJsXfQ	&	bUeb4oR8ZJ8	\\VSX17QtHhHU	&	xGS9d4RdvMs	&	cgPbNnJ01r8	\\VkqvucQlqpI	&	xaoB5FVMd5M	&	cpiOte96Fks	\\W--i8xt1YeQ	&	xj5zOlhqq7w	&	cs7gJF15oAM	\\W2HwbGsYiQM	&	xvufjYH2-h0	&	d7mV519bpaU	\\WE1-qIAzTIo	&	xwMWjccMGbo	&	dHs_lyaBLzY	\\XdpgKoWGCc8	&	xyM3jt3NvRM	&	dOLQtcQwC8E	\\XmER3o7e378	&	y5yL90GvV1g	&	dRKBrwpDFkk	\\YlgGKAfTkr0	&	ykFB4uRdC_s	&	dWbX9nzVL9w	\\Z64EQpg3NAc	&	zFaIvUNO2cs	&	ddWiUtDJU0g	\\Z7HkWqwzD3I	&	zRBnTvsFgw0	&	e2SdXuargrs	\\Zf219ojN9-4	&		&	eZkqnXujr9k	\\Zs3Dc2LHrWk	&		&	elDYQFD19RY	\\_5H0bH5xEBY	&		&	fJaZkGw4tmk	\\_I6p0BxEFBk	&		&	gSbFsY3k_7c	\\__6SVhuzGtagg	&		&	hoAnYHumgp8	\\_mAJzWEQ8qQ	&		&	hpF15BblllQ	\\aTbnDpA-O2s	&		&	i-L42kh_6os	\\a_xY-ygZweo	&		&	i9DIJO9S93c	\\bnfboHHE_rc	&		&	izjhS54Tk5I	\\bsfgprLcC7E	&		&	jI6znjXUbz8	\\cPk59Rh8F3I	&		&	jdW2wSkVA9U	\\cQYFuKLcAqs	&		&	jkdj1GEmn78	\\ceUmCF1SWqw	&		&	jm1fK7VjKSA	\\ckMyV5_gJZE	&		&	k4BxYgTTn6c	\\e-flDUF5p0Q	&		&	kXNp-WuJock	\\eAWjHIeYwDE	&		&	lHvT-S9AkjA	\\eInIWR4VGFE	&		&	l_PEHry-dPM	\\eKeeJytYzHI	&		&	mZtlJvNHAvU	\\frOdnyWiz44	&		&	n11MX1aBadw	\\g0Y5d-B1hM0	&		&	n4KT1Avkqq8	\\g6uKANq9c6M	&		&	nEhBtBOA-2E	\\gme_UzNXwTk	&		&	nIyR4rFxMjI	\\grAMUFnUYQw	&		&	oZOzkay1GZs	\\h5aE-xpeyDQ	&		&	pMSe7pb-dRM	\\hH5G7C8Hj-w	&		&	plZaeKjxrh4	\\i1BTgCd2oOA	&		&	qXMYAAT5RZs	\\iJWGNG7TxQk	&		&	qriW2UfovN8	\\idD-cvfKT0U	&		&	qyvNJI0w4d8	\\iklsH1a6VKQ	&		&	r-E9FQQ0Q6I	\\jpBvDaG9oi4	&		&	rpv0VR3Pei8	\\jzeRWTekkuk	&		&	rx4LI022q28	\\k0GhTaWYrQo	&		&	s--yg_2Dijc	\\k4xRBmrJvLc	&		&	s-vO0SsJ3C4	\\kMo0H-19-Ds	&		&	s6eKgncyVjQ	\\kXHJH742wFI	&		&	sF-bbPpMlGY	\\kkrxVtOpNII	&		&	sN_TA_04OFI	\\l3mbigRjqNk	&		&	sR37oYPYUg	\\lJRDw53PmOM	&		&	s_AE8EIT_UU	\\lfrnSPSqbGw	&		&	su5tmhU-XWc	\\lhVSFF1i2_c	&		&	szoQHxTFz98	\\lrg5GEQ8Jrw	&		&	t2o-RdQBr0U	\\mCpFxN8-wZQ	&		&	tRZKF9ji5Dc	\\mcEbVc0P3HU	&		&	tgeqcB3wCow	\\mdIdJ_7-kwM	&		&	tn5qVbwVemY	\\nM-Y5scZeNE	&		&	uCYRqzIdno0	\\nZLiwfTALdw	&		&	uLtFgMXOM8E	\\nyl4DkN2BTY	&		&	uReM42ilasA	\\qQK2aA5l6Zg	&		&	uTKwYD12-N0	\\qSe1-hfYn3U	&		&	uU4cYT-w7Wk	\\qW2jplF-gTc	&		&	uURah2jjzXY	\\q_vbueFu_8E	&		&	urzAA6j9p-Y	\\qdmNhKoFWIw	&		&	utaYpgBACRM	\\qyNIuXPDKW0	&		&	uydkjfyLYkE	\\qyRpIJ5x844	&		&	v1Cyf7CTO2w	\\rF5vYT4D6Kk	&		&	v3qymv087ok	\\rgeK2k7DTJM	&		&	vAWlag2XU9E	\\s5cl6d_vIVA	&		&	vWFwTPhGSj4	\\sEuGSkeuVD0	&		&	v_PMeW7Wgn8	\\shalynntSLA	&		&	wAfc-CoRK8k	\\sn1jYpwGwXM	&		&	wHUBFj1eRaw	\\svZh-Sv3RVA	&		&	wbs5kkU_toc	\\syOgD4uzckE	&		&	whyT9oZxBnQ	\\t0kT00Evc6Y	&		&	xi4uG0scevI	\\u_Kx-FmIuGw	&		&	xtuPiEukh9Y	\\uplAoM2JQKc	&		&	xuQLKFLPp6M	\\uvtoieki4vw	&		&	y9TA3Zjp9wQ	\\vOI9i1e-eX8	&		&	yRObnYLH1QA	\\vQBKvXuywLA	&		&	yhtvr5hoy5Y	\\vW9ib--AWv4	&		&	yqdLJ2ePmlA	\\veZNUBbbF9g	&		&	zFq6PKGL-RQ	\\vuHguigYmi0	&		&	zdS79QzfKAY	\\wAsbX6JHYnU	&		&		\\wvdUoUu9sns	&		&		\\xR9bD7OEo_M	&		&		\\yEvQkkuGvEE	&		&		\\yG5lLYVSFFc	&		&		\\yH5pcXrNC34	&		&		\\yvJNb2slxAY	&		&		\\zEN3zenkTOE	&		&		\\zdMNrFWVeA0	&		&		\\
+0Etj1j0G1HI	&	051PuPcvGXM	&	01rWqAmipLo	\\
+0V7Am6ZowM0	&	0eU5piFUrh4	&	0NEk0aVONfo	\\
+1IYjoYG8O6g	&	0vYEgQr6XsM	&	0vGblvchoqw	\\
+1gN\_BXUa1pE	&	1Io79wz1HPg	&	0z73yLt4r2s	\\
+1uto5cAJ7JE	&	2HTna6FFaf4	&	18kJKv7fZyo	\\
+2\_sFPBAq69E	&	2Tdl6Zxy5BM	&	1IKxPEE52OQ	\\
+3cjjETCrk5Q	&	2eZV9-goQl4	&	1LVNr2ABe-I	\\
+3oAawKMZrJ8	&	3hL2GH-XGrg	&	1QzvHBjXUeU	\\
+4j\_kHq\_2EqY	&	4YYYjCKbrFA	&	1dtsE0CGk58	\\
+4yx8bpJXvfE	&	5uA87nebFNo	&	1h0Y2GKmkpU	\\
+5P30UtOkR98	&	6P\_aok\_YaF4	&	1lhAwKtC\_HA	\\
+5VtZwpu68bA	&	6mn78r3JTf8	&	1vTMNKD6u0k	\\
+5sDXzTFDmcw	&	6tdqMoOmb7I	&	25\_OmbxR0AE	\\
+61tZQxgyslU	&	71pTFZKqU00	&	2BGWJT9oWFY	\\
+6FDRq2UkbU4	&	735rb-y-E9Y	&	2a8G4mIscJw	\\
+6W-4KM1Bh4w	&	8\_MKu\_hBH20	&	3AyylrG4j\_c	\\
+6j7qDjXXy5s	&	8tz-fY4\_rIY	&	3Q9KbjohXR8	\\
+6qbrwu-gYXg	&	9-rs2NbvLM8	&	3Uw3uGnBpv8	\\
+7Ll73o2oPsU	&	9iiNcg1Vo6A	&	3aJo70bfxpI	\\
+7n1Kurj5DoA	&	A-NDpqmFaZc	&	3id3ij6UTxg	\\
+8C7XmDFtMd8	&	A0NGgnLy3oA	&	3vDpw2IIIgM	\\
+8K8-JeThiyk	&	A3TnoPKpCqA	&	4GFTBVMQdsM	\\
+8mMjQVeGeH0	&	ATeDuGRtBpY	&	58VWYsiumAs	\\
+8mf1je4N1MM	&	AsiEpUUi3VU	&	5EygGxuaEJw	\\
+913d-ZUevlM	&	AyUQdo8-ca0	&	5USj1Nh7t1s	\\
+9KUX0w-wNJI	&	BXqyNQpmWEM	&	5kGsASMR3Vo	\\
+9nuJnNdEdKc	&	CigIPV\_c\_JM	&	64jknG0EfPg	\\
+AQUJ\_yvhIpg	&	CkVn3e90ZmQ	&	7DX6fs5zdfw	\\
+AjqAF-cMhLk	&	E0ZRN6z5Epg	&	8DtHjRYOf-0	\\
+Bj6YCDLTFw	&	EDTyGgpwsWc	&	8Ff\_s83LCq4	\\
+CM5lkWQHnoE	&	Ea9cDpJIxJE	&	8H5bKJk6j8g	\\
+CO6QMRV-Rn4	&	Fdx-iIegUq8	&	8JymxjeJxGU	\\
+CP4Mvx0jtRM	&	GBuf6tJaAsY	&	8ZZ9GvWcYS8	\\
+CQoADIX6r3c	&	H1iuZFpVqDU	&	9LRMZcABlU8	\\
+D7q18pMi0BY	&	HZ1RUOHW4vQ	&	9Q2ahLvQdGw	\\
+D\_cF3Xn1oEU	&	JAqGCIYRbMk	&	9iEcH4tvew0	\\
+DvvnskRPCKQ	&	JmC44NnxID4	&	ALcyPQp6MaE	\\
+EIi5jrbKETw	&	K7\_9KJ1H7so	&	AiZ8uU4JhYo	\\
+ERLMNVIm3ug	&	Kk8J8Ugzd1A	&	B17oafBr\_dI	\\
+F2h4ABL0FUs	&	KkNeQgwC8e8	&	CVMLShBfiP4	\\
+FkTTLv\_K\_-8	&	Krm5-5WDrDE	&	Ck\_\_A5-saNU	\\
+G3RoSdcy-x4	&	KyLXLJVX1SA	&	DeytgA94IDU	\\
+G82CvOH8D14	&	L0GHWCNUQK4	&	DfksCfRtSmY	\\
+Ghk5Cia6ekM	&	LYCTjMAS3Bg	&	DqmgMY-70sI	\\
+GodyygWDpek	&	LzzUxuq4LCA	&	Dvq5TTBTp40	\\
+GqCYQMNN0ks	&	MZ43kZPwywg	&	EeTP5XwqSyo	\\
+GtTgKzOx1gA	&	N7SIGXl6u0o	&	F0TDfVZiOBg	\\
+Gwz6P2gsp\_Y	&	N9lzHVS7\_C0	&	F9eL0oxLBjg	\\
+H3GdU7cLrjo	&	O3jec1vlbOo	&	FEE9KERZovU	\\
+HMKRY\_Jyxks	&	OER2e4-w368	&	GIObQf19GXc	\\
+HjOC4P9ovjA	&	OuKqZyBIYAo	&	GOEiGQ7RlgQ	\\
+HurjdE2ry0o	&	PhQzx2IW\_G4	&	GP2UomvOUgk	\\
+I5o7k\_x0vwY	&	QA4l\_q6HuGw	&	H2mXZIunNpk	\\
+IBaZQtLKZ\_k	&	Qvg1tIaTrc0	&	H5dhyhOcFKI	\\
+IHOwfQsrjtQ	&	Ra7hF1ZJ\_CY	&	IAbXYQlz\_v8	\\
+IZisx1p6QJU	&	TLfitdm7KT0	&	IL0W8DTjkMc	\\
+IbRpHgNpYsI	&	TUYRUfR3nls	&	JI52mwGIuGs	\\
+ImsQAWkoxg	&	TnIyQdHRmDI	&	JQTvisnmvKk	\\
+IpkbpAbkDIg	&	Ts6A6RR3dVQ	&	JVNRdGsa6rw	\\
+J5ftgv3BHd0	&	Uc97016ScmM	&	JyzGr1pjrZk	\\
+JHL62QDtTB0	&	V3F7TfiqOcA	&	LaMQ3qGGIEk	\\
+JMYxs6gooao	&	VRKkQXVYIhk	&	LvX8gZEnqkE	\\
+JO9wyuVfbD4	&	WGqH91-Vtpk	&	Lz9Ztx04YKg	\\
+JuXDcCO9Ds4	&	WJvrZP50vts	&	MELXF9E\_RUs	\\
+K1aiMNdrlUg	&	X37jDiiXCM4	&	M\_FIpjLG7Ic	\\
+K9iPEoAbOio	&	X4iwbgRXKvk	&	N2LMCIcSG8w	\\
+KjC9qUN3yz4	&	\_X0SqViRKH4	&	NV6C5BgHpFQ	\\
+L04SUurMfG0	&	\_jgaKt-hh1E	&	NiJcUeB-jkY	\\
+L8Vl05blL\_U	&	\_po0UMyKOJ4	&	OCQ9l4oQ5tI	\\
+Ldft2mDyK3g	&	aB48LiXRxyI	&	OEwXady1LYU	\\
+Lgqdp7RHS0s	&	adTvK02FcBc	&	OMAjbgbgyqA	\\
+LjtWvf-Q9rs	&	bTN5ltEqyp8	&	Or\_l4D3d2Rk	\\
+LqVzlJqK63M	&	bgFvyNMgj4Q	&	P0QsWO5CjUA	\\
+LzzrH4X-Tfg	&	cF1rLiZLCDo	&	P978\_D2KU\_Y	\\
+MGburXoemRY	&	cdIKwN0JtHk	&	PNcqRRvtt7Q	\\
+MW3QgexqaCY	&	dMvUNlprrWc	&	Pm\_EUWf\_LyI	\\
+MoCb8KDv9k	&	dma-KHqbhr8	&	Pw-9oSroQNs	\\
+MvtWociP\_18	&	eR16KXkGzA8	&	Q6KEL0\_t2-M	\\
+NFGviYQiFII	&	eaeS-t24PYU	&	Q9g1Nw7ubSI	\\
+NTLm8D9L6dg	&	eb-psejW3qk	&	QcvV2HwRn\_0	\\
+O-9BotdD9xg	&	f\_2L50a7Qf4	&	QeeFDwaaJjQ	\\
+OA1egRiv2fY	&	fko0ZFgFDy0	&	RJgvf\_RMQYU	\\
+OSJ2vY4iMUw	&	h2bJcbAxLXE	&	S6JYr18vzHQ	\\
+OkM0bfuJU3o	&	hEqQj4ZskXs	&	S8WdHaepufc	\\
+OkOQCWKyC7c	&	iJtWrAmSsmk	&	SKH69nNPHPI	\\
+OykxqG-4BbQ	&	jCx1\_wEOBOE	&	SX\_GlrVvZrg	\\
+PRtzf-l2iDk	&	kBg\_j4YYLVk	&	SfvMpYwhyc0	\\
+Pcb7I7-gQNA	&	kgIlQObqDTk	&	SsJIc4KlZoI	\\
+PlVKF6JJ4xE	&	l4JcgU4ZOMI	&	T7wjg-teZR4	\\
+PniKj-dSL5A	&	lNKW624AwTc	&	THEGo\_JIrSM	\\
+Q26t\_7AopZo	&	lhVHpSUSTLg	&	TykvEinDRQQ	\\
+QRJ\_6JaTGLI	&	llKcF2sy8Kc	&	U4cQIn7fXG4	\\
+QjKs2Qxmt5c	&	m6ToAmRuW7Q	&	Un2ZSvFgc70	\\
+Qvm\_i0MZHbI	&	mzx3u2SW\_tA	&	UoY44kksjV4	\\
+R-6o0gWkX8U	&	ndw3-gmSGoE	&	Uy9cXGrU8Ro	\\
+R5UOX4JhlIM	&	oCtjjekZUYg	&	WL-mNud6EqY	\\
+RNokB071frc	&	ofDDUyZO7Gs	&	Wmygy5VFuGE	\\
+RrjLqGRwbNs	&	omaowxzbPuc	&	Y1s0SKXFPUo	\\
+SXDCoYsq3q4	&	oq1kUR8D1LE	&	YBbbXX5eWTI	\\
+Sb2sTtQYIBs	&	pg0GOlQWirQ	&	YZvbQFojujA	\\
+TgvmkWsrhUM	&	q4iV\_6IHRKk	&	ZOnk4LF6fM	\\
+TyvpprJ4oiI	&	qu37HjY4Vhw	&	ZhixuUUsX8c	\\
+Ud\_-38UsxWI	&	sKX-c-YW-hU	&	\_49Y0j\_ehgA	\\
+UgUgiD5o79c	&	troRgJeGzq0	&	\_CKmhhxzv40	\\
+V9m0xiTKLc0	&	ukpfCgdXrBE	&	aHkR7aIosXk	\\
+VN49ug6Myc4	&	x3ZXVIJsXfQ	&	bUeb4oR8ZJ8	\\
+VSX17QtHhHU	&	xGS9d4RdvMs	&	cgPbNnJ01r8	\\
+VkqvucQlqpI	&	xaoB5FVMd5M	&	cpiOte96Fks	\\
+W--i8xt1YeQ	&	xj5zOlhqq7w	&	cs7gJF15oAM	\\
+W2HwbGsYiQM	&	xvufjYH2-h0	&	d7mV519bpaU	\\
+WE1-qIAzTIo	&	xwMWjccMGbo	&	dHs\_lyaBLzY	\\
+XdpgKoWGCc8	&	xyM3jt3NvRM	&	dOLQtcQwC8E	\\
+XmER3o7e378	&	y5yL90GvV1g	&	dRKBrwpDFkk	\\
+YlgGKAfTkr0	&	ykFB4uRdC\_s	&	dWbX9nzVL9w	\\
+Z64EQpg3NAc	&	zFaIvUNO2cs	&	ddWiUtDJU0g	\\
+Z7HkWqwzD3I	&	zRBnTvsFgw0	&	e2SdXuargrs	\\
+Zf219ojN9-4	&		&	eZkqnXujr9k	\\
+Zs3Dc2LHrWk	&		&	elDYQFD19RY	\\
+\_5H0bH5xEBY	&		&	fJaZkGw4tmk	\\
+\_I6p0BxEFBk	&		&	gSbFsY3k\_7c	\\
+\_\_6SVhuzGtagg	&		&	hoAnYHumgp8	\\
+\_mAJzWEQ8qQ	&		&	hpF15BblllQ	\\
+aTbnDpA-O2s	&		&	i-L42kh\_6os	\\
+a\_xY-ygZweo	&		&	i9DIJO9S93c	\\
+bnfboHHE\_rc	&		&	izjhS54Tk5I	\\
+bsfgprLcC7E	&		&	jI6znjXUbz8	\\
+cPk59Rh8F3I	&		&	jdW2wSkVA9U	\\
+cQYFuKLcAqs	&		&	jkdj1GEmn78	\\
+ceUmCF1SWqw	&		&	jm1fK7VjKSA	\\
+ckMyV5\_gJZE	&		&	k4BxYgTTn6c	\\
+e-flDUF5p0Q	&		&	kXNp-WuJock	\\
+eAWjHIeYwDE	&		&	lHvT-S9AkjA	\\
+eInIWR4VGFE	&		&	l\_PEHry-dPM	\\
+eKeeJytYzHI	&		&	mZtlJvNHAvU	\\
+frOdnyWiz44	&		&	n11MX1aBadw	\\
+g0Y5d-B1hM0	&		&	n4KT1Avkqq8	\\
+g6uKANq9c6M	&		&	nEhBtBOA-2E	\\
+gme\_UzNXwTk	&		&	nIyR4rFxMjI	\\
+grAMUFnUYQw	&		&	oZOzkay1GZs	\\
+h5aE-xpeyDQ	&		&	pMSe7pb-dRM	\\
+hH5G7C8Hj-w	&		&	plZaeKjxrh4	\\
+i1BTgCd2oOA	&		&	qXMYAAT5RZs	\\
+iJWGNG7TxQk	&		&	qriW2UfovN8	\\
+idD-cvfKT0U	&		&	qyvNJI0w4d8	\\
+iklsH1a6VKQ	&		&	r-E9FQQ0Q6I	\\
+jpBvDaG9oi4	&		&	rpv0VR3Pei8	\\
+jzeRWTekkuk	&		&	rx4LI022q28	\\
+k0GhTaWYrQo	&		&	s--yg\_2Dijc	\\
+k4xRBmrJvLc	&		&	s-vO0SsJ3C4	\\
+kMo0H-19-Ds	&		&	s6eKgncyVjQ	\\
+kXHJH742wFI	&		&	sF-bbPpMlGY	\\
+kkrxVtOpNII	&		&	sN\_TA\_04OFI	\\
+l3mbigRjqNk	&		&	sR37oYPYUg	\\
+lJRDw53PmOM	&		&	s\_AE8EIT\_UU	\\
+lfrnSPSqbGw	&		&	su5tmhU-XWc	\\
+lhVSFF1i2\_c	&		&	szoQHxTFz98	\\
+lrg5GEQ8Jrw	&		&	t2o-RdQBr0U	\\
+mCpFxN8-wZQ	&		&	tRZKF9ji5Dc	\\
+mcEbVc0P3HU	&		&	tgeqcB3wCow	\\
+mdIdJ\_7-kwM	&		&	tn5qVbwVemY	\\
+nM-Y5scZeNE	&		&	uCYRqzIdno0	\\
+nZLiwfTALdw	&		&	uLtFgMXOM8E	\\
+nyl4DkN2BTY	&		&	uReM42ilasA	\\
+qQK2aA5l6Zg	&		&	uTKwYD12-N0	\\
+qSe1-hfYn3U	&		&	uU4cYT-w7Wk	\\
+qW2jplF-gTc	&		&	uURah2jjzXY	\\
+q\_vbueFu\_8E	&		&	urzAA6j9p-Y	\\
+qdmNhKoFWIw	&		&	utaYpgBACRM	\\
+qyNIuXPDKW0	&		&	uydkjfyLYkE	\\
+qyRpIJ5x844	&		&	v1Cyf7CTO2w	\\
+rF5vYT4D6Kk	&		&	v3qymv087ok	\\
+rgeK2k7DTJM	&		&	vAWlag2XU9E	\\
+s5cl6d\_vIVA	&		&	vWFwTPhGSj4	\\
+sEuGSkeuVD0	&		&	v\_PMeW7Wgn8	\\
+shalynntSLA	&		&	wAfc-CoRK8k	\\
+sn1jYpwGwXM	&		&	wHUBFj1eRaw	\\
+svZh-Sv3RVA	&		&	wbs5kkU\_toc	\\
+syOgD4uzckE	&		&	whyT9oZxBnQ	\\
+t0kT00Evc6Y	&		&	xi4uG0scevI	\\
+u\_Kx-FmIuGw	&		&	xtuPiEukh9Y	\\
+uplAoM2JQKc	&		&	xuQLKFLPp6M	\\
+uvtoieki4vw	&		&	y9TA3Zjp9wQ	\\
+vOI9i1e-eX8	&		&	yRObnYLH1QA	\\
+vQBKvXuywLA	&		&	yhtvr5hoy5Y	\\
+vW9ib--AWv4	&		&	yqdLJ2ePmlA	\\
+veZNUBbbF9g	&		&	zFq6PKGL-RQ	\\
+vuHguigYmi0	&		&	zdS79QzfKAY	\\
+wAsbX6JHYnU	&		&		\\
+wvdUoUu9sns	&		&		\\
+xR9bD7OEo\_M	&		&		\\
+yEvQkkuGvEE	&		&		\\
+yG5lLYVSFFc	&		&		\\
+yH5pcXrNC34	&		&		\\
+yvJNb2slxAY	&		&		\\
+zEN3zenkTOE	&		&		\\
+zdMNrFWVeA0	&		&		\\
 \hline
-\end{tabular}
-\end{center}
 \caption{List of \textit{YouTube} IDs used for the \textit{YTAcap} data set.}
 \label{tab:app_ytacap}
-\end{table}
+\end{longtable}
 
 \subsection{Songs in the \textit{ACAP} data set}
-\begin{table}[h]
+\begin{table}[h]	\footnotesize
 \begin{center}
-\begin{tabular}{|c|c|c|}
+\begin{tabular}{|c|c|c|}\hline
+
 Title & Artist & Phoneme annotations available \\ \hline
 Africa & Toto & Yes \\
 Beautiful Stranger & Madonna & Yes \\
@@ -129,203 +322,202 @@ Rehab & Amy Winehouse & Yes \\
 Rolling In The Deep & Adele & Yes \\
 She's Leaving Home & The Beatles & No \\
 Smells Like Teen Spirit & Nirvana & Yes \\
-Sunrise & Norah Jones & Yes \\
+Sunrise & Norah Jones & Yes \\ \hline
 \end{tabular}
 \end{center}
-\caption{Set of keywords used in the keyword spotting tasks.}
-\label{tab:app_kw}
+\caption{Songs in the \textit{ACAP} data set.}
+\label{tab:app_acap}
 \end{table}%
 
 \subsection{Songs in the \textit{DAMP} data set}
 
 The following is a list of all titles in the \textit{DAMP} data set. The column ``\#Performances'' displays the number of performances in the original data set. For the subsets used in this work, around 20 performances of each song were used for balance. For the \textit{DampTest} data sets, one performance of each song was randomly selected.
+	\footnotesize
+\begin{longtable}[H!]{|p{.4\textwidth}|p{.4\textwidth}|p{.1\textwidth}|} \hline
 
-\begin{tabular}{|c|c|c||c|c|c|}
-Title & Artist & \#Performances & Title & Artist & \#Performances \\ \hline
-Let It Go & From ``Frozen'' & 2038 & Stay & Rihanna ft. Mikky Ekko & 946 \\
-Say Something & Great Big World & 903 & Cups & From ``Pitch Perfect'' & 767 \\
-When I Was Your Man & Bruno Mars & 579 & Miley Cyrus & The Climb & 552 \\
-My Heart Will Go On & Celine Dion & 485 & Let Her Go & Passenger & 468 \\
-I Won't Give Up & Jason Mraz & 462 & Hallelujah & Rufus Wainwright & 460 \\
-Apologize & OneRepublic & 449 & Part Of Your World & From ``The Little Mermaid'' & 419 \\
-Demons & Imagine Dragons & 398 & Because Of You & Kelly Clarkson & 379 \\
-Killing Me Softly & The Fugees & 337 & Counting Stars & OneRepublic & 325 \\
-Summertime Sadness & Lana Del Rey & 312 & Grenade & Bruno Mars & 305 \\
-Beautiful & Christina Aguilera & 293 & A Thousand Miles & Vanessa Carlton & 284 \\
-Over The Rainbow & From ``The Wizard Of Oz'' & 284 & The Wind Beneath My Wings & Bette Midler & 267 \\
-Hey There Delilah & Plain White T's & 262 & Colors Of The Wind & From ``Pocahontas'' & 256 \\
-Adore You & Miley Cyrus & 239 & I Dreamed A Dream & From ``Les Miserables'' & 239 \\
-Hero & Mariah Carey & 236 & Crazy & Patsy Cline & 228 \\
-Radioactive & Imagine Dragons & 228 & I'm Yours & Jason Mraz \\
-Human & Christina Perri & 217 & The A Team & Ed Sheeran & 215 \\
-Call Me Maybe & Carly Rae Jepsen & 207 & The Rose & Bette Midler & 205 \\
-Happy & Pharrell Williams & 204 & Amazing Grace & Elvis & 201 \\
-Pompeii & Bastille & 199 & Neon Lights & Demi Lovato & 197 \\
-Bubbly & Colbie Caillat & 195 & Don't Know Why & Norah Jones & 186 \\
-If I Ain't Got You & Alicia Keys & 178 & You Are Not Alone & Michael Jackson & 177 \\
-Stand By Me & Ben E. King & 174 & Ain't No Sunshine & Bill Withers & 170 \\
-Before He Cheats & Carrie Underwood & 170 & Alone & Heart & 161 \\
-At Last & Etta James & 160 & Just The Way You Are & Bruno Mars & 157 \\
-You Raise Me Up & Josh Groban & 157 & On My Own & From ``Les Miserables'' & 156 \\
-Twinkle Twinkle Little Star & Traditional & 153 & Clarity & Zedd ft. Foxes & 152 \\
-Kiss Me & Sixpence None The Richer & 152 & Lean On Me & Bill Withers & 150 \\
-She Will be Loved & Maroon 5 & 149 & House Of The Rising Sun & The Animals & 149 \\
-Valerie & Amy Winehouse & 149 & Total Eclipse Of The Heart & Bonnie Tyler & 148 \\
-Landslide & Fleetwood Mac & 147 & More Than Words & Extreme & 144 \\
-Boyfriend & Justin Bieber & 143 & America The Beautiful & K. L. Bates \& S. A. Ward & 140 \\
-All I Want For Christmas & Mariah Carey & 140 & What Makes You Beautifule & One Direction & 135 \\
-Somewhere Only We Know & Keane & 134 & Reflection & From ``Mulan'' & 132 \\
-From This Moment On & Shania Twain & 132 & ...Baby, One More Time & Britney Spears & 131 \\
-Love You Like A Love Song & Selena Gomez \& The Scene & 131 & I Believe I Can Fly & R. Kelly & 131 \\
-Burn & Ellie Goulding & 130 & F**kin' Perfect & P!nk & 127 \\
-It Will Rain & Bruno Mars & 127 & You Know I'm No Good & Amy Winehouse & 125 \\
-Fireflies & Owl City & 124 & I Hope You Dance & Lee-Ann Womack & 124 \\
-This Little Light Of Mine & Traditional & 124 & Danny Boy & Traditional & 124 \\
-Your Song & Elton John & 123 & Breakaway & Kelly Clarkson & 123 \\
-Airplanes & B.o.B. ft. Hayley Williams & 122 & Need You Now & Lady Antebellum & 120 \\
-Stay With Me & Sam Smith & 119 & Zombie & The Cranberries & 117 \\
-Sweater Weather & The Neighbourhood & 115 & Count On Me & Bruno Mars & 108 \\
-Love The Way You Lie & Eminem ft. Rihanna & 106 & It's All Coming Back To Me Now & Celine Dion & 106 \\
-Jesus, Take The Wheel & Carrie Underwood & 104 &  Applause & Lady Gaga & 104 \\
-Wanted & Hunter Hayes & 103 & Wake Me Up & Avicii ft. Aloe Blacc & 103 \\
-O Holy Night & Traditional & 102 & Saving All My Love For You & Whitney Houston & 99\\
-Bad Romance & Lady Gaga & 98 & All By Myself & Eric Carmen & 98 \\
-Hey Brother & Avicii & 98 & You Are So Beautiful & Joe Cocker & 97 \\
-Songbird & Eva Cassidy & 97 & How Great Thou Art & Traditional & 97\\
-Toxic & Britney Spears & 95 & Naturally & Selena Gomez \& The Scene & 95 \\
-Rehab & Amy Winehouse & 94 & I'll Be & Edwin McCain & 94 \\
-A Whole New World & From ``Aladdin'' & 93 & Forget You & CeeLo Green &  91 \\
-Mama's Broken Heart & Miranda Lambert & 91 & Wherever You Will Go & The Calling & 90 \\
-Baby & Justin Bieber & 90 & Hush, Little Baby & Traditional & 89 \\
-The Alphabet Song & Traditional & 89 & Have I Told You Lately (I Love You) & Rod Stewart & 88\\
-True Colors & Cyndi Lauper & 88 & How You Remind Me & Nickelback & 87 \\
-Georgia On My Mind & Ray Charles & 87 & Love Song & Sara Bareilles & 87 \\
-Give Your Heart A Break & Demi Lovato & 86 & Breakeven (Falling To Pieces) & The Script & 86 \\
-Want U Back & Cher Lloyd & 86 & Ironic & Alanis Morissette & 84 \\
-My Favorite Things & From ``The Sound Of Music'' & 84 & All Out of Love & Air Supply & 84 \\
-Castle On A Cloud & From ``Les Miserables'' & 84 & Uninvited & Alanis Morissette & 84 \\
-Always On My Mind & Willie Nelson & 83 & My Girl & The Temptations & 83 \\
-I Will Survive & Gloria Gaynor & 83 & Bingo & Traditional & 82 \\
-Can't Fight This Feeling & REO Speedwagon & 82 & Ben & Michael Jackson & 80 \\
-Brave & Sara Bareilles & 80 & The Worst & Jhene Aiko & 79 \\
-L O V E & Frank Sinatra & 79 & You Found Me & The Fray & 79 \\
-Marry You & Bruno Mars & 79 & I Want It That Way & Backstreet Boys & 78 \\
-Fly Away & Amanda Brown & 76 & And I Am Telling You & From ``Dreamgirls'' & 76 \\
-One Of Us & Joan Osborne & 73 & You And I & Lady Gaga & 71 \\
-Try & P!nk & 71 & Stay & Lisa Loeb & 71 \\
-Home & Phillip Phillips & 71 & Hand In My Pocket & Alanis Morissette & 70 \\
-Circle Of Life & From ``The Lion King'' & 70 & Can You Feel The Love Tonight & From ``The Lion King'' & 70 \\
-The First Cut Is The Deepest & Sheryl Crow & 69 & You've Got A Friend In Me & From ``Toy Story'' & 69 \\
-How To Save A Life & The Fray & 69 & Let Me Love You & Mario & 69 \\
-All Star & Smash Mouth & 68 & Head Over Feet & Alanis Morissette & 68 \\
-Row Row Row Your Boat & Traditional & 67 & Top Of The World & Carpenters & 67 \\
-All The Man That I Need & Whitney Houston & 67 & Never Say Never & The Fray & 67 \\
-All The Small Things & blink-182 & 66 & Just A Kiss & Lady Antebellum & 66 \\
-You Oughta Know & Alanis Morissette & 66 & Lights & Ellie Goulding & 66 \\
-I Look To You & Whitney Houston & 66 & Blurred Lines & Robin Thicke ft. T.I. + Pharrell Williams & 65 \\
-Billionaire & & 54 & Sway & Michael Bublé & 65 
-Careless Whisper & George Michael & 65 & As Long As You Love Me & Backstreet Boys & 64\\
-Lucky & Britney Spears & 64 & Santeria & Sublime & 63\\
-Super Bass & Nicki Minaj & 62 & Heart Attack & Demi Lovato & 62 \\
-Always Be My Baby & Mariah Carey & 62 & Piano Man & Billy Joel & 61\\
-Kryptonite & 3 Doors Down & 61 & Do You Hear What I Hear & Traditional & 61 \\
-Beauty And The Beast & From ``Beauty And The Beast'' & 61 & Just The Way You Are & Billy Joel & 61 \\
-Love Somebody & Maroon 5 & 61 & Drink A Beer & Luke Bryan & 60 \\
-Love Me Again & John Newman & 60 & More Than This & One Direction & 60 \\
-Locked Out Of Heaven & Bruno Mars & 59 & The Star-Spangled Banner & Whitney Houston & 58\\
-Silent Night & Traditional & 57 & Alejandro & Lady Gaga & 57\\
-Best Song Ever & One Direction & 57 & Achy Breaky Heart & Billy Ray Cyrus & 57\\
-The Greatest Love Of All & Whitney Houston & 56 & Sitting On The Dock of The Bay & Otis Redding & 56\\
-Everybody Hurts & R.E.M. & 56 & Glad You Came & The Wanted & 56 \\
-Losing my Religion & R.E.M. & 55 & Gorilla & Bruno Mars & 55\\
-Blue Christmas & Elvis Presley & 55 & Eye Of The Tiger & Survivor & 54\\
-Girls Just Want To Have Fun & Cyndi Lauper & 54 & Safe And Sound & Capital Cities & 54\\
-Don't Rain On My Parade & Barbra Streisand & 54 & Can't Remember To Forget You & Shakira ft. Rihanna & 53\\
-Two Black Cadillacs & Carrie Underwood & 53 & Every Rose Has Its Thorn & Poison & 53\\
-Body Party & Ciara & 53 & American Pie & Don McLean & 53\\
-This Love & Maroon 5 & 52 & Simple Man & Lynyrd Skynyrd & 53\\
-A Horse With No Name & America & 52 & 15 Seconds Of Fame & Johnny Burgos & 52\\
-Under The Sea & From ``The Little Mermaid'' & 52 & Fallin' For You & Colbie Caillat & 51\\
-One Thing & One Direction & 51 & Oops, I Did It Again & Britney Spears & 51\\
-Frere Jacques & Traditional & 51 & Somebody To Love & Queen & 51\\
-Sometimes & Britney Spears & 50 & It's Time & Imagine Dragons & 50\\
-Baby, I Love Your Way & Peter Frampton & 50 & Good Girl & Carrie Underwood & 50\\
-Just When I Needed You Most & Randy VanWarmer & 50 & Yesterday Once More & Carpenters & 49\\
-A Holly Jolly Christmas & Lady Antebellum & 48 & The Lazy Song & Bruno Mars & 48\\
-Treasure & Bruno Mars & 48 & Paparazzi & Lady Gaga & 47\\
-Worshipper & Hunter Sparkman & 47 & All-American Girl & Carrie Underwood & 46\\
-Borderline & Madonna & 46 & Don't Let The Sun Go Down On Me & Elton John & 46\\
-Candle In The Wind & Elton John & 46 & Dark Side & Kelly Clarkson & 46\\
-We've Only Just Begun & Carpenters & 46 & Adorn & Miguel & 45\\
-Whatcha Say & Jason Derulo & 46 & I Wanna Dance With Somebody & Whitney Houston & 45\\
-Name & Goo Goo Dolls & 44 & Down & Jay Sean ft. Lil Wayne & 44\\
-I Want To Hold Your Hand & The Beatles & 44 & Hit Me With Your Best Shot & Pat Benatar & 44\\
-Secrets & OneRepublic & 43 & Kiss The Girl & From ``The Little Mermaid'' & 43\\
-Young Girls & Bruno Mars & 42 & Endless Love & Lionel Richie \& Diana Ross & 42\\
-That's The Way It Is & Celine Dion & 42 & Runaway Train & Soul Asylum & 42\\
-The Way You Look Tonight & Tony Bennett &  41 & Gangsta's Paradise & Coolio & 41\\
-Betcha By Golly, Wow & The Stylistics & 40 & Climax & & 40\\
-Disturbia & Rihanna & 40 & Closing Time & & 39\\
-The Way I Am & & 39 & Umbrella & Rihanna & 39\\
-OMG & & 39 & Summer & Calvin Harris & 39\\
-Bye Bye Bye & N\*SYNC & 39 & God Bless The USA & & 39\\
-When A Man Loves A Woman & Percy Sledge & 38 & Won't Go Home Without You & Maroon 5 & 38\\
-Behind Blue Eyes & & 38 & King Of Anything & Sara Bareilles & 37\\
-Rainy Days And Mondays & & 37 & For The First Time & & 37\\
-Animal & Neon Trees & 37 & Born This Way & Lady Gaga & 37\\
-Merry Christmas, Darling & & 36 & Friends In Low Places & & 36\\
-Linger & The Cranberries & 36 & The Edge Of Glory & Lady Gaga & 36\\
-Didn't We Almost Have It All & Whitney Houston & 36  & Cooler Than Me & & 36\\
-Faith & George Michael & 35 & Jingle Bell Rock & & 35\\
-\#That Power & & 35 & New York, New York & Frank Sinatra & 34\\
-Poker Face & Lady Gaga & 34 & The Little Drummer Boy & & 34\\
-Cruise & & 34 & The One I Love & & 34\\
-Lovefool & & 34 & No Air & & 34\\
-Feel Like Makin' Love & & 34 & Save The Last Dance For Me & & 33\\
-Breakfast At Tiffany's & Deep Blue Something & 33 & Stronger & & 33\\
-Twist And Shout & The Beatles & 32 & I'm A Slave 4 U & Britney Spears & 32\\
-Baby Love & & 32 & Home & Daughtry & 32\\
-Strongr (What Doesn't Kill You) & & 30 & Send In The Clowns & From ``Pippin'' & 30\\
-Bed Intruder & & 29 & Summertime & From ``Porgy And Bess'' & 29\\
-Rocket Man & Elton John & 29 & Drift Away & & 29\\
-Seasons Of Love & From ``Rent'' & 29 & You Make Me Feel Brand New & & 28\\
-In My Head & & 27 & Making Memories Of Us & & 27\\
-She's Always A Woman & Billy Joel & 26 & Luka & Suzanne Vega & 22\\
-Broken Wings & Mr. Mister & 22 & You Drive Me Crazy & Britney Spears & 21\\
-Say Somethin' & & 21 & & &\\
+Title & Artist & \#Perf.\\ \hline
+Let It Go & From ``Frozen'' & 2038 \\ Stay & Rihanna ft. Mikky Ekko & 946 \\
+Say Something & Great Big World & 903 \\ Cups & From ``Pitch Perfect'' & 767 \\
+When I Was Your Man & Bruno Mars & 579 \\ Miley Cyrus & The Climb & 552 \\
+My Heart Will Go On & Celine Dion & 485 \\ Let Her Go & Passenger & 468 \\
+I Won't Give Up & Jason Mraz & 462 \\ Hallelujah & Rufus Wainwright & 460 \\
+Apologize & OneRepublic & 449 \\ Part Of Your World & From ``The Little Mermaid'' & 419 \\
+Demons & Imagine Dragons & 398 \\ Because Of You & Kelly Clarkson & 379 \\
+Killing Me Softly & The Fugees & 337 \\ Counting Stars & OneRepublic & 325 \\
+Summertime Sadness & Lana Del Rey & 312 \\ Grenade & Bruno Mars & 305 \\
+Beautiful & Christina Aguilera & 293 \\ A Thousand Miles & Vanessa Carlton & 284 \\
+Over The Rainbow & From ``The Wizard Of Oz'' & 284 \\ The Wind Beneath My Wings & Bette Midler & 267 \\
+Hey There Delilah & Plain White T's & 262 \\ Colors Of The Wind & From ``Pocahontas'' & 256 \\
+Adore You & Miley Cyrus & 239 \\ I Dreamed A Dream & From ``Les Miserables'' & 239 \\
+Hero & Mariah Carey & 236 \\ Crazy & Patsy Cline & 228 \\
+Radioactive & Imagine Dragons & 228 \\ I'm Yours & Jason Mraz & 221 \\
+Human & Christina Perri & 217 \\ The A Team & Ed Sheeran & 215 \\
+Call Me Maybe & Carly Rae Jepsen & 207 \\ The Rose & Bette Midler & 205 \\
+Happy & Pharrell Williams & 204 \\ Amazing Grace & Elvis & 201 \\
+Pompeii & Bastille & 199 \\ Neon Lights & Demi Lovato & 197 \\
+Bubbly & Colbie Caillat & 195 \\ Don't Know Why & Norah Jones & 186 \\
+If I Ain't Got You & Alicia Keys & 178 \\ You Are Not Alone & Michael Jackson & 177 \\
+Stand By Me & Ben E. King & 174 \\ Ain't No Sunshine & Bill Withers & 170 \\
+Before He Cheats & Carrie Underwood & 170 \\ Alone & Heart & 161 \\
+At Last & Etta James & 160 \\ Just The Way You Are & Bruno Mars & 157 \\
+You Raise Me Up & Josh Groban & 157 \\ On My Own & From ``Les Miserables'' & 156 \\
+Twinkle Twinkle Little Star & Traditional & 153 \\ Clarity & Zedd ft. Foxes & 152 \\
+Kiss Me & Sixpence None The Richer & 152 \\ Lean On Me & Bill Withers & 150 \\
+She Will be Loved & Maroon 5 & 149 \\ House Of The Rising Sun & The Animals & 149 \\
+Valerie & Amy Winehouse & 149 \\ Total Eclipse Of The Heart & Bonnie Tyler & 148 \\
+Landslide & Fleetwood Mac & 147 \\ More Than Words & Extreme & 144 \\
+Boyfriend & Justin Bieber & 143 \\ America The Beautiful & K. L. Bates \& S. A. Ward & 140 \\
+All I Want For Christmas & Mariah Carey & 140 \\ What Makes You Beautifule & One Direction & 135 \\
+Somewhere Only We Know & Keane & 134 \\ Reflection & From ``Mulan'' & 132 \\
+From This Moment On & Shania Twain & 132 \\ ...Baby, One More Time & Britney Spears & 131 \\
+Love You Like A Love Song & Selena Gomez \& The Scene & 131 \\ I Believe I Can Fly & R. Kelly & 131 \\
+Burn & Ellie Goulding & 130 \\ F**kin' Perfect & P!nk & 127 \\
+It Will Rain & Bruno Mars & 127 \\ You Know I'm No Good & Amy Winehouse & 125 \\
+Fireflies & Owl City & 124 \\ I Hope You Dance & Lee-Ann Womack & 124 \\
+This Little Light Of Mine & Traditional & 124 \\ Danny Boy & Traditional & 124 \\
+Your Song & Elton John & 123 \\ Breakaway & Kelly Clarkson & 123 \\
+Airplanes & B.o.B. ft. Hayley Williams & 122 \\ Need You Now & Lady Antebellum & 120 \\
+Stay With Me & Sam Smith & 119 \\ Zombie & The Cranberries & 117 \\
+Sweater Weather & The Neighbourhood & 115 \\ Count On Me & Bruno Mars & 108 \\
+Love The Way You Lie & Eminem ft. Rihanna & 106 \\ It's All Coming Back To Me Now & Celine Dion & 106 \\
+Jesus, Take The Wheel & Carrie Underwood & 104 \\  Applause & Lady Gaga & 104 \\
+Wanted & Hunter Hayes & 103 \\ Wake Me Up & Avicii ft. Aloe Blacc & 103 \\
+O Holy Night & Traditional & 102 \\ Saving All My Love For You & Whitney Houston & 99\\
+Bad Romance & Lady Gaga & 98 \\ All By Myself & Eric Carmen & 98 \\
+Hey Brother & Avicii & 98 \\ You Are So Beautiful & Joe Cocker & 97 \\
+Songbird & Eva Cassidy & 97 \\ How Great Thou Art & Traditional & 97\\
+Toxic & Britney Spears & 95 \\ Naturally & Selena Gomez \& The Scene & 95 \\
+Rehab & Amy Winehouse & 94 \\ I'll Be & Edwin McCain & 94 \\
+A Whole New World & From ``Aladdin'' & 93 \\ Forget You & CeeLo Green &  91 \\
+Mama's Broken Heart & Miranda Lambert & 91 \\ Wherever You Will Go & The Calling & 90 \\
+Baby & Justin Bieber & 90 \\ Hush, Little Baby & Traditional & 89 \\
+The Alphabet Song & Traditional & 89 \\ Have I Told You Lately (I Love You) & Rod Stewart & 88\\
+True Colors & Cyndi Lauper & 88 \\ How You Remind Me & Nickelback & 87 \\
+Georgia On My Mind & Ray Charles & 87 \\ Love Song & Sara Bareilles & 87 \\
+Give Your Heart A Break & Demi Lovato & 86 \\ Breakeven (Falling To Pieces) & The Script & 86 \\
+Want U Back & Cher Lloyd & 86 \\ Ironic & Alanis Morissette & 84 \\
+My Favorite Things & From ``The Sound Of Music'' & 84 \\ All Out of Love & Air Supply & 84 \\
+Castle On A Cloud & From ``Les Miserables'' & 84 \\ Uninvited & Alanis Morissette & 84 \\
+Always On My Mind & Willie Nelson & 83 \\ My Girl & The Temptations & 83 \\
+I Will Survive & Gloria Gaynor & 83 \\ Bingo & Traditional & 82 \\
+Can't Fight This Feeling & REO Speedwagon & 82 \\ Ben & Michael Jackson & 80 \\
+Brave & Sara Bareilles & 80 \\ The Worst & Jhene Aiko & 79 \\
+L O V E & Frank Sinatra & 79 \\ You Found Me & The Fray & 79 \\
+Marry You & Bruno Mars & 79 \\ I Want It That Way & Backstreet Boys & 78 \\
+Fly Away & Amanda Brown & 76 \\ And I Am Telling You & From ``Dreamgirls'' & 76 \\
+One Of Us & Joan Osborne & 73 \\ You And I & Lady Gaga & 71 \\
+Try & P!nk & 71 \\ Stay & Lisa Loeb & 71 \\
+Home & Phillip Phillips & 71 \\ Hand In My Pocket & Alanis Morissette & 70 \\
+Circle Of Life & From ``The Lion King'' & 70 \\ Can You Feel The Love Tonight & From ``The Lion King'' & 70 \\
+The First Cut Is The Deepest & Sheryl Crow & 69 \\ You've Got A Friend In Me & From ``Toy Story'' & 69 \\
+How To Save A Life & The Fray & 69 \\ Let Me Love You & Mario & 69 \\
+All Star & Smash Mouth & 68 \\ Head Over Feet & Alanis Morissette & 68 \\
+Row Row Row Your Boat & Traditional & 67 \\ Top Of The World & Carpenters & 67 \\
+All The Man That I Need & Whitney Houston & 67 \\ Never Say Never & The Fray & 67 \\
+All The Small Things & blink-182 & 66 \\ Just A Kiss & Lady Antebellum & 66 \\
+You Oughta Know & Alanis Morissette & 66 \\ Lights & Ellie Goulding & 66 \\
+I Look To You & Whitney Houston & 66 \\ Blurred Lines & Robin Thicke ft. T.I. + Pharrell Williams & 65 \\
+Billionaire & Travie McCoy ft. Bruno Mars & 54 \\ Sway & Michael Bublé & 65 \\
+Careless Whisper & George Michael & 65 \\ As Long As You Love Me & Backstreet Boys & 64\\
+Lucky & Britney Spears & 64 \\ Santeria & Sublime & 63\\
+Super Bass & Nicki Minaj & 62 \\ Heart Attack & Demi Lovato & 62 \\
+Always Be My Baby & Mariah Carey & 62  \\ Piano Man & Billy Joel & 61\\
+Kryptonite & 3 Doors Down & 61 \\ Do You Hear What I Hear & Traditional & 61 \\
+Beauty And The Beast & From ``Beauty And The Beast'' & 61 \\ Just The Way You Are & Billy Joel & 61 \\
+Love Somebody & Maroon 5 & 61 \\ Drink A Beer & Luke Bryan & 60 \\
+Love Me Again & John Newman & 60 \\ More Than This & One Direction & 60 \\
+Locked Out Of Heaven & Bruno Mars & 59 \\ The Star-Spangled Banner & Whitney Houston & 58\\
+Silent Night & Traditional & 57 \\ Alejandro & Lady Gaga & 57\\
+Best Song Ever & One Direction & 57 \\ Achy Breaky Heart & Billy Ray Cyrus & 57\\
+The Greatest Love Of All & Whitney Houston & 56 \\ Sitting On The Dock of The Bay & Otis Redding & 56\\
+Everybody Hurts & R.E.M. & 56 \\ Glad You Came & The Wanted & 56 \\
+Losing my Religion & R.E.M. & 55 \\ Gorilla & Bruno Mars & 55\\
+Blue Christmas & Elvis Presley & 55 \\ Eye Of The Tiger & Survivor & 54\\
+Girls Just Want To Have Fun & Cyndi Lauper & 54 \\ Safe And Sound & Capital Cities & 54\\
+Don't Rain On My Parade & Barbra Streisand & 54 \\ Can't Remember To Forget You & Shakira ft. Rihanna & 53\\
+Two Black Cadillacs & Carrie Underwood & 53 \\ Every Rose Has Its Thorn & Poison & 53\\
+Body Party & Ciara & 53 \\ American Pie & Don McLean & 53\\
+This Love & Maroon 5 & 52 \\ Simple Man & Lynyrd Skynyrd & 53\\
+A Horse With No Name & America & 52 \\ 15 Seconds Of Fame & Johnny Burgos & 52\\
+Under The Sea & From ``The Little Mermaid'' & 52 \\ Fallin' For You & Colbie Caillat & 51\\
+One Thing & One Direction & 51 \\ Oops, I Did It Again & Britney Spears & 51\\
+Frere Jacques & Traditional & 51 \\ Somebody To Love & Queen & 51\\
+Sometimes & Britney Spears & 50 \\ It's Time & Imagine Dragons & 50\\
+Baby, I Love Your Way & Peter Frampton & 50 \\ Good Girl & Carrie Underwood & 50\\
+Just When I Needed You Most & Randy VanWarmer & 50 \\ Yesterday Once More & Carpenters & 49\\
+A Holly Jolly Christmas & Lady Antebellum & 48 \\ The Lazy Song & Bruno Mars & 48\\
+Treasure & Bruno Mars & 48 \\ Paparazzi & Lady Gaga & 47\\
+Worshipper & Hunter Sparkman & 47 \\ All-American Girl & Carrie Underwood & 46\\
+Borderline & Madonna & 46 \\ Don't Let The Sun Go Down On Me & Elton John & 46\\
+Candle In The Wind & Elton John & 46 \\ Dark Side & Kelly Clarkson & 46\\
+We've Only Just Begun & Carpenters & 46 \\ Adorn & Miguel & 45\\
+Whatcha Say & Jason Derulo & 46 \\ I Wanna Dance With Somebody & Whitney Houston & 45\\
+Name & Goo Goo Dolls & 44 \\ Down & Jay Sean ft. Lil Wayne & 44\\
+I Want To Hold Your Hand & The Beatles & 44 \\ Hit Me With Your Best Shot & Pat Benatar & 44\\
+Secrets & OneRepublic & 43 \\ Kiss The Girl & From ``The Little Mermaid'' & 43\\
+Young Girls & Bruno Mars & 42 \\ Endless Love & Lionel Richie \& Diana Ross & 42\\
+That's The Way It Is & Celine Dion & 42 \\ Runaway Train & Soul Asylum & 42\\
+The Way You Look Tonight & Tony Bennett &  41 \\ Gangsta's Paradise & Coolio & 41\\
+Betcha By Golly, Wow & The Stylistics & 40 \\ Climax & Usher & 40\\
+Disturbia & Rihanna & 40 \\ Closing Time & Semisonic & 39\\
+The Way I Am & Ingrid Michaelson & 39 \\ Umbrella & Rihanna & 39\\
+OMG & Usher ft. will.i.am & 39 \\ Summer & Calvin Harris & 39\\
+Bye Bye Bye & N\*SYNC & 39 \\ God Bless The USA & Lee Greenwood & 39\\
+When A Man Loves A Woman & Percy Sledge & 38 \\ Won't Go Home Without You & Maroon 5 & 38\\
+Behind Blue Eyes & The Who & 38 \\ King Of Anything & Sara Bareilles & 37\\
+Rainy Days And Mondays & Carpenters & 37 \\ For The First Time & The Script & 37\\
+Animal & Neon Trees & 37 \\ Born This Way & Lady Gaga & 37\\
+Merry Christmas, Darling & Carpenters & 36 \\ Friends In Low Places & The Nashville All Stars & 36\\
+Linger & The Cranberries & 36 \\ The Edge Of Glory & Lady Gaga & 36\\
+Didn't We Almost Have It All & Whitney Houston & 36 \\ Cooler Than Me & Mike Posner & 36\\
+Faith & George Michael & 35 \\ Jingle Bell Rock & Bobby Helms & 35\\
+\#thatPOWER & will.i.am ft. Justin Bieber & 35 \\ New York, New York & Frank Sinatra & 34\\
+Poker Face & Lady Gaga & 34 \\ The Little Drummer Boy & K. Davis & 34\\
+Cruise & Florida Georgia Line & 34 \\ The One I Love & R.E.M. & 34\\
+Lovefool & The Cardigans & 34 \\ No Air & Jordin Sparks ft. Chris Brown & 34\\
+Feel Like Makin' Love & Bad Company & 34 \\ Save The Last Dance For Me & The Drifters & 33\\
+Breakfast At Tiffany's & Deep Blue Something & 33 \\ Stronger & Britney Spears & 33\\
+Twist And Shout & The Beatles & 32 \\ I'm A Slave 4 U & Britney Spears & 32\\
+Baby Love & The Supremes & 32 \\ Home & Daughtry & 32\\
+Stronger (What Doesn't Kill You) & Kelly Clarkson & 30 \\ Send In The Clowns & From ``Pippin'' & 30\\
+Bed Intruder & The Gregory Brothers & 29 \\ Summertime & From ``Porgy And Bess'' & 29\\
+Rocket Man & Elton John & 29 \\ Drift Away & Dobie Gray & 29\\
+Seasons Of Love & From ``Rent'' & 29 \\ You Make Me Feel Brand New & Stylistics & 28\\
+In My Head & Jason Derulo & 27 \\ Making Memories Of Us & Keith Urban & 27\\
+She's Always A Woman & Billy Joel & 26 \\ Luka & Suzanne Vega & 22\\
+Broken Wings & Mr. Mister & 22 \\ You Drive Me Crazy & Britney Spears & 21\\
+Say Somethin' & Austin Mahone & 21\\
 \hline
-\end{tabular}
-\end{center}
 \caption{All songs in the \textit{DAMP} data set.}
 \label{tab:app_damp}
-\end{table}%
+\end{longtable}%
 
 
 \subsection{Phrases in the \textit{DampRetrieval} data sets}
-\begin{table}[h]
+\begin{table}[H!]\footnotesize
 \begin{center}
-\begin{tabular}{|c|c|}
+\begin{tabular}{|p{.6\textwidth}|p{.4\textwidth}|}\hline
 Phrase & Song \\ \hline
- & Alejandro \\
- & Poker Face \\
- & Somewhere Only We Know \\
- & Twinkle, Twinkle, Little Star \\
- & Won't Go Home Without You\\
- & All Star\\
- & Hey There, Delilah\\
- & Glad You Came\\
- & Head Over Feet\\
- & Top Of The World\\
- & Hero\\
- & Love You Like A Love Song\\
- & Faith\\
- & Merry Christmas, Darling\\
- & 15 Seconds Of Fame\\
- & Sway\\
- & God Bless The USA\\
- & Love The Way You Lie\\
- & Grenade\\
- & Super Bass\\
+All those flames that burned before him & Alejandro \\
+Can't read my, can't read my, no, he can't read my poker face & Poker Face \\
+I'm getting tired and I need somewhere to begin & Somewhere Only We Know \\
+Up above the world so high & Twinkle, Twinkle, Little Star \\
+I may not make it through the night, I won't go home without you & Won't Go Home Without You\\
+Somebody once asked, could I spare some change for cash, I need to get myself away from this place & All Star\\
+I'm a thousand miles away, but girl, tonight you look so pretty, yes, you do & Hey There, Delilah\\
+The sun goes down, the stars come out & Glad You Came\\
+And don't be alarmed if I fall head over feet & Head Over Feet\\
+There is wonder in most everything I see & Top Of The World\\
+And you cast your fear aside and you know you can survive & Hero\\
+I love you like a love song, baby, I & Love You Like A Love Song\\
+Oh, oh, baby, I reconsider my foolish notion & Faith\\
+But I can I dream and in my dreams & Merry Christmas, Darling\\
+She's better off, but maybe worse & 15 Seconds Of Fame\\
+Dance with me, make me sway & Sway\\
+And I'd gladly stand up next to you and defend her still today & God Bless The USA\\
+Now I know we said things, did things that we didn't mean & Love The Way You Lie\\
+What you don't understand is I'd catch a grenade for you & Grenade\\
+When he come up in the club he blazin' up & Super Bass\\
 \hline
 \end{tabular}
 \end{center}
@@ -333,30 +525,30 @@ Phrase & Song \\ \hline
 \label{tab:app_dampretf}
 \end{table}%
 
-\begin{table}[h]
+\begin{table}[H!]\footnotesize
 \begin{center}
-\begin{tabular}{|c|c|}
+\begin{tabular}{|p{.6\textwidth}|p{.4\textwidth}|}\hline
 Phrase & Song \\ \hline
- & Summertime \\
- & Paparazzi \\
- & Cooler Than Me\\
- & I Will Survive\\
- & Simple Man\\
- & Breakeven\\
- & Safe And Sound\\
- & I Want It That Way\\
- & Because Of You\\
- & When A Man Loves A Woman\\
- & Neon Lights\\
- & Jesus, Take The Wheel\\
- & Baby Love\\
- & Poker Face\\
- & King Of Anything\\
- & As Long As You Love Me\\
- & Hand In My Pocket\\
- & You Are Not Alone\\
- & Animal\\
- & Part Of Your World\\
+So hush, little baby, don't you cry & Summertime \\
+I'm your biggest fan, I'll follow you until you love me, papa, paparazzi & Paparazzi \\
+Behind your make-up, nobody knows who you even are & Cooler Than Me\\
+I should've changed my stupid lock & I Will Survive\\
+Come sit beside me, my only son & Simple Man\\
+They say bad things happen for a reason & Breakeven\\
+You'll still be standing next to me & Safe And Sound\\
+Now I can see that we're falling apart & I Want It That Way\\
+I'm forced to fake a smile, a laugh, every day of my life & Because Of You\\
+Sleep out in the rain & When A Man Loves A Woman\\
+So let's pretend we're running out of time & Neon Lights\\
+Jesus, take the wheel & Jesus, Take The Wheel\\
+I never loved no one but you & Baby Love\\
+I'll get him hot, show him what I've got & Poker Face\\
+Who died and made you king of anything & King Of Anything\\
+Every little thing that you have said and done & As Long As You Love Me\\
+I'm high, but I'm grounded & Hand In My Pocket\\
+Every day I sit and I ask myself, how did love slip away & You Are Not Alone\\
+And I won't denied by you, the animal inside of you, oh & Animal\\
+What would I give if I could live out of these waters & Part Of Your World\\
  \hline
 \end{tabular}
 \end{center}
@@ -365,131 +557,118 @@ Phrase & Song \\ \hline
 \end{table}%
 
 \subsection{Phrases in the \textit{AuthorRetrieval} data set}
-\begin{table}[h]
-\begin{center}
-\begin{tabular}{|c|c|}
+The following table displays the phrases performed in the \textit{AuthorRetrieval} data set. (The list does not add up to 90 entries because some phrases were repeated).
+
+	\footnotesize
+	\begin{longtable}[H!]{|p{.4\textwidth}|p{.4\textwidth}|p{.1\textwidth}|} \hline
 Phrase & Song \\ \hline
- &  Call Me Maybe\\
- &  I Wanna Dance With Somebody\\
- &  Whatcha Say\\
- &  Summertime\\
- &  Summertime Sadness\\
- &  The A Team\\
- &  More Than Words\\
- &  Hallelujah\\
- &  Human\\
- &  Grenade\\
- &  Part Of Your World\\
- &  Circle Of Life\\
- &  Careless Whisper\\
- &  Over The Rainbow\\
- &  Because Of You\\
- &  Wake Me Up\\
- &  You Found Me\\
- &  Don't Know Why\\
- &  Alejandro\\
- &  Total Eclipse Of The Heart\\
- &  Grenade\\
- &  Lovefool\\
- &  A Thousand Miles\\
- &  You Drive Me Crazy\\
- &  Grenade\\
- &  Stay\\
- &  Happy\\
- &  Top Of The World\\
- &  She Will Be Loved\\
- &  Locked Out Of Heaven\\
- &  Umbrella\\
- &  Colors Of The Wind\\
- &  Can't Remember To Forget You\\
- &  New York, New York\\
- &  Fireflies\\
- &  Didn't We Almost Have It All\\
- &  Let Her Go\\
- &  Oops, I Did It Again\\
- &  Cups\\
- &  Part Of Your World\\
- &  Say Something\\
- &  Clarity\\
- &  Locked Out Of Heaven\\
- &  Safe And Sound\\
- &  That's The Way It Is\\
- &  Animal\\
- &  Locked Out Of Heaven\\
- &  Beauty And The Beast\\
- &  Love Song\\
- &  The Way You Look Tonight\\
- &  Piano Man\\
- &  And I Am Telling You\\
- &  Baby, I Love Your Way\\
- &  Beauty And The Beast\\
- &  More Than Words\\
- &  Bad Romance\\
- &  Can't Remember To Forget You\\
- &  Summer\\
- &  Save The Last Dance For Me\\
- &  Hero\\
- &  Hey There, Delilah\\
- &  Just The Way You Are\\
- &  Sway\\
- &  All Out Of Love\\
- &  Faith\\
- &  Your Song\\
- &  Somewhere Only We Know\\
- &  All The Small Things\\
- &  I Believe I Can Fly\\
- &  Let It Go\\
- &  Can You Feel The Love Tonight\\
- &  On My Own\\
- &  Lovefool\\
- &  Piano Man\\
- &  Want U Back\\
- &  Pompeii\\
- &  Oops, I Did It Again\\
- &  I Dreamed A Dream\\
- &  Apologize\\
- &  Apologize\\
- &  Don't Rain On My Parade\\
- &  Girls Just Wanna Have Fun\\
- &  The Edge Of Glory\\
- &  Valerie\\
- &  Breakeven\\
- &  Gangsta's Paradise\\
- &  My Heart Will Go On\\
- &  Seasons Of Love\\
- &  Grenade\\
- &  O Holy Night\\
+Hey, I just met you, and this is crazy &  Call Me Maybe\\
+Yeah, I wanna dance with somebody, I wanna feel the heat with somebody &  I Wanna Dance With Somebody\\
+Whatcha say &  Whatcha Say\\
+Summertime and the living is easy &  Summertime\\
+Summertime, summertime sadness &  Summertime Sadness\\
+And they she's in the class A team, stuck in her daydream &  The A Team\\
+Saying ``I love you'' is not the words I want to hear from you &  More Than Words\\
+I heard there was a secret chord that David played and it pleased the lord &  Hallelujah\\
+'Cause darling, I would catch a grenade for you &  Grenade\\
+Out of the sea, wish I could be, part of that world &  Part Of Your World\\
+It's the circle, the circle of life &  Circle Of Life\\
+I'm never gonna dance again, guilty feet have got no rhythm &  Careless Whisper\\
+There's a land that I heard of once in a lullaby &  Over The Rainbow\\
+Because of you I never stray too far from the sidewalk &  Because Of You\\
+So wake me up when it's all over &  Wake Me Up\\
+Lost and insecure, you found me, you found me &  You Found Me\\
+I waited 'til I saw the sun &  Don't Know Why\\
+Don't call me name, don't call me name, Alejandro &  Alejandro\\
+Nothing I can say, a total eclipse of the heart &  Total Eclipse Of The Heart\\
+I don't care 'bout anything but you &  Lovefool\\
+If I can fall into the sky &  A Thousand Miles\\
+You drive me crazy, I just can't sleep &  You Drive Me Crazy\\
+All you gotta do is stay &  Stay\\
+Come along if you feel like a room without a roof &  Happy\\
+I'm on the top of the world looking down on creation &  Top Of The World\\
+And she will be loved &  She Will Be Loved\\
+'Cause you make me feel like I've been locked out of heaven &  Locked Out Of Heaven\\
+When the sun shine, we shine together, told you I'd be here forever &  Umbrella\\
+Can you sing with all the voices of the mountain &  Colors Of The Wind\\
+Can't remember to forget you &  Can't Remember To Forget You\\
+Start spreading the news, I'm leaving today &  New York, New York\\
+Million fireflies, I'm weird 'cause I hate goodbyes &  Fireflies\\
+Didn't we almost have it all &  Didn't We Almost Have It All\\
+Only know your lover when you let her go &  Let Her Go\\
+I'm not that innocent &  Oops, I Did It Again\\
+When I'm gone, when I'm gone, oh, you're gonna miss me when I'm gone &  Cups\\
+Say something, I'm giving up on you &  Say Something\\
+If our love is tragedy, why are you my clarity &  Clarity\\
+Even if the sky is falling down, I know that we'll be safe and sound &  Safe And Sound\\
+And that's the way it is &  That's The Way It Is\\
+Oh, I want some more, oh, what are you waiting for &  Animal\\
+Tale as old, song as old as rhyme, beauty and the beast &  Beauty And The Beast\\
+I'm not gonna write you a love song &  Love Song\\
+And the way you look tonight &  The Way You Look Tonight\\
+Sing us a song, you're the piano man &  Piano Man\\
+And I am telling you I'm not going &  And I Am Telling You\\
+Ooh baby, I love your way &  Baby, I Love Your Way\\
+I want your love and I want your revenge, you and me could write a bad romance &  Bad Romance\\
+When I met you in the summer, summer, to my heartbeat's sound &  Summer\\
+Save the last dance for me &  Save The Last Dance For Me\\
+And when the hero comes along &  Hero\\
+Hey there, Delilah, what's it like in New York City &  Hey There, Delilah\\
+I love you just the way you are &  Just The Way You Are (Billy Joel)\\
+When Marimba rhythms start to play &  Sway\\
+And I'm all out of love, I'm so lost without you &  All Out Of Love\\
+Well, I guess it would be nice if I could touch your body &  Faith\\
+I hope you don't mind, I hope you don't mind &  Your Song\\
+So why don't we go somewhere only we know &  Somewhere Only We Know\\
+All the small things &  All The Small Things\\
+I believe I can fly, I believe I can touch the sky &  I Believe I Can Fly\\
+Let it go, let it go, can't hold it back anymore &  Let It Go\\
+Can you feel the love tonight &  Can You Feel The Love Tonight\\
+On my own, pretending he's beside me &  On My Own\\
+Love me, love me, say that you love me &  Lovefool\\
+I was lost [sic] to my own devices &  Pompeii\\
+Oops, I did it again, I played with your heart, got lost in the game &  Oops, I Did It Again\\
+I dreamed a dream in time gone by &  I Dreamed A Dream\\
+And it's too late to apologize &  Apologize\\
+Don't tell me not to fly, I've simply got to &  Don't Rain On My Parade\\
+Come home in the morning light, my mother says ``when you gonna live your life right'' &  Girls Just Wanna Have Fun\\
+I'm on the edge of glory &  The Edge Of Glory\\
+Since I've come on home, well, my body's been a mess, and I miss your ginger hair and the way you like to dress &  Valerie\\
+When a heart breaks, no, it don't break even &  Breakeven\\
+Been spending most their lives living in a gansta's paradise &  Gangsta's Paradise\\
+My heart will go on and on &  My Heart Will Go On\\
+Five hundred twenty-five thousand six hundred minutes &  Seasons Of Love\\
+O holy night, the stars are brightly shining &  O Holy Night\\
  \hline
-\end{tabular}
-\end{center}
+
 \caption{Phrases in the \textit{AuthorRetrieval} data set.}
 \label{tab:app_authorret}
-\end{table}%
+\end{longtable}%
 
 \subsection{Songs in the \textit{Mauch}  data set}
-\begin{table}[h]
+\begin{table}[H!] \footnotesize
 \begin{center}
-\begin{tabular}{|c|c|}
+\begin{tabular}{|l|l|}\hline
 Title & Artist \\ \hline
-Knowing Me, Knowing You & Abba
-Eternal Flame & The Bangles
-Call Me &Blondie
-Warwick Avenue & Duffy
-Ordinary World & Duran Duran
-Do You Want To & Franz Ferdinand
-Toy Soldiers & Martika
-Guiding Light & Muse
-The Dock Of The Bay & Otis Redding
-We Are The Champions & Queen
-RM-P082 12.210 & (RWC database)
-RM-P084 1.519 & (RWC database)
-Addicted To Love & Robert Palmer
-Black Magic Woman & Santana
-Back For Good & Take That
-What's Love Got To Do With It & Tina Turner
-Africa & Toto
-With Or Without You & U2
-She & Zweieck
+Knowing Me, Knowing You & Abba\\
+Eternal Flame & The Bangles\\
+Call Me &Blondie\\
+Warwick Avenue & Duffy\\
+Ordinary World & Duran Duran\\
+Do You Want To & Franz Ferdinand\\
+Toy Soldiers & Martika\\
+Guiding Light & Muse\\
+The Dock Of The Bay & Otis Redding\\
+We Are The Champions & Queen\\
+RM-P082 12.210 & (RWC database)\\
+RM-P084 1.519 & (RWC database)\\
+Addicted To Love & Robert Palmer\\
+Black Magic Woman & Santana\\
+Back For Good & Take That\\
+What's Love Got To Do With It & Tina Turner\\
+Africa & Toto\\
+With Or Without You & U2\\
+She & Zweieck\\
 \hline
 \end{tabular}
 \end{center}
@@ -498,16 +677,102 @@ She & Zweieck
 \end{table}%
 
 \subsection{Songs in the \textit{QMUL Expletive} data set}
+	\footnotesize
+	\begin{longtable}[H!]{|p{.6\textwidth}|p{.4\textwidth}|} \hline
+			Title & Artist \\ \hline
+Hanging On			&	Ellie Goulding	ft.	Tinie Tempah		\\
+Talk That Talk	&	Rihanna	ft.		Jay Z	\\
+Pink Matter			&	Frank Ocean	ft.	Andre 3000		\\
+You Da One	&	Rihanna	\\
+Airplanes (pt. 2)	&	Bob	ft.		Eminem	\\
+Mockingbird	&	Eminem	\\
+Get Yourself Back Home			&	Gym Class Heroes	\\
+Bangarang		&	Skrillex				\\
+The Best		&	Nicki Minaj		\\
+Read All About It			&	Professor Green	ft.	Emilie Sande		\\
+Traktor			&	Wretch 32	ft.	L Marshall		\\
+Love The Way You Lie	&	Eminem	ft.		Rihanna	\\
+Crew Love		&	Drake	ft.		The Weeknd	\\
+Heartbeat			&	Childish Gambino	\\
+Castle Walls			&	TI	ft.		Christina Aguleria	\\
+Drop The World		&	Lil Wayne	ft.	Eminem		\\
+Empire State Of Mind		&	Jay Z	ft.		Alicia Keys	\\
+Hitz			&	Chase \& Status	ft.	Tinie Tempah		\\
+Remember Me		&	Daley	ft.		Jessie J	\\
+Fire Fly			&	Childish Gambino	\\
+Made In America &	Jay Z ft. Kanye West			\\
+Roman's Revenge		&	Nicki Minaj	ft.	Eminem		\\
+Strange Clouds		&	Bob	ft.		Lil Wayne	\\
+Lord Knows		&	Drake	ft.		Rick Ross	\\
+Poetic Justice		&	Kendrick Lamar	ft.	Drake		\\
+Best I Ever Had	&	Drake			\\
+Good Morning		&	Kanye West		\\
+Encore	&	Jay Z			\\
+I Need A Doctor	&	Eminem	ft.		Dr. Dre	\\
+6 Ft 7 Ft		&	Wiz Khalifa			\\
+My Band	&	D12		\\
+Purple Pills	&	D12			\\
+Bass Down Low		&	Dev	ft.		Tinie Tempah	\\
+Shot For Me		&	Drake	ft.		The Weeknd	\\
+The Way I Am	&	Eminem				\\
+Spacebound	&	Eminem			\\
+Without Me	&	Eminem				\\
+Run This Town		&	Jay Z	ft.		Kanye West	\\
+That's My Bitch		&	Jay Z	ft.		Kanye West	\\
+AYO TECHNOLOGY 			&	50 Cent	ft.		Justin Timberlake	\\
+Like Toy Soldiers	&	Eminem			\\
+Cleaning Out My Closet	&	Eminem.			\\
+Stan 	&	Eminem	ft.		Dido	\\
+?		&	Labrinth				\\
+Pizza Boy		&	Chip	ft.		Meek Mill	\\
+Beautiful	&	Chip		\\
+Superman	&	Eminem				\\
+25 To Life	&	Eminem				\\
+My Name Is	&	Eminem				\\
+No Love		&	Eminem	ft.		Lil Wayne	\\
+Lose Yourself	&	Eminem				\\
+The Real Slim Shady	&	Eminem				\\
+All Of The Lights		&	Kanye West	ft.	Various		\\
+LOST IN THE WORLD			&	Kanye West	ft.	Gil Scot Heron		\\
+Dark Fantasy		&	Kanye West			\\
+Jesus Walks		&	Kanye West				\\
+Paris (NIGGERS In)		&	Jay Z	ft.		Kanye West	\\
+Lighters		&	Eminem 	ft.		Royce Da 5"9	\\
+Evil Deeds	&	Eminem			\\
+Yellow Brick Road	&	Eminem				\\
+Mosh	&	Eminem		\\
+Puke	&	Eminem				\\
+My First Single	&	Eminem				\\
+Rain Main	&	Eminem			\\
+Big Weenie	&	Eminem		\\
+Crazy In Love	&	Eminem			\\
+Ass Like That	&	Eminem			\\
+Cold Winds Blow	&	Eminem			\\
+Hailie's Song	&	Eminem			\\
+Lose Yourself	&	Eminem			\\
+Murder To Excellence 		&	Jay Z	ft.		Kanye West	\\
+Why I Love You		&	Jay Z	ft.		Kanye West	\\
+Welcome To The Jungle		&	Jay Z	ft.		Kanye West	\\
+Arena	&	Bob	ft.		T.I	\\
+Thrift Shop		&	Macklemore			\\
+Who Gon Stop Me		&	Jay Z	ft.		Kanye West	\\
+Prime Time		&	Jay Z	ft.		Kanye West	\\
+Otis		&	Jay Z	ft.		Kanye West	\\
+No Church In The Wild 		&	Jay Z	ft.		Kanye West	\\
+Lift Off		&	Jay Z	ft.		Kanye West	\\
+\hline
+
+\end{longtable}%
 
 \section{Results of the \textit{MIREX} 2017 Lyrics-to-Audio alignment challenge}
 
-\subsection{Results on the \textit{ACAP} data set
+\subsection{Results on the \textit{ACAP} data set}
 The following table displays the results on the \textit{ACAP} data set in the \textit{MIREX} challenge. ``HMM'', ``DTW'', and ``LEV'' correspond to the three approaches described in chapter \ref{chap:alignment_retrieval}. ``DMS1'' and ``DMS2'' are the two approaches submitted by other parties.
 
 \begin{table}[h]
 \begin{center}
-\begin{tabular}{|c||c|c|c|}
-Submission & Mean error & Median error & St. dev. error\\
+\begin{tabular}{|c||c|c|c|}\hline
+Submission & Mean error & Median error & St. dev. error\\ \hline
 HMM & 13.96 & 7.64	 & 12.73\\
 DTW & 27.94 & 19.58 & 31.86\\
 LEV & 7.34 & 4.55 & 7.71\\
@@ -520,6 +785,7 @@ DMS2 & 10.57 & 2.02 & 23.30\\
 \label{tab:app_mirex1}
 \end{table}%
 
-\subsection{Results on the \textit{ACAP_Poly} data set
+\subsection{Results on the \textit{ACAP\_Poly} data set}
 
-\subsection{Results on the \textit{Mauch} data set
+\subsection{Results on the \textit{Mauch} data set}
+
