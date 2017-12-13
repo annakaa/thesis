@@ -1,6 +1,6 @@
 tasks beschreiben
 übergänge
-abkürzungen/glossar
+D abkürzungen/glossar
 refs
 D MAP?? (höchstens reziproker rang, aber nicht vergleichbar)
 implementierung rausnehmen?
@@ -11,11 +11,12 @@ research triphones!!
 add thought about triphones being to variable in singing
 time resolutions!
 phonotactic lid sota - inspiration
-lid figures - y label!!
+D lid figures - y label!!
 why not hmms? - no accounting for phoneme confusions or noisy, long phones; reliable training data? (-> additional source of confusion)
+13 instead of 12
 
 retrieval_dtw_process: hinten "alignment" hinzufügen
-12 instead of 13
+
 
 missing refs:
 sasou 7

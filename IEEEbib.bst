@@ -716,7 +716,7 @@ FUNCTION {incollection}
       format.chapter.pages output
       new.sentence
       publisher "publisher" output.check
-      address output
+      %address output
       format.edition output
       format.date "year" output.check
     }
@@ -742,15 +742,15 @@ FUNCTION {inproceedings}
 	  organization output
 	  format.date "year" output.check
 	}
-	{ address output.nonnull
+	{ %address output.nonnull
 	  format.date "year" output.check
 	  organization output
 	}
       if$
       format.bvolume output
       format.number.series output
-      format.pages output
-      publisher output
+%      format.pages output
+ %     publisher output
     }
     { format.incoll.inproc.crossref output.nonnull
       format.pages output
@@ -862,7 +862,7 @@ FUNCTION {proceedings}
       publisher output
       format.date "year" output.check
     }
-    { address output.nonnull
+    { %address output.nonnull
       format.date "year" output.check
       new.sentence
       editor empty$
@@ -969,6 +969,10 @@ MACRO {toois} {"ACM Transactions on Office Information Systems"}
 MACRO {toplas} {"ACM Transactions on Programming Languages and Systems"}
 
 MACRO {tcs} {"Theoretical Computer Science"}
+
+MACRO {ismir} {"International Society for Music Information Retrieval Conference (ISMIR)"}
+MACRO {icassp} {"IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)"}
+MACRO {eusipco} {"European Signal Processing Conference (EUSIPCO)"}
 
 READ
 
