@@ -7,7 +7,7 @@
 The general procedure for the tasks in this work is shown in figures \ref{fig:process_training} and \ref{fig:process_classification}. Using data sets of audio (speech or singing) and matching annotations, models are trained as outlined in figure \ref{fig:process_training}. Then, these models are used to classify unseen audio data in order to generate annotations for them.\\
 In detail, the necessary steps are:
 \begin{description}
-\item[Pre-processing] For the tasks in this work, pre-processing of the audio data is relatively straightforward and consists of normalization of the signal and averaging to a mono channel. Additionally, the audio is downsampled to $16kHz$ because this is the lowest sampling frequency in all the data sets, and downsampling is necessary for compatibility (more detail on the data sets is given in chapter \ref{chap:data}).
+\item[Pre-processing] For the tasks in this work, pre-processing of the audio data is relatively straightforward and consists of normalization of the signal and averaging to a mono channel. Additionally, the audio is downsampled to $16kHz$ because this is the lowest sampling frequency in all the data sets, and downsampling is necessary for compatibility (more detail on the data sets is given in chapter \ref{chap:datasets}).
 \item[Feature extraction] The audio signal contains a lot of data that is redundant and irrelevant to the tasks. For this reason, many types of so-called feature representations were developed over the years. The features employed in this work are described in the next section.
 \item[Model training] Using both the audio features and the available annotations, models are trained with machine learning algorithms to gain an implicit understanding of the sought-after annotations (i.e. classes). In this work, only supervised learning was employed. The used machine learning methods are described in section \ref{sec:tech_ml}.
 \item[Classification] The trained models can then be used in features extracted from unseen audio data to extract their annotations (= classes).
@@ -450,10 +450,10 @@ K(\mathbf{x}_{i},\mathbf{x}_{j}) = e^{-\gamma \parallel \mathbf{x}_{i} - \mathbf
 As can be seen from the above equations, $C$ and $\gamma$ are free parameters. Their optimum values depend on the actual training data vectors. In \cite{techreport:practical_svm}, a grid search during each training is suggested to find them. 
 \medskip
 \\
-The presented training process is appropriate for a two-class problem. For multi-class problems, one-vs-one trainings for all combinations of classes are performed. Then, all of the developed classifiers are used for the classification of the evaluation data and a voting strategy is applied to determine the resulting class. This procedure is not quite in agreement with the one used in the feature selection algorithm (IRMFSP, see section \ref{subsec:irmfsp}), as this algorithm selects features to separate all classes at once, rather than on a one-vs-one basis.
+The presented training process is appropriate for a two-class problem. For multi-class problems, one-vs-one trainings for all combinations of classes are performed. Then, all of the developed classifiers are used for the classification of the evaluation data and a voting strategy is applied to determine the resulting class. 
 
 
-\subsection{i-Vector processing}
+\subsection{i-Vector processing}\label{subsec:tech_ivector}
 I-Vector (identity vector) extraction was first introduced in \cite{Dehak2011} and has since become a state-of-the-art technique for various speech processing tasks, such as speaker verification, speaker recognition, and language identification \cite{Martinez2011}. To our knowledge, it has not been used for any Music Information Retrieval tasks before. \\
 The main idea behind i-vectors is that all training utterances contain some common trends, which effectively add irrelevance to the data in respect to training. Using i-vector extraction, this irrelevance can be filtered out, while only the unique parts of the data relevant to the task at hand remain. The dimensionality of the training data is massively reduced, which also makes the training less computationally expensive. As a side effect, all feature matrices are transformed to i-vectors of equal length, eliminating problems that are caused by varying utterance lengths.\\
 Mathematically, this assumption can be expressed as:
@@ -620,7 +620,7 @@ However, Goodfellow makes an argument that Deep models operate on a different le
 \subsection{Phoneme recognition}\label{subsec:tech_systems_phonerec}
 In common ASR systems, phoneme recognition is performed by training an acoustic model that is able to determine the probability of phoneme occurrences in unseen audio frames. The result of this is a so-called phoneme posteriorgram - i.e. a matrix of the probabilities of each possible phoneme over time. In a second step, another model is applied to this posteriorgram, taking into account the probabilities of phoneme sequences and words formed by these phonemes, and thus generating a phoneme string from the posterior probabilities. This step is called language modeling.\\
 
-Language modeling is a field of research unto itself, and is a complex tasks for lyrics. For this reason, this work focuses on improving the acoustic modeling step. The training process is performed according to the general schema described in section \ref{sec:tech_general}. The specific adaptations are shown in figures \ref{fig:process_training_phones} and \ref{fig:process_classification_phones}: In training, phoneme annotations are used to defined the possible classes. A set of around 39 phonemes is common; the phoneme set used in this work is the one used in CMU Sphinx\footnote{\url{http://cmusphinx.sourceforge.net/}} in the \textit{TIMIT} annotations. The set is listed with examples in \ref{app:phones}. The used data sets contained annotations of monophones. In ASR, splitting phonemes into three temporal phases is common, resulting in so-called triphones. This was also tested as described in section \ref{sec:phonerec_acap}.\\
+Language modeling is a field of research unto itself, and is a complex tasks for lyrics. For this reason, this work focuses on improving the acoustic modeling step. The training process is performed according to the general schema described in section \ref{sec:tech_general}. The specific adaptations are shown in figures \ref{fig:process_training_phones} and \ref{fig:process_classification_phones}: In training, phoneme annotations are used to defined the possible classes. A set of around 39 phonemes is common; the phoneme set used in this work is the one used in CMU Sphinx\footnote{\url{http://cmusphinx.sourceforge.net/}} in the \textit{TIMIT} annotations. The set is listed with examples in appendix \ref{app:phones}. The used data sets contained annotations of monophones. In ASR, splitting phonemes into three temporal phases is common, resulting in so-called triphones. This was also tested as described in section \ref{sec:phonerec_acap}.\\
 
 \begin{figure}
 	\begin{center}
@@ -693,7 +693,7 @@ For evaluation, all test examples are classified into exactly one language class
  \end{equation}  
  where $TP$ are the True Positives, and $N$ is the number of all documents. In ASR, the average cost measure as recommended in \cite{nist_cavg} is also used widely now; however, for comparison with other singing language identification approaches such as those described in chapter \ref{chap:sota}, the accuracy was still used in this work.
 
-\subsection{Keyword spotting}
+\subsection{Keyword spotting}\label{subsec:tech_kws}
 In \cite{kws_overview}, three basic principles for keyword spotting in speech are mentioned:
 \begin{description}
 \item[LVCSR-based keyword spotting] {In this approach, a full transcription of the audio recording is performed using Large-Vocabulary Continuous Speech Recognition (LVCSR), which can then be searched for the keyword. 

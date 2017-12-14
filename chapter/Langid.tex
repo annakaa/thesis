@@ -2,13 +2,13 @@
 
 \chapter{Sung language identification} \label{chap:langid}
 Singing language identification is the task of automatically determining the language of a sung recording. For this task, two algorithms were developed: One based on i-Vector extraction, and one based on the statistics of phoneme posteriorgrams. They will be described in detail in this section.\\
-In both cases, the \textit{NIST2003LRE} and \textit{OGIMultilang} corpora were used for testing the algorithms on speech, and the \textit{YTAcap} data set was used for singing (see chapter \ref{chap:Data}).
+In both cases, the \textit{NIST2003LRE} and \textit{OGIMultilang} corpora were used for testing the algorithms on speech, and the \textit{YTAcap} data set was used for singing (see chapter \ref{chap:datasets}).
 
 \section{Language identification in singing using i-vectors}
 %known speakers - unknown speakers - whole documents
 
 
-As described in section \ref{sec:tech_ivector}, i-Vector extraction is a feature dimension reduction algorithm that was originally developed for speaker recognition, but has since then been employed successfully for other tasks, including language identification. After the publication of this approach for i-Vector extraction for singing language identification, they also became used for other MIR tasks, such as artist recognition and similarity calculation \cite{eghbal-zadeh1} \cite{eghbal-zadeh2}.
+As described in section \ref{subsec:tech_ivector}, i-Vector extraction is a feature dimension reduction algorithm that was originally developed for speaker recognition, but has since then been employed successfully for other tasks, including language identification. After the publication of this approach for i-Vector extraction for singing language identification, they also became used for other MIR tasks, such as artist recognition and similarity calculation \cite{eghbal-zadeh1} \cite{eghbal-zadeh2}.
 
 \section{Proposed system}
 \label{sec:system}

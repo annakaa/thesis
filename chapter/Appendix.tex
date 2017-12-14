@@ -7,7 +7,7 @@
 \begin{appendix}
 \chapter{Appendix}
 
-\section{Phoneme set}
+\section{Phoneme set}\label{app:phonemes}
 The employed phoneme set is \textit{ARPABET}, which is also used in CMU Sphinx\footnote{\url{http://www.speech.cs.cmu.edu/cgi-bin/cmudict}} and in the \textit{TIMIT} annotations. It contains 39 phonemes. The following listing is taken from the Sphinx documentation:
 \begin{table}[h!]
 \footnotesize
@@ -62,7 +62,7 @@ Phoneme & IPA Symbol & Example & Translation \\ \hline
 \label{tab:app_phonemes}
 \end{table}%
 
-\section{Keywords}
+\section{Keywords}\label{app:keywords}
 \begin{table}[h!]
 		\footnotesize
 \begin{center}
@@ -94,7 +94,7 @@ little & l ih t ah l & 4 & 53 & 121 \\
 
 \section{Data sets}
 
-\subsection{Links to the \textit{YTAcap} songs}
+\subsection{Links to the \textit{YTAcap} songs}\label{app:ytacap}
 The following table lists the IDs of the videos on \texttt{http://www.youtube.com} that were used to generate the \textit{YTAcap} data set for singing language identification. The full URL is formed by pre-pending \texttt{http://www.youtube.com/watch?v=} to the ID. Please note that this list was created in 2012, and videos may not be available any longer.
 	\footnotesize
 \begin{longtable}[h!]{|p{.3\textwidth} | p{.3\textwidth} | p{.3\textwidth} |} 
@@ -302,7 +302,7 @@ zdMNrFWVeA0	&		&		\\
 \label{tab:app_ytacap}
 \end{longtable}
 
-\subsection{Songs in the \textit{ACAP} data set}
+\subsection{Songs in the \textit{ACAP} data set}\label{app:acap}
 \begin{table}[h]	\footnotesize
 \begin{center}
 \begin{tabular}{|c|c|c|}\hline
@@ -334,7 +334,7 @@ Viva La Vida & Coldplay & Yes\\
 \label{tab:app_acap}
 \end{table}%
 
-\subsection{Songs in the \textit{DAMP} data set}
+\subsection{Songs in the \textit{DAMP} data set}\label{app:damp}
 
 The following is a list of all titles in the \textit{DAMP} data set. The column ``\#Performances'' displays the number of performances in the original data set. For the subsets used in this work, around 20 performances of each song were used for balance. For the \textit{DampTest} data sets, one performance of each song was randomly selected.
 	\footnotesize
@@ -498,7 +498,7 @@ Say Somethin' & Austin Mahone & 21\\
 \end{longtable}%
 
 
-\subsection{Phrases in the \textit{DampRetrieval} data sets}
+\subsection{Phrases in the \textit{DampRetrieval} data sets}\label{app:dampRetrieval}
 \begin{table}[h!]\footnotesize
 \begin{center}
 \begin{tabular}{|p{.6\textwidth}|p{.4\textwidth}|}\hline
@@ -561,7 +561,7 @@ What would I give if I could live out of these waters & Part Of Your World\\
 \label{tab:app_dampretM}
 \end{table}%
 
-\subsection{Phrases in the \textit{AuthorRetrieval} data set}
+\subsection{Phrases in the \textit{AuthorRetrieval} data set}\label{app:authorRetrieval}
 The following table displays the phrases performed in the \textit{AuthorRetrieval} data set. (The list does not add up to 90 entries because some phrases were repeated).
 
 	\footnotesize
@@ -650,7 +650,7 @@ O holy night, the stars are brightly shining &  O Holy Night\\
 \label{tab:app_authorret}
 \end{longtable}%
 
-\subsection{Songs in the \textit{Mauch}  data set}
+\subsection{Songs in the \textit{Mauch}  data set}\label{app:mauch}
 \begin{table}[h!] \footnotesize
 \begin{center}
 \begin{tabular}{|l|l|}\hline
@@ -681,7 +681,7 @@ She & Zweieck\\
 \label{tab:app_mauch}
 \end{table}%
 
-\subsection{Songs in the \textit{QMUL Expletive} data set}
+\subsection{Songs in the \textit{QMUL Expletive} data set}\label{app:qmul}
 	\footnotesize
 	\begin{longtable}[h!]{|p{.6\textwidth}|p{.4\textwidth}|} \hline
 			Title & Artist \\ \hline
@@ -769,7 +769,7 @@ Lift Off		&	Jay Z	ft.		Kanye West	\\
 
 \end{longtable}%
 
-\section{Results of the \textit{MIREX} 2017 Lyrics-to-Audio alignment challenge}
+\section{Results of the \textit{MIREX} 2017 Lyrics-to-Audio alignment challenge}\label{app:mirex}
 
 \subsection{Results on the \textit{ACAP} data set}
 Table \ref{tab:app_mirex1} displays the results on the \textit{ACAP} data set in the \textit{MIREX} challenge. ``HMM'', ``DTW'', and ``LEV'' correspond to the three approaches described in chapter \ref{chap:alignment_retrieval}. ``DMS1'' and ``DMS2'' are the two approaches submitted by other parties. Table \ref{tab:app_mirex1a} show the individual song results.

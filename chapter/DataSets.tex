@@ -81,7 +81,7 @@ To sum up:
 \item[DampF and DampM] {Each of these data sets contains 20 to 23 full recordings per song performed by singers of one gender, female and male respectively.}
 \item[DampFB and DampMB] {Starting from \textit{DampF} and \textit{DampM}, these data sets were then reduced in the same way as \textit{DampBB}. \textit{DampFB} is roughly the same size, \textit{DampMB} is a bit smaller because there are fewer male recordings.}
 \item[DampTestF and DampTestM] {Contains one full recording per song and gender (300 each). These data sets were used for testing. There is no overlap with any of the training data sets.}
-\item[DampRetrievalF and DampRetrievalM] {20 hand-picked sung phrases from \textit{DampF} and \textit{DampM} of a few seconds duration with good enunciation and good audio quality. These were selected for fine-tuning retrieval approaches. An overview can be found in appendix \ref{app:retrieval}.}
+\item[DampRetrievalF and DampRetrievalM] {20 hand-picked sung phrases from \textit{DampF} and \textit{DampM} of a few seconds duration with good enunciation and good audio quality. These were selected for fine-tuning retrieval approaches. An overview can be found in appendix \ref{app:dampRetrieval}.}
 \end{description}
 %Matt's data set??
 An overview of the amounts of data is given in table \ref{tab:damp_corpora}.
@@ -115,7 +115,7 @@ An overview of the amounts of data is given in table \ref{tab:damp_corpora}.
   \hline
 
 
- \end{tabular}\label{tab:damp_corpora}
+ \end{tabular}
 \end{center}
 
  \caption{Overview of the structure of the \textit{DAMP}-based phonetically annotated data sets, number of recordings in brackets, duration in italics (dd:hh:mm:ss). Note that no number of recordings is given for some data sets because their content was selected phoneme-wise, not song-wise. For retrieval, the recordings are short phrases instead of full songs.}
@@ -145,7 +145,7 @@ This data set was first presented in \cite{mauch_alignment2} and is used for ali
 \subsection{Hansen's vocal track data set (polyphonic)} \label{subsec:data_hansen_polyphonic}
 This data sets consists of the songs in the \textit{ACAP} data set described above in section \ref{subsec:data_hansen}, but with instrumental annotations. The annotations are carried over. This data set is also used for alignment evaluation and denoted as \textit{ACAP\_Poly}.
 
-\section{Keywords}
+\section{Keywords}\label{sec:data_keywords}
 From the 301 different song lyrics of the \textit{DAMP} data sets, 15 keywords were chosen by semantic content and frequency to test the keyword spotting algorithms. Each keyword occurs in at least 50 of the 301 songs, and also appears in the \textit{ACAP} data set. The keywords are shown in table \ref{tab:keywords}. A list of the number of occurrences in each data set is given in appendix \ref{app:keywords}.
 \begin{table}
  \small

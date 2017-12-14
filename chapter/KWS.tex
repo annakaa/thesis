@@ -1,5 +1,5 @@
 \chapter{Sung keyword spotting} \label{chap:kws}
-Keyword spotting is another task for which the new acoustic models described in chapter \ref{chap:phonerec} were employed. A keyword-filler HMM algorithm was selected due to its independence on phoneme durations, which is a condition that cannot be fulfilled easily in singing. As described in section \ref{sec:tech_kwfhmm}, keyword-filler HMMs consist of two sub-HMMs: One to model the keyword and one to model everything else (=filler). The keyword HMM has a simple left-to-right topology with one state per keyword phoneme. The filler HMM is a fully connected loop of all phonemes. When the Viterbi path with the highest likelihood passes through the keyword HMM rather than the filler loop, the keyword is detected. Keyword detection was performed on whole songs, which is a realistic assumption for many practical applications. The \textit{ACAP} and \textit{DampTest} data sets were used for evaluation with the keyword set described in section \ref{sec:data_kws}. Song-wise $F_1$ measures were calculated for evaluation.
+Keyword spotting is another task for which the new acoustic models described in chapter \ref{chap:phonerec} were employed. A keyword-filler HMM algorithm was selected due to its independence on phoneme durations, which is a condition that cannot be fulfilled easily in singing. As described in section \ref{subsec:tech_kws}, keyword-filler HMMs consist of two sub-HMMs: One to model the keyword and one to model everything else (=filler). The keyword HMM has a simple left-to-right topology with one state per keyword phoneme. The filler HMM is a fully connected loop of all phonemes. When the Viterbi path with the highest likelihood passes through the keyword HMM rather than the filler loop, the keyword is detected. Keyword detection was performed on whole songs, which is a realistic assumption for many practical applications. The \textit{ACAP} and \textit{DampTest} data sets were used for evaluation with the keyword set described in section \ref{sec:data_keywords}. Song-wise $F_1$ measures were calculated for evaluation.
 
 \section{Keyword spotting using keyword-filler HMMs}
 \subsection{Comparison of acoustic models}
@@ -24,7 +24,7 @@ In general, recalls are usually close to $1$, and precisions often in the range 
         \begin{subfigure}[t]{0.5\textwidth}
                 \includegraphics[width=\textwidth]{images/kws_exp1_acap.png}
                 \caption{\textit{ACAP}}
-                \label{fig:kws_exp1a}
+                \label{fig:kws_exp1_acap}
         \end{subfigure}
         \caption{$F_1$ measures for keyword spotting results using posteriorgrams generated with various acoustic models.}
           \end{figure}
@@ -79,7 +79,7 @@ One potential source of error are sequences of phonemes that overlap with keywor
 \section{Keyword spotting using duration-informed keyword-filler HMMs}\label{sec:kws_duration}
 \subsection{Approach}
 As mentioned above, a high recall is easily achievable with the described approach, but the comparatively low precision decreases the over-all result. Therefore, using additional information to sort out false positives would be a helpful next step.\\
-One such source of information are the durations of the detected phonemes. As shown in figure \ref{fig:phone_durations}, each phoneme in the \textit{TIMIT} speech database has a fairly fixed duration. In singing, the vowels' durations vary a lot, but the consonants' are still quite predictable. Standard HMMs do not impose any restrictions on the state durations, resulting in a geometric distribution which does not correspond to naturally observed phoneme durations.\\
+One such source of information are the durations of the detected phonemes. As shown in figure \ref{fig:phoneme_stats}, each phoneme in the \textit{TIMIT} speech database has a fairly fixed duration. In singing, the vowels' durations vary a lot, but the consonants' are still quite predictable. Standard HMMs do not impose any restrictions on the state durations, resulting in a geometric distribution which does not correspond to naturally observed phoneme durations.\\
 As first described in \cite{ferguson}, introducing restrictions on state durations can improve the recognition results. In \cite{juang}, Juang et al. present two basic approaches for duration modeling in HMMs: Internal duration modeling and Post-processor duration modeling.\\
 
 In both approaches, parametric state duration models for each phoneme need to be calculated first \cite{levinson}. Several distributions has been tested for this task (e.g. Gaussian), but Burshtein showed that Gamma distributions are best at modeling naturally occurring phoneme duration distributions \cite{burshtein}:

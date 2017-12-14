@@ -14,6 +14,7 @@ phonotactic lid sota - inspiration
 D lid figures - y label!!
 why not hmms? - no accounting for phoneme confusions or noisy, long phones; reliable training data? (-> additional source of confusion)
 13 instead of 12
+lyrics to phonemes??? (ref in retrieval)
 
 retrieval_dtw_process: hinten "alignment" hinzufügen
 
