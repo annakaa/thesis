@@ -111,22 +111,17 @@ In order to find out what influence the speaker characteristics had on the resul
 
 \begin{figure}[h]
        \centering
-      %\begin{subfigure}[b]{0.3\textwidth}
-        %        \includegraphics[width=\textwidth]{images/lid_exp2_nist.png}
-         %      \caption{NIST2003LRE}
-           %     \label{fig:lid_exp2_nist}
-        %\end{subfigure}%
-        \begin{subfigure}[b]{0.5\textwidth}
+        \begin{subfigure}[b]{0.4\textwidth}
                 \includegraphics[width=\textwidth]{images/lid_exp2_ogi.png}
                 \caption{OGIMultilang}
                 \label{fig:exp2_ogi}
         \end{subfigure}
-                \begin{subfigure}[b]{0.5\textwidth}
+                \begin{subfigure}[b]{0.4\textwidth}
                 \includegraphics[width=\textwidth]{images/lid_exp2_yt.png}
                 \caption{YTAcap}
                 \label{fig:exp2_yt}
         \end{subfigure}
-        \caption{Results using SVM models on all three language identification data sets, with or without i-vector processing, with speakers separated between training and test sets.}\label{fig:lid_exp2}
+        \caption{Results using SVM models, with or without i-vector processing, with speakers separated between training and test sets.}\label{fig:lid_exp2}
 \end{figure}
 
 The results are shown in figure \ref{fig:lid_exp2}. In general, all configurations performed worse, indicating that some of the characteristics learned by the models come from the speakers rather than the languages. Apart from this, the general trends for the features remain the same, and i-vector extraction still improves the over-all results.\\
@@ -142,12 +137,12 @@ For this reason, results for the \textit{YTAcap} data set were taken from the pr
 
 \begin{figure}[h]
        \centering
-           \begin{subfigure}[b]{0.5\textwidth}
+           \begin{subfigure}[b]{0.4\textwidth}
                 \includegraphics[width=\textwidth]{images/lid_exp3_ogi.png}
                 \caption{OGIMultilang}
                 \label{fig:exp3_ogi}
         \end{subfigure}
-                \begin{subfigure}[b]{0.5\textwidth}
+                \begin{subfigure}[b]{0.4\textwidth}
                 \includegraphics[width=\textwidth]{images/lid_exp3_yt.png}
                 \caption{YTAcap}
                 \label{fig:exp3_yt}
