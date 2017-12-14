@@ -17,14 +17,14 @@ Implementation of these steps for the actual tasks is described in section \ref{
 
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=0.8\textwidth]{images/process_training.png}
+		\includegraphics[width=1\textwidth]{images/process_training.png}
 		\caption{Schematic of the training procedure used in the considered tasks.}
 		\label{fig:process_training}
 	\end{center}
 \end{figure}
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=0.8\textwidth]{images/process_classification}
+		\includegraphics[width=1\textwidth]{images/process_classification}
 		\caption{Schematic of the classification procedure used in the considered tasks (the model is the one created during training - see figure \ref{fig:process_training}).}
 		\label{fig:process_classification}
 	\end{center}
@@ -72,7 +72,7 @@ In this work, 13 coefficients including the $0th$ coefficient are extracted. In 
 
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=0.8\textwidth]{images/mel_filterbanks.png}
+		\includegraphics[width=0.6\textwidth]{images/mel_filterbanks.png}
 		\caption{Example of a Mel filterbank. \cite{davis_mermelstein}}
 		\label{fig:mel_filterbanks}
 	\end{center}
@@ -122,14 +122,14 @@ In principle, these ideas are related to those that MFCCs are based on, but know
 \end{description}
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=0.8\textwidth]{images/filterbanks_mfcc_plp.png}
+		\includegraphics[width=0.7\textwidth]{images/filterbanks_mfcc_plp.png}
 		\caption{Mel-scale (top) and Bark-scale filterbank. \cite{hoenig}}
 		\label{fig:comp_filterbanks}
 	\end{center}
 \end{figure}
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=0.6\textwidth]{images/eq_loudness.png}
+		\includegraphics[width=0.4\textwidth]{images/eq_loudness.png}
 		\caption{Perceptually motivated equal-loudness weighting function. (The dashed function is used for signals with a Nyquist frequency $>5kHz$). \cite{hoenig}}
 		\label{fig:eq_loudness}
 	\end{center}
@@ -158,7 +158,7 @@ In this work, the coefficient vector is used directly as a feature to train vari
 
 \begin{figure}
  \centerline{\framebox{
- \includegraphics[width=.6\textwidth]{images/trap_temporal.png}}}
+ \includegraphics[width=.5\textwidth]{images/trap_temporal.png}}}
  \caption{The temporal paradigm for TRAP extraction versus conventional features (e.g. MFCC). \cite{traps1}}
  \label{fig:trap_temporal}
 \end{figure}
@@ -171,7 +171,7 @@ In this work, the coefficient vector is used directly as a feature to train vari
 
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=0.8\textwidth]{images/phoneme_traps.png}
+		\includegraphics[width=1\textwidth]{images/phoneme_traps.png}
 		\caption{Mean TRAPs of various phonemes in the 5th critical band. \cite{traps1}}
 		\label{fig:phoneme_traps}
 	\end{center}
@@ -191,7 +191,7 @@ A graphic example of such an alignment is given in figure \ref{fig:dtw_example}.
 
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=0.8\textwidth]{images/dtw_example.png}
+		\includegraphics[width=1\textwidth]{images/dtw_example.png}
 		\caption{Example of a DTW alignment. Alignment between points is represented by the arrows. \cite{meinard_retrieval}}
 		\label{fig:dtw_example}
 	\end{center}
@@ -248,7 +248,7 @@ where $L(i,j)$ is the Levenshtein distance at step $(i,j)$ and $D$, $I$, and $S$
 
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=0.6\textwidth]{images/levenshtein_example.png}
+		\includegraphics[width=0.4\textwidth]{images/levenshtein_example.png}
 		\caption{Example of a Levenshtein distance calculation between the two strings ``INTENTION'' and ``EXECUTION''. Found operations (\textbf{d}eletions, \textbf{i}nsertions, \textbf{s}ubstitutions) are shown at the bottom. \cite{levenshtein_lecture}}
 		\label{fig:levenshtein_example}
 	\end{center}
@@ -291,7 +291,7 @@ In order to find the optimal parameters $\lambda$, the iterative Expectation Max
 
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=0.6\textwidth]{images/gmm_structure.png}
+		\includegraphics[width=0.7\textwidth]{images/gmm_structure.png}
 		\caption{Visualization of a GMM. The Gaussian mixture is the weighted sum of several Gaussian distributions, where $p_i$ are the mixture weights and $b_i$ are the Gaussians. \cite{reynolds_rose}}
 		\label{fig:gmm_structure}
 	\end{center}
@@ -299,7 +299,7 @@ In order to find the optimal parameters $\lambda$, the iterative Expectation Max
 
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=0.6\textwidth]{images/gmm_training.png}
+		\includegraphics[width=1\textwidth]{images/gmm_training.png}
 		\caption{Example of a GMM in two dimensions. Crosses signify the data points, ellipses the three multivariate Gaussians. On the left-hand side, the evolution of the estimated means and covariances of these Gaussians during the EM process is shown;  the right-hand side shows the converged mixture. \cite{numerical_recipes}}
 		\label{fig:gmm_training}
 	\end{center}
@@ -492,7 +492,7 @@ Networks with no hidden layers are only able to solve linear problems; the intro
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.5\textwidth]{images/neuron.png}
+	\includegraphics[width=0.3\textwidth]{images/neuron.png}
 	\caption{Functionality of a single neuron in an ANN. The neuron computes a weighted sum of its inputs, and then applies an activation function, resulting in output $y$. \cite{mackay}}
 	\label{fig:neuron}
 \end{figure}
@@ -548,7 +548,7 @@ where $M$ is the number of output neurons.\\
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.9\textwidth]{images/feedforward.png}
+	\includegraphics[width=0.4\textwidth]{images/feedforward.png}
 	\caption{Schematic of a feed-forward neural network with an input layer with four neurons, two hidden layers with four neurons each, and an output layer with two neurons. \cite{medium}}
 	\label{fig:feedforward}
 \end{figure}
@@ -624,14 +624,14 @@ Language modeling is a field of research unto itself, and is a complex tasks for
 
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=0.8\textwidth]{images/process_training_phones.png}
+		\includegraphics[width=1\textwidth]{images/process_training_phones.png}
 		\caption{Schematic of the training procedure for phoneme recognition.}
 		\label{fig:process_training_phones}
 	\end{center}
 \end{figure}
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=0.8\textwidth]{images/process_classification_phones.png}
+		\includegraphics[width=1\textwidth]{images/process_classification_phones.png}
 		\caption{Schematic of the classification procedure for phoneme recognition.}
 		\label{fig:process_classification_phones}
 	\end{center}
@@ -649,7 +649,7 @@ Some work also use a measure called $correct$, which ignores insertions. This ma
  
  \begin{figure}
 	\begin{center}
-		\includegraphics[width=0.8\textwidth]{images/posteriorgram.png}
+		\includegraphics[width=1\textwidth]{images/posteriorgram.png}
 		\caption{Example of a phoneme posteriorgram, the result of classification with an acoustic model. The posteriorgram represents the posterior probabilities of each phoneme over time. The time resolution in this example is $10ms$.}
 		\label{fig:posteriorgram}
 	\end{center}
@@ -659,14 +659,14 @@ Some work also use a measure called $correct$, which ignores insertions. This ma
 \subsection{Language identification}
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=0.8\textwidth]{images/process_training_lid.png}
+		\includegraphics[width=1\textwidth]{images/process_training_lid.png}
 		\caption{Schematic of the training procedure for language identification.}
 		\label{fig:process_training_lid}
 	\end{center}
 \end{figure}
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=0.8\textwidth]{images/process_classification_lid.png}
+		\includegraphics[width=1\textwidth]{images/process_classification_lid.png}
 		\caption{Schematic of the classification procedure for language identification.}
 		\label{fig:process_classification_lid}
 	\end{center}
@@ -713,7 +713,7 @@ Keyword-filler HMMs have been described in \cite{szoeke} and \cite{jansen}. In g
 
 \begin{figure}
  \centerline{\framebox{
- \includegraphics[width=.7\textwidth]{images/kw_filler_hmm.png}}}
+ \includegraphics[width=.8\textwidth]{images/kw_filler_hmm.png}}}
  \caption{Keyword-filler HMM for the keyword ``greasy" with filler path on the left hand side and two possible keyword pronunciation paths on the right hand side. The parameter $\beta$ determines the transition probability between the filler HMM and the keyword HMM. \cite{jansen}}
  \label{fig:kf_hmm}
 \end{figure}
@@ -746,7 +746,7 @@ For evaluation, the alignment approaches were submitted to the \textit{MIREX} 20
 
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=0.8\textwidth]{images/process_retrieval.png}
+		\includegraphics[width=0.9\textwidth]{images/process_retrieval.png}
 		\caption{Schematic of the procedure for lyrics retrieval.}
 		\label{fig:process_retrieval}
 	\end{center}

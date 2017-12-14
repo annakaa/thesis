@@ -12,7 +12,7 @@ On the accompanied version of the same data set, the average error is $13.96s$ a
 %TODO erklären
 \begin{figure}
  \begin{center}
-                \includegraphics[width=0.5\textwidth]{images/res_align_hmm.png}
+                \includegraphics[width=0.45\textwidth]{images/res_align_hmm.png}
                \caption{\textit{MIREX} results on all three data sets using the HMM-based approach.}
                 \label{fig:results_align_hmm}
                  \end{center}
@@ -23,7 +23,7 @@ On the accompanied version of the same data set, the average error is $13.96s$ a
 
 \begin{figure}
  \begin{center}
-                \includegraphics[width=0.8\textwidth]{images/process_alignment_dtw.png}
+                \includegraphics[width=1\textwidth]{images/process_alignment_dtw.png}
                 \caption{Overview of the DTW-based lyrics alignment and retrieval method.}
                 \label{fig:retrieval_dtw_process}
                  \end{center}
@@ -66,7 +66,7 @@ As a future step, incorporating prior phoneme information (e.g. in the form of D
 
 \begin{figure}
  \begin{center}
-                \includegraphics[width=0.8\textwidth]{images/res_align_dtw.png}
+                \includegraphics[width=0.5\textwidth]{images/res_align_dtw.png}
                \caption{\textit{MIREX} results on all three data sets using the DTW-based approach.}
                 \label{fig:results_align_dtw}
                  \end{center}
@@ -79,7 +79,7 @@ In the first experiment, similarity measures were calculated between the lyrics 
 
 \begin{figure}
        \centering
-        \begin{subfigure}[b]{0.4\textwidth}
+        \begin{subfigure}[b]{0.5\textwidth}
 	    \includegraphics[width=\textwidth]{images/retrieval_dtwres_testF.png}
                 \caption{DampTestF}
                 \label{fig:retrieval_dtwres_testF}
@@ -87,7 +87,7 @@ In the first experiment, similarity measures were calculated between the lyrics 
          %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc.
           %(or a blank line to force the subfigure onto a new line)
          \vspace{10px}
-        \begin{subfigure}[b]{0.4\textwidth}
+        \begin{subfigure}[b]{0.5\textwidth}
 	  \includegraphics[width=\textwidth]{images/retrieval_dtwres_testM.png}
                 \caption{DampTestM}
                 \label{fig:retrieval_dtwres_testM}
@@ -108,7 +108,7 @@ In the second retrieval experiment, the same process was performed on single lin
 Then, evaluation was performed as to whether a line from the correct song was retrieved in the N-best results. In this way, confusions between repetitions of a line in the same song did not have an impact on the result. However, repetitions of lyrical lines across multiple songs are a possible source of confusion. The results for the female test set are shown in figure \ref{fig:retrieval_dtwres_testF_line}, the ones for the male test set in figure \ref{fig:retrieval_dtwres_testM_line}.
 \begin{figure}
         \centering
-        \begin{subfigure}[b]{0.4\textwidth}
+        \begin{subfigure}[b]{0.5\textwidth}
 	    \includegraphics[width=\textwidth]{images/retrieval_dtwres_testF_line.png}
                 \caption{DampTestF}
                 \label{fig:retrieval_dtwres_testF_line}
@@ -116,7 +116,7 @@ Then, evaluation was performed as to whether a line from the correct song was re
         %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc.
           %(or a blank line to force the subfigure onto a new line)
           \vspace{10px}
-       \begin{subfigure}[b]{0.4\textwidth}
+       \begin{subfigure}[b]{0.5\textwidth}
 	  \includegraphics[width=\textwidth]{images/retrieval_dtwres_testM_line.png}
                 \caption{DampTestM}
                 \label{fig:retrieval_dtwres_testM_line}
@@ -136,7 +136,7 @@ In parallel, the lyrics database is prepared by converting it into phoneme seque
 %TODO: phoneme seqs erklären
 \begin{figure}
  \begin{center}
-                \includegraphics[width=.8\textwidth]{images/process_alignment_lev.png}
+                \includegraphics[width=.9\textwidth]{images/process_alignment_lev.png}
                 \caption{Overview of the phoneme-based lyrics retrieval process.}
                 \label{fig:retrieval_phone_overview}
                  \end{center}
@@ -157,11 +157,11 @@ The following steps are undertaken to obtain a plausible phoneme sequence from t
   \begin{figure}
 
 	\centering
-	\begin{subfigure}[t]{0.4\textwidth}
+	\begin{subfigure}[t]{0.5\textwidth}
 		\includegraphics[width=.8\textwidth]{images/retrieval_phone_block1.png}
 		\caption{Original phoneme sequence}\label{fig:retrieval_phone_block1}
 	\end{subfigure}%
-	\begin{subfigure}[t]{0.4\textwidth}
+	\begin{subfigure}[t]{0.5\textwidth}
 		\includegraphics[width=.8\textwidth]{images/retrieval_phone_block2.png}
 		\caption{Grouped into blocks (with probabilities in italics)}\label{fig:retrieval_phone_block2}
 	\end{subfigure}
@@ -175,7 +175,7 @@ The following steps are undertaken to obtain a plausible phoneme sequence from t
 
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=.8\textwidth]{images/retrieval_phone_confusion.png}
+		\includegraphics[width=1\textwidth]{images/retrieval_phone_confusion.png}
 		\caption{Example of a confusion matrix for an acoustic model. (Note that \textit{[pau]} confusions are set to 0).}
 		\label{fig:retrieval_phone_confusion}
 	\end{center}
@@ -237,7 +237,7 @@ The similarity calculation itself is implemented with a modified Levenshtein dis
 \textit{MIREX} results for this approach are shown in figure \ref{fig:results_align_phone}; the detailed results can be found in appendix \ref{app:mirex}. Over-all, this approach produces much lower error values than the other two, and was in fact the winning algorithm in the competition. This confirms that the phoneme detection strategy is a feasible alternative to the HMM-based approach. On the \textit{ACAP} data set, the mean error is at $2.87s$ and the median is $0.26s$. On \textit{ACAP\_Poly}, these values are $7.34s$ and $4.55s$ respectively, and on \textit{Mauch}, they are $9.03s$ and $7.52s$. Once again, the results are much higher on polyphonic data than on unaccompanied singing, for which the models were trained. However, the error is still lower than with the submitted methods that include source separation. Therefore, future experiments that also employ pre-processing of this kind would be very interesting. Looking at the song-wise results, songs with heavier and noisier accompaniment generally receive higher errors than others.
 \begin{figure}
  \begin{center}
-                \includegraphics[width=0.5\textwidth]{images/res_align_phone.png}
+                \includegraphics[width=0.45\textwidth]{images/res_align_phone.png}
                \caption{\textit{MIREX} results on all three data sets using the phoneme-based approach.}
                 \label{fig:results_align_phone}
                  \end{center}
@@ -265,7 +265,7 @@ The retrieval rates for the Top-3 and Top-10 results follow a similar pattern. F
 
 \begin{figure}
 	\centering
-	\begin{subfigure}[b]{0.4\textwidth}
+	\begin{subfigure}[b]{0.5\textwidth}
 		\includegraphics[width=\textwidth]{images/retrieval_levres_testF.png}
 		\caption{DampTestF}
 		\label{fig:retrieval_levres_testF}
@@ -273,7 +273,7 @@ The retrieval rates for the Top-3 and Top-10 results follow a similar pattern. F
 	%add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc.
 	%(or a blank line to force the subfigure onto a new line)
 	\vspace{10px}
-	\begin{subfigure}[b]{0.4\textwidth}
+	\begin{subfigure}[b]{0.5\textwidth}
 		\includegraphics[width=\textwidth]{images/retrieval_levres_testM.png}
 		\caption{DampTestM}
 		\label{fig:retrieval_levres_testM}
@@ -284,7 +284,7 @@ The retrieval rates for the Top-3 and Top-10 results follow a similar pattern. F
 
 \begin{figure}
 	\centering
-	\begin{subfigure}[b]{0.4\textwidth}
+	\begin{subfigure}[b]{0.5\textwidth}
 		\includegraphics[width=\textwidth]{images/retrieval_levres_testF_line.png}
 		\caption{DampTestF}
 		\label{fig:retrieval_levres_testF_line}
@@ -292,7 +292,7 @@ The retrieval rates for the Top-3 and Top-10 results follow a similar pattern. F
 	%add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc.
 	%(or a blank line to force the subfigure onto a new line)
 	\vspace{10px}
-	\begin{subfigure}[b]{0.4\textwidth}
+	\begin{subfigure}[b]{0.5\textwidth}
 		\includegraphics[width=\textwidth]{images/retrieval_levres_testM_line.png}
 		\caption{DampTestM}
 		\label{fig:retrieval_levres_testM_line}
@@ -318,7 +318,7 @@ Since textual lyrics are usually easily available on the internet, a new approac
 The data flow is shown in figure \ref{fig:expletive_dataflow}.
 \begin{figure}
 \begin{center}
-                \includegraphics[width=0.6\textwidth]{images/process_expletives.png}
+                \includegraphics[width=1\textwidth]{images/process_expletives.png}
                 \caption{Data flow in the expletive detection approach.}
                 \label{fig:expletive_dataflow}
                  \end{center}

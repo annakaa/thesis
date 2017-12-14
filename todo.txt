@@ -30,3 +30,11 @@ fujihara 21
 15.4 546  550!!
 15.5 553
 
+zu klein:
+res_phonerec_acap, res_phonerec_acap_w, res_phonerec, res_phonerec_w, res_phonerec_sizes, res_phonerec_sizes_w
+lid_exp1_nist, lid_exp1_ogi, lid_exp1_acap, lid_exp1a_nist, lid_exp1a_ogi, lid_exp1a_acap
+lid_exp2_ogi, lid_exp2_acap, lid_exp3_ogi, lid_exp3_acap
+retrieval_dtwres_testF, retrieval_dtwres_testM, retrieval_dtwres_testF_line, retrieval_dtwres_testM_line,
+retrieval_calF, retrieval_calM, retrieval_calA, 
+retrieval_levres_testF, retrieval_levres_testM, retrieval_levres_testF_line, retrieval_levres_testM_line
+
