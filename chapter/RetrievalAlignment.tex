@@ -144,7 +144,9 @@ In parallel, the lyrics database is prepared by converting it into phoneme seque
 
 \vspace{-5pt}
 \paragraph{Symbolic mapping} \label{par:symbolic_mapping}
-As described before, starting from the sung recording used as a query, MFCC features are extracted and run through the acoustic model trained on singing to recognize the contained phonemes. This produces a phoneme posteriorgram, such as the one shown in figure \ref{fig:posteriorgram}; i.e., probabilities of each phone over each time frame. These probabilities contain some noise, both due to inaccuracies in the model and due to ambiguities or actual noise in the performance.\\ %Why not HMMSs??
+As described before, starting from the sung recording used as a query, MFCC features are extracted and run through the acoustic model trained on singing to recognize the contained phonemes. This produces a phoneme posteriorgram, such as the one shown in figure \ref{fig:posteriorgram}; i.e., probabilities of each phone over each time frame. These probabilities contain some noise, both due to inaccuracies in the model and due to ambiguities or actual noise in the performance.\\
+(In ASR, HMMs are commonly used for obtaining phoneme sequences from the output of an acoustic model. This was not done in this work for various reasons. One of them is the lack of reliable training data; the same data as for the acoustic models could be used, but may lead to errors in the model due to the relatively small number of individual songs, and this could also amplify errors in the automatic annotation. In addition to this, the presented approach is more flexible and allows taking knowledge about phoneme performances in singing into account, such as occurrences of long phonemes and the most frequent confusions between phonemes. Nevertheless, a HMM approach could also be tested in the future).\\
+
 The following steps are undertaken to obtain a plausible phoneme sequence from the posteriorgram:
 \begin{description}
 	\item[Smoothing] First, the posteriorgram is smoothed along the time axis with a window of length 3 in order to remove small blips in the phoneme probabilities. 

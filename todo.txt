@@ -1,15 +1,7 @@
 übergänge
 implementierung rausnehmen?
-curse of dimensionality -> goodfellow
 vektoren fett
-research triphones!!
-add thought about triphones being to variable in singing
-time resolutions!
-phonotactic lid sota - inspiration
-D lid figures - y label!!
-why not hmms? - no accounting for phoneme confusions or noisy, long phones; reliable training data? (-> additional source of confusion)
-13 instead of 12
-lyrics to phonemes??? (ref in retrieval)
+
 
 seconds vs s
 % vs .
@@ -18,5 +10,12 @@ seconds vs s
 15.4 546  550!!
 15.5 553
 
+Bengio et al., 2007; Erhan et al., 2009; Bengio, 2009;
+processing. Empirically, greater depth does seem to result in better generalization
+Mesnil et al., 2011; Ciresan et al., 2012; Krizhevsky et al., 2012; Sermanet et al., 2013; Farabet et al., 2013; Couprie et al., 2013; Kahou et al., 2013; Goodfellow
+for a wide variety of tasks (Bengio et al., 2007; Erhan et al., 2009; Bengio, 2009;
+et al., 2014d; Szegedy et al., 2014a)
 
 
+ Radford et al. (2015).
+ Goodfellow et al.(2014d)
