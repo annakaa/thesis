@@ -8,7 +8,7 @@
 \chapter{Appendix}
 
 \section{Phoneme set}\label{app:phonemes}
-The employed phoneme set is \textit{ARPABET}, which is also used in CMU Sphinx\footnote{\url{http://www.speech.cs.cmu.edu/cgi-bin/cmudict}} and in the \textit{TIMIT} annotations. It contains 39 phonemes. The following listing is taken from the Sphinx documentation:
+The employed phoneme set is \textit{ARPABET}, which is also used in CMU Sphinx\footnote{\url{http://www.speech.cs.cmu.edu/cgi-bin/cmudict}} and in the \textit{TIMIT} annotations. It contains 39 phonemes. The listing in table \ref{tab:app_phonemes} taken from the Sphinx documentation:
 \begin{table}[h!]
 \footnotesize
 \begin{center}
@@ -63,6 +63,7 @@ Phoneme & IPA Symbol & Example & Translation \\ \hline
 \end{table}%
 
 \section{Keywords}\label{app:keywords}
+Table \ref{tab:app_kw} contains a list of the keywords used for the keyword spotting tasks in this work. It also shows the keywords' pronunciations with number of phonemes and the number of occurrences in the \textit{ACAP} and \textit{DampTest} data sets.
 \begin{table}[h!]
 		\footnotesize
 \begin{center}
@@ -87,7 +88,7 @@ little & l ih t ah l & 4 & 53 & 121 \\
 \hline
 \end{tabular}
 \end{center}
-\caption{Set of keywords used in the keyword spotting tasks.}
+\caption{Set of keywords used in the keyword spotting tasks with pronunciation, number of phonemes, and number of occurrences in the \textit{ACAP} data set and the \textit{DampTest} data sets.}
 \label{tab:app_kw}
 \end{table}%
 
@@ -303,6 +304,8 @@ zdMNrFWVeA0	&		&		\\
 \end{longtable}
 
 \subsection{Songs in the \textit{ACAP} data set}\label{app:acap}
+Table \ref{tab:app_acap} shows a list of all the songs in the \textit{ACAP} data set, and includes information whether phoneme annotations for these songs are available or not.
+
 \begin{table}[h]	\footnotesize
 \begin{center}
 \begin{tabular}{|c|c|c|}\hline
@@ -336,7 +339,7 @@ Viva La Vida & Coldplay & Yes\\
 
 \subsection{Songs in the \textit{DAMP} data set}\label{app:damp}
 
-The following is a list of all titles in the \textit{DAMP} data set. The column ``\#Performances'' displays the number of performances in the original data set. For the subsets used in this work, around 20 performances of each song were used for balance. For the \textit{DampTest} data sets, one performance of each song was randomly selected.
+Table \ref{tab:app_damp} is a list of all titles in the \textit{DAMP} data set. The column ``\#Perf.'' displays the number of performances in the original data set. For the subsets used in this work, around 20 performances of each song were used for balance. For the \textit{DampTest} data sets, one performance of each song was randomly selected.
 	\footnotesize
 \begin{longtable}[h!]{|p{.4\textwidth}|p{.4\textwidth}|p{.1\textwidth}|} \hline
 
@@ -499,6 +502,7 @@ Say Somethin' & Austin Mahone & 21\\
 
 
 \subsection{Phrases in the \textit{DampRetrieval} data sets}\label{app:dampRetrieval}
+Tables \ref{tab:app_dampretF} and \ref{tab:app_dampretM} contain listings of the lyric phrases selected for the \textit{DampRetrievalF} and \textit{DampRetrievalM} data sets respectively. The songs were taken from the \textit{DampTestF} and \textit{DampTestM} data sets and are therefore contained in table \ref{tab:app_damp} above. 
 \begin{table}[h!]\footnotesize
 \begin{center}
 \begin{tabular}{|p{.6\textwidth}|p{.4\textwidth}|}\hline
@@ -562,7 +566,7 @@ What would I give if I could live out of these waters & Part Of Your World\\
 \end{table}%
 
 \subsection{Phrases in the \textit{AuthorRetrieval} data set}\label{app:authorRetrieval}
-The following table displays the phrases performed in the \textit{AuthorRetrieval} data set. (The list does not add up to 90 entries because some phrases were repeated).
+The following table displays the phrases performed in the \textit{AuthorRetrieval} data set. The songs were taken from the \textit{DAMP} data set as well. (The list does not add up to 90 entries because some phrases were repeated).
 
 	\footnotesize
 	\begin{longtable}[h!]{|p{.4\textwidth}|p{.4\textwidth}|p{.1\textwidth}|} \hline
@@ -651,6 +655,7 @@ O holy night, the stars are brightly shining &  O Holy Night\\
 \end{longtable}%
 
 \subsection{Songs in the \textit{Mauch}  data set}\label{app:mauch}
+The songs in the \textit{Mauch} data set for lyrics alignment evaluation are listed in table \ref{tab:app_mauch}
 \begin{table}[h!] \footnotesize
 \begin{center}
 \begin{tabular}{|l|l|}\hline
@@ -682,6 +687,7 @@ She & Zweieck\\
 \end{table}%
 
 \subsection{Songs in the \textit{QMUL Expletive} data set}\label{app:qmul}
+Table \ref{tab:app_qmul} shows a list of the songs in the \textit{QMUL Expletive} data set, all of which contain expletives. This data set was used for expletive detection.
 	\footnotesize
 	\begin{longtable}[h!]{|p{.6\textwidth}|p{.4\textwidth}|} \hline
 			Title & Artist \\ \hline
@@ -772,7 +778,7 @@ Lift Off		&	Jay Z	ft.		Kanye West	\\
 \section{Results of the \textit{MIREX} 2017 Lyrics-to-Audio alignment challenge}\label{app:mirex}
 
 \subsection{Results on the \textit{ACAP} data set}
-Table \ref{tab:app_mirex1} displays the results on the \textit{ACAP} data set in the \textit{MIREX} challenge. ``HMM'', ``DTW'', and ``LEV'' correspond to the three approaches described in chapter \ref{chap:alignment_retrieval}. ``DMS1'' and ``DMS2'' are the two approaches submitted by other parties. Table \ref{tab:app_mirex1a} show the individual song results.
+Table \ref{tab:app_mirex1} displays the results on the \textit{ACAP} data set in the \textit{MIREX} challenge. ``HMM'', ``DTW'', and ``LEV'' correspond to the three approaches described in chapter \ref{chap:retrieval_alignment}. ``DMS1'' and ``DMS2'' are the two approaches submitted by other parties. Table \ref{tab:app_mirex1a} show the individual song results.
 
 \begin{table}[h]
 \begin{center}
@@ -813,7 +819,7 @@ Viva La Vida & 0.120 	5.47	&	0.21	&	0.37	&	0.37	\\
 
 \subsection{Results on the \textit{ACAP\_Poly} data set}
 
-Similarly, table \ref{tab:app_mirex2} shows the results on the \textit{ACAP\_Poly} dataset
+Similarly, table \ref{tab:app_mirex2} shows the results on the \textit{ACAP\_Poly} dataset, with ``HMM'', ``DTW'', and ``LEV'' being the approaches for alignment described in this work. Table \ref{tab:app_mirex2a} contains the individual song results.
 
 \begin{table}[h]
 	\begin{center}
@@ -853,6 +859,7 @@ Viva La Vida	&	25.82	&	19.58	&	19.83	&	6.44	&	3.63	\\
 \end{table}%
 
 \subsection{Results on the \textit{Mauch} data set}
+Last, the \textit{MIREX} results on the \textit{Mauch} data set are shown in table \ref{tab:app_mirex3}, and the song-wise results are displayed in table  \ref{tab:app_mirex3a}.
 \begin{table}[h]
 	\begin{center}
 		\begin{tabular}{|c||c|c|c|}\hline
