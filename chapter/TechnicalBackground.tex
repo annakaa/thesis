@@ -340,10 +340,10 @@ Markov models are statistical models of Markov processes - i.e. sequences of sta
 
 A HMM consists of four basic components:
 \begin{itemize}
-\item The observation (= emission) sequence $O = (o_1, o_2, ..., o_T)$
+\item The observation (= emission) sequence $Y = (y_1, y_2, ..., y_T)$
 \item The hidden state nodes $Q = (q_1, q_2, ..., q_N)$; the sequence of hidden states corresponding to the observation sequence will be denoted as $I = (i_1, i_2, ..., i_T)$ where $i_t \in Z$.
 \item The transition probabilities between the hidden states, defined by a transition matrix $A \in \mathbb{R}^{N x N}$; additionally, the initial state distribution (i.e. the probability of starting in each state) $\pi \in \mathbb{R}^N$
-\item The emission probabilities $B = (b_1(k), b_2(k), ..., b_N(k))$, mapping from the hidden states to the observations. These can, for example, be Gaussians for continuous outputs $o_t$, or conditional probabilities for discrete $o_t$.
+\item The emission probabilities $B = (b_1(k), b_2(k), ..., b_N(k))$, mapping from the hidden states to the observations. These can, for example, be Gaussians for continuous outputs $y_t$, or conditional probabilities for discrete $y_t$.
 \end{itemize}
 The transition probabilities, initial state distribution, and emission probabilities define the model $\lambda$.\\
 
@@ -351,34 +351,34 @@ In the case of speech recognition, the observations are the feature vectors, and
 
 Three problems commonly need to be solved for problems modeled with HMMs: 
 \begin{description}
-\item[Evaluation] - i.e., how probable is an observation sequence given this model? In mathematical terms, the probability $P(O, I | \lambda)$ is sought. The most straightforward way to do this would be to calculate this probability for each possible $Y$ of the length $T$ of the observation sequence, but this is very computationally expensive. For this reason, an algorithm called \textit{forward procedure} is used. A forward variable $\alpha$ representing the probability at time $t$ is introduced:
+\item[Evaluation] - i.e., how probable is an observation sequence given this model? In mathematical terms, the probability $P(Y, I | \lambda)$ is sought. The most straightforward way to do this would be to calculate this probability for each possible $Y$ of the length $T$ of the observation sequence, but this is very computationally expensive. For this reason, an algorithm called \textit{forward procedure} is used. A forward variable $\alpha$ representing the probability at time $t$ is introduced:
 \begin{equation}
-\alpha_t(i) = P(o_1, o_2, ..., o_t, i_t = q_i | \lambda )
+\alpha_t(i) = P(y_1, y_2, ..., y_t, i_t = q_i | \lambda )
 \end{equation}
 This can be solved inductively with the initialization
 \begin{equation}
-\alpha_1(i) = \pi_i b_i (O_1), 1 \leq i \leq N
+\alpha_1(i) = \pi_i b_i (Y_1), 1 \leq i \leq N
 \end{equation}
 and the induction step
 \begin{equation}
-\alpha_{t+1}(j) = \left[ \sum_{i=1}^N \alpha_t(i) a_ij \right] b_j (O_{t+1})
+\alpha_{t+1}(j) = \left[ \sum_{i=1}^N \alpha_t(i) a_ij \right] b_j (Y_{t+1})
 \end{equation}
 This is a form of Dynamic Programming.
 
 \item[Training] - i.e., how can the parameters $\lambda$ be set optimally to maximize the probability of observed sequences? There is no analytical way to compute this, but the so-called \textit{Baum-Welch} algorithm (which is a special case of the Expectation Maximization algorithm) allows for an iterative estimation of the parameters. In order to do this, a backward variable $\beta$ is calculated analogous to $\alpha$ to represent the probability of the sequence from time $t+1$ to the end:
 \begin{equation}
-\beta_t(i) = P(o_{t+1}, o_{t+2}, ..., o_T, i_t = q_i | \lambda )
+\beta_t(i) = P(y_{t+1}, y_{t+2}, ..., y_T, i_t = q_i | \lambda )
 \end{equation}
 \begin{equation}
 \beta_T(i) = 1, 1 \leq i \leq N
 \end{equation}
 \begin{equation}
-\beta_{t}(i) = \sum_{j=1}^N a_ij b_j (O_{t+1})\beta_{t+1}(j)
+\beta_{t}(i) = \sum_{j=1}^N a_ij b_j (Y_{t+1})\beta_{t+1}(j)
 \end{equation}
 
 The probability of a path being in state $q_i$ at $t$ and making a transition to $q_j$ at $t+1$ is then:
 \begin{equation}
-\xi_{t}(i, j) = \frac{\alpha_t(i)a_ij b_j (O_{t+1} \beta_{t+1}(j)}{P(O|\lambda)}
+\xi_{t}(i, j) = \frac{\alpha_t(i)a_ij b_j (Y_{t+1} \beta_{t+1}(j)}{P(Y|\lambda)}
 \end{equation}
 This can be used to calculate the expected numbers of transitions and emissions, which can be re-adapted with statistics from the observation sequences and used to adjust $\alpha$ and $\beta$. This process is repeated until convergence.
 
@@ -386,7 +386,7 @@ This can be used to calculate the expected numbers of transitions and emissions,
 
 Again, this problem is broken down by first defining a variable for the probability of being in state $q_i$ at time $t$:
 \begin{equation}
-\gamma_t(i) = P(i_t = q_i | O, \lambda )
+\gamma_t(i) = P(i_t = q_i | Y, \lambda )
 \end{equation}
 and therefore, the most likely state at $t$ is:
 \begin{equation}
@@ -395,7 +395,7 @@ i_t = \argmax_{1 \leq i \leq N}[\gamma_t(i)], 1 \leq t \leq T
 
 Using the forward and backward variables, this can be expressed as
 \begin{equation}
-\gamma_t(i) = \frac{\alpha_t(i) \beta_t(i)}{P(O | \lambda)}
+\gamma_t(i) = \frac{\alpha_t(i) \beta_t(i)}{P(Y | \lambda)}
 \end{equation}
 This problem can be solved efficiently with the \textit{Viterbi algorithm}, which again employs Dynamic Programming.
 \end{description}
@@ -404,7 +404,7 @@ This problem can be solved efficiently with the \textit{Viterbi algorithm}, whic
 \begin{figure}
 	\begin{center}
 		\includegraphics[width=0.6\textwidth]{images/asr_hmm.png}
-		\caption{A HMM as it is commonly used in ASR, with phonemes as hidden states and acoustic feature vectors as the observations. $a_12, a_22, a_23,...$ are elements of the transition matrix $A$; $b_2(y1_), b_2(y_2), b_3(y_3)$ are elements of the output probability matrix $B$. \cite{gales_young_hmm}}
+		\caption{A HMM as it is commonly used in ASR, with phonemes as hidden states and acoustic feature vectors as the observations. $a_12, a_22, a_23,...$ are elements of the transition matrix $A$; $b_2(y1_), b_2(y_2), b_3(y_3)$ are elements of the output probability matrix $B$; $Y = y_1,y_2,...$ is the observation sequence. \cite{gales_young_hmm}}
 		\label{fig:asr_hmm}
 	\end{center}
 \end{figure}
@@ -620,7 +620,7 @@ However, Goodfellow makes an argument that Deep models operate on a different le
 \subsection{Phoneme recognition}\label{subsec:tech_systems_phonerec}
 In common ASR systems, phoneme recognition is performed by training an acoustic model that is able to determine the probability of phoneme occurrences in unseen audio frames. The result of this is a so-called phoneme posteriorgram - i.e. a matrix of the probabilities of each possible phoneme over time. In a second step, another model is applied to this posteriorgram, taking into account the probabilities of phoneme sequences and words formed by these phonemes, and thus generating a phoneme string from the posterior probabilities. This step is called language modeling.\\
 
-Language modeling is a field of research unto itself, and is a complex tasks for lyrics. For this reason, this work focuses on improving the acoustic modeling step. The training process is performed according to the general schema described in section \ref{sec:tech_general}. The specific adaptations are shown in figures \ref{fig:process_training_phones} and \ref{fig:process_classification_phones}: In training, phoneme annotations are used to defined the possible classes. A set of around 39 phonemes is common; the phoneme set used in this work is the one used in CMU Sphinx\footnote{\url{http://cmusphinx.sourceforge.net/}} in the \textit{TIMIT} annotations. The set is listed with examples in appendix \ref{app:phones}. The used data sets contained annotations of monophones. In ASR, splitting phonemes into three temporal phases is common, resulting in so-called triphones. This was also tested as described in section \ref{sec:phonerec_acap}.\\
+Language modeling is a field of research unto itself, and is a complex tasks for lyrics. For this reason, this work focuses on improving the acoustic modeling step. The training process is performed according to the general schema described in section \ref{sec:tech_general}. The specific adaptations are shown in figures \ref{fig:process_training_phones} and \ref{fig:process_classification_phones}: In training, phoneme annotations are used to defined the possible classes. A set of around 39 phonemes is common; the phoneme set used in this work is the one used in CMU Sphinx\footnote{\url{http://cmusphinx.sourceforge.net/}} in the \textit{TIMIT} annotations. The set is listed with examples in appendix \ref{app:phones}. The used data sets contained annotations of monophones. In ASR, splitting phonemes into three temporal phases is common, resulting in so-called senones. This was also tested as described in section \ref{sec:phonerec_acap}.\\
 
 \begin{figure}
 	\begin{center}

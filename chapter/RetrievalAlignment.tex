@@ -131,7 +131,7 @@ The results for the \textit{DAMP} models show the same basic tendencies as befor
 
 \section{Phoneme-based retrieval and alignment}\label{sec:retrieval_phone}
 Next, another step was introduced to improve the previous approach and make it more flexible. This step serves to compress the posteriorgrams down to a plausible sequence of phonemes, which can then be used to search directly on a textual lyrics database. Text comparison is much cheaper than the previous comparison strategy, and enables quick expansion of the lyrics database.\\
-In parallel, the lyrics database is prepared by converting it into phoneme sequences as described in section \ref{}. The key algorithms are (a) how to generate plausible phoneme sequences from the posteriorgrams, and (b) how to compare these against the sequences in the database. These parts will be described in more detail in the following. An overview is given in figure \ref{fig:retrieval_phone_overview}.
+In parallel, the lyrics database is prepared by converting it into phoneme sequences as described in section \ref{subsec:phonerec_corpus}. The key algorithms are (a) how to generate plausible phoneme sequences from the posteriorgrams, and (b) how to compare these against the sequences in the database. These parts will be described in more detail in the following. An overview is given in figure \ref{fig:retrieval_phone_overview}.
 
 %TODO: phoneme seqs erklären
 \begin{figure}
