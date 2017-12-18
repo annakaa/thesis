@@ -6,6 +6,9 @@ vektoren fett
 seconds vs s
 % vs .
 
+
+system descriptions in chapters??
+
 LESEN:
 abstract: vllt gute retrieval-ergebnisse (calib)?
 intro: demonstrate improvements?? 

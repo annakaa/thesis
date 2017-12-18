@@ -268,7 +268,7 @@ where $L(i,j)$ is the Levenshtein distance at step $(i,j)$ and $D$, $I$, and $S$
 
 \section{Machine learning algorithms} \label{sec:tech_ml}
 This section describes the various Machine Learning algorithms employed throughout this thesis. Gaussian Mixture Models (GMMs), Hidden Markov Models (HMMs), and Support Vector Machines (SVMs) are three traditional approaches that are used as the basis of many new approaches, and were used for several starting experiments. i-Vector processing is a relatively new, more sophisticated approach that bundles several other machine learning techniques.\\
-In recent years, Deep Learning has become the standard for machine learning applications \cite{}. This chapter also describes a new approach that was used extensively in this work: Deep Neural Networks (DNNs).
+In recent years, Deep Learning has become the standard for machine learning applications \cite{schmidhuber_dl}. This chapter also describes a new approach that was used extensively in this work: Deep Neural Networks (DNNs).
 
 
 
@@ -284,7 +284,7 @@ b_i(x) = \frac{1}{ (2\pi)^{D/2} \det(\Sigma_i)^{1/2}} \exp \left\{-\frac{1}{2} (
 where $\mu_i$ is the mean vector and $\Sigma_i$ is the covariance matrix.\\
 These parameters, together with the mixture weights, define the model:
 \begin{equation}
-\lambda = \left{ p_i, \mu_i, \Sigma_i \right}, i = 1,...,M
+\lambda = \left\{ p_i, \mu_i, \Sigma_i \right\}, i = 1,...,M
 \end{equation}
 For each observation $o_j$, the contribution of each Gaussian $b_i$ can be calculated as:
 \begin{equation}
@@ -356,7 +356,7 @@ A HMM consists of four basic components:
 \end{itemize}
 The transition probabilities, initial state distribution, and emission probabilities define the model $\lambda$.\\
 
-In the case of speech recognition, the observations are the feature vectors, and the hidden states are the phonemes generating these features. Such a model is visualized in figure \ref{fig:asr_hmm}. Different variants of HMMs can be created by restricting the transition matrix in certain ways; e.g., left-to-right HMMs, which only allow transitions to subsequent states and are often used in speech recognition and handwriting recognition \cite{bishop}. A particularly interesting property of HMMs for speech recognition is their relative invariance to warping along the time axis since states can usually be repeated for arbitrary amounts of time.\\
+In the case of speech recognition, the observations are the feature vectors, and the hidden states are the phonemes generating these features. Such a model is visualized in figure \ref{fig:asr_hmm}. Different variants of HMMs can be created by restricting the transition matrix in certain ways; e.g., left-to-right HMMs, which only allow transitions to subsequent states and are often used in speech recognition and handwriting recognition \cite{bishop}. A particularly interesting property of HMMs for speech recognition is their relative invariance to warping along the time axis because states can usually be repeated for arbitrary amounts of time.\\
 
 Three problems commonly need to be solved for problems modeled with HMMs: 
 \begin{description}
@@ -391,7 +391,7 @@ The probability of a path being in state $q_i$ at $t$ and making a transition to
 \end{equation}
 This can be used to calculate the expected numbers of transitions and emissions, which can be re-adapted with statistics from the observation sequences and used to adjust $\alpha$ and $\beta$. This process is repeated until convergence.
 
-\item[Decoding] - i.e., given an observation sequence, what is the most probable underlying sequence of hidden states? This is particularly interesting for speech recognition since the interpretation here is the detection of the generating phonemes from a series of feature vectors.\\
+\item[Decoding] - i.e., given an observation sequence, what is the most probable underlying sequence of hidden states? This is particularly interesting for speech recognition since the interpretation here is the detection of the phonemes generating a series of feature vectors.\\
 
 Again, this problem is broken down by first defining a variable for the probability of being in state $q_i$ at time $t$:
 \begin{equation}
@@ -420,38 +420,39 @@ This problem can be solved efficiently with the \textit{Viterbi algorithm}, whic
 
 \subsection{Support Vector Machines}
 %! clean up
-In all supervised classification tasks, a training data set and a classification data set are provided. Each of these sets consists of previously extracted features of the training entities (or musical pieces in the case of genre classification) and, for the training data set, annotation labels (or genres in the case of genre classification). The training data set is denoted here as pairs of $\left(\mathbf{x}_{i}, y_{i}\right), i=1..l$, with $\textbf{x}_i \in \mathbb{R}^{n}$ being the feature vectors and $y_{i}$ being their assigned classes. The classifier tries to find similarities behind the training data for each label and separation conditions between the labels. With this information, the classifier is then able to assign a label to the classification data entities.\\
+Support Vector Machines (SVMs) are another type of supervised machine learning models, which are able to learn relationships between feature vectors $\textbf{x}_i \in \mathbb{R}^{n}$ and their expected classes $y_i, i=1,...,L$.
+%In all supervised classification tasks, a training data set and a classification data set are provided. Each of these sets consists of previously extracted features of the training entities (or musical pieces in the case of genre classification) and, for the training data set, annotation labels (or genres in the case of genre classification). The training data set is denoted here as pairs of $\left(\mathbf{x}_{i}, y_{i}\right), i=1..l$, with $\textbf{x}_i \in \mathbb{R}^{n}$ being the feature vectors and $y_{i}$ being their assigned classes. The classifier tries to find similarities behind the training data for each label and separation conditions between the labels. With this information, the classifier is then able to assign a label to the classification data entities.\\
 SVMs attempt to solve this problem by grouping the training data vectors $\mathbf{x}_{i}$ and finding separating (hyper-)planes (with the normal vector $\mathbf{w}$ and the offset $b$) between the points of the different classes (or annotation labels) $y_{i}$. In doing so, they try to maximize the margin between the plane and the data points. Additionally, the feature vectors may be transformed into a higher-dimensional space by the function $\phi(\textbf{x}_i)$ to make them more easily separable (as demonstrated in figure \ref{fig:svm_transformation}).\\
 
 In \cite{techreport:practical_svm}, this training process is expressed (for a two-class problem) as:
-\begin{equation*}
+\begin{equation}
 \begin{aligned}
 & \min\limits_{\mathbf{w},b,\xi} & & \frac{1}{2}\mathbf{w}^{T}\mathbf{w} + C \sum\limits_{i=1}^{l}\xi_{i} \\
 & \text{subject to} & & y_{i}(\mathbf{w}^{T} \phi(\mathbf{x}_{i})+b) \geq 1-\xi_{i} , \\
 &&& \xi_{i} \geq 0
 \end{aligned}
-\end{equation*}
+\end{equation}
 (with $\xi_{i}$ being a slack variable and $C > 0$ being a penalty parameter for the error term, higher $C$s allowing for fewer outliers (\cite{article:intro_svm}).
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.9\textwidth]{images/svm_transformation.png}
-	\caption{A set of data points which cannot be separated linearly in their original form (left), but can be separated after transformation into another space (right) \cite{article:intro_svm}}
+	\caption{A set of data points which cannot be separated linearly in their original form (left), but can be separated after transformation into another space (right). \cite{article:intro_svm}}
 	\label{fig:svm_transformation}
 \end{figure}
 \medskip
 \\
-$K(\mathbf{x}_{i},\mathbf{x}_{j}) \equiv \phi(\mathbf{x}_{i})^{T} \phi(\mathbf{x}_{j})$ is called the \textit{kernel function}. Several variants are possible, e.g. a linear one:
+$K(\mathbf{x}_{i},\mathbf{x}_{j}) \equiv \phi(\mathbf{x}_{i})^{T} \phi(\mathbf{x}_{j})$ is called a ``kernel function''. Several variants are possible, e.g. a linear kernel:
 \begin{equation}
 K(\mathbf{x}_{i},\mathbf{x}_{j}) = \mathbf{x}_{i}^{T}\mathbf{x}_{j}
 \end{equation}
-It is often useful to use a non-linear kernel because the data points may not be linearly separable (even after the transformation into a higher-dimensional space). An example is shown in figure \ref{fig:svm_kernels}. The RBF kernel (Radial Basis Function) is a popular one:
+It is often useful to use a non-linear kernel because the data points may not be linearly separable (even after the transformation into a higher-dimensional space). An example is shown in figure \ref{fig:svm_kernels}. The Radial Basis Function (RBF) kernel is a popular one:
 \begin{equation}
 K(\mathbf{x}_{i},\mathbf{x}_{j}) = e^{-\gamma \parallel \mathbf{x}_{i} - \mathbf{x}_{j} \parallel^{2}}, \gamma > 0
 \end{equation}
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.9\textwidth]{images/svm_kernels.png}
-	\caption{A set of data points which cannot be separated using a linear kernel (left), but can be separated with a polynomial kernel (right) \cite{article:svm_tutorial}}
+	\caption{A set of data points which cannot be separated using a linear kernel (left), but can be separated with a polynomial kernel (right). \cite{article:svm_tutorial}}
 	\label{fig:svm_kernels}
 \end{figure}
 \medskip
@@ -459,20 +460,22 @@ K(\mathbf{x}_{i},\mathbf{x}_{j}) = e^{-\gamma \parallel \mathbf{x}_{i} - \mathbf
 As can be seen from the above equations, $C$ and $\gamma$ are free parameters. Their optimum values depend on the actual training data vectors. In \cite{techreport:practical_svm}, a grid search during each training is suggested to find them. 
 \medskip
 \\
-The presented training process is appropriate for a two-class problem. For multi-class problems, one-vs-one trainings for all combinations of classes are performed. Then, all of the developed classifiers are used for the classification of the evaluation data and a voting strategy is applied to determine the resulting class. 
+The presented training process is useful for solving two-class problems. For multi-class problems, one-vs-one trainings for all combinations of classes are performed. Then, all of the developed classifiers are used for the classification of the evaluation data and a voting strategy is applied to determine the resulting class. 
 
 
 \subsection{i-Vector processing}\label{subsec:tech_ivector}
-I-Vector (identity vector) extraction was first introduced in \cite{Dehak2011} and has since become a state-of-the-art technique for various speech processing tasks, such as speaker verification, speaker recognition, and language identification \cite{Martinez2011}.\\
-The main idea behind i-vectors is that all training utterances contain some common trends, which effectively add irrelevance to the data in respect to training. Using i-vector extraction, this irrelevance can be filtered out, while only the unique parts of the data relevant to the task at hand remain. The dimensionality of the training data is massively reduced, which also makes the training less computationally expensive. As a side effect, all feature matrices are transformed to i-vectors of equal length, eliminating problems that are caused by varying utterance lengths.\\
+i-Vector (identity vector) extraction was first introduced in \cite{Dehak2011}, and has since become a state-of-the-art technique for various speech processing tasks, such as speaker verification, speaker recognition, and language identification \cite{Martinez2011}. i-Vector extraction is not a stand-alone training algorithm, but rather a feature post-processing step using unsupervised machine learning. The resulting i-vectors for training examples are used to train other models (instead of the features themselves); during classification, i-vectors are extracted in the same way, and run through this model.\\
+The main idea behind i-vectors is that all training examples (e.g. speech utterances) contain some common trends, which effectively add irrelevance to the data during training. Using i-vector extraction, this irrelevance can be filtered out, while only the unique parts of the data relevant to the task at hand remain. The dimensionality of the training data is massively reduced, which also makes the training less computationally expensive. As a side effect, all feature matrices are transformed into i-vectors of equal length, eliminating problems that are caused by varying utterance lengths.\\
 Mathematically, this assumption can be expressed as:
 \begin{equation}
 M(u) = m+Tw
 \end{equation}
-In this equation, $M(u)$ is the GMM supervector for utterance $u$. The supervector approach was first presented in \cite{reynolds00} and has since been successfully applied to a number of speech recognition problems. A music example can be found in \cite{Charbuillet2011}. $m$ represents the language- and channel-independent component of $u$ and is estimated using a Universal Background Model (UBM). $T$ is a low-rank matrix modeling the relevant language- and channel-related variability, the so-called Total Variability Matrix. Finally, $w$ is a normally distributed latent variable vector: The i-vector for utterance $u$.
+where $M(u)$ is the GMM supervector for utterance $u$. The supervector approach was first presented in \cite{reynolds00} and has since been successfully applied to a number of speech recognition problems. A music example can be found in \cite{Charbuillet2011}. $m$ represents the language- and channel-independent component of $u$ and is estimated using a Universal Background Model (UBM). $T$ is a low-rank matrix modeling the relevant language- and channel-related variability, the so-called Total Variability Matrix. Finally, $w$ is a normally distributed latent variable vector: The i-vector for utterance $u$.\\
 
-\paragraph*{Step 1: UBM training} A Universal Background Model (UBM) is trained using Gaussian Mixture Models (GMMs) from all utterances. This UBM models the characteristics that are common to all of them.
-\paragraph*{Step 2: Statistics extraction} 0th and 1st order Baum-Welch statistics are calculated for each of the utterances from the UBM according to:
+The following steps are necessary for i-vector extraction:
+\begin{description}
+\item[1. UBM training] A Universal Background Model (UBM) is trained using Gaussian Mixture Models (GMMs) from all utterances. This unsupervised model represents the characteristics that are common to all of them.
+\item[2. Statistics extraction] 0th and 1st order Baum-Welch statistics are calculated for each of the utterances from the UBM according to:
 \begin{equation}
 N_c(u)=\sum_{t=1}^{L} P(c|y_t,\Omega)
 \end{equation}
@@ -480,22 +483,20 @@ N_c(u)=\sum_{t=1}^{L} P(c|y_t,\Omega)
 \widetilde{F_c}(u)=\sum_{t=1}^{L} P(c|y_t,\Omega)(y_t-m_c)
 \end{equation}
 where $u={y_1,y_2,...,y_L}$ denotes an utterance with $L$ frames, $c=1,...,C$ denotes the index of the Gaussian component, $\Omega$ denotes the UBM,  $m_c$ is the mean of the UBM mixture component $c$, and $P(c|y_t,\Omega)$ denotes the posterior probability that the frame $y_t$ was generated by mixture component $c$. As the equation shows, the 1st order statistics are centered around the mean of each mixture component.\\
-\paragraph*{Step 3: T matrix training}
-Using the Baum-Welch statistics for all utterances, the Total Variability Matrix $T$ is now trained iteratively according to:
+\item[3. $T$ matrix training] Using the Baum-Welch statistics for all utterances, the Total Variability Matrix $T$ is now trained iteratively according to:
 \begin{equation}\label{equ:trainT}
 w = (I+T^t \Sigma^{-1} N (u) T)^{-1}T^t \Sigma^{-1} \widetilde{F}(u)
 \end{equation}
-using Expectation Maximization.
-\paragraph*{Step 4: Actual i-vector extraction}
-Finally, an i-vector $w$ can be extracted for each utterance using equation \ref{equ:trainT} again. This can also be done for unseen utterances, using a previously trained $T$.
-
+using the Expectation Maximization algorithm.
+\item[4. Actual i-vector extraction] Finally, an i-vector $w$ can be extracted for each utterance using equation \ref{equ:trainT} again. This can also be done for unseen utterances, using a previously trained $T$, and in this way be used during classification.
+\end{description}
 
 \subsection{Artificial Neural Networks}
 Artificial Neural Networks have a long research history. Based on an idea by McCulloch and Pitts from 1943 \cite{mcculloch_pitts}, they were slowly developed into functional algorithms for classification and pattern recognition. Rosenblatt proposed a hardware design for a single-layer perceptron in 1958 \cite{rosenblatt}, while the first multi-layer networks were introduced by Ivakhnenko and Lapa in 1965 \cite{ivakhnenko}. In 1969, Minsky and Papert posited many practical limitations for Neural Networks \cite{minsky_papert}, which led to a decrease in interest.\\
 The introduction of the backpropagation algorithm solved some of these issues and increased the training speed of multilayer networks \cite{werbos}, leading to a wider usage in speech recognition \cite{waibel_hanazawa} and other fields, such as computer vision \cite{srinivas} and Natural Language Processing \cite{goldberg}. However, other algorithms such as SVMs began to produce better results over time and thus overtook Neural Networks in popularity.\\
-Over time, processing speed of computers increased, and better strategies and hardware for parallel computing became available. This enabled the training of networks with many more layers, allowing for a much better adaptation to many high-dimensional problems \cite{hinton_osindero}. Over the past 10 years, this so-called ``deep learning'' became the state of the art for many machine learning problems \cite{nytimes}\cite{schmidhuber_dl}\cite{deng_hinton_kingsbury}.\\
+Over time, processing speed of computers increased, and better strategies and hardware for parallel computing became available. This the training of networks with many more layers possible, allowing for a much better adaptation to high-dimensional problems \cite{hinton_osindero}. Over the past 10 years, this so-called ``deep learning'' became the state of the art for many machine learning problems \cite{nytimes}\cite{schmidhuber_dl}\cite{deng_hinton_kingsbury}.\\
 
-Artifical Neural Networks (ANNs) are inspired by ``real'' Neural Networks - i.e. the human brain and nervous system. They generally consist of neurons, which are nodes that can process inputs and send outputs, and the connections between them. These neurons are grouped in layers: An input layer, an output layer, and a number of hidden layers in between them. Historically, ANNs first had no hidden layers at all; this type of ANN was called ``perceptron''. Later, the addition of a hidden layer was introduced and the resulting networks were called ``Multilayer Perceptrons'' (MLPs).
+Artifical Neural Networks (ANNs) are inspired by ``real'' Neural Networks - i.e. the human brain and nervous system. They consist of neurons, which are nodes that can process inputs and send outputs, and the connections between them. These neurons are grouped in layers: An input layer, an output layer, and a number of hidden layers in between them. Historically, ANNs had no hidden layers at all; this type of ANN was called ``perceptron''. Later, hidden layers were introduced and the resulting networks were called ``Multilayer Perceptrons'' (MLPs).
 %check this!
 Networks with no hidden layers are only able to solve linear problems; the introduction of hidden layers added non-linear projections to the calculation. Recent ``Deep'' Neural Networks (DNNs) possess three or more hidden layers, leading to an exponential increase of the degrees of freedom and thus the possibility to model much more complex problems.\\
 
@@ -545,7 +546,7 @@ An activation function commonly used is the sigmoid function, shown in figure \r
 y = \frac{1}{1 + e^{-z}}
 \end{equation}
 Neurons of this type are called ``logistic'' neurons. This function is often applied because it generates a smooth, real-valued output and has easy-to-use derivatives, simplifying the training process.\\
-Rectified linear units (ReLUs) are also used frequently since they train faster than logistic units and retain more information that is relevant in the middle layers (in particular, sparsity for small inputs and lower risk of vanishing or exploding gradients). The function is shown in figure \ref{fig:activation_relu}:
+Rectified linear units (ReLUs) are also used frequently since they train faster than logistic units and retain more information that is relevant in the middle layers (in particular, this is leads to sparsity for small inputs and a lower risk of vanishing or exploding gradients). The function is shown in figure \ref{fig:activation_relu}:
 \begin{equation}
 y = \max(0, z)
 \end{equation}
@@ -561,9 +562,9 @@ where $M$ is the number of output neurons.\\
 	\caption{Schematic of a feed-forward neural network with an input layer with four neurons, two hidden layers with four neurons each, and an output layer with two neurons. \cite{medium}}
 	\label{fig:feedforward}
 \end{figure}
-In addition to the various types of neurons, ANNs themselves can be grouped into a number of types. In their basic configuration, ANNs will have multiple layers of the described neurons where connections are only allowed in one direction. A schematic is shown in figure \ref{fig:feedforward}. This type of network is called ``feed forward'' or, in the context of Deep Learning, a Deep Neural Network (DNN).\\
-If connections that skip back are allowed in the network, the network is called a Recursive Neural Network (RNN). These networks are particularly useful for modeling time-dependent series because they have the ability to ``store'' temporal states in their units. However, they were deemed impractical for a long time because they exhibit the exploding/vanishing gradient problem during training \cite{Hochreiter1998}. This problem was solved with the introduction of memory cells in place of neurons, in particular Long Short-Term Memory (LSTM) units \cite{Hochreiter1997} and Gated Recurrent Units (GRU) \cite{Cho2014}. Nowadays, RNNs are being used successfully in a number of research tasks \cite{lstm_sak_senior}.\\
-A third type of Neural Network are Convolutional Neural Networks (CNNs). These networks add layers of filters before or in between classical fully-connected layers. The parameters of these filters are trained jointly with the other layers. For this reason, CNNs are able to ``learn'' a feature representation of the input. They were first used in image recognition \cite{krizhevsky}, but are now also being used for audio-related tasks such as environmental sound classification \cite{piczak} and ASR \cite{abdelhamid}. A disadvantage of both RNNs and CNNs is the computational complexity of training them, and the requirement for even more training data because they possess even more degrees of freedom than DNNs of comparable sizes.\\
+In addition to the various types of neurons, ANNs themselves can be grouped into different of types. In their basic configuration, ANNs will have multiple layers of the described neurons where connections are only allowed in one direction. A schematic is shown in figure \ref{fig:feedforward}. This type of network is called ``feed forward'' or, in the context of Deep Learning, a Deep Neural Network (DNN).\\
+If connections that skip back are allowed in the network, the network is called a Recurrent Neural Network (RNN). These networks are particularly useful for modeling time-dependent series because they have the ability to ``store'' temporal states in their units. However, they were deemed impractical for a long time because they exhibit the exploding/vanishing gradient problem during training \cite{Hochreiter1998}. This problem was solved with the introduction of memory cells in place of neurons, in particular Long Short-Term Memory (LSTM) units \cite{Hochreiter1997} and Gated Recurrent Units (GRU) \cite{Cho2014}. Nowadays, RNNs are being used successfully in a number of research tasks \cite{lstm_sak_senior}.\\
+A third type of Neural Network are Convolutional Neural Networks (CNNs). These networks add layers of filters (so-called convolutional layers) before or in between classical fully-connected layers. The parameters of these filters are trained jointly with the other layers. For this reason, CNNs are able to ``learn'' a feature representation of the input. They were first used in image recognition \cite{krizhevsky}, but are now also being used for audio-related tasks such as environmental sound classification \cite{piczak} and ASR \cite{abdelhamid}. A disadvantage of both RNNs and CNNs is the computational complexity of training them, and the requirement for even more training data because they possess even more degrees of freedom than DNNs of comparable sizes.\\
 %woanders?
 In this work, DNNs with logistic units in the hidden layers and a softmax output layer were used in phoneme classification tasks.\\
 
@@ -576,7 +577,7 @@ Then, the weights are adjusted accordingly:
 \Delta w_{ij} = - \eta \frac{\partial E}{\partial w_{ij}}
 \end{equation}
 where $\eta$ is the so-called learning rate which must be chosen carefully to ensure convergence of the training process.\\
-In the same way, the error is propagated further backwards through the model for the weights from the previous layers. This is done until all the weights have been adjusted. Then, the next batch of training data is passed through the model and the process is repeated. The training process is performed until the weights converge (or until a fixed number of iterations has been reached).\\
+In the same way, the error is propagated further backwards through the model to adjust the weights of the previous layers. This is done until all the weights have been adjusted. Then, the next batch of training data is passed through the model and the process is repeated. The training process is performed until the weights converge (or until a fixed number of iterations has been reached).\\
 
 A commonly used cost function is the squared error measure:
 \begin{equation}
@@ -602,9 +603,9 @@ E_C = - \sum_{j=1}^M t_j \log y_j
 %\end{equation}
 \\
 One of the major issues in Neural Networks is that of overfitting: The model adapts too well to the training data and is not able to sufficiently generalize to new data anymore. (In extreme cases, the model simply learns all the training data by heart). This is especially relevant for deep networks because of the many degrees of freedom.\\
-There are several strategies to overcome this problem. One of the most frequently used regularization strategies is dropout: During training, nodes in the network are deactivated randomly, effectively resulting in many different network structures and making the whole network robust to variations in the data. The most crucial point, however, is the amount of data used for training the network. The more variety is available, the lower the risk of overtraining.\\
+There are several strategies to overcome this problem. One of the most frequently used regularization techniques is dropout: During training, nodes in the network are deactivated randomly, effectively resulting in many different network structures and making the whole network robust to variations in the data. The most crucial point, however, is the amount of data used for training the network. The more variety is available, the lower the risk of overtraining.\\
 The so-called ``curse of dimensionality'' is a concept that applies to many machine learning algorithms:
-However, Goodfellow et al. make an argument that Deep models operate on a different level altogether \cite{goodfellow}: Where traditional machine learning methods make an assumption of smoothness of the hidden functions to be represented, Deep models actually attempt to model the underlying structures in a distributed way. This means that information about outputs can be learned in a shared way - i.e., if two classes have something in common, the model is also able to represent this fact. Practically, the many degrees of freedom do not lead to ``learning by heart'', but instead allow for an internal representation of highly complex relationships. Goodfellow et al. mention two interpretations of the Deep modeling capabilities: Learning a representation composed of simpler representations (e.g. corners defined by edges), or learning sequential step that build on top of each other (e.g. first locate objects, then segment them, then recognize them). There is also a number of publications that demonstrate better generalization abilities for deeper networks \cite{bengio07}\cite{bengio09}\cite{ciresan}\cite{erhan09}\cite{krizhevsky}\cite{szegedy}. In an experiment in \cite{goodfellow_experiment}, shallow models with three hidden layers overfit at 20 million parameters, while a Deep model (11 hidden layers) benefits from more than 60 million. This is because a Deep model has the capability to learn the actual explanatory factors behind the expected outputs (e.g. learning about different genders or whether someone is wearing glasses when modeling images \cite{radford}).
+However, Goodfellow et al. make an argument that Deep models operate on a different level altogether \cite{goodfellow}: Where traditional machine learning methods make an assumption of smoothness of the hidden functions to be represented, deep models actually attempt to model the underlying structures in a distributed way. This means that information about outputs can be learned in a shared way - i.e., if two classes have something in common, the model is also able to represent this fact. Practically, the many degrees of freedom do not lead to ``learning by heart'', but instead allow for an internal representation of highly complex relationships. Goodfellow et al. mention two interpretations of the deep modeling capabilities: Learning a representation composed of simpler representations (e.g. corners defined by edges), or learning sequential step that build on top of each other (e.g. first locate objects, then segment them, then recognize them). There is also a number of publications that demonstrate better generalization abilities for deeper networks \cite{bengio07}\cite{bengio09}\cite{ciresan}\cite{erhan09}\cite{krizhevsky}\cite{szegedy}. In an experiment in \cite{goodfellow_experiment}, shallow models with three hidden layers overfit at 20 million parameters, while a deep model (11 hidden layers) benefits from more than 60 million. This is because a deep model has the capability to learn the actual explanatory factors behind the expected outputs (e.g. learning about different genders or whether a person is wearing glasses when modeling faces \cite{radford}).
 
 %!!! hier weiter mit CoD - Goodfellow
 %particularly when seen as feature learning... - non-linear mapping; or representing different features of the input (faces: male vs. female, glasses...)
@@ -630,7 +631,7 @@ However, Goodfellow et al. make an argument that Deep models operate on a differ
 \subsection{Phoneme recognition}\label{subsec:tech_systems_phonerec}
 In common ASR systems, phoneme recognition is performed by training an acoustic model that is able to determine the probability of phoneme occurrences in unseen audio frames. The result of this is a so-called phoneme posteriorgram - i.e. a matrix of the probabilities of each possible phoneme over time. In a second step, another model is applied to this posteriorgram, taking into account the probabilities of phoneme sequences and words formed by these phonemes, and thus generating a phoneme string from the posterior probabilities. This step is called language modeling.\\
 
-Language modeling is a field of research unto itself, and is a complex tasks for lyrics. For this reason, this work focuses on improving the acoustic modeling step. The training process is performed according to the general schema described in section \ref{sec:tech_general}. The specific adaptations are shown in figures \ref{fig:process_training_phones} and \ref{fig:process_classification_phones}: In training, phoneme annotations are used to defined the possible classes. A set of around 39 phonemes is common; the phoneme set used in this work is the one used in CMU Sphinx\footnote{\url{http://cmusphinx.sourceforge.net/}} in the \textit{TIMIT} annotations. The set is listed with examples in appendix \ref{app:phonemes}. The used data sets contained annotations of monophones. In ASR, splitting phonemes into three temporal phases is common, resulting in so-called senones. This was also tested as described in section \ref{sec:phonerec_acap}.\\
+Language modeling is a field of research unto itself, and is a complex tasks for lyrics. For this reason, this work focuses on improving the acoustic modeling step. The training process is performed according to the general schema described in section \ref{sec:tech_general}. The specific adaptations are shown in figures \ref{fig:process_training_phones} and \ref{fig:process_classification_phones}: In training, phoneme annotations are used to defined the possible classes. A set of around 39 phonemes is common; the phoneme set used in this work is the one used in CMU Sphinx\footnote{\url{http://cmusphinx.sourceforge.net/}} and is listed with examples in appendix \ref{app:phonemes}. The used data sets contain annotations of monophones. In ASR, splitting phonemes into three temporal phases is common, resulting in so-called senones. This was also tested as described in section \ref{sec:phonerec_acap}.\\
 
 \begin{figure}
 	\begin{center}
@@ -647,12 +648,12 @@ Language modeling is a field of research unto itself, and is a complex tasks for
 	\end{center}
 \end{figure}
 
- The whole training process then results in an acoustic model, which can be used for classification as shown in figure \ref{fig:process_classification_phones}. As described, classification results in a phoneme posteriorgram. An example is shown in figure \ref{fig:posteriorgram}. The time resolution of the posteriograms in this work is $10ms$. Instead of language modeling, many of the following tasks build directly on the posteriogram. For evaluation of the phoneme recognition itself, Viterbi decoding with evenly weighted transitions is performed on the posteriorgrams. Then, the Phoneme Error Rate (PER) and the Weighted Phoneme Error Rate (WPER) are used for assessing the quality. The Phoneme Error Rate is simply the Levenshtein distance between the generated and the expected phoneme sequence where insertions, deletions, and replacements are weighted equally, normalized by the length of the expected sequence:
+ The whole training process then results in an acoustic model, which can be used for classification as shown in figure \ref{fig:process_classification_phones}. As described, classification results in a phoneme posteriorgram. An example is shown in figure \ref{fig:posteriorgram}. The time resolution of the posteriograms in this work is 10ms. Instead of language modeling, many of the following tasks build directly on the posteriogram. For evaluation of the phoneme recognition itself, Viterbi decoding with evenly weighted transitions is performed on the posteriorgrams. Then, the Phoneme Error Rate (PER) and the Weighted Phoneme Error Rate (WPER) are used for assessing the quality. The Phoneme Error Rate is simply the Levenshtein distance between the generated and the expected phoneme sequence where insertions, deletions, and replacements are weighted equally, normalized by the length of the expected sequence:
   \begin{equation}
     PER = \frac{D + I + S}{N}
  \end{equation} 
- where $D$ are deletions, $I$ are insertions, and $S$ are substitutions of phonemes and $N$ is the length of the sequence. (The accuracy measure used by in some of the state-of-the-art works is the same as $1-PER$).\\
-Some work also use a measure called $correct$, which ignores insertions. This makes sense if it is assumed that the phoneme results are used afterwards by an algorithm that is tolerant to insertions. In many cases, they will then also be tolerant to deletions. For cases like this, Hunt suggested a weighted error rate that punishes insertions and deletions less heavily than substitutions \cite{hunt}:
+ where $D$ are deletions, $I$ are insertions, and $S$ are substitutions of phonemes and $N$ is the length of the sequence. (The accuracy measure used in some of the state-of-the-art works is the same as $1-PER$).\\
+Some works also use a measure called $correct$, which ignores insertions. This makes sense if it is assumed that the phoneme results are used afterwards by an algorithm that is tolerant to insertions. In many cases, such post-processing steps will then also be tolerant to deletions. For cases like this, Hunt suggested a weighted error rate that punishes insertions and deletions less heavily than substitutions \cite{hunt}:
  \begin{equation}
     Weighted\ PER = \frac{0.5 D + 0.5 I + S}{N}
  \end{equation}  
@@ -660,7 +661,7 @@ Some work also use a measure called $correct$, which ignores insertions. This ma
  \begin{figure}
 	\begin{center}
 		\includegraphics[width=1\textwidth]{images/posteriorgram.png}
-		\caption{Example of a phoneme posteriorgram, the result of classification with an acoustic model. The posteriorgram represents the posterior probabilities of each phoneme over time. The time resolution in this example is $10ms$.}
+		\caption{Example of a phoneme posteriorgram, the result of classification with an acoustic model. The posteriorgram represents the posterior probabilities of each phoneme over time. The time resolution in this example is 10ms.}
 		\label{fig:posteriorgram}
 	\end{center}
 \end{figure}
@@ -682,7 +683,7 @@ Some work also use a measure called $correct$, which ignores insertions. This ma
 	\end{center}
 \end{figure}
 
-Language identification has been extensively researched in the field of Automatic Speech Recognition since the 1980's. A number of successful algorithms have been developed over the years. An overview over the fundamental techniques is given by Zissman in \cite{zissman}.\\
+Language identification has been extensively researched in the field of Automatic Speech Recognition since the 1980's. A number of successful algorithms has been developed over the years. An overview over the fundamental techniques is given by Zissman in \cite{zissman}.\\
 Fundamentally, four properties of languages can be used to discriminate between them:
 \begin{description}
 	\item[Phonetics] The unique sounds that are used in a given language.
@@ -690,11 +691,12 @@ Fundamentally, four properties of languages can be used to discriminate between 
 	\item[Prosody] The ``melody'' of the spoken language.
 	\item[Vocabulary] The possible words made up by the phonemes and the probabilities of certain combinations of words.
 \end{description}
-Even modern system mostly focus on phonetics and phonotactics as the distinguishing factors between languages. Vocabulary is sometimes exploited in the shape of language models.\\
+Even modern systems mostly focus on phonetics and phonotactics as the distinguishing factors between languages. Vocabulary is sometimes exploited in the shape of language models.\\
 In ASR, the standard technique for language identification is Parallel Phone Recognition followed by Language Modeling (PPRLM). In this approach, acoustic and language models are trained for each language (or, in some cases, only the language models are different and just one acoustic model is used) . Unseen examples are then run through each model or combinations thereof, and the result with the highest likelihood determines the language (e.g. \cite{lid_li_ma} and \cite{lid_matejka}).\\
-Other approaches directly train models for each language (e.g. GMMs). This technique can be considered a ``bag of frames'' approach, i.e. the single data frames are considered to be statistically independent of each other. The generated models then describe probability densities for certain acoustic characteristics of each language. GMM approaches used to perform worse than their PPRLM counterparts, but the development of new features has made the difference negligible \cite{singer}. They are in general easier to implement since only audio examples and their language annotations are required. Allen et al. \cite{allen} report results of up to $76.4\%$ accuracy for ten languages. Different backend classifiers, such as Multi-Layer Perceptrons (MLPs) and Support Vector Machines (SVMs) \cite{campbell} have also been used successfully instead of GMMs.\\
+Other approaches directly train models for each language on the feature vectors (e.g. GMMs). This technique can be considered a ``bag of frames'' approach, i.e. the single data frames are considered to be statistically independent of each other. The trained models then describe probability densities for certain acoustic characteristics of each language. GMM approaches used to perform worse than their PPRLM counterparts, but the development of new features has made the difference negligible \cite{singer}. They are, in general, easier to implement since only audio examples and their language annotations are required. Allen et al. \cite{allen} report results of up to $76.4\%$ accuracy for ten languages. Different backend classifiers, such as Multi-Layer Perceptrons (MLPs) and Support Vector Machines (SVMs) \cite{campbell}, have also been used successfully instead of GMMs.\\
 %HERE??
 In this work, an approach that trains directly on the acoustic characteristics using i-vector extraction and SVMs is presented. The modifications to the general processing chain are presented in figures \ref{fig:process_training_lid} and \ref{fig:process_classification_lid}.\\
+ 
 Additionally, a second approach based on phoneme posteriorgrams is tested. Statistics from the posteriorgrams are calculated, and then a second model is trained on these. Similar methods have been developed in ASR: Berkling presented an approach that uses sequences of recognized phonemes to discriminate between two languages (English and German), either with statistical modeling or with Neural Networks \cite{phdthesis:berkling_phd}. Mean errors of $0.12$ and $0.07$ on unseen data are achieved for the statistical approach and the Neural Network approach respectively when enough training data is available.\\
 Li, Ma, and Lee present a system where acoustic inputs are tokenized into acoustic words, which do not necessarily correspond to phonetic n-grams. Then, language classifiers are trained on statistics of the acoustic words \cite{lid_li_ma_lee}. They obtain an equal error rate of $0.05$ for six languages using a universal phoneme recognizer for tokenization and SVMs for backend language recognition. Peche et al. \cite{peche} attempt a similar approach on languages with limited resources. The performance remains good even when only acoustic models trained on different languages are used.\\
 In all of these approaches, tokenization of some sort is performed using the acoustic models. Since phoneme recognition on singing still performs relatively badly, statistics are calculated directly on the phoneme posteriors in this work\\.
@@ -704,7 +706,7 @@ For evaluation, all test examples are classified into exactly one language class
  \begin{equation}
     Accuracy = \frac{TP}{N}
  \end{equation}  
- where $TP$ are the True Positives, and $N$ is the number of all documents. In ASR, the average cost measure as recommended in \cite{nist_cavg} is also used widely now; however, for comparison with other singing language identification approaches such as those described in chapter \ref{chap:sota}, the accuracy was still used in this work.
+ where $TP$ are the True Positives, and $N$ is the number of all documents. In ASR, the average cost measure as recommended in \cite{nist_cavg} is also used widely now; however, to remain in line with other sung language identification approaches such as those described in chapter \ref{chap:sota}, the accuracy was still used in this work.
 
 \subsection{Keyword spotting}\label{subsec:tech_kws}
 In \cite{kws_overview}, three basic principles for keyword spotting in speech are mentioned:
@@ -722,7 +724,7 @@ Again, a full transcription of the audio recording is performed, but the full la
 \end{description}
 
 As described in the next chapter (section \ref{sec:sota_speechtosinging}), there are significant differences between speech and singing signals, which means that ASR approaches for keyword spotting cannot simply be transferred to singing. In particular, both LVCSR-based keyword spotting and Phonetic search keyword spotting depend heavily on predictable phoneme durations (within certain limits). When a certain word is pronounced, its phonemes will usually have approximately the same duration across speakers. The language model employed in both approaches will take this information into account. However, phoneme durations in singing are not as predictable in speech, as figure \ref{fig:phoneme_stats} demonstrates. For this reason, a simpler acoustic approach using keyword-filler HMMs is employed in this work.\\
-Keyword-filler HMMs have been described in \cite{szoeke} and \cite{jansen}. In general, two separate HMMs are created: One for the requested keyword, and one for all non-keyword regions (=filler). The keyword HMM is generated using a simple left-to-right topology with one state per keyword phoneme, while the filler HMM is a fully connected loop of states for all phonemes. These two HMMs are then joined. Using this composite HMM, Viterbi decoding is performed on the phoneme posteriorgrams. Whenever the Viterbi path passes through the keyword HMM, the keyword is detected. The likelihood of this path can then be compared to an alternative path through the filler HMM, resulting in a detection score. A threshold can be employed to only return highly scored occurrences. Additionally, the parameter $\beta$ can be tuned to adjust the model. It determines the likelihood of transitioning from the filler HMM to the keyword HMM. The whole process is illustrated in figure \ref{fig:kf_hmm}.
+Keyword-filler HMMs have been described in \cite{szoeke} and \cite{jansen}. In general, two separate HMMs are created: One for the requested keyword, and one for all non-keyword regions (=filler). The keyword HMM has a simple left-to-right topology with one state per keyword phoneme, while the filler HMM is a fully connected loop of states for all phonemes. These two HMMs are then joined. Using this composite HMM, Viterbi decoding is performed on the phoneme posteriorgrams. Whenever the Viterbi path passes through the keyword HMM, the keyword is detected. The likelihood of this path can then be compared to an alternative path through the filler HMM, resulting in a detection score. A threshold can be employed to only return highly scored occurrences. Additionally, the parameter $\beta$ can be tuned to adjust the model. It determines the likelihood of transitioning from the filler HMM to the keyword HMM. The whole process is illustrated in figure \ref{fig:kf_hmm}.
 
 \begin{figure}
  \centerline{\framebox{
@@ -743,7 +745,7 @@ Keyword spotting results are considered correct when they are detected within th
  \begin{equation}
     F_1 = 2 \frac{P \cdot R}{P + R}
  \end{equation}  
-This measure is especially suited for cases where the classes are not balanced; in keyword spotting, occurrence of a keyword is much rarer than non-occurrence. In continuous speech recognition, the Figure Of Merit measure is often used \cite{fom}; however, since timing is not an issue in many applications for sung keyword spotting, this measure is not used here.
+This measure is especially suited for cases where the classes are not balanced; in keyword spotting, occurrence of a keyword is much rarer than non-occurrence. In continuous speech recognition, the Figure Of Merit measure is often used \cite{fom}; however, since timing is not an issue in many applications for sung keyword spotting, this measure is not employed here.
 
 \subsection{Alignment and retrieval}
 \begin{figure}
@@ -753,7 +755,7 @@ This measure is especially suited for cases where the classes are not balanced; 
 		\label{fig:process_alignment}
 	\end{center}
 \end{figure}
-Alignment is also performed on the phoneme posteriorgram. The lyrics with their phonetic pronunciation must be known; then, an algorithm finds the best positions of each phoneme in the sequence in the posteriorgram. Traditionally, Viterbi decoding is used for this, with the transition matrix shaped such that only transitions through the expected phonemes are possible. In this work, two other methods (based on DTW and the Levenshtein distance) are also tested. The general process is shown in figure \ref{fig:process_alignment}.\\
+Alignment is also performed on the phoneme posteriorgram. The lyrics with their phonetic pronunciation must be known in advance; then, an algorithm finds the best positions of each phoneme in the sequence in the posteriorgram. Traditionally, Viterbi decoding is used for this, with the transition matrix shaped such that only transitions through the expected phonemes are possible. In this work, two other methods (based on DTW and the Levenshtein distance) are also tested. The general process is shown in figure \ref{fig:process_alignment}.\\
 
 For evaluation, the alignment approaches were submitted to the \textit{MIREX} 2017 challenge for lyrics-to-audio alignment\footnote{\url{http://www.music-ir.org/mirex/wiki/2017:Automatic_Lyrics-to-Audio_Alignment}}. In this challenge, the mean absolute error in seconds was used as the evaluation measure. For its calculation, all absolute deviations between the expected phoneme start and end timestamps and the automatically detected ones are calculated, averaged over the whole song, and once again over all songs. The measure was suggested in \cite{mesaros_alignment}.\\
 
@@ -764,7 +766,7 @@ For evaluation, the alignment approaches were submitted to the \textit{MIREX} 20
 		\label{fig:process_retrieval}
 	\end{center}
 \end{figure}
-Lyrics retrieval can be interpreted as an alignment task as well. As shown in figure \ref{fig:process_retrieval}, alignment is performed on a whole database of lyrics instead of just those for a single song. Then, the scores for each alignment are compared, and the best one determines the best match.\\
+Lyrics retrieval can be interpreted as an alignment task as well. As shown in figure \ref{fig:process_retrieval}, alignment is performed on a whole database of lyrics instead of just those for a single song. Then, the scores for each alignment are compared, and the highest one determines the best match.\\
 
 For evaluation, the accuracy when taking the first $N$ number of results into account (also called recognition rate in the state of the art) is calculated. For clarification: The first $N$ results are checked for occurrence of the expected result; then, the percentage of queries for which the correct result was detected is calculated. An alternative measure for tasks like this is the Mean Reciprocal Rank (i.e. the average inverse of the position where the expected result occurs); once again, the previously described measure was used for comparability with the state of the art.
 
