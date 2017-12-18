@@ -6,16 +6,9 @@ vektoren fett
 seconds vs s
 % vs .
 
-6.4.1 197 201!!!
-15.4 546  550!!
-15.5 553
-
-Bengio et al., 2007; Erhan et al., 2009; Bengio, 2009;
-processing. Empirically, greater depth does seem to result in better generalization
-Mesnil et al., 2011; Ciresan et al., 2012; Krizhevsky et al., 2012; Sermanet et al., 2013; Farabet et al., 2013; Couprie et al., 2013; Kahou et al., 2013; Goodfellow
-for a wide variety of tasks (Bengio et al., 2007; Erhan et al., 2009; Bengio, 2009;
-et al., 2014d; Szegedy et al., 2014a)
-
-
- Radford et al. (2015).
- Goodfellow et al.(2014d)
+LESEN:
+abstract: vllt gute retrieval-ergebnisse (calib)?
+intro: demonstrate improvements?? 
+classic vs. classical?
+tech: diff dtw levenshtein??
+dl reference!!

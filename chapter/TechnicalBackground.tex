@@ -7,10 +7,10 @@
 The general procedure for the tasks in this work is shown in figures \ref{fig:process_training} and \ref{fig:process_classification}. Using data sets of audio (speech or singing) and matching annotations, models are trained as outlined in figure \ref{fig:process_training}. Then, these models are used to classify unseen audio data in order to generate annotations for them.\\
 In detail, the necessary steps are:
 \begin{description}
-\item[Pre-processing] For the tasks in this work, pre-processing of the audio data is relatively straightforward and consists of normalization of the signal and averaging to a mono channel. Additionally, the audio is downsampled to $16kHz$ because this is the lowest sampling frequency in all the data sets, and downsampling is necessary for compatibility (more detail on the data sets is given in chapter \ref{chap:datasets}).
+\item[Pre-processing] For the tasks in this work, pre-processing of the audio data is relatively straightforward and consists of normalization of the signal and averaging to a mono channel. Additionally, the audio is usually downsampled to $16kHz$ because this is the lowest sampling frequency in most of the data sets, and downsampling is necessary for compatibility (more detail on the data sets is given in chapter \ref{chap:datasets}).
 \item[Feature extraction] The audio signal contains a lot of data that is redundant and irrelevant to the tasks. For this reason, many types of so-called feature representations were developed over the years. The features employed in this work are described in the next section.
-\item[Model training] Using both the audio features and the available annotations, models are trained with machine learning algorithms to gain an implicit understanding of the sought-after annotations (i.e. classes). In this work, only supervised learning was employed. The used machine learning methods are described in section \ref{sec:tech_ml}.
-\item[Classification] The trained models can then be used in features extracted from unseen audio data to extract their annotations (= classes).
+\item[Model training] Using both the audio features and the available annotations, models are trained with machine learning algorithms to gain an implicit understanding of the requested annotations (i.e. classes). In this work, only supervised learning was employed. The machine learning methods are described in section \ref{sec:tech_ml}.
+\item[Classification] The trained models can then be used on features extracted from unseen audio data to obtain their annotations (= classes).
 \item[Post-processing] In many tasks, the classification results are not used directly, but processed further. In tasks like alignment and retrieval, for example, phoneme probabilities are matched with symbolic phoneme annotations. In these cases, distance calculation methods as described in section \ref{sec:tech_distances} are required.
 \end{description}
 Implementation of these steps for the actual tasks is described in section \ref{sec:tech_systems}.
@@ -18,14 +18,14 @@ Implementation of these steps for the actual tasks is described in section \ref{
 \begin{figure}
 	\begin{center}
 		\includegraphics[width=1\textwidth]{images/process_training.png}
-		\caption{Schematic of the training procedure used in the considered tasks.}
+		\caption{Schematic of the training procedure of the considered tasks.}
 		\label{fig:process_training}
 	\end{center}
 \end{figure}
 \begin{figure}
 	\begin{center}
 		\includegraphics[width=1\textwidth]{images/process_classification}
-		\caption{Schematic of the classification procedure used in the considered tasks (the model is the one created during training - see figure \ref{fig:process_training}).}
+		\caption{Schematic of the classification procedure of the considered tasks (the model is the one created during training - see figure \ref{fig:process_training}).}
 		\label{fig:process_classification}
 	\end{center}
 \end{figure}
@@ -33,27 +33,28 @@ Implementation of these steps for the actual tasks is described in section \ref{
 \section{Audio features}
 %mfcc, sdc, (rasta-)plp, trap; mention filterbank feats...?
 %TODO: write intro
-This section describes the various audio features used througout this work. As one of the most successful features in ASR, Mel-Frequency Cepstral Coefficients (MFCCs) were used in all tasks, in some of them as the only feature. Shifted Delta Cepstrum (SDC) features, Perceptual Linear Prediction (PLP) features, and TempoRAl Patterns (TRAPs) were used in language identification. All features are extracted with a time resolution of $10ms$, with window sizes of $20$ to $25ms$.
+This section describes the various audio features used througout this work. As one of the most successful features in ASR, Mel-Frequency Cepstral Coefficients (MFCCs) were used in all tasks, in some of them as the only feature. Shifted Delta Cepstrum (SDC) features, Perceptual Linear Prediction (PLP) features, and TempoRAl Patterns (TRAPs) were used in language identification. All features were extracted with a time resolution of 10ms, with window sizes of 20 to 25ms.
 \subsection{Mel-Frequency Cepstral Coefficients (MFCCs)} 
 %!
-MFCCs are among the most frequently used audio features in speech recognition and Music Information Retrieval \cite{sahidullah}\cite{meinard_retrieval}. They were first introduced in 1976 by Mermelstein \cite{mermelstein}\cite{davis_mermelstein} based on previous experiments by Bridle and Brown \cite{bridle_brown}.\\
+MFCCs are among the most frequently used audio features in speech recognition and Music Information Retrieval \cite{sahidullah}\cite{meinard_retrieval}. They were first introduced in 1976 by Mermelstein and Davis \cite{mermelstein}\cite{davis_mermelstein} based on previous experiments by Bridle and Brown \cite{bridle_brown}.\\
 
-The basic idea behind MFCCs comes from experiments of human auditory perception. Audio signals are transformed into a representation that is based on human perceptual sensitivities. This is done by taking the short-term Fourier transform (STFT) of an audio signal and then mapping the resulting spectrum from a linear frequency scale onto a Mel scale. Then, the Discrete Cosine Transform (DCT) of the resulting log energies is calculated along the frequency axis to decorrelate the spectral band signals. The result is a representation of the various frequencies within the spectrum (i.e. the cepstrum), which can be interpreted as ranging from the spectral envelope to the more fine-grained components. In theory, this makes the result largely independent of the absolute frequencies, but representative of the perceptual content (e.g. phonemes). One point of criticism, however, is the lack of interpretability of the MFC coefficients.\\
+The basic idea behind MFCCs comes from experiments in human auditory perception. Audio signals are transformed into a representation that is based on human perceptual sensitivities. This is done by taking the Short-Term Fourier Transform (STFT) of an audio signal and then mapping the resulting spectrum from a linear frequency scale onto a Mel scale. Then, the Discrete Cosine Transform (DCT) of the resulting log energies is calculated along the frequency axis to decorrelate the spectral band signals. The result is a representation of the various frequencies within the spectrum (i.e. the cepstrum), which can be interpreted as ranging from the spectral envelope to the more fine-grained components. In theory, this makes the result largely independent of the absolute frequencies (i.e. the pitch), but representative of the perceptual content (e.g. phonemes). One point of criticism, however, is the lack of interpretability of the MFC coefficients.\\
 
 In detail, the calculation is performed as follows:
 \begin{description}
-\item[1. Short-term Fourier transform (STFT)] After cutting a signal $x$ into frames (e.g. of $10ms$ duration) and windowing it (e.g. with a Hamming window), the Discrete Fourier Transform (DFT) is calculated for each time frame:
+\item[1. Short-term Fourier transform (STFT)] After cutting a signal $x$ into frames (e.g. of 10ms duration) and windowing it (e.g. with a Hamming window), the Discrete Fourier Transform (DFT) is calculated for each time frame:
 \begin{equation}
 X(k) = \sum_{n=0}^{N-1} x(n)h(n)e^{-j 2\pi kn/N} ,  k = 0,1,...,N-1
 \end{equation}
 where $h(n)$ is the window and $N$ is the DFT length. For the further calculations, only the power spectrum is used:
+%???
 \begin{equation}
 P_i(k) = \frac{1}{N} \mid S_i(k) \mid ^2
 \end{equation}
 
 \item[2. Mel-spectrum calculation] The resulting energies are mapped from the linear frequency scale to a perceptually motivated Mel scale. This is done by convolving the spectrum with a set of $M$ triangular Mel-spaced filters $H_i(k)$, such as the ones shown in figure \ref{fig:mel_filterbanks}. Furthermore, the resulting energy outputs are logarithmized:
 \begin{equation}
-X_i = \log_{10} \left( \sum_{k=0}^{N-1} \mid X(k) \mid \dot H_i(k) \right), i=1,2,...,M
+X_i = \log_{10} \left( \sum_{k=0}^{N-1} \mid X(k) \mid \cdot H_i(k) \right), i=1,2,...,M
 \end{equation}
 
 \item[3. Discrete Cosine Transform (DCT)] Finally, the Mel-scale spectrum is transformed with a DCT, resulting in the so-called cepstrum:
@@ -61,13 +62,15 @@ X_i = \log_{10} \left( \sum_{k=0}^{N-1} \mid X(k) \mid \dot H_i(k) \right), i=1,
 C_j = \sum_{i=1}^M X_i \cdot \cos \left( j \cdot (i-1/2) \cdot \frac{\pi}{M} \right), j=1,2,...,J 
 %j \dot (i-1/2) \dot \frac{\pi}{M}
 \end{equation}
-The $J$ MFC coefficients are retained as features. The $0th$ coefficient can be interpreted as a version of the power over all frequency bands, and the $1st$ coefficient as the global energy balance between low and high frequencies \cite{oshaughnessy}.
+The $J$ MFC coefficients are retained as features. The 0th coefficient can be interpreted as the power over all frequency bands, and the 1st coefficient as the global energy balance between low and high frequencies \cite{oshaughnessy}.
 
 \end{description}
 
-In this work, 13 coefficients including the $0th$ coefficient are extracted, with the exception of language identification where 20 coefficients are used. In addition, deltas and double-deltas are calculated to capture information about the feature's trajectory:
+In this work, 13 coefficients including the 0th coefficient are extracted, with the exception of language identification, where 20 coefficients are used. In addition, deltas and double-deltas are calculated to capture information about the feature's trajectory:
 \begin{equation}
-\Delta(C(n)) = C(n) - C(n-1) \\
+\Delta(C(n)) = C(n) - C(n-1) 
+\end{equation}
+\begin{equation}
 \Delta\Delta(C(n)) = \Delta(C(n)) - \Delta(C(n-1))
 \end{equation}
 
@@ -82,7 +85,7 @@ In this work, 13 coefficients including the $0th$ coefficient are extracted, wit
 
 
 \subsection{Shifted Delta Cepstrum (SDCs)} 
-Shifted Delta Cepstrum features were first described in \cite{bielefeld} and have since been successfully used for speaker verification and language identification tasks on pure speech data \cite{torres} \cite{campbell} \cite{allen}. They are calculated on MFCC vectors and take their temporal evolution into account. This has been shown to improve recognition results since speech and singing naturally have temporal contexts. Their configuration is described by the four parameter $N-d-P-k$, where $N$ is the number of cepstral coefficients for each frame, $d$ is the time context (in frames) for the delta calculation, $k$ is the number of delta blocks to use, and $P$ is the shift between consecutive blocks. The delta cepstrals are then calculated as:
+Shifted Delta Cepstrum features were first described in \cite{bielefeld} and have since been successfully used for speaker verification and language identification tasks on speech data \cite{torres} \cite{campbell} \cite{allen}. They are calculated on MFCC vectors and take their temporal evolution into account. This has been shown to improve recognition results because speech and singing signals are defined by their temporal contexts. Their configuration is described by the four parameters $N-d-P-k$, where $N$ is the number of cepstral coefficients for each frame, $d$ is the time context (in frames) for the delta calculation, $k$ is the number of delta blocks to use, and $P$ is the shift between consecutive blocks. The delta cepstrals are then calculated as:
 \begin{equation}
 \Delta c(t) = c(t+iP+d)+c(t+iP-d), 0<=i<=k
 \end{equation}
@@ -98,7 +101,7 @@ with $c \in [0, N-1]$ as the previously extracted cepstral coefficients. The res
 
 %TODO: perceptive or perceptual??
 \subsection{Perceptive Linear Predictive features (PLPs)} 
-PLP features, first introduced in \cite{hermansky90}, are also one of the most frequently used features in speech processing, next to MFCCs. They are based on the idea to use knowledge about human perception to emphasize important speech information in spectra while minimizing the differences between speakers.\\
+PLP features, first introduced in \cite{hermansky90}, are also among the most frequently used features in speech processing, next to MFCCs. They are based on the idea to use knowledge about human perception to emphasize important speech information in spectra while minimizing the differences between speakers.\\
 
 \begin{figure}
 	\begin{center}
@@ -117,7 +120,7 @@ In principle, these ideas are related to those that MFCCs are based on, but know
 \end{equation}
 \item[4. Intensity - loudness conversion] This steps integrates knowledge about the relationship between the intensity of the signal and its perceived loudness. According to the power law of hearing \cite{stevens}, this relation can be approximated as a cubic root compression:
 \begin{equation}
-\Phi(f)  = \Xi(f)^0.33
+\Phi(f)  = \Xi(f)^{0.33}
 \end{equation}
 \item[5. Autoregressive modeling] An inverse DFT is then applied to the computed loudness signal to obtain an auto-correlation function. Then, the actual linear prediction is implemented with an all-pole model as described in \cite{makhoul2}. Levinson-Durbin recursion is employed to compute the final PLP coefficients from the auto-correlation function.
 \end{description}
@@ -136,38 +139,32 @@ In principle, these ideas are related to those that MFCCs are based on, but know
 	\end{center}
 \end{figure}
 
-Later, RASTA filtering was introduced as a step between the Bark-spectrum calculation and the equal loudness pre-emphasis (i.e. steps 2 and 3) \cite{rasta_plp}. This is essentially a bandpass filtering in the log-spectral domain that serves to suppress the slow-changing components of the signal which are commonly caused by the transmission channel rather than the content. The filter is defined as
+Later, RASTA filtering was introduced as a step between the Bark-spectrum calculation and the equal loudness pre-emphasis (i.e. steps 2 and 3) \cite{rasta_plp}. This is essentially a bandpass filtering in the log-spectral domain that serves to suppress the slow-changing components of the signal, which are commonly rooted in the transmission channel rather than the content. The filter is defined as
 \begin{equation}
 H(z) = 0.1 \frac{2+z^{-1}-z^{-3}-2z^{-4}}{z^{-4}\cdot (1-0.98z^{-1})}
-\end{equation}
+\end{equation}\\
 
 In this work, model orders of 13 and 36 are used. Deltas and double-deltas between frames are also calculated, and PLPs are tested with and without RASTA pre-processing.
 
 
 \subsection{TempoRal Patterns (TRAP)} 
-TRAPs were developed by Hermansky \cite{traps1} \cite{traps2} and have also been used successfully in a number of speech recognition tasks. In contrast to the other presented features, which, apart from delta calculation, only consider a single spectral frame at a time, TRAPs take the spectral development over time into account. This is visualized in figure \ref{fig:trap_temporal}. To demonstrate the feature's suitability for phoneme classification, examples of mean TRAPs for various phonemes in the 5th critical band are shown in figure \ref{fig:phoneme_traps}.\\
+TRAPs were developed by Hermansky \cite{traps1} \cite{traps2} and have also been used successfully in a number of speech recognition tasks. In contrast to MFCCs and PLPs, which, apart from delta calculation, only consider a single spectral frame at a time, TRAPs take the spectral development over time into account. This is visualized in figure \ref{fig:trap_temporal}. To demonstrate the feature's suitability for phoneme classification, examples of mean TRAPs for various phonemes in the 5th critical band are shown in figure \ref{fig:phoneme_traps}.\\
 
 In \cite{matejka}, a slightly modified method is presented. An overview of the steps necessary for this version of TRAP calculation is given in figure \ref{fig:traps}. In detail, these are:
 \begin{description}
 \item[1. Grouping into spectral bands]  Spectral band signals are extracted from the signal with a triangular Mel-scale filterbank, such as the one presented in figure \ref{fig:mel_filterbanks}. The log-energy of each band is used for further processing.
-\item[2. Normalization and windowing] Each band's trajectory is normalized and windowed with relatively long windows (e.g. Hamming windows with a temporal context of $200$ to $1000ms$) to obtain a representation of the temporal development.
+\item[2. Normalization and windowing] Each band's trajectory is normalized and windowed with relatively long windows (e.g. Hamming windows with a temporal context of 200 to 1000ms) to obtain a representation of the temporal development.
 \item[3. DCT decorrelation] A DCT is applied to each frame to decorrelate its coefficients and reduce dimensionality. The vectors for each critical band are concatenated. (In classical TRAP calculation, separate classifiers would be trained for each band in this step).
-\item[4. Model training] In classical TRAP calculation, the resulting band coefficients are now used to train a Multilayer Perceptron with a single hidden layer to obtain phoneme probabilities \cite{matejka} . However, as suggested in \cite{jens}, the feature values extracted so far can also be used to train other models, or even be combined with other features beforehand. In \cite{robust_asr}, the authors suggest that a combination with MFCCs works particularly well as these two features cover different sets of characteristics: MFCCs are better at capturing the spectral content, while TRAPs model the temporal progressions better.
+\item[4. Model training] In classical TRAP calculation, the resulting band coefficients are now used to train a Multilayer Perceptron with a single hidden layer to obtain phoneme probabilities \cite{matejka}. However, as suggested in \cite{jens}, the feature values extracted so far can also be used to train other models, or even be combined with other features beforehand. In \cite{robust_asr}, the authors suggest that a combination with MFCCs works particularly well as these two features cover different sets of characteristics: MFCCs are better at capturing the spectral content, while TRAPs model the temporal progressions better.
 \end{description}
 
-In this work, the coefficient vector is used directly as a feature to train various models. 8 linear spectral bands were extracted with a time context of 20 frames (corresponding to $200ms$), and the first 8 DCT coefficients were kept.
+In this work, the coefficient vector is used directly as a feature to train various models. 8 linear spectral bands were extracted with a time context of 20 frames (corresponding to 200ms), and the first 8 DCT coefficients were kept.
 
 \begin{figure}
  \centerline{\framebox{
  \includegraphics[width=.5\textwidth]{images/trap_temporal.png}}}
  \caption{The temporal paradigm for TRAP extraction versus conventional features (e.g. MFCC). \cite{traps1}}
  \label{fig:trap_temporal}
-\end{figure}
-\begin{figure}
- \centerline{\framebox{
- \includegraphics[width=\columnwidth]{images/trap_extraction.png}}}
- \caption{TRAP extraction process. \cite{jens}}
- \label{fig:traps}
 \end{figure}
 
 \begin{figure}
@@ -178,8 +175,19 @@ In this work, the coefficient vector is used directly as a feature to train vari
 	\end{center}
 \end{figure}
 
+\begin{figure}
+ \centerline{\framebox{
+ \includegraphics[width=\columnwidth]{images/trap_extraction.png}}}
+ \caption{TRAP extraction process. \cite{jens}}
+ \label{fig:traps}
+\end{figure}
+
+
+
 
 \section{Distance calculation} \label{sec:tech_distances}
+In this section, two algorithms for distance calculation used in this work are described. Dynamic Time Warping (DTW) is used for calculating optimal alignments between two sequences of continuous values, while Levenshtein alignment is particularly useful for finding the optimal alignment (and therefore the minimum distance) between two sequences with discrete values, such as character strings, when allowing deletions, insertions, and replacements.
+
 \subsection{Dynamic Time Warping}
 Dynamic Time Warping (DTW) is an algorithm for finding an optimal alignment between two time sequences of vectors $X$ and $Y$, which was originally developed for aligning speech sequences to each other \cite{rabiner}. $X$ and $Y$ are not required to have the same length (i.e. $X = (x_1,...,x_M$) and $Y = (y_1,...,y_N) $). To this end, varying durations of parts of each sequence are allowed. The result is a warping path $W = w_1,...,w_K$ where each element represents an alignment of the elements of the two sequences (i.e. $w_k = (m_k,n_k)$ represents the alignment of the elements $x_{m_k}$ and $y_{n_k}$ of $X$ and $Y$).\\
 In classical DTW, the warping path must fulfill three restrictions:
@@ -229,7 +237,7 @@ Subsequence DTW is a variant of this algorithm in which the boundary condition i
 
 
 \subsection{Levenshtein distance}
-The Levenshtein distance, also called edit distance, is a measure of similarity between two strings (or character sequences). The algorithm was first described by Levenshtein in 1965 \cite{levenshtein} and can also be used to retrieve an optimal alignment (approximate string matching \cite{navarro}). In that sense, it serves a similar purpose as DTW for strings instead of time sequences. This measure is commonly used in the fields of Computational Biology, Natural Language Processing, and signal processing.\\
+The Levenshtein distance, also called edit distance, is a measure of similarity between two strings (or character sequences). The algorithm was first described by Levenshtein in 1965 \cite{levenshtein} and can also be used to retrieve an optimal alignment (so-called approximate string matching \cite{navarro}). In that sense, it serves a similar purpose as DTW for strings instead of time sequences. This measure is commonly used in the fields of Computational Biology, Natural Language Processing, and signal processing.\\
 
 The distance is the sum of character operations necessary to transform one string into the other. These operations can be substitutions, insertions, or deletions, which may be weighted differently. An example is shown in figure \ref{fig:levenshtein_example}. If each operation has a cost of 1, the Levenshtein distance in this example is 5; if substitutions are weighted with a cost of 2, the distance is 8.\\
 
@@ -271,17 +279,17 @@ p(x_n | \lambda ) = \sum_{i=1}^M p_i b_i(x)
 \end{equation}
 where $b_i$ are the constituting distributions, $p_i$ are the mixture weights, and $\lambda$ are the model parameters. A visualization is shown in figure \ref{fig:gmm_structure}. If the observations are multidimensional (which is the case for audio features), multivariate Gaussians (with $D$ dimensions) are used for this:
 \begin{equation}
-b_i(x) = \frac{1}{ (2\pi)^{D/2} \det(\Sigma_i)^{1/2}} \exp( \left\{-\frac{1}{2} (x - \mu_i) \Sigma_i^{-1} (x - \mu_i) \right\})
+b_i(x) = \frac{1}{ (2\pi)^{D/2} \det(\Sigma_i)^{1/2}} \exp \left\{-\frac{1}{2} (x - \mu_i) \Sigma_i^{-1} (x - \mu_i) \right\}
 \end{equation}
 where $\mu_i$ is the mean vector and $\Sigma_i$ is the covariance matrix.\\
 These parameters, together with the mixture weights, define the model:
 \begin{equation}
-\lambda = {p_i, \mu_i, \Sigma_i}, i = 1,...,M
+\lambda = \left{ p_i, \mu_i, \Sigma_i \right}, i = 1,...,M
 \end{equation}
 For each observation $o_j$, the contribution of each Gaussian $b_i$ can be calculated as:
 \begin{equation}
 %???
-p_ni = P(i | n) = \frac{b_i P(i)}{P(x_n)} 
+p_{ni} = P(i | n) = \frac{b_i P(i)}{P(x_n)} 
 \end{equation}
 The overall likelihood of the model is:
 \begin{equation}
@@ -306,7 +314,7 @@ In order to find the optimal parameters $\lambda$, the iterative Expectation Max
 	\end{center}
 \end{figure}
 
-Gaussian Mixture Models have been used in many areas of machine learning, for example in ASR \cite{reynolds_rose}, in image retrieval \cite{permuter}, in financial modeling \cite{alexander}, and in visual tracking \cite{chen_adebomi}. When used for classification, one GMM is trained for each class separately $S = (s_1, s_2, ..., s_J)$, resulting in $J$ sets of parameters $\lambda$. The likelihood $L_j$ of each class is then determined, and the most likely class is chosen:
+Gaussian Mixture Models have been used in many areas of machine learning, for example in ASR \cite{reynolds_rose}, in image retrieval \cite{permuter}, in financial modeling \cite{alexander}, and in visual tracking \cite{chen_adebomi}. When used for classification, one GMM is trained for each class $S = (s_1, s_2, ..., s_J)$ separately, resulting in $J$ sets of parameters $\lambda$. The likelihood $L_j$ of each class is then determined, and the most likely class is chosen:
 \begin{equation}
 C = \argmax_{1 \leq j \leq J } P(\lambda_j | X) = \argmax_{1 \leq j \leq J} \frac{p(X | \lambda_j) P(\lambda_j)}{p(X)}
 \end{equation}
@@ -319,7 +327,7 @@ In practice, log-probabilities are commonly used for numerical reasons, resultin
 C = \argmax_{1 \leq j \leq J} \sum_{n=1}^N p(x_n | \lambda_j)
 \end{equation}
 
-In addition to this direct classification concept, GMMs are often used to model the emission probabilities in Hidden Markov Models.
+In addition to this direct use for classification, GMMs are often used to model the emission probabilities in Hidden Markov Models.
 
 
 
@@ -342,7 +350,7 @@ Markov models are statistical models of Markov processes - i.e. sequences of sta
 A HMM consists of four basic components:
 \begin{itemize}
 \item The observation (= emission) sequence $Y = (y_1, y_2, ..., y_T)$
-\item The hidden state nodes $Q = (q_1, q_2, ..., q_N)$; the sequence of hidden states corresponding to the observation sequence will be denoted as $I = (i_1, i_2, ..., i_T)$ where $i_t \in Z$.
+\item The hidden state nodes $Q = (q_1, q_2, ..., q_N)$; the sequence of hidden states corresponding to the observation sequence will be denoted as $I = (i_1, i_2, ..., i_T)$ where $i_t \in Q$.
 \item The transition probabilities between the hidden states, defined by a transition matrix $A \in \mathbb{R}^{N x N}$; additionally, the initial state distribution (i.e. the probability of starting in each state) $\pi \in \mathbb{R}^N$
 \item The emission probabilities $B = (b_1(k), b_2(k), ..., b_N(k))$, mapping from the hidden states to the observations. These can, for example, be Gaussians for continuous outputs $y_t$, or conditional probabilities for discrete $y_t$.
 \end{itemize}
