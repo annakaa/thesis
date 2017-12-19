@@ -44,22 +44,22 @@ In detail, the calculation is performed as follows:
 \begin{description}
 \item[1. Short-term Fourier transform (STFT)] After cutting a signal $x$ into frames (e.g. of 10ms duration) and windowing it (e.g. with a Hamming window), the Discrete Fourier Transform (DFT) is calculated for each time frame:
 \begin{equation}
-X(k) = \sum_{n=0}^{N-1} x(n)h(n)e^{-j 2\pi kn/N} ,  k = 0,1,...,N-1
+S(k) = \sum_{n=0}^{N-1} x(n)h(n)e^{-j 2\pi kn/N} ,  k = 0,1,...,N-1
 \end{equation}
 where $h(n)$ is the window and $N$ is the DFT length. For the further calculations, only the power spectrum is used:
 %???
 \begin{equation}
-P_i(k) = \frac{1}{N} \mid S_i(k) \mid ^2
+X(k) = \frac{1}{N} \mid S(k) \mid ^2
 \end{equation}
 
 \item[2. Mel-spectrum calculation] The resulting energies are mapped from the linear frequency scale to a perceptually motivated Mel scale. This is done by convolving the spectrum with a set of $M$ triangular Mel-spaced filters $H_i(k)$, such as the ones shown in figure \ref{fig:mel_filterbanks}. Furthermore, the resulting energy outputs are logarithmized:
 \begin{equation}
-X_i = \log_{10} \left( \sum_{k=0}^{N-1} \mid X(k) \mid \cdot H_i(k) \right), i=1,2,...,M
+\hat{X}_i = \log_{10} \left( \sum_{k=0}^{N-1} \mid X(k) \mid \cdot H_i(k) \right), i=1,2,...,M
 \end{equation}
 
 \item[3. Discrete Cosine Transform (DCT)] Finally, the Mel-scale spectrum is transformed with a DCT, resulting in the so-called cepstrum:
 \begin{equation}
-C_j = \sum_{i=1}^M X_i \cdot \cos \left( j \cdot (i-1/2) \cdot \frac{\pi}{M} \right), j=1,2,...,J 
+C_j = \sum_{i=1}^{M} \hat{X}_i \cdot \cos \left( (j+1) \cdot (i-1/2) \cdot \frac{\pi}{M} \right), j=0,1,...,J-1
 %j \dot (i-1/2) \dot \frac{\pi}{M}
 \end{equation}
 The $J$ MFC coefficients are retained as features. The 0th coefficient can be interpreted as the power over all frequency bands, and the 1st coefficient as the global energy balance between low and high frequencies \cite{oshaughnessy}.
@@ -87,7 +87,7 @@ In this work, 13 coefficients including the 0th coefficient are extracted, with 
 \subsection{Shifted Delta Cepstrum (SDCs)} 
 Shifted Delta Cepstrum features were first described in \cite{bielefeld} and have since been successfully used for speaker verification and language identification tasks on speech data \cite{torres} \cite{campbell} \cite{allen}. They are calculated on MFCC vectors and take their temporal evolution into account. This has been shown to improve recognition results because speech and singing signals are defined by their temporal contexts. Their configuration is described by the four parameters $N-d-P-k$, where $N$ is the number of cepstral coefficients for each frame, $d$ is the time context (in frames) for the delta calculation, $k$ is the number of delta blocks to use, and $P$ is the shift between consecutive blocks. The delta cepstrals are then calculated as:
 \begin{equation}
-\Delta c(t) = c(t+iP+d)+c(t+iP-d), 0<=i<=k
+\Delta c(t) = c(t+iP+d)+c(t+iP-d), 0\ leq i \leq k
 \end{equation}
 with $c \in [0, N-1]$ as the previously extracted cepstral coefficients. The resulting $k$ delta cepstrals for each frame are concatenated to form a single SDC vector of the length $kN$. In this work, the common parameter combination $N=7, d=1, P=3, k=7$ was used. The calculation is visualized in figure \ref{fig:sdc_example}.
 
@@ -113,10 +113,10 @@ PLP features, first introduced in \cite{hermansky90}, are also among the most fr
 In principle, these ideas are related to those that MFCCs are based on, but knowledge about human perception is integrated more extensively. A comparison of the steps of both algorithms is given in figure \ref{fig:comp_mfcc_plp}. For PLP computation, these steps are as follows:
 \begin{description}
 \item[1. Short-term Fourier transform] As in MFCC extraction, the signal $x$ is segmented into frames, which are then windowed, and the STFT is calculated for each of them. The power spectrum is $X$ is used for further processing.
-\item[2. Bark-spectrum calculation] Similar to the Mel-frequency transformation step, the resulting energies $X$ are mapped to a Bark frequency scale, which is also perceptually motivated (resulting in Bark-scaled energies $X_i$). As described in \cite{woodland} and \cite{hoenig}, there is no necessity for the particular use of a Bark scale, but it is employed for historic reasons. A comparison of the filters of which Mel  and Bark filterbanks are composed is shown in figure \ref{fig:comp_filterbanks}. Furthermore, the coefficients are logarithmized.
+\item[2. Bark-spectrum calculation] Similar to the Mel-frequency transformation step, the resulting energies $X$ are mapped to a Bark frequency scale, which is also perceptually motivated (resulting in Bark-scaled energies $\hat{X}_i$). As described in \cite{woodland} and \cite{hoenig}, there is no necessity for the particular use of a Bark scale, but it is employed for historic reasons. A comparison of the filters of which Mel  and Bark filterbanks are composed is shown in figure \ref{fig:comp_filterbanks}. Furthermore, the coefficients are logarithmized.
 \item[3. Equal loudness pre-emphasis] The filterbank coefficients are weighted with an equal-loudness curve $E(f)$ which simulates the varying sensitivities of human hearing across the frequency range. Figure \ref{fig:eq_loudness} displays such a curve; Makhoul and Cosell presented a numerical approximation \cite{makhoul}. (As mentioned in figure \ref{fig:comp_mfcc_plp}, such a pre-emphasis is sometimes performed as the first step of MFCC calculation as well). This is computed as
 \begin{equation}
-\Xi(f) = X_i(f) \cdot E(f)
+\Xi(f) = \hat{X}_i(f) \cdot E(f)
 \end{equation}
 \item[4. Intensity - loudness conversion] This steps integrates knowledge about the relationship between the intensity of the signal and its perceived loudness. According to the power law of hearing \cite{stevens}, this relation can be approximated as a cubic root compression:
 \begin{equation}
@@ -189,7 +189,7 @@ In this work, the coefficient vector is used directly as a feature to train vari
 In this section, two algorithms for distance calculation used in this work are described. Dynamic Time Warping (DTW) is used for calculating optimal alignments between two sequences of continuous values, while Levenshtein alignment is particularly useful for finding the optimal alignment (and therefore the minimum distance) between two sequences with discrete values, such as character strings, when allowing deletions, insertions, and replacements.
 
 \subsection{Dynamic Time Warping}
-Dynamic Time Warping (DTW) is an algorithm for finding an optimal alignment between two time sequences of vectors $X$ and $Y$, which was originally developed for aligning speech sequences to each other \cite{rabiner}. $X$ and $Y$ are not required to have the same length (i.e. $X = (x_1,...,x_M$) and $Y = (y_1,...,y_N) $). To this end, varying durations of parts of each sequence are allowed. The result is a warping path $W = w_1,...,w_K$ where each element represents an alignment of the elements of the two sequences (i.e. $w_k = (m_k,n_k)$ represents the alignment of the elements $x_{m_k}$ and $y_{n_k}$ of $X$ and $Y$).\\
+Dynamic Time Warping (DTW) is an algorithm for finding an optimal alignment between two time sequences of vectors $X$ and $Y$, which was originally developed for aligning speech sequences to each other \cite{rabiner}. $X$ and $Y$ are not required to have the same length (i.e. $\mathbf{x} = (x_1,...,x_M$) and $\mathbf{y} = (y_1,...,y_N) $). To this end, varying durations of parts of each sequence are allowed. The result is a warping path $W = w_1,...,w_K$ where each element represents an alignment of the elements of the two sequences (i.e. $w_k = (m_k,n_k)$ represents the alignment of the elements $x_{m_k}$ and $y_{n_k}$ of $\mathbf{x}$ and $\mathbf{y}$).\\
 In classical DTW, the warping path must fulfill three restrictions:
 \begin{description}
 	\item[1. Boundary condition] The warping path must align the whole sequences to each other - i.e. $w_1 = (1,1)$ and $w_K = (M,N)$.
@@ -214,11 +214,11 @@ where $\theta$ is the angle between $x_m$ and $y_n$.\\
 
 In the second step, an optimal warping path is calculated on the cost matrix. The cost of a warping path is
 \begin{equation}
-c_W(X,Y) =  \sum_{k=1}^{K} c(x_{m_k}, y_{n_k})
+c_W(\mathbf{x},\mathbf{y}) =  \sum_{k=1}^{K} c(x_{m_k}, y_{n_k})
 \end{equation}
 and the optimal warping path is the one with minimal cost - i.e. the DTW cost:
 \begin{equation}
-DTW(X,Y) =  \min\{c_W(X,Y)|W \text{ is a warping path}\}
+DTW(\mathbf{x},\mathbf{y}) =  \min\{c_W(\mathbf{x},\mathbf{y})|W \text{ is a warping path}\}
 \end{equation}
 
 Consequently, the DTW cost can also be used to compare the quality of alignments of one query sequence to multiple other sequences when taking the varying lengths into account.
