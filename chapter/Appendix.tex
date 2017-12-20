@@ -8,12 +8,10 @@
 \chapter{Appendix}
 
 \section{Phoneme set}\label{app:phonemes}
-The employed phoneme set is \textit{ARPABET}, which is also used in CMU Sphinx\footnote{\url{http://www.speech.cs.cmu.edu/cgi-bin/cmudict}} and in the \textit{TIMIT} annotations. It contains 39 phonemes. The listing in table \ref{tab:app_phonemes} taken from the Sphinx documentation:
-\begin{table}[h!]
-\footnotesize
-\begin{center}
-\begin{tabular}[h!]{|c||c|c|c|}
-\hline
+The employed phoneme set is based on ARPABET, and is also used in CMU Sphinx\footnote{\url{http://www.speech.cs.cmu.edu/cgi-bin/cmudict}} and in the \textit{TIMIT} annotations. It contains 39 phonemes. The listing in table \ref{tab:app_phonemes} taken from the Sphinx documentation:
+	\footnotesize
+	\begin{longtable}[h!]{|p{.1\textwidth}|p{.1\textwidth}|p{.2\textwidth}|p{.2\textwidth}|} \hline
+
 Phoneme & IPA Symbol & Example & Translation \\ \hline
         aa & \textipa{A} & odd &  aa d \\
         ae & \textipa{\ae} & at & ae t\\
@@ -56,20 +54,18 @@ Phoneme & IPA Symbol & Example & Translation \\ \hline
         zh & \textipa{Z} & seizure & s iy zh er\\
 
 \hline
-\end{tabular}
-\end{center}
+
 \caption{Phoneme set used throughout this work.}
 \label{tab:app_phonemes}
-\end{table}%
+\end{longtable}%
 
 \section{Keywords}\label{app:keywords}
 Table \ref{tab:app_kw} contains a list of the keywords used for the keyword spotting tasks in this work. It also shows the keywords' pronunciations with number of phonemes and the number of occurrences in the \textit{ACAP} and \textit{DampTest} data sets.
-\begin{table}[h!]
-		\footnotesize
-\begin{center}
-\begin{tabular}{|c||c|c|c|c|}\hline
+\footnotesize
+\begin{longtable}[h!]{|p{.2\textwidth}|p{.2\textwidth}|p{.1\textwidth}|p{.1\textwidth}| p{.1\textwidth}|}\hline
 
-Keyword & Pronunciation & \#Phonemes & \#Occ. \textit{ACAP} & \#Occ. \textit{DampTest} \\ \hline
+
+Keyword & Pronunciation & \# Phonemes & \#Occ. \textit{ACAP} & \#Occ. \textit{DampTest} \\ \hline
 love & l ah v & 3 & 156 & 748\\
 baby & b ey b iy & 4 & 84 & 467\\
 never & n eh v er & 4  & 106 & 246\\
@@ -86,11 +82,10 @@ time & t ay m & 3 & 102 & 243\\
 only & ow n l iy & 4 & 58 & 164\\
 little & l ih t ah l & 4 & 53 & 121 \\
 \hline
-\end{tabular}
-\end{center}
+
 \caption{Set of keywords used in the keyword spotting tasks with pronunciation, number of phonemes, and number of occurrences in the \textit{ACAP} data set and the \textit{DampTest} data sets.}
 \label{tab:app_kw}
-\end{table}%
+\end{longtable}%
 
 
 \section{Data sets}
@@ -306,9 +301,8 @@ zdMNrFWVeA0	&		&		\\
 \subsection{Songs in the \textit{ACAP} data set}\label{app:acap}
 Table \ref{tab:app_acap} shows a list of all the songs in the \textit{ACAP} data set, and includes information whether phoneme annotations for these songs are available or not.
 
-\begin{table}[h]	\footnotesize
-\begin{center}
-\begin{tabular}{|c|c|c|}\hline
+\footnotesize
+\begin{longtable}[h!]{|p{.3\textwidth}|p{.3\textwidth}|p{.3\textwidth}|}\hline
 
 Title & Artist & Phoneme annotations available \\ \hline
 Africa & Toto & Yes \\
@@ -331,11 +325,10 @@ Trick Me & Kelis & Yes \\
 Umbrella & Rihanna & No \\
 Viva La Vida & Coldplay & Yes\\
 \hline
-\end{tabular}
-\end{center}
+
 \caption{Songs in the \textit{ACAP} data set.}
 \label{tab:app_acap}
-\end{table}%
+\end{longtable}%
 
 \subsection{Songs in the \textit{DAMP} data set}\label{app:damp}
 
@@ -503,9 +496,9 @@ Say Somethin' & Austin Mahone & 21\\
 
 \subsection{Phrases in the \textit{DampRetrieval} data sets}\label{app:dampRetrieval}
 Tables \ref{tab:app_dampretf} and \ref{tab:app_dampretm} contain listings of the lyric phrases selected for the \textit{DampRetrievalF} and \textit{DampRetrievalM} data sets respectively. The songs were taken from the \textit{DampTestF} and \textit{DampTestM} data sets and are therefore contained in table \ref{tab:app_damp} above. 
-\begin{table}[h!]\footnotesize
-\begin{center}
-\begin{tabular}{|p{.6\textwidth}|p{.4\textwidth}|}\hline
+\footnotesize
+\begin{longtable}[h!]{|p{.6\textwidth}|p{.4\textwidth}|p{.3\textwidth}|}\hline
+
 Phrase & Song \\ \hline
 All those flames that burned before him & Alejandro \\
 Can't read my, can't read my, no, he can't read my poker face & Poker Face \\
@@ -528,15 +521,14 @@ Now I know we said things, did things that we didn't mean & Love The Way You Lie
 What you don't understand is I'd catch a grenade for you & Grenade\\
 When he come up in the club he blazin' up & Super Bass\\
 \hline
-\end{tabular}
-\end{center}
+
 \caption{Phrases in the \textit{DampRetrievalF} data set.}
 \label{tab:app_dampretf}
-\end{table}%
+\end{longtable}%
 
-\begin{table}[h!]\footnotesize
-\begin{center}
-\begin{tabular}{|p{.6\textwidth}|p{.4\textwidth}|}\hline
+\footnotesize
+\begin{longtable}[h!]{|p{.6\textwidth}|p{.4\textwidth}|p{.3\textwidth}|}\hline
+
 Phrase & Song \\ \hline
 So hush, little baby, don't you cry & Summertime \\
 I'm your biggest fan, I'll follow you until you love me, papa, paparazzi & Paparazzi \\
@@ -559,17 +551,16 @@ Every day I sit and I ask myself, how did love slip away & You Are Not Alone\\
 And I won't denied by you, the animal inside of you, oh & Animal\\
 What would I give if I could live out of these waters & Part Of Your World\\
  \hline
-\end{tabular}
-\end{center}
+
 \caption{Phrases in the \textit{DampRetrievalM} data set.}
-\label{tab:app_dampretM}
-\end{table}%
+\label{tab:app_dampretm}
+\end{longtable}%
 
 \subsection{Phrases in the \textit{AuthorRetrieval} data set}\label{app:authorRetrieval}
 The following table displays the phrases performed in the \textit{AuthorRetrieval} data set. The songs were taken from the \textit{DAMP} data set as well. (The list does not add up to 90 entries because some phrases were repeated).
 
 	\footnotesize
-	\begin{longtable}[h!]{|p{.4\textwidth}|p{.4\textwidth}|p{.1\textwidth}|} \hline
+	\begin{longtable}[h!]{|p{.6\textwidth}|p{.4\textwidth}|} \hline
 Phrase & Song \\ \hline
 Hey, I just met you, and this is crazy &  Call Me Maybe\\
 Yeah, I wanna dance with somebody, I wanna feel the heat with somebody &  I Wanna Dance With Somebody\\
@@ -655,10 +646,9 @@ O holy night, the stars are brightly shining &  O Holy Night\\
 \end{longtable}%
 
 \subsection{Songs in the \textit{Mauch}  data set}\label{app:mauch}
-The songs in the \textit{Mauch} data set for lyrics alignment evaluation are listed in table \ref{tab:app_mauch}
-\begin{table}[h!] \footnotesize
-\begin{center}
-\begin{tabular}{|l|l|}\hline
+The songs in the \textit{Mauch} data set for lyrics alignment evaluation are listed in table \ref{tab:app_mauch}.
+\footnotesize
+\begin{longtable}[h!]{|p{.5\textwidth}|p{.5\textwidth}|} \hline
 Title & Artist \\ \hline
 Knowing Me, Knowing You & Abba\\
 Eternal Flame & The Bangles\\
@@ -680,11 +670,10 @@ Africa & Toto\\
 With Or Without You & U2\\
 She & Zweieck\\
 \hline
-\end{tabular}
-\end{center}
+
 \caption{Songs in the \textit{Mauch} data set.}
 \label{tab:app_mauch}
-\end{table}%
+\end{longtable}%
 
 \subsection{Songs in the \textit{QMUL Expletive} data set}\label{app:qmul}
 Table \ref{tab:app_qmul} shows a list of the songs in the \textit{QMUL Expletive} data set, all of which contain expletives. This data set was used for expletive detection.
@@ -773,6 +762,8 @@ No Church In The Wild 		&	Jay Z	ft.		Kanye West	\\
 Lift Off		&	Jay Z	ft.		Kanye West	\\
 \hline
 
+\caption{Songs in the \textit{QMUL Expletive} data set.}
+\label{tab:app_qmul}
 \end{longtable}%
 
 \section{Results of the \textit{MIREX} 2017 Lyrics-to-Audio alignment challenge}\label{app:mirex}
@@ -798,17 +789,18 @@ DMS2 & 10.57 & 2.02 & 23.30\\
 
 \begin{table}[h]
 	\begin{center}
+		\footnotesize
 		\begin{tabular}{|c||c|c|c|c|c|}\hline
 			Song & HMM & DTW & LEV & DMS1 & DMS2 \\ \hline
-Clocks & 41.510 	73.56	&	21.89	&	34.71	&	34.71	\\
-I Kissed A Girl & 0.180 	0.27	&	0.14	&	0.16	&	0.16	\\
-Rehab & 0.040 	0.29	&	0.07	&	0.11	&	0.11	\\
-Rolling In The Deep & 0.860 	3.93	&	1.06	&	1.22	&	1.22	\\
-Sunrise & 0.670 	0.47	&	0.76	&	0.36	&	0.36	\\
-This Afternoon & 0.990	1.82	&	0.26	&	1.32	&	1.32	\\
-Trick Me & 0.170 	0.11	&	0.14	&	0.19	&	0.19	\\
-Umbrella & 1.450 	2.04	&	1.3	&	1.72	&	1.72	\\
-Viva La Vida & 0.120 	5.47	&	0.21	&	0.37	&	0.37	\\
+Clocks & 41.51 &	73.56	&	21.89	&	34.71	&	34.71	\\
+I Kissed A Girl & 0.18 &	0.27	&	0.14	&	0.16	&	0.16	\\
+Rehab & 0.04 &	0.29	&	0.07	&	0.11	&	0.11	\\
+Rolling In The Deep & 0.86 & 	3.93	&	1.06	&	1.22	&	1.22	\\
+Sunrise & 0.67 & 	0.47	&	0.76	&	0.36	&	0.36	\\
+This Afternoon & 0.99 &	1.82	&	0.26	&	1.32	&	1.32	\\
+Trick Me & 0.17 & 	0.11	&	0.14	&	0.19	&	0.19	\\
+Umbrella & 1.45 & 	2.04	&	1.3	&	1.72	&	1.72	\\
+Viva La Vida & 0.12 &	5.47	&	0.21	&	0.37	&	0.37	\\
 	
 			\hline
 		\end{tabular}
@@ -839,6 +831,7 @@ Similarly, table \ref{tab:app_mirex2} shows the results on the \textit{ACAP\_Pol
 
 \begin{table}[h]
 	\begin{center}
+		\footnotesize
 		\begin{tabular}{|c||c|c|c|c|c|}\hline
 			Song & HMM & DTW & LEV & DMS1 & DMS2 \\ \hline
 Clocks	&	42.76	&	107.72	&	22.69	&	65.43	&	76.2	\\
@@ -878,6 +871,7 @@ Last, the \textit{MIREX} results on the \textit{Mauch} data set are shown in tab
 
 \begin{table}[h]
 	\begin{center}
+		\footnotesize
 		\begin{tabular}{|c||c|c|c|c|c|}\hline
 			Song & HMM & DTW & LEV & DMS1 & DMS2 \\ \hline
 Knowing Me, Knowing You	&	9.4	&	4.25	&	4.72	&	18.91	&	4.31	\\

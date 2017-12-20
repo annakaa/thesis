@@ -6,18 +6,18 @@
 This chapter contains descriptions of all the data sets (or corpora) used over the course of this thesis. They are grouped into speech-only data sets, data sets of unaccompanied (=a-capella) singing, and data sets of full musical pieces with singing (``real-world'' data sets).
 
 \section{Speech data sets}
-\subsection{TIMIT}
-\textit{TIMIT} is, presumably, the most widely used corpus in speech recognition research \cite{timit}. It was developed in 1993 and consists of 6300 English-language audio recordings of 630 native speakers with annotations on the phoneme, word, and sentence levels. The corpus is split into a training and a test section, with the training section containing 4620 utterances, and the test section containing 1680. Each of those utterances has a duration of a few seconds. The recordings are sampled at $16,000 Hz$ and are mono channel.\\
-The phoneme annotations follow a model similar to ARPABET and contain 61 different phonemes \cite{Zue1990}. As described in \cite{timit_replacement}, the annotations are broken down to a set of 39 phonemes, which is commonly used in speech recognition, e.g. by CMU SPHINX. The phoneme set is listed in appendix \ref{app:phonemes})
+\subsection{\textit{TIMIT}}
+\textit{TIMIT} is, presumably, the most widely used corpus in speech recognition research \cite{timit}. It was developed in 1993 and consists of 6,300 English-language audio recordings of 630 native speakers with annotations on the phoneme, word, and sentence levels. The corpus is split into a training and a test section, with the training section containing 4,620 utterances, and the test section containing 1,680. Each of those utterances has a duration of a few seconds. The recordings are sampled at 16,000Hz and have a mono channel.\\
+The phoneme annotations follow a model similar to ARPABET and contain 61 different phonemes \cite{Zue1990}. In this work, the annotations are broken down to a set of 39 phonemes as suggested in \cite{timit_replacement}. This phoneme set is commonly used in speech recognition, e.g. by the CMU SPHINX framework, and is listed in appendix \ref{app:phonemes}.
 %wo benutzt?
 
 \subsection{NIST Language identification corpora}
-The National Institute for Standards and Technology (NIST) regularly runs various speech recognition challenges, one of them being the Language Recognition Evaluation (LRE) task, which is offered every two to four years\footnote{\url{https://www.nist.gov/itl/iad/mig/language-recognition}}. To this end, they publish training and evaluation corpora of speech in several languages. They consist of short segments (up to 35 seconds) of free telephone speech by many different speakers. The recordings are mono channel with a sampling rate of $8000 Hz$.\\
-The corpus for the 2003 challenge was used in this work for comparison of language identification algorithms against speech data \cite{nist2003lre}. Only the English-, German-, and Spanish-language subsets were chosen, since those languages are covered by the corresponding singing dataset. To balance out the languages, 240 recordings were used for each of them, making up around 1 hour of material.
+The National Institute for Standards and Technology (NIST) regularly runs various speech recognition challenges, one of them being the Language Recognition Evaluation (LRE) task, which is held every two to four years\footnote{\url{https://www.nist.gov/itl/iad/mig/language-recognition}}. To this end, they publish training and evaluation corpora of speech in several languages. They consist of short segments (up to 35 seconds) of free telephone speech by many different speakers. The recordings are mono channel with a sampling rate of 8000Hz.\\
+The corpus for the 2003 challenge was used in this work for comparison of language identification algorithms on speech data \cite{nist2003lre}. Only the English-, German-, and Spanish-language subsets were selected because these languages are covered by the corresponding singing data set. To balance out the languages, 240 recordings were used for each of them, summing up to around 1 hour of material per language.
 
 \subsection{OGI Multi-Language Telephone Speech Corpus}
 %aufräumen!!
-In 1992, the Oregon Institute for Science and Technology (OGI) also published a multilingual corpus of telephone recordings, called the OGI Multi-Language Telephone Speech Corpus, to facilitate multi-language ASR research. Just like the NIST corpora, it has become widely used for speech recognition tasks. Again, the English-, German-, and Spanish-language subsets were used in this work. They each consist of more than 1000 recordings per language of up to $50$ seconds duration, making up a total of about three to five hours. In contrast to the NIST corpus, the recordings are somewhat less ``clean'' with regards to accents and background noise; the sampling rate is also $8000 Hz$ on a mono channel.\\
+In 1992, the Oregon Institute for Science and Technology (OGI) also published a multilingual corpus of telephone recordings, called the OGI Multi-Language Telephone Speech Corpus, to facilitate multi-language ASR research. Just like the NIST corpora, it has become widely used for speech recognition tasks. Again, the English-, German-, and Spanish-language subsets were used in this work. They each consist of more than 1000 recordings per language of up to $50$ seconds duration, making up a total of about three to five hours. In contrast to the NIST corpus, the recordings are somewhat less ``clean'' with regards to accents and background noise; the sampling rate is also 8000Hz on a mono channel.\\
 In many experiments, languages were balanced out by randomly discarding utterances to obtain equal numbers. For experiments on longer recordings, results on individual utterances were aggregated for each speaker and also balanced down to the lowest number, producing 118 documents per language (354 in sum).\\
 
 
@@ -25,12 +25,12 @@ In many experiments, languages were balanced out by randomly discarding utteranc
 
 %Tabelle nennen!
 \begin{table}[htp]
-  \caption{{Amounts of data in the three used data sets: Sum duration on top, number of utterances in italics.}}
+
   \begin{center}
     \begin{tabular}{|c||c|c|c|}\hline
     \textbf{hh:mm:ss} & \multirow{4}{*}{\textbf{NIST2003LRE}} & \multirow{4}{*}{\textbf{OGIMultilang}} & \multirow{4}{*}{\textbf{YTAcap}}\\
     \textbf{\textit{\#Utterances}} & & & \\
-    \textbf{\textit{\#Speakers}} & & & \\ 
+    \textbf{{\#Speakers}} & & & \\ 
     \textbf{{$\varnothing$ Duration/Speaker}} & & & \\ \hline \hline 
     \multirow{4}{*}{English} & 00:59:08 & 05:13:17 &  08:04:25 \\
     & \textit{240} & \textit{1912} & \textit{1975} \\
@@ -46,30 +46,31 @@ In many experiments, languages were balanced out by randomly discarding utteranc
      & - & 00:01:26 & 00:02:43 \\ \hline 
     \end{tabular}
   \end{center}
+    \caption{{Amounts of data in the three used data sets: Sum duration, number of utteraces, number of speakers, and average duration per speaker.}}
   \label{tab:datasets}
 \end{table}
 
 \section{Unaccompanied singing data sets}
-\subsection{YouTube data set}
-As opposed to the speech case, there are no standardized corpora for sung language identification. For the sung language identification experiments, files of unaccompanied singing were therefore extracted from \textit{YouTube}\footnote{\url{http://www.youtube.com}, Last checked: 05/16/13} videos. This was done for three languages: English, German, and Spanish. The corpus consists of between 116 (258min) and 196 (480min) examples per language. These were mostly videos of amateur singers freely performing songs without accompaniment. Therefore, they are of highly varying quality and often contain background noise. The audio was downloaded in the natively provided quality, but then downsampled to $8000 Hz$ and averaged to a mono channel for uniformity and for compatibility with the speech corpora for language identification. Most of the performers contributed only a single song, with just a few providing up to three. This was done to avoid effects where the classifier recognizes the singer's voice instead of the language.\\
-Special attention was paid to musical style. Rap, opera singing, and other specific singing styles were excluded. All the songs performed in these videos were pop songs. Different musical styles can have a high impact on language classification results. The author tried to limit this influence as much as possible by choosing recordings of pop music instead of language-specific genres (such as Latin American music).\\
-For many experiments, they were split up into segments of 10-20 seconds at silent points (3,156 ``utterances'' in sum). In most cases, these segments were then balanced for the languages by randomly discarding superfluous segments. In other experiments, a balanced set of the whole songs was used (i.e. 116 songs per language).\\
-An overview of the amounts of data in the three corpora for language identification is given in Table \ref{tab:datasets}.
+\subsection{\textit{YouTube} data set (\textit{YTAcap})}
+As opposed to the speech case, there are no standardized corpora for sung language identification. For the sung language identification experiments, files of unaccompanied singing were therefore extracted from \textit{YouTube}\footnote{\url{http://www.youtube.com}} videos. This was done for three languages: English, German, and Spanish. The corpus consists of between 116 (258min) and 196 (480min) examples per language. These were mostly videos of amateur singers freely performing songs without accompaniment. Therefore, they are of highly varying quality and often contain background noise. The audio was downloaded in the natively provided quality, but then downsampled to 8000Hz and averaged to a mono channel for uniformity and for compatibility with the speech corpora for language identification. Most of the performers contributed only a single song, with just a few providing up to three. This was done to avoid effects where the classifier recognizes the singer's voice instead of the language.\\
+Special attention was paid to musical style. Rap, opera singing, and other specific singing styles were excluded. All the songs performed in these videos were pop songs. Different musical styles can have a high impact on language classification results.In order to limit this influence as much as possible, recordings of pop music were selected instead of language-specific genres (such as Latin American music).\\
+For many experiments, these songs were split up into segments of 10-20 seconds at silent points (3,156 ``utterances'' in sum). In most cases, these segments were then balanced for the languages by randomly discarding superfluous segments. In other experiments, a balanced set of the whole songs was used (i.e. 116 songs per language).\\
+An overview of the amounts of data in the three corpora for language identification is given in table \ref{tab:datasets}.
 
-\subsection{Hansen's vocal track data set} \label{subsec:data_hansen}
-This is one of the data sets used for keyword spotting and phoneme recognition. It was first presented in \cite{jens}. It consists of the vocal tracks of 19 commercial English-language pop songs. They are studio quality with some post-processing applied (EQ, compression, reverb). Some of them contain choir singing. These 19 songs are split up into 920 clips that roughly represent lines in the song lyrics. The original audio quality is $44,100 Hz$ on mono channels; for compatibility with models trained on \textit{TIMIT}, they were downsampled to $16,000 Hz$. \\
+\subsection{Hansen's vocal track data set (\textit{ACAP})} \label{subsec:data_hansen}
+This is one of the data sets used for keyword spotting and phoneme recognition. It was first presented in \cite{jens}, and consists of the vocal tracks of 19 commercial English-language pop songs. They have studio quality with some post-processing applied (EQ, compression, reverb). Some of them contain choir singing. These 19 songs are split up into 920 clips that roughly represent lines in the song lyrics. The original audio quality is 44,100Hz on a mono channel; for compatibility with models trained on \textit{TIMIT}, they were downsampled to 16,000Hz. \\
 13 of the songs were annotated with time-aligned phonemes. The phoneme set is the one used in CMU Sphinx\footnote{\url{http://cmusphinx.sourceforge.net/}} and contains 39 phonemes (it is the same one used in the \textit{TIMIT} annotations described above, and can be found in appendix \ref{app:phonemes}). All of the songs were annotated with word-level transcriptions. This is the only one of the singing data sets that has full manual phoneme annotations, which are assumed to be reliable and can be used as ground truth.\\
-For comparison, recordings of spoken recitations of all song lyrics were also made. These were all performed by the same speaker (the author).\\
+%For comparison, recordings of spoken recitations of all song lyrics were also made. These were all performed by the same speaker (the author).\\
 This data set will be referred to as \textit{ACAP}. 
 
-\subsection{DAMP data set} \label{sec:data_damp}
-As described, Hansen's data set is very small and therefore not suited to training phoneme models for singing. As a much larger source of unaccompanied singing, the \textit{DAMP} data set, which is freely available from Stanford University\footnote{\url{https://ccrma.stanford.edu/damp/}}\cite{phdthesis:jeffreysmith}, was employed. This data set contains more than 34,000 recordings of amateur singing of full songs with no background music, which were obtained from the \textit{Smule Sing!} karaoke app. Each performance is labeled with metadata such as the gender of the singer, the region of origin, the song title, etc. The singers performed 301 English-language pop songs. The recordings have good sound quality with little background noise, but come from a lot of different recording conditions. They were originally provided in OGG format at a sampling rate of $22,050 Hz$ (mono channel), but were also converted to wave format and downsampled to $16,000 Hz$ for compatibility.\\
+\subsection{\textit{DAMP} data set} \label{sec:data_damp}
+As described, Hansen's data set is very small and therefore not suited to training phoneme models for singing. As a much larger source of unaccompanied singing, the \textit{DAMP} data set, which is freely available from Stanford University\footnote{\url{https://ccrma.stanford.edu/damp/}}\cite{phdthesis:jeffreysmith}, was used. This data set contains more than 34,000 recordings of amateur singing of full songs with no background music, which were obtained from the \textit{Smule Sing!} karaoke app. Each performance is labeled with metadata such as the gender of the singer, the region of origin, the song title, etc. The singers performed 301 English-language pop songs. The recordings have good sound quality with little background noise, but come from a lot of different recording conditions. They were originally provided in OGG format at a sampling rate of 22,050Hz (mono channel), but were also converted to wave format and downsampled to 16,000Hz for compatibility. A list of the contained songs can be found in appendix \ref{app:damp}.\\
 No lyrics annotations are available for this data set, but the textual lyrics can be obtained from the \textit{Smule Sing!} website\footnote{\url{http://www.smule.com/songs}}. These are, however, not aligned in any way. Such an alignment was performed automatically on the word and phoneme levels (see section \ref{sec:phonerec_acap}).\\
-The selection of songs is not balanced, with performances ranging between 20 and 2038 instances. Female performances are also much more frequent than male ones, and gender often plays a role when training and evaluating models. For these reasons, several subsets of the dataset were composed by hand.\\
-In order to generate training data sets, the data was balanced by songs so that certain songs (and their phoneme distributions) would not be overrepresented. Since least represented song in the original data set has 20 recordings,  20 to 23 recordings per song were chosen at random to generate a training data set, which was named \textit{DampB}. For each song, as many different singers as possible were selected. Additionally, recordings with more ``Loves'' (user approval) were more likely to be selected (however, a large percentage of the original data set did not have such ratings). This resulted in a data set of 6,902 recordings.\\
+The selection of songs is not balanced, with performances ranging between 21 and 2038 instances. Female performances are also much more frequent than male ones, and gender often plays a role when training and evaluating models. For these reasons, several subsets of the dataset were composed by hand.\\
+In order to generate training data sets, the data was balanced by songs so that certain songs (and their phoneme distributions) would not be overrepresented. Since the least represented song in the original data set has 21 recordings,  20 to 23 recordings per song were chosen at random to generate a training data set, which was named \textit{DampB}. For each song, as many different singers as possible were selected. Additionally, recordings with more ``Loves'' (user approval) were more likely to be selected (however, a large percentage of the original data set did not have such ratings). This resulted in a data set of 6,902 recordings.\\
 This process was then repeated, this time only taking recordings by singers of one gender into account. In this way, data sets of recordings by female and male singers only were, named \textit{DampF} and \textit{DampM} respectively. Due to the gender split, there were fewer recordings of some of the songs available. Male singers in particular are underrepresented in the original data set. Therefore, \textit{DampF} contains 6,564 recordings, while \textit{DampM} contains 4,534. These sizes are roughly in the same range as for the mixed-gender data set, which enables the comparison of models trained on all three.\\
-These three data sets do not contain balanced amounts of phonemes; therefore. subsets of them were created where phoneme frames were discarded until they were balanced and a maximum of 250,000 frames per phoneme were left, where possible. These data set are named \textit{DampBB}, \textit{DampFB}, and \textit{DampMB}, and they are about 4\% the size of their respective source data sets.\\
-Since all of these data sets are still much larger than the \textit{TIMIT} speech corpus, another subset of similar size was created for comparison. On the basis of the balanced \textit{DampBB} data set, phoneme instances were discarded until they were balanced and 60,000 frames per phoneme were left, resulting in the \textit{DampBB\_small} data set.\\
+These three data sets do not contain balanced amounts of phonemes; therefore, subsets of them were created where phoneme frames were discarded until they were balanced and a maximum of 250,000 frames per phoneme were left, where possible. These data set are named \textit{DampBB}, \textit{DampFB}, and \textit{DampMB}, and they are about 4\% the size of their respective source data sets.\\
+Since all of these data sets are still much larger than the \textit{TIMIT} speech corpus, another subset of similar size was created for comparison. On the basis of the balanced \textit{DampBB} data set, phoneme instances were discarded until 60,000 frames per phoneme were left, resulting in the \textit{DampBB\_small} data set.\\
 For testing new algorithms, two small test data sets were created from the original \textit{DAMP} data set. These are, again, split by gender, and contain one recording per song, resulting in 301 recordings for the female data set and 300 for the male one (since there was one song with not enough available male recordings). They are called \textit{DampTestF} and \textit{DampTestM} respectively. For mixed-gender training, testing was simply performed on both data sets.\\
 Additionally, 20 phrases from each of the test data sets were manually selected for good singing and recording quality. This was necessary for fine-tuning and analysis of the retrieval algorithms.\\
 
@@ -92,7 +93,10 @@ An overview of the amounts of data is given in table \ref{tab:damp_corpora}.
  \begin{center}
  \begin{tabular}{|c||c|c|c|}
   \hline
-    & \textbf{Both genders} & \textbf{Female} & \textbf{Male}\\
+  \textbf{Name} & \multirow{3}{*}{\textbf{Both genders}} & \multirow{3}{*}{\textbf{Female}} & \multirow{3}{*}{\textbf{Male}}\\
+  \textbf{(\#Utterances)} & & & \\
+  \textbf{\textit{dd:hh:mm:ss}} & & & \\ 
+
   \hline
   \hline
   \textbf{Full} & DampB & DampF & DampM \\
@@ -122,8 +126,8 @@ An overview of the amounts of data is given in table \ref{tab:damp_corpora}.
  \label{tab:damp_corpora}
 \end{table}
 
-\subsection{Retrieval data set by the author} \label{sec:data_retrieval}
-This is a data set of 90 short lyrics phrases from the \textit{DAMP} data set sung with clear enunciation by the author. The phrases were recorded with a smartphone microphone for testing a demo app for the retrieval algorithm. They were then further utilized to finetune this retrieval algorithm. The recordings are a few seconds in duration with a sampling rate of 16,000 Hz on a mono channel.
+\subsection{Retrieval data set by the author (\textit{AuthorRetrieval})} \label{sec:data_retrieval}
+This is a data set of 90 short lyrics phrases from the \textit{DAMP} data set sung with clear enunciation by the author. The phrases were recorded with a smartphone microphone for testing a demo app for the retrieval algorithm. They were then further utilized to finetune this retrieval algorithm. The recordings are a few seconds in duration with a sampling rate of 16,000Hz on a mono channel.
 
 
 %\subsection{Aji's synthesized singing data set} \label{subsec:data_synth}
@@ -137,13 +141,13 @@ This is a data set of 90 short lyrics phrases from the \textit{DAMP} data set su
 
 \section{Accompanied singing data sets}
 \subsection{QMUL Expletive data set}\label{subsec:data_qmul}
-This data set consists of 80 popular full songs which were collected at Queen Mary University, most of them Hip Hop. 711 instances of 48 expletives were annotated on these songs. In addition, the matching textual, unaligned lyrics were retrieved from the internet. The audio is provided at $44,100 kHz$ sampling rate in stereo, but was also resampled to $16,000 Hz$ and a mono track for compatibility with some models.
+This data set consists of 80 popular full songs which were collected at Queen Mary University of London, most of them Hip Hop. 711 instances of 48 expletives were annotated on these songs. In addition, the matching textual, unaligned lyrics were retrieved from the internet. The audio is provided at 44,100kHz sampling rate in stereo, but was also downsampled to 16,000Hz and averaged to a mono track for compatibility with other models. % The considered expletives are listed in appendix \ref{app:expletives}.
 
 \subsection{Mauch's data set}\label{subsec:data_mauch_alignment}
 This data set was first presented in \cite{mauch_alignment2} and is used for alignment evaluation. It consists of 20 English-language pop songs with singing and accompaniment. Word onsets were manually annotated. This data set will be referred to as \textit{Mauch}.
 
-\subsection{Hansen's vocal track data set (polyphonic)} \label{subsec:data_hansen_polyphonic}
-This data sets consists of the songs in the \textit{ACAP} data set described above in section \ref{subsec:data_hansen}, but with instrumental annotations. The annotations are carried over. This data set is also used for alignment evaluation and denoted as \textit{ACAP\_Poly}.
+\subsection{Hansen's vocal track data set (polyphonic) (\textit{ACAP\_Poly})} \label{subsec:data_hansen_polyphonic}
+This data sets consists of the songs in the \textit{ACAP} data set described above in section \ref{subsec:data_hansen}, but with instrumental accompaniment. The annotations are carried over. This data set is also used for alignment evaluation and denoted as \textit{ACAP\_Poly}.
 
 \section{Keywords}\label{sec:data_keywords}
 From the 301 different song lyrics of the \textit{DAMP} data sets, 15 keywords were chosen by semantic content and frequency to test the keyword spotting algorithms. Each keyword occurs in at least 50 of the 301 songs, and also appears in the \textit{ACAP} data set. The keywords are shown in table \ref{tab:keywords}. A list of the number of occurrences in each data set is given in appendix \ref{app:keywords}.
