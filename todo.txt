@@ -15,3 +15,6 @@ intro: demonstrate improvements??
 classic vs. classical?
 tech: diff dtw levenshtein??
 dl reference!!
+phonerec: fig 5.1 PER capital
+zeitformen…
+other implmentation source`?
