@@ -973,6 +973,7 @@ MACRO {tcs} {"Theoretical Computer Science"}
 MACRO {ismir} {"International Society for Music Information Retrieval Conference (ISMIR)"}
 MACRO {icassp} {"IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)"}
 MACRO {eusipco} {"European Signal Processing Conference (EUSIPCO)"}
+MACRO {interspeech} {"Interspeech"}
 
 READ
 
