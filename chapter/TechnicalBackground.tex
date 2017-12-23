@@ -13,7 +13,7 @@ In detail, the necessary steps are:
 \item[Classification] The trained models can then be used on features extracted from unseen audio data to obtain their annotations (= classes).
 \item[Post-processing] In many tasks, the classification results are not used directly, but processed further. In tasks like alignment and retrieval, for example, phoneme probabilities are matched with symbolic phoneme annotations. In these cases, distance calculation methods as described in section \ref{sec:tech_distances} are required.
 \end{description}
-Implementation of these steps for the actual tasks is described in section \ref{sec:tech_systems}.
+Implementation of these steps for the actual tasks is described in the individual chapters.
 
 \begin{figure}
 	\begin{center}
@@ -155,8 +155,8 @@ In \cite{matejka}, a slightly modified method is presented. An overview of the s
 \begin{description}
 \item[1. Grouping into spectral bands]  Spectral band signals are extracted from the signal with a triangular Mel-scale filterbank, such as the one presented in figure \ref{fig:mel_filterbanks}. The log-energy of each band is used for further processing.
 \item[2. Normalization and windowing] Each band's trajectory is normalized and windowed with relatively long windows (e.g. Hamming windows with a temporal context of 200 to 1000ms) to obtain a representation of the temporal development.
-\item[3. DCT decorrelation] A DCT is applied to each frame to decorrelate its coefficients and reduce dimensionality. The vectors for each critical band are concatenated. (In classical TRAP calculation, separate classifiers would be trained for each band in this step).
-\item[4. Model training] In classical TRAP calculation, the resulting band coefficients are now used to train a Multilayer Perceptron with a single hidden layer to obtain phoneme probabilities \cite{matejka}. However, as suggested in \cite{jens}, the feature values extracted so far can also be used to train other models, or even be combined with other features beforehand. In \cite{robust_asr}, the authors suggest that a combination with MFCCs works particularly well as these two features cover different sets of characteristics: MFCCs are better at capturing the spectral content, while TRAPs model the temporal progressions better.
+\item[3. DCT decorrelation] A DCT is applied to each frame to decorrelate its coefficients and reduce dimensionality. The vectors for each critical band are concatenated. (In classic TRAP calculation, separate classifiers would be trained for each band in this step).
+\item[4. Model training] In classic TRAP calculation, the resulting band coefficients are now used to train a Multilayer Perceptron with a single hidden layer to obtain phoneme probabilities \cite{matejka}. However, as suggested in \cite{jens}, the feature values extracted so far can also be used to train other models, or even be combined with other features beforehand. In \cite{robust_asr}, the authors suggest that a combination with MFCCs works particularly well as these two features cover different sets of characteristics: MFCCs are better at capturing the spectral content, while TRAPs model the temporal progressions better.
 \end{description}
 
 In this work, the coefficient vector is used directly as a feature to train various models. 8 linear spectral bands were extracted with a time context of 20 frames (corresponding to 200ms), and the first 8 DCT coefficients were kept.
@@ -191,7 +191,7 @@ In this section, two algorithms for distance calculation used in this work are d
 
 \subsection{Dynamic Time Warping}
 Dynamic Time Warping (DTW) is an algorithm for finding an optimal alignment between two time sequences of vectors $X$ and $Y$, which was originally developed for aligning speech sequences to each other \cite{rabiner}. $X$ and $Y$ are not required to have the same length (i.e. ${X} = (x_1,...,x_M$) and ${Y} = (y_1,...,y_N) $). To this end, varying durations of parts of each sequence are allowed. The result is a warping path $W = (w_1,...,w_K)$ where each element represents an alignment of the elements of the two sequences (i.e. $w_k = (m_k,n_k)$ represents the alignment of the elements $x_{m_k}$ and $y_{n_k}$ of ${X}$ and ${Y}$).\\
-In classical DTW, the warping path must fulfill three restrictions:
+In classic DTW, the warping path must fulfill three restrictions:
 \begin{description}
 	\item[1. Boundary condition] The warping path must align the whole sequences to each other - i.e. $w_1 = (1,1)$ and $w_K = (M,N)$.
 	\item[2. Step size condition] The warping path may only step sequentially forward in either direction - i.e. $w_{k+1} - w_k \in \{(0,1),(1,0),(1,1)\}$. 
@@ -530,7 +530,7 @@ Networks with no hidden layers are only able to solve linear problems; the intro
           \end{figure}
           
    
-The function of a single neuron is visualized in figure \ref{fig:neuron}. Classical neurons compute a weighted sum $z$ of their inputs $x = (x_1,x_2,...,x_I)$:
+The function of a single neuron is visualized in figure \ref{fig:neuron}. classic neurons compute a weighted sum $z$ of their inputs $x = (x_1,x_2,...,x_I)$:
 \begin{equation}
 z = w_0 + \sum_{i=1}^I x_i w_i = w_0 + w^\top x
 \end{equation}
@@ -565,7 +565,7 @@ where $M$ is the number of output neurons.\\
 \end{figure}
 In addition to the various types of neurons, ANNs themselves can be grouped into different of types. In their basic configuration, ANNs will have multiple layers of the described neurons where connections are only allowed in one direction. A schematic is shown in figure \ref{fig:feedforward}. This type of network is called ``feed forward'' or, in the context of Deep Learning, a Deep Neural Network (DNN).\\
 If connections that skip back are allowed in the network, the network is called a Recurrent Neural Network (RNN). These networks are particularly useful for modeling time-dependent series because they have the ability to ``store'' temporal states in their units. However, they were deemed impractical for a long time because they exhibit the exploding/vanishing gradient problem during training \cite{Hochreiter1998}. This problem was solved with the introduction of memory cells in place of neurons, in particular Long Short-Term Memory (LSTM) units \cite{Hochreiter1997} and Gated Recurrent Units (GRU) \cite{Cho2014}. Nowadays, RNNs are being used successfully in a number of research tasks \cite{lstm_sak_senior}.\\
-A third type of Neural Network are Convolutional Neural Networks (CNNs). These networks add layers of filters (so-called convolutional layers) before or in between classical fully-connected layers. The parameters of these filters are trained jointly with the other layers. For this reason, CNNs are able to ``learn'' a feature representation of the input. They were first used in image recognition \cite{krizhevsky}, but are now also being used for audio-related tasks such as environmental sound classification \cite{piczak} and ASR \cite{abdelhamid}. A disadvantage of both RNNs and CNNs is the computational complexity of training them, and the requirement for even more training data because they possess even more degrees of freedom than DNNs of comparable sizes.\\
+A third type of Neural Network are Convolutional Neural Networks (CNNs). These networks add layers of filters (so-called convolutional layers) before or in between classic fully-connected layers. The parameters of these filters are trained jointly with the other layers. For this reason, CNNs are able to ``learn'' a feature representation of the input. They were first used in image recognition \cite{krizhevsky}, but are now also being used for audio-related tasks such as environmental sound classification \cite{piczak} and ASR \cite{abdelhamid}. A disadvantage of both RNNs and CNNs is the computational complexity of training them, and the requirement for even more training data because they possess even more degrees of freedom than DNNs of comparable sizes.\\
 %woanders?
 In this work, DNNs with logistic units in the hidden layers and a softmax output layer were used in phoneme classification tasks.\\
 
@@ -627,147 +627,147 @@ However, Goodfellow et al. make an argument that Deep models operate on a differ
 %\subsection{Evaluation of language identification tasks}
 %\subsection{Evaluation of keyword spotting tasks}
 
-\section{Speech recognition systems and their evaluation} \label{sec:tech_systems}
-
-\subsection{Phoneme recognition}\label{subsec:tech_systems_phonerec}
-In common ASR systems, phoneme recognition is performed by training an acoustic model that is able to determine the probability of phoneme occurrences in unseen audio frames. The result of this is a so-called phoneme posteriorgram - i.e. a matrix of the probabilities of each possible phoneme over time. In a second step, another model is applied to this posteriorgram, taking into account the probabilities of phoneme sequences and words formed by these phonemes, and thus generating a phoneme string from the posterior probabilities. This step is called language modeling.\\
-
-Language modeling is a field of research unto itself, and is a complex tasks for lyrics. For this reason, this work focuses on improving the acoustic modeling step. The training process is performed according to the general schema described in section \ref{sec:tech_general}. The specific adaptations are shown in figures \ref{fig:process_training_phones} and \ref{fig:process_classification_phones}: In training, phoneme annotations are used to defined the possible classes. A set of around 39 phonemes is common; the phoneme set used in this work is the one used in CMU Sphinx\footnote{\url{http://cmusphinx.sourceforge.net/}} and is listed with examples in appendix \ref{app:phonemes}. The used data sets contain annotations of monophones. In ASR, splitting phonemes into three temporal phases is common, resulting in so-called senones. This was also tested as described in section \ref{sec:phonerec_acap}.\\
-
-\begin{figure}
-	\begin{center}
-		\includegraphics[width=1\textwidth]{images/process_training_phones.png}
-		\caption{Schematic of the training procedure for phoneme recognition.}
-		\label{fig:process_training_phones}
-	\end{center}
-\end{figure}
-\begin{figure}
-	\begin{center}
-		\includegraphics[width=1\textwidth]{images/process_classification_phones.png}
-		\caption{Schematic of the classification procedure for phoneme recognition.}
-		\label{fig:process_classification_phones}
-	\end{center}
-\end{figure}
-
- The whole training process then results in an acoustic model, which can be used for classification as shown in figure \ref{fig:process_classification_phones}. As described, classification results in a phoneme posteriorgram. An example is shown in figure \ref{fig:posteriorgram}. The time resolution of the posteriograms in this work is 10ms. Instead of language modeling, many of the following tasks build directly on the posteriogram. For evaluation of the phoneme recognition itself, Viterbi decoding with evenly weighted transitions is performed on the posteriorgrams. Then, the Phoneme Error Rate (PER) and the Weighted Phoneme Error Rate (WPER) are used for assessing the quality. The Phoneme Error Rate is simply the Levenshtein distance between the generated and the expected phoneme sequence where insertions, deletions, and replacements are weighted equally, normalized by the length of the expected sequence:
-  \begin{equation}
-    PER = \frac{D + I + S}{N}
- \end{equation} 
- where $D$ are deletions, $I$ are insertions, and $S$ are substitutions of phonemes and $N$ is the length of the sequence. (The accuracy measure used in some of the state-of-the-art works is the same as $1-PER$; a Word Error Rate can be calculated analogously).\\
-Some works also use a measure called $correct$, which ignores insertions. This makes sense if it is assumed that the phoneme results are used afterwards by an algorithm that is tolerant to insertions. In many cases, such post-processing steps will then also be tolerant to deletions. For cases like this, Hunt suggested a weighted error rate that punishes insertions and deletions less heavily than substitutions \cite{hunt}:
- \begin{equation}
-    Weighted\ PER = \frac{0.5 D + 0.5 I + S}{N}
- \end{equation}  
- 
- \begin{figure}
-	\begin{center}
-		\includegraphics[width=1\textwidth]{images/posteriorgram.png}
-		\caption{Example of a phoneme posteriorgram, the result of classification with an acoustic model. The posteriorgram represents the posterior probabilities of each phoneme over time. The time resolution in this example is 10ms.}
-		\label{fig:posteriorgram}
-	\end{center}
-\end{figure}
-
-
-\subsection{Language identification}
-\begin{figure}
-	\begin{center}
-		\includegraphics[width=1\textwidth]{images/process_training_lid.png}
-		\caption{Schematic of the training procedure for language identification.}
-		\label{fig:process_training_lid}
-	\end{center}
-\end{figure}
-\begin{figure}
-	\begin{center}
-		\includegraphics[width=1\textwidth]{images/process_classification_lid.png}
-		\caption{Schematic of the classification procedure for language identification.}
-		\label{fig:process_classification_lid}
-	\end{center}
-\end{figure}
-
-Language identification has been extensively researched in the field of Automatic Speech Recognition since the 1980's. A number of successful algorithms has been developed over the years. An overview over the fundamental techniques is given by Zissman in \cite{zissman}.\\
-Fundamentally, four properties of languages can be used to discriminate between them:
-\begin{description}
-	\item[Phonetics] The unique sounds that are used in a given language.
-	\item[Phonotactics] The probabilities of certain phonemes and phoneme sequences.
-	\item[Prosody] The ``melody'' of the spoken language.
-	\item[Vocabulary] The possible words made up by the phonemes and the probabilities of certain combinations of words.
-\end{description}
-Even modern systems mostly focus on phonetics and phonotactics as the distinguishing factors between languages. Vocabulary is sometimes exploited in the shape of language models.\\
-In ASR, the standard technique for language identification is Parallel Phone Recognition followed by Language Modeling (PPRLM). In this approach, acoustic and language models are trained for each language (or, in some cases, only the language models are different and just one acoustic model is used) . Unseen examples are then run through each model or combinations thereof, and the result with the highest likelihood determines the language (e.g. \cite{lid_li_ma} and \cite{lid_matejka}).\\
-Other approaches directly train models for each language on the feature vectors (e.g. GMMs). This technique can be considered a ``bag of frames'' approach, i.e. the single data frames are considered to be statistically independent of each other. The trained models then describe probability densities for certain acoustic characteristics of each language. GMM approaches used to perform worse than their PPRLM counterparts, but the development of new features has made the difference negligible \cite{singer}. They are, in general, easier to implement since only audio examples and their language annotations are required. Allen et al. \cite{allen} report results of up to $76.4\%$ accuracy for ten languages. Different backend classifiers, such as Multi-Layer Perceptrons (MLPs) and Support Vector Machines (SVMs) \cite{campbell}, have also been used successfully instead of GMMs.\\
-%HERE??
-In this work, an approach that trains directly on the acoustic characteristics using i-vector extraction and SVMs is presented. The modifications to the general processing chain are presented in figures \ref{fig:process_training_lid} and \ref{fig:process_classification_lid}.\\
- 
-Additionally, a second approach based on phoneme posteriorgrams is tested. Statistics from the posteriorgrams are calculated, and then a second model is trained on these. Similar methods have been developed in ASR: Berkling presented an approach that uses sequences of recognized phonemes to discriminate between two languages (English and German), either with statistical modeling or with Neural Networks \cite{phdthesis:berkling_phd}. Mean errors of $0.12$ and $0.07$ on unseen data are achieved for the statistical approach and the Neural Network approach respectively when enough training data is available.\\
-Li, Ma, and Lee present a system where acoustic inputs are tokenized into acoustic words, which do not necessarily correspond to phonetic n-grams. Then, language classifiers are trained on statistics of the acoustic words \cite{lid_li_ma_lee}. They obtain an equal error rate of $0.05$ for six languages using a universal phoneme recognizer for tokenization and SVMs for backend language recognition. Peche et al. \cite{peche} attempt a similar approach on languages with limited resources. The performance remains good even when only acoustic models trained on different languages are used.\\
-In all of these approaches, tokenization of some sort is performed using the acoustic models. Since phoneme recognition on singing still performs relatively badly, statistics are calculated directly on the phoneme posteriors in this work\\.
-
-
-For evaluation, all test examples are classified into exactly one language class. Then, the accuracy (i.e. the average retrieval) is calculated:
- \begin{equation}
-    Accuracy = \frac{TP}{N}
- \end{equation}  
- where $TP$ are the True Positives, and $N$ is the number of all documents. In ASR, the average cost measure as recommended in \cite{nist_cavg} is also used widely now; however, to remain in line with other sung language identification approaches such as those described in chapter \ref{chap:sota}, the accuracy was still used in this work.
-
-\subsection{Keyword spotting}\label{subsec:tech_kws}
-In \cite{kws_overview}, three basic principles for keyword spotting in speech are mentioned:
-\begin{description}
-\item[LVCSR-based keyword spotting] {In this approach, a full transcription of the audio recording is performed using Large-Vocabulary Continuous Speech Recognition (LVCSR), which can then be searched for the keyword. 
-%Both acoustic models and language models are employed for this step. The resulting text can then be searched for the requested keywords. 
-This is expensive to implement and offers no tolerance for transcription errors - if the keyword is not transcribed correctly, it will never be found later.}
-\item[Acoustic keyword spotting] {
-%In contrast to the LVCSR approach, no full transcription is performed here. 
-Acoustic KWS algorithms only search for the keyword on the basis of its acoustic properties. %This is commonly done with Hidden Markov Models (HMMs) and can either be performed directly on the audio or feature data, or on phoneme posteriorgrams obtained from an acoustic model.\\
-This approach is easy to implement and provides some tolerance for pronunciation variations. However, it does not take any a-priori knowledge about the language into account (e.g. about plausible word or phoneme sequences).}
-\item[Phonetic search keyword spotting]{
-%Just like in LVCSR-based keyword spotting, 
-Again, a full transcription of the audio recording is performed, but the full lattices are retained instead of just the final transcription. A phonetic search for the keyword can then be run on these lattices. This approach combines the a-priori knowledge of the LVCSR-based approach with the robustness of the acoustic approach.}
-\end{description}
-
-As described in the next chapter (section \ref{sec:sota_speechtosinging}), there are significant differences between speech and singing signals, which means that ASR approaches for keyword spotting cannot simply be transferred to singing. In particular, both LVCSR-based keyword spotting and Phonetic search keyword spotting depend heavily on predictable phoneme durations (within certain limits). When a certain word is pronounced, its phonemes will usually have approximately the same duration across speakers. The language model employed in both approaches will take this information into account. However, phoneme durations in singing are not as predictable in speech, as figure \ref{fig:phoneme_stats} demonstrates. For this reason, a simpler acoustic approach using keyword-filler HMMs is employed in this work.\\
-Keyword-filler HMMs have been described in \cite{szoeke} and \cite{jansen}. In general, two separate HMMs are created: One for the requested keyword, and one for all non-keyword regions (=filler). The keyword HMM has a simple left-to-right topology with one state per keyword phoneme, while the filler HMM is a fully connected loop of states for all phonemes. These two HMMs are then joined. Using this composite HMM, Viterbi decoding is performed on the phoneme posteriorgrams. Whenever the Viterbi path passes through the keyword HMM, the keyword is detected. The likelihood of this path can then be compared to an alternative path through the filler HMM, resulting in a detection score. A threshold can be employed to only return highly scored occurrences. Additionally, the parameter $\beta$ can be tuned to adjust the model. It determines the likelihood of transitioning from the filler HMM to the keyword HMM. The whole process is illustrated in figure \ref{fig:kf_hmm}.
-
-\begin{figure}
- \centerline{\framebox{
- \includegraphics[width=.8\textwidth]{images/kw_filler_hmm.png}}}
- \caption{Keyword-filler HMM for the keyword ``greasy" with filler path on the left hand side and two possible keyword pronunciation paths on the right hand side. The parameter $\beta$ determines the transition probability between the filler HMM and the keyword HMM. \cite{jansen}}
- \label{fig:kf_hmm}
-\end{figure}
-Integration with the phoneme recognition system is shown in figure \ref{fig:process_training_kws}. Effectively, the keyword-filler HMM is added as a post-processing step after classification, and thus performed on the posteriorgrams.
-\begin{figure}
-	\begin{center}
-		\includegraphics[width=0.8\textwidth]{images/process_classification_kws.png}
-		\caption{Schematic of the procedure for keyword spotting.}
-		\label{fig:process_training_kws}
-	\end{center}
-\end{figure}
-
-Keyword spotting results are considered correct when they are detected within the expected songs, and are evaluated according to the $F_1$ measure. This measure is the harmonic mean of precision $P$ and recall $R$:
- \begin{equation}
-    F_1 = 2 \frac{P \cdot R}{P + R}
- \end{equation}  
-This measure is especially suited for cases where the classes are not balanced; in keyword spotting, occurrence of a keyword is much rarer than non-occurrence. In continuous speech recognition, the Figure Of Merit measure is often used \cite{fom}; however, since timing is not an issue in many applications for sung keyword spotting, this measure is not employed here.
-
-\subsection{Alignment and retrieval}
-\begin{figure}
-	\begin{center}
-		\includegraphics[width=0.8\textwidth]{images/process_classification_alignment.png}
-		\caption{Schematic of the procedure for lyrics-to-audio alignment.}
-		\label{fig:process_alignment}
-	\end{center}
-\end{figure}
-Alignment is also performed on the phoneme posteriorgram. The lyrics with their phonetic pronunciation must be known in advance; then, an algorithm finds the best positions of each phoneme in the sequence in the posteriorgram. Traditionally, Viterbi decoding is used for this, with the transition matrix shaped such that only transitions through the expected phonemes are possible. In this work, two other methods (based on DTW and the Levenshtein distance) are also tested. The general process is shown in figure \ref{fig:process_alignment}.\\
-
-For evaluation, the alignment approaches were submitted to the \textit{MIREX} 2017 challenge for lyrics-to-audio alignment\footnote{\url{http://www.music-ir.org/mirex/wiki/2017:Automatic_Lyrics-to-Audio_Alignment}}. In this challenge, the mean absolute error in seconds was used as the evaluation measure. For its calculation, all absolute deviations between the expected phoneme start and end timestamps and the automatically detected ones are calculated, averaged over the whole song, and once again over all songs. The measure was suggested in \cite{mesaros_alignment}.\\
-
-\begin{figure}
-	\begin{center}
-		\includegraphics[width=0.9\textwidth]{images/process_retrieval.png}
-		\caption{Schematic of the procedure for lyrics retrieval.}
-		\label{fig:process_retrieval}
-	\end{center}
-\end{figure}
-Lyrics retrieval can be interpreted as an alignment task as well. As shown in figure \ref{fig:process_retrieval}, alignment is performed on a whole database of lyrics instead of just those for a single song. Then, the scores for each alignment are compared, and the highest one determines the best match.\\
-
-For evaluation, the accuracy when taking the first $N$ number of results into account (also called recognition rate in the state of the art) is calculated. For clarification: The first $N$ results are checked for occurrence of the expected result; then, the percentage of queries for which the correct result was detected is calculated. In literature, this is often called the retrieval rate or recognition rate. An alternative measure for tasks like this is the Mean Reciprocal Rank (i.e. the average inverse of the position where the expected result occurs); once again, the previously described measure was used for comparability with the state of the art.
-
+%\section{Speech recognition systems and their evaluation} \label{sec:tech_systems}
+%
+%\subsection{Phoneme recognition}\label{subsec:tech_systems_phonerec}
+%In common ASR systems, phoneme recognition is performed by training an acoustic model that is able to determine the probability of phoneme occurrences in unseen audio frames. The result of this is a so-called phoneme posteriorgram - i.e. a matrix of the probabilities of each possible phoneme over time. In a second step, another model is applied to this posteriorgram, taking into account the probabilities of phoneme sequences and words formed by these phonemes, and thus generating a phoneme string from the posterior probabilities. This step is called language modeling.\\
+%
+%Language modeling is a field of research unto itself, and is a complex tasks for lyrics. For this reason, this work focuses on improving the acoustic modeling step. The training process is performed according to the general schema described in section \ref{sec:tech_general}. The specific adaptations are shown in figures \ref{fig:process_training_phones} and \ref{fig:process_classification_phones}: In training, phoneme annotations are used to defined the possible classes. A set of around 39 phonemes is common; the phoneme set used in this work is the one used in CMU Sphinx\footnote{\url{http://cmusphinx.sourceforge.net/}} and is listed with examples in appendix \ref{app:phonemes}. The used data sets contain annotations of monophones. In ASR, splitting phonemes into three temporal phases is common, resulting in so-called senones. This was also tested as described in section \ref{sec:phonerec_acap}.\\
+%
+%\begin{figure}
+%	\begin{center}
+%		\includegraphics[width=1\textwidth]{images/process_training_phones.png}
+%		\caption{Schematic of the training procedure for phoneme recognition.}
+%		\label{fig:process_training_phones}
+%	\end{center}
+%\end{figure}
+%\begin{figure}
+%	\begin{center}
+%		\includegraphics[width=1\textwidth]{images/process_classification_phones.png}
+%		\caption{Schematic of the classification procedure for phoneme recognition.}
+%		\label{fig:process_classification_phones}
+%	\end{center}
+%\end{figure}
+%
+% The whole training process then results in an acoustic model, which can be used for classification as shown in figure \ref{fig:process_classification_phones}. As described, classification results in a phoneme posteriorgram. An example is shown in figure \ref{fig:posteriorgram}. The time resolution of the posteriograms in this work is 10ms. Instead of language modeling, many of the following tasks build directly on the posteriogram. For evaluation of the phoneme recognition itself, Viterbi decoding with evenly weighted transitions is performed on the posteriorgrams. Then, the Phoneme Error Rate (PER) and the Weighted Phoneme Error Rate (WPER) are used for assessing the quality. The Phoneme Error Rate is simply the Levenshtein distance between the generated and the expected phoneme sequence where insertions, deletions, and replacements are weighted equally, normalized by the length of the expected sequence:
+%  \begin{equation}
+%    PER = \frac{D + I + S}{N}
+% \end{equation} 
+% where $D$ are deletions, $I$ are insertions, and $S$ are substitutions of phonemes and $N$ is the length of the sequence. (The accuracy measure used in some of the state-of-the-art works is the same as $1-PER$; a Word Error Rate can be calculated analogously).\\
+%Some works also use a measure called $correct$, which ignores insertions. This makes sense if it is assumed that the phoneme results are used afterwards by an algorithm that is tolerant to insertions. In many cases, such post-processing steps will then also be tolerant to deletions. For cases like this, Hunt suggested a weighted error rate that punishes insertions and deletions less heavily than substitutions \cite{hunt}:
+% \begin{equation}
+%    Weighted\ PER = \frac{0.5 D + 0.5 I + S}{N}
+% \end{equation}  
+% 
+% \begin{figure}
+%	\begin{center}
+%		\includegraphics[width=1\textwidth]{images/posteriorgram.png}
+%		\caption{Example of a phoneme posteriorgram, the result of classification with an acoustic model. The posteriorgram represents the posterior probabilities of each phoneme over time. The time resolution in this example is 10ms.}
+%		\label{fig:posteriorgram}
+%	\end{center}
+%\end{figure}
+%
+%
+%\subsection{Language identification}
+%\begin{figure}
+%	\begin{center}
+%		\includegraphics[width=1\textwidth]{images/process_training_lid.png}
+%		\caption{Schematic of the training procedure for language identification.}
+%		\label{fig:process_training_lid}
+%	\end{center}
+%\end{figure}
+%\begin{figure}
+%	\begin{center}
+%		\includegraphics[width=1\textwidth]{images/process_classification_lid.png}
+%		\caption{Schematic of the classification procedure for language identification.}
+%		\label{fig:process_classification_lid}
+%	\end{center}
+%\end{figure}
+%
+%Language identification has been extensively researched in the field of Automatic Speech Recognition since the 1980's. A number of successful algorithms has been developed over the years. An overview over the fundamental techniques is given by Zissman in \cite{zissman}.\\
+%Fundamentally, four properties of languages can be used to discriminate between them:
+%\begin{description}
+%	\item[Phonetics] The unique sounds that are used in a given language.
+%	\item[Phonotactics] The probabilities of certain phonemes and phoneme sequences.
+%	\item[Prosody] The ``melody'' of the spoken language.
+%	\item[Vocabulary] The possible words made up by the phonemes and the probabilities of certain combinations of words.
+%\end{description}
+%Even modern systems mostly focus on phonetics and phonotactics as the distinguishing factors between languages. Vocabulary is sometimes exploited in the shape of language models.\\
+%In ASR, the standard technique for language identification is Parallel Phone Recognition followed by Language Modeling (PPRLM). In this approach, acoustic and language models are trained for each language (or, in some cases, only the language models are different and just one acoustic model is used) . Unseen examples are then run through each model or combinations thereof, and the result with the highest likelihood determines the language (e.g. \cite{lid_li_ma} and \cite{lid_matejka}).\\
+%Other approaches directly train models for each language on the feature vectors (e.g. GMMs). This technique can be considered a ``bag of frames'' approach, i.e. the single data frames are considered to be statistically independent of each other. The trained models then describe probability densities for certain acoustic characteristics of each language. GMM approaches used to perform worse than their PPRLM counterparts, but the development of new features has made the difference negligible \cite{singer}. They are, in general, easier to implement since only audio examples and their language annotations are required. Allen et al. \cite{allen} report results of up to $76.4\%$ accuracy for ten languages. Different backend classifiers, such as Multi-Layer Perceptrons (MLPs) and Support Vector Machines (SVMs) \cite{campbell}, have also been used successfully instead of GMMs.\\
+%%HERE??
+%In this work, an approach that trains directly on the acoustic characteristics using i-vector extraction and SVMs is presented. The modifications to the general processing chain are presented in figures \ref{fig:process_training_lid} and \ref{fig:process_classification_lid}.\\
+% 
+%Additionally, a second approach based on phoneme posteriorgrams is tested. Statistics from the posteriorgrams are calculated, and then a second model is trained on these. Similar methods have been developed in ASR: Berkling presented an approach that uses sequences of recognized phonemes to discriminate between two languages (English and German), either with statistical modeling or with Neural Networks \cite{phdthesis:berkling_phd}. Mean errors of $0.12$ and $0.07$ on unseen data are achieved for the statistical approach and the Neural Network approach respectively when enough training data is available.\\
+%Li, Ma, and Lee present a system where acoustic inputs are tokenized into acoustic words, which do not necessarily correspond to phonetic n-grams. Then, language classifiers are trained on statistics of the acoustic words \cite{lid_li_ma_lee}. They obtain an equal error rate of $0.05$ for six languages using a universal phoneme recognizer for tokenization and SVMs for backend language recognition. Peche et al. \cite{peche} attempt a similar approach on languages with limited resources. The performance remains good even when only acoustic models trained on different languages are used.\\
+%In all of these approaches, tokenization of some sort is performed using the acoustic models. Since phoneme recognition on singing still performs relatively badly, statistics are calculated directly on the phoneme posteriors in this work\\.
+%
+%
+%For evaluation, all test examples are classified into exactly one language class. Then, the accuracy (i.e. the average retrieval) is calculated:
+% \begin{equation}
+%    Accuracy = \frac{TP}{N}
+% \end{equation}  
+% where $TP$ are the True Positives, and $N$ is the number of all documents. In ASR, the average cost measure as recommended in \cite{nist_cavg} is also used widely now; however, to remain in line with other sung language identification approaches such as those described in chapter \ref{chap:sota}, the accuracy was still used in this work.
+%
+%\subsection{Keyword spotting}\label{subsec:tech_kws}
+%In \cite{kws_overview}, three basic principles for keyword spotting in speech are mentioned:
+%\begin{description}
+%\item[LVCSR-based keyword spotting] {In this approach, a full transcription of the audio recording is performed using Large-Vocabulary Continuous Speech Recognition (LVCSR), which can then be searched for the keyword. 
+%%Both acoustic models and language models are employed for this step. The resulting text can then be searched for the requested keywords. 
+%This is expensive to implement and offers no tolerance for transcription errors - if the keyword is not transcribed correctly, it will never be found later.}
+%\item[Acoustic keyword spotting] {
+%%In contrast to the LVCSR approach, no full transcription is performed here. 
+%Acoustic KWS algorithms only search for the keyword on the basis of its acoustic properties. %This is commonly done with Hidden Markov Models (HMMs) and can either be performed directly on the audio or feature data, or on phoneme posteriorgrams obtained from an acoustic model.\\
+%This approach is easy to implement and provides some tolerance for pronunciation variations. However, it does not take any a-priori knowledge about the language into account (e.g. about plausible word or phoneme sequences).}
+%\item[Phonetic search keyword spotting]{
+%%Just like in LVCSR-based keyword spotting, 
+%Again, a full transcription of the audio recording is performed, but the full lattices are retained instead of just the final transcription. A phonetic search for the keyword can then be run on these lattices. This approach combines the a-priori knowledge of the LVCSR-based approach with the robustness of the acoustic approach.}
+%\end{description}
+%
+%As described in the next chapter (section \ref{sec:sota_speechtosinging}), there are significant differences between speech and singing signals, which means that ASR approaches for keyword spotting cannot simply be transferred to singing. In particular, both LVCSR-based keyword spotting and Phonetic search keyword spotting depend heavily on predictable phoneme durations (within certain limits). When a certain word is pronounced, its phonemes will usually have approximately the same duration across speakers. The language model employed in both approaches will take this information into account. However, phoneme durations in singing are not as predictable in speech, as figure \ref{fig:phoneme_stats} demonstrates. For this reason, a simpler acoustic approach using keyword-filler HMMs is employed in this work.\\
+%Keyword-filler HMMs have been described in \cite{szoeke} and \cite{jansen}. In general, two separate HMMs are created: One for the requested keyword, and one for all non-keyword regions (=filler). The keyword HMM has a simple left-to-right topology with one state per keyword phoneme, while the filler HMM is a fully connected loop of states for all phonemes. These two HMMs are then joined. Using this composite HMM, Viterbi decoding is performed on the phoneme posteriorgrams. Whenever the Viterbi path passes through the keyword HMM, the keyword is detected. The likelihood of this path can then be compared to an alternative path through the filler HMM, resulting in a detection score. A threshold can be employed to only return highly scored occurrences. Additionally, the parameter $\beta$ can be tuned to adjust the model. It determines the likelihood of transitioning from the filler HMM to the keyword HMM. The whole process is illustrated in figure \ref{fig:kf_hmm}.
+%
+%\begin{figure}
+% \centerline{\framebox{
+% \includegraphics[width=.8\textwidth]{images/kw_filler_hmm.png}}}
+% \caption{Keyword-filler HMM for the keyword ``greasy" with filler path on the left hand side and two possible keyword pronunciation paths on the right hand side. The parameter $\beta$ determines the transition probability between the filler HMM and the keyword HMM. \cite{jansen}}
+% \label{fig:kf_hmm}
+%\end{figure}
+%Integration with the phoneme recognition system is shown in figure \ref{fig:process_training_kws}. Effectively, the keyword-filler HMM is added as a post-processing step after classification, and thus performed on the posteriorgrams.
+%\begin{figure}
+%	\begin{center}
+%		\includegraphics[width=0.8\textwidth]{images/process_classification_kws.png}
+%		\caption{Schematic of the procedure for keyword spotting.}
+%		\label{fig:process_training_kws}
+%	\end{center}
+%\end{figure}
+%
+%Keyword spotting results are considered correct when they are detected within the expected songs, and are evaluated according to the $F_1$ measure. This measure is the harmonic mean of precision $P$ and recall $R$:
+% \begin{equation}
+%    F_1 = 2 \frac{P \cdot R}{P + R}
+% \end{equation}  
+%This measure is especially suited for cases where the classes are not balanced; in keyword spotting, occurrence of a keyword is much rarer than non-occurrence. In continuous speech recognition, the Figure Of Merit measure is often used \cite{fom}; however, since timing is not an issue in many applications for sung keyword spotting, this measure is not employed here.
+%
+%\subsection{Alignment and retrieval}
+%\begin{figure}
+%	\begin{center}
+%		\includegraphics[width=0.8\textwidth]{images/process_classification_alignment.png}
+%		\caption{Schematic of the procedure for lyrics-to-audio alignment.}
+%		\label{fig:process_alignment}
+%	\end{center}
+%\end{figure}
+%Alignment is also performed on the phoneme posteriorgram. The lyrics with their phonetic pronunciation must be known in advance; then, an algorithm finds the best positions of each phoneme in the sequence in the posteriorgram. Traditionally, Viterbi decoding is used for this, with the transition matrix shaped such that only transitions through the expected phonemes are possible. In this work, two other methods (based on DTW and the Levenshtein distance) are also tested. The general process is shown in figure \ref{fig:process_alignment}.\\
+%
+%For evaluation, the alignment approaches were submitted to the \textit{MIREX} 2017 challenge for lyrics-to-audio alignment\footnote{\url{http://www.music-ir.org/mirex/wiki/2017:Automatic_Lyrics-to-Audio_Alignment}}. In this challenge, the mean absolute error in seconds was used as the evaluation measure. For its calculation, all absolute deviations between the expected phoneme start and end timestamps and the automatically detected ones are calculated, averaged over the whole song, and once again over all songs. The measure was suggested in \cite{mesaros_alignment}.\\
+%
+%\begin{figure}
+%	\begin{center}
+%		\includegraphics[width=0.9\textwidth]{images/process_retrieval.png}
+%		\caption{Schematic of the procedure for lyrics retrieval.}
+%		\label{fig:process_retrieval}
+%	\end{center}
+%\end{figure}
+%Lyrics retrieval can be interpreted as an alignment task as well. As shown in figure \ref{fig:process_retrieval}, alignment is performed on a whole database of lyrics instead of just those for a single song. Then, the scores for each alignment are compared, and the highest one determines the best match.\\
+%
+%For evaluation, the accuracy when taking the first $N$ number of results into account (also called recognition rate in the state of the art) is calculated. For clarification: The first $N$ results are checked for occurrence of the expected result; then, the percentage of queries for which the correct result was detected is calculated. In literature, this is often called the retrieval rate or recognition rate. An alternative measure for tasks like this is the Mean Reciprocal Rank (i.e. the average inverse of the position where the expected result occurs); once again, the previously described measure was used for comparability with the state of the art.
+%

@@ -11,13 +11,8 @@ system descriptions in chapters??
 
 LESEN:
 abstract: vllt gute retrieval-ergebnisse (calib)?
-intro: demonstrate improvements?? 
-classic vs. classical?
 tech: diff dtw levenshtein??
 dl reference!!
 phonerec: fig 5.1 PER capital
 zeitformen…
 other implmentation source`?
-(=
-accuracy % for lid
-expletive figure: TIMIT

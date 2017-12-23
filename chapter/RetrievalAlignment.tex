@@ -1,8 +1,31 @@
 \chapter{Lyrics Retrieval and Alignment} \label{chap:retrieval_alignment}
 
 Lyrics retrieval and alignment are related tasks: The retrieval task can be interpreted as an alignment of all possible lyrics sequences to the query audio, and a subsequent selection of the best-matching result. This is done in all described algorithms.\\
-As a starting point, a traditional HMM-based algorithm for Forced Alignment was tested. Building on top of the posteriorgrams extracted with the new acoustic models as described in chapter \ref{chap:phonerec}, a new algorithm using Dynamic Time Warping (DTW) was developed and evaluated for both alignment and retrieval. Next, another processing step for explicitly extracting phonemes from the posteriorgrams was included; the resulting method was also tested for both alignment and retrieval. All three mentioned algorithms were entered into the 2017 \textit{MIREX} challenge for lyrics-to-audio alignment, in which the algorithms were tested on Hansen's dataset, both in the singing-only and polyphonic conditions (\textit{ACAP} and \textit{ACAP\_Poly}, see sections \ref{subsec:data_hansen} and \ref{subsec:data_hansen_polyphonic}), and on Mauch's alignment data set (\textit{Mauch}, see section \ref{subsec:data_mauch_alignment}). The results can be viewed on \url{http://www.music-ir.org/mirex/wiki/2017:Automatic_Lyrics-to-Audio_Alignment_Results}.\\
-Finally, a practical application for lyrics alignment is presented: Automatic expletive detection in rap songs.
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{images/process_classification_alignment.png}
+		\caption{Schematic of the procedure for lyrics-to-audio alignment.}
+		\label{fig:process_alignment}
+	\end{center}
+\end{figure}
+In this work, alignment is also performed on phoneme posteriorgrams. The lyrics with their phonetic pronunciation must be known in advance; then, an algorithm finds the best positions of each phoneme in the sequence in the posteriorgram. Traditionally, Viterbi decoding is used for this, with the transition matrix shaped such that only transitions through the expected phonemes are possible. The general process is shown in figure \ref{fig:process_alignment}.
+
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.9\textwidth]{images/process_retrieval.png}
+		\caption{Schematic of the procedure for lyrics retrieval.}
+		\label{fig:process_retrieval}
+	\end{center}
+\end{figure}
+For retrieval, alignment is performed on a whole database of lyrics instead of just those for a single song as illusted in figure \ref{fig:process_retrieval}. Then, the scores for each alignment are compared, and the highest one determines the best match.\\
+
+As a starting point, a traditional HMM-based algorithm for Forced Alignment was tested. Building on top of the posteriorgrams extracted with the new acoustic models as described in chapter \ref{chap:phonerec}, a new algorithm using Dynamic Time Warping (DTW) was developed and evaluated for both alignment and retrieval. Next, another processing step for explicitly extracting phonemes from the posteriorgrams was included; the resulting method was also tested for both alignment and retrieval. The general process is shown in figure \ref{fig:process_alignment}.\\
+
+For alignment evaluation, the approaches were submitted to the \textit{MIREX} 2017 challenge for lyrics-to-audio alignment\footnote{\url{http://www.music-ir.org/mirex/wiki/2017:Automatic_Lyrics-to-Audio_Alignment}}, in which the algorithms were tested on Hansen's dataset, both in the singing-only and polyphonic conditions (\textit{ACAP} and \textit{ACAP\_Poly}, see sections \ref{subsec:data_hansen} and \ref{subsec:data_hansen_polyphonic}), and on Mauch's alignment data set (\textit{Mauch}, see section \ref{subsec:data_mauch_alignment}). In this challenge, the mean absolute error in seconds was used as the evaluation measure. For its calculation, all absolute deviations between the expected phoneme start and end timestamps and the automatically detected ones are calculated, averaged over the whole song, and once again over all songs. The measure was suggested in \cite{mesaros_alignment}. The full results can be viewed on \url{http://www.music-ir.org/mirex/wiki/2017:Automatic_Lyrics-to-Audio_Alignment_Results}.\\
+
+For evaluation of the retrieval results, the accuracy when taking the first $N$ number of results into account (also called recognition rate in the state of the art) is calculated. For clarification: The first $N$ results are checked for occurrence of the expected result; then, the percentage of queries for which the correct result was detected is calculated. (In literature, this is sometimes called the retrieval rate or recognition rate.) An alternative measure for tasks like this is the Mean Reciprocal Rank (i.e. the average inverse of the position where the expected result occurs); once again, the previously described measure was used for comparability with the state of the art. Retrieval is tested on the \textit{AuthorRetrieval}, \textit{DampRetrieval}, and \textit{DampTest} data sets.\\
+
+This chapter also presents a practical application for lyrics alignment: Automatic expletive detection in rap songs.
 
 
 \section{HMM-based lyrics-to-audio alignment}\label{sec:ret_hmm}

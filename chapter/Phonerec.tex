@@ -1,5 +1,44 @@
 \chapter{Singing Phoneme Recognition} \label{chap:phonerec}
-The following chapter describes the systems developed for phoneme recognition in singing, which serve as a basis for most of the following tasks. All three approaches are based on the general processing chain described in section \ref{subsec:tech_systems_phonerec}. The first one employs traditional GMM-HMM and DNN models trained on speech as a starting point. The other two use DNNs for modeling the phonemes, and are trained on different data sets. Since there is no large data set of singing annotated with phonemes available, speech was made more ``song-like'' for the second approach. In the third one presented, lyrics are automatically aligned to a large singing data set using the GMM-HMM approach, and the resulting data set is used for model training again.
+
+In common ASR systems, phoneme recognition is performed by training an acoustic model that is able to determine the probability of phoneme occurrences in unseen audio frames. The result of this is a so-called phoneme posteriorgram - i.e. a matrix of the probabilities of each possible phoneme over time. In a second step, another model is applied to this posteriorgram, taking into account the probabilities of phoneme sequences and words formed by these phonemes, and thus generating a phoneme string from the posterior probabilities. This step is called language modeling.\\
+
+Language modeling is a field of research unto itself, and is a complex tasks for lyrics. For this reason, this work focuses on improving the acoustic modeling step. The training process is performed according to the general schema described in section \ref{sec:tech_general}. The specific adaptations are shown in figures \ref{fig:process_training_phones} and \ref{fig:process_classification_phones}: In training, phoneme annotations are used to defined the possible classes. A set of around 39 phonemes is common; the phoneme set used in this work is the one used in CMU Sphinx\footnote{\url{http://cmusphinx.sourceforge.net/}} and is listed with examples in appendix \ref{app:phonemes}. The used data sets contain annotations of monophones. In ASR, splitting phonemes into three temporal phases is common, resulting in so-called senones. This was also tested as described in section \ref{sec:phonerec_acap}.\\
+
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=1\textwidth]{images/process_training_phones.png}
+		\caption{Schematic of the training procedure for phoneme recognition.}
+		\label{fig:process_training_phones}
+	\end{center}
+\end{figure}
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=1\textwidth]{images/process_classification_phones.png}
+		\caption{Schematic of the classification procedure for phoneme recognition.}
+		\label{fig:process_classification_phones}
+	\end{center}
+\end{figure}
+
+ The whole training process then results in an acoustic model, which can be used for classification as shown in figure \ref{fig:process_classification_phones}. As described, classification results in a phoneme posteriorgram. An example is shown in figure \ref{fig:posteriorgram}. The time resolution of the posteriograms in this work is 10ms. Instead of language modeling, many of the following tasks build directly on the posteriogram. For evaluation of the phoneme recognition itself, Viterbi decoding with evenly weighted transitions is performed on the posteriorgrams. Then, the Phoneme Error Rate (PER) and the Weighted Phoneme Error Rate (WPER) are used for assessing the quality. The Phoneme Error Rate is simply the Levenshtein distance between the generated and the expected phoneme sequence where insertions, deletions, and replacements are weighted equally, normalized by the length of the expected sequence:
+  \begin{equation}
+    PER = \frac{D + I + S}{N}
+ \end{equation} 
+ where $D$ are deletions, $I$ are insertions, and $S$ are substitutions of phonemes and $N$ is the length of the sequence. (The accuracy measure used in some of the state-of-the-art works is the same as $1-PER$; a Word Error Rate can be calculated analogously).\\
+Some works also use a measure called $correct$, which ignores insertions. This makes sense if it is assumed that the phoneme results are used afterwards by an algorithm that is tolerant to insertions. In many cases, such post-processing steps will then also be tolerant to deletions. For cases like this, Hunt suggested a weighted error rate that punishes insertions and deletions less heavily than substitutions \cite{hunt}:
+ \begin{equation}
+    Weighted\ PER = \frac{0.5 D + 0.5 I + S}{N}
+ \end{equation}  \\
+ 
+ \begin{figure}
+	\begin{center}
+		\includegraphics[width=1\textwidth]{images/posteriorgram.png}
+		\caption{Example of a phoneme posteriorgram, the result of classification with an acoustic model. The posteriorgram represents the posterior probabilities of each phoneme over time. The time resolution in this example is 10ms.}
+		\label{fig:posteriorgram}
+	\end{center}
+\end{figure}
+
+The following chapter describes the systems developed for phoneme recognition in singing, which serve as a basis for most of the following tasks. All three approaches are based on this general processing chain. The first one employs traditional GMM-HMM and DNN models trained on speech as a starting point. The other two use DNNs for modeling the phonemes, and are trained on different data sets. Since there is no large data set of singing annotated with phonemes available, speech was made more ``song-like'' for the second approach. In the third one presented, lyrics are automatically aligned to a large singing data set using the GMM-HMM approach, and the resulting data set is used for model training again.
+
 
 \section{Phoneme recognition using models trained on speech} \label{sec:phonerec_timit}
 %timit
@@ -8,14 +47,14 @@ The following chapter describes the systems developed for phoneme recognition in
 % tested: alignment acap
 % phonerec acap, dampm/f
 %todo: hmm vs dnn??
-As a starting point, models for phoneme recognition were trained on speech data, specifically the \textit{TIMIT} corpus. As in many classical ASR approaches, GMM-HMMs were selected as a basis and trained using the Hidden Markov Toolkit (HTK)\cite{htk}.\\
+As a starting point, models for phoneme recognition were trained on speech data, specifically the \textit{TIMIT} corpus. As in many classic ASR approaches, GMM-HMMs were selected as a basis and trained using the Hidden Markov Toolkit (HTK)\cite{htk}.\\
 Additionally, Deep Neural Networks (DNN) were trained for comparison with models trained on the other data sets. They had three hidden layers of 1024 nodes, 850 nodes, and 1024 nodes again.\\
-In both cases, 13 MFCCs were extracted, and deltas and double-deltas were calculated, resulting in a feature vector of dimension 39. As the output, the set of 39 monophones described in section \ref{subsec:tech_systems_phonerec} was used.\\
+In both cases, 13 MFCCs were extracted, and deltas and double-deltas were calculated, resulting in a feature vector of dimension 39. As the output, the described set of 39 monophones was used.\\
 %output ,mono tri
 % results, align, phone
 The HMMs were used for aligning text lyrics to audio in some of the following approaches. To verify the quality of such an alignment, this was tested on the part of the \textit{ACAP} singing corpus that has phoneme annotations. On average, the alignment error was $0.16$ seconds. A small manual check suggests that this value may be in the range of the agreement of annotators. A closer inspection of the results also shows that the biggest contributions to this error occur because a few segments were heavily misaligned, whereas most of them are just slightly off.\\
 %figure?
-The DNN models were trained to perform phoneme recognition. This system was evaluated by first generating phoneme posteriorgrams from the test audio using the DNN models, and then running Viterbi decoding on those to extract phoneme strings. Then, the Phoneme Error Rate and the Weighted Phoneme Error Rate were calculated as described in section \ref{subsec:tech_systems_phonerec}.\\
+The DNN models were trained to perform phoneme recognition. This system was evaluated by first generating phoneme posteriorgrams from the test audio using the DNN models, and then running Viterbi decoding on those to extract phoneme strings. Then, the Phoneme Error Rate and the Weighted Phoneme Error Rate were calculated as described above.\\
 The results for DNN models trained on \textit{TIMIT} are shown in figure \ref{fig:res_timit}. For validation, the model was tested on the test part of \textit{TIMIT}, resulting in a Phoneme Error Rate of $0.4$ and a Weighted Phoneme Error Rate of $0.3$. Lower values on these corpora can be found in literature, but those systems are usually more sophisticated and include language modeling steps and gender- or speaker-adapted models. In this scenario, those values serve as a validation of the recognition ability of the model on unseen data, and as an upper bound for the other results.\\
 On the \textit{ACAP} data set, the Phoneme Error Rate is $1.06$ and the Weighted Phoneme Error rate is $0.8$. Performing the same evaluation on the \textit{DAMP} test data sets generates similar results: A Phoneme Error Rate of $1.26$/$1.29$ (female/male), and a Weighted Phoneme Error Rate of $0.9$. This demonstrates that the performance of models trained on speech leaves room for improvement when used for phoneme recognition in singing. The difference between both singing data sets can be explained by their content: \textit{ACAP} is much smaller, and contains cleaner singing in the sense of both the recording quality and the singing performance. Songs in this data set were performed by professional singers, whereas the \textit{DAMPTest} sets contain recordings by amateurs who may not always enunciate clearly. Additionally, the phoneme annotations for the \textit{DAMPTest} sets were generated from the song lyrics; these do not correspond to the actual performed phonemes in all cases.\\
 It can be assumed that models trained on better-matching conditions (i.e. singing) would perform much better at this task. The problem with this approach lies in the lack of data sets that can be used for these purposes. In contrast with speech, no large corpora of phonetically annotated singing are available. In the following sections, workarounds for this problem are tested.
@@ -227,7 +266,7 @@ Finally, a model trained on \textit{DampB} over three iterations was also tested
 \end{figure*}
 
 \subsection{Phoneme recognition}
-After validating the alignment strategy, phoneme recognition experiments were carried out on both the \textit{ACAP} and the \textit{DampTest} data sets. This was possible even though there are no manual annotations for the \textit{DampTest} sets because the expected phonemes are available from the textual lyrics. Again, the Phoneme Error Rate and the Weighted Phoneme Error Rate are used as evaluation measures (see section \ref{subsec:tech_systems_phonerec}).\\
+After validating the alignment strategy, phoneme recognition experiments were carried out on both the \textit{ACAP} and the \textit{DampTest} data sets. This was possible even though there are no manual annotations for the \textit{DampTest} sets because the expected phonemes are available from the textual lyrics. Again, the Phoneme Error Rate and the Weighted Phoneme Error Rate are used as evaluation measures (see above).\\
 The results for \textit{ACAP} are shown in figure \ref{fig:res_phonerec_acap}. In general, models trained on \textit{DampB} performed much better at phoneme recognition than those trained on \textit{TIMIT}. Compared to these speech-based models, the Phoneme Error Rate falls from $1.06$ to $0.77$, while the Weighted Phoneme Error Rate falls from $0.8$ to $0.59$. As can be seen from both evaluation measures, using alignments with three states per phoneme instead of a single state does not improve the results in this case, contrasting with the better alignment results. This might happen because more classes cause more confusion in the model, even though the three-state results were downmapped to single phonemes for calculating the evaluation measures. Additionally, the temporal pronunciation phases may just be too variable in singing, as opposed to speech. As in the alignment results, using gender-specific models does not provide an advantage over mixed-gender models. (Results for the gender-specific models were only evaluated on songs of the matching gender).\\
 As already seen in the alignment validation results, training models on \textit{DampB} over three iterations actually degrades the result. Again, this might happen because phoneme alignment errors are amplified over the iterations. Interestingly, the effect is not as strong for the three-state models, perhaps because the three classes per phoneme help to alleviate each other's errors.\\
 
