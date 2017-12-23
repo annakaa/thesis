@@ -1,18 +1,9 @@
-übergänge
 implementierung rausnehmen?
-vektoren fett
 
 
-seconds vs s
-% vs .
 
 
-system descriptions in chapters??
 
 LESEN:
 abstract: vllt gute retrieval-ergebnisse (calib)?
 tech: diff dtw levenshtein??
-dl reference!!
-phonerec: fig 5.1 PER capital
-zeitformen…
-other implmentation source`?
