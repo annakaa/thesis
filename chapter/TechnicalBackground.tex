@@ -107,7 +107,7 @@ PLP features, first introduced in \cite{hermansky90}, are also among the most fr
 \begin{figure}
 	\begin{center}
 		\includegraphics[width=0.8\textwidth]{images/comp_mfcc_plp.png}
-		\caption{Comparison of the processing steps in MFCC (left) and PLP (right) calculation. \cite{hoenig}}
+		\caption{Comparison of the processing steps in PLP (left) and MFCC (right) calculation. \cite{hoenig}}
 		\label{fig:comp_mfcc_plp}
 	\end{center}
 \end{figure}
@@ -237,7 +237,7 @@ Subsequence DTW is a variant of this algorithm in which the boundary condition i
 	\end{figure}
 
 
-\subsection{Levenshtein distance}
+\subsection{Levenshtein distance}\label{subsec:tech_levenshtein}
 The Levenshtein distance, also called edit distance, is a measure of similarity between two strings (or character sequences). The algorithm was first described by Levenshtein in 1965 \cite{levenshtein} and can also be used to retrieve an optimal alignment (so-called approximate string matching \cite{navarro}). In that sense, it serves a similar purpose as DTW for strings instead of time sequences. This measure is commonly used in the fields of Computational Biology, Natural Language Processing, and signal processing.\\
 
 The distance is the sum of character operations necessary to transform one string into the other. These operations can be substitutions, insertions, or deletions, which may be weighted differently. An example is shown in figure \ref{fig:levenshtein_example}. If each operation has a cost of 1, the Levenshtein distance in this example is 5; if substitutions are weighted with a cost of 2, the distance is 8.\\
@@ -254,7 +254,7 @@ L(i,j-1) + I(x_i)\\
 L(i-1,j-1) + S(x_i,y_j)
 \end{cases}       
 \end{equation}
-where $L(i,j)$ is the Levenshtein distance at step $(i,j)$ and $D$, $I$, and $S$ are the costs for deletions, insertions, and substitutions respectively \cite{applied_computing}. The over-all Levenshtein distance is $L(M,N)$.
+where $L(i,j)$ is the Levenshtein distance at step $(i,j)$ and $D$, $I$, and $S$ are the costs for deletions, insertions, and substitutions respectively \cite{applied_computing}. The over-all Levenshtein distance is $L(M,N)$.\\
 
 \begin{figure}
 	\begin{center}
@@ -264,6 +264,15 @@ where $L(i,j)$ is the Levenshtein distance at step $(i,j)$ and $D$, $I$, and $S$
 	\end{center}
 \end{figure}
 
+The Levenshtein distance is often employed to measure the quality of speech recognition systems with regards to the recognized phonemes or words. The so-called Phoneme Error Rate (PER) is simply the Levenshtein distance between a generated and an expected phoneme sequence where insertions, deletions, and replacements are weighted equally, normalized by the length of the expected sequence:
+  \begin{equation}
+    PER = \frac{D + I + S}{N}
+ \end{equation} 
+ where $D$ are deletions, $I$ are insertions, and $S$ are substitutions of phonemes and $N$ is the length of the sequence. (The accuracy measure used in some of the state-of-the-art works is the same as $1-PER$; a Word Error Rate can be calculated analogously).\\
+Some works also use a measure called $correct$, which ignores insertions. This makes sense if it is assumed that the phoneme results are used afterwards by an algorithm that is tolerant to insertions. In many cases, such post-processing steps will then also be tolerant to deletions. For cases like this, Hunt suggested a weighted error rate that punishes insertions and deletions less heavily than substitutions \cite{hunt}:
+ \begin{equation}
+    Weighted\ PER = \frac{0.5 D + 0.5 I + S}{N}
+ \end{equation}  \\
 
 
 
@@ -513,17 +522,17 @@ Networks with no hidden layers are only able to solve linear problems; the intro
         \centering
         \begin{subfigure}[t]{0.3\textwidth}
 		\includegraphics[width=\textwidth]{images/activation_heaviside.png}
-                \caption{Heaviside binary step activation function}
+                \caption{Heaviside binary step}% activation function}
                 \label{fig:activation_heaviside}
         \end{subfigure}
                 \begin{subfigure}[t]{0.3\textwidth}
 		\includegraphics[width=\textwidth]{images/activation_sigmoid.png}
-                \caption{Sigmoid activation function}
+                \caption{Sigmoid}% activation function}
                 \label{fig:activation_sigmoid}
         \end{subfigure}
                 \begin{subfigure}[t]{0.3\textwidth}
 		\includegraphics[width=\textwidth]{images/activation_relu.png}
-                \caption{ReLU activation function}
+                \caption{ReLU}% activation function}
                 \label{fig:activation_relu}
         \end{subfigure}
         \caption{Activation functions used for ANN neurons. \cite{medium}}
@@ -580,7 +589,7 @@ Then, the weights are adjusted accordingly:
 where $\eta$ is the so-called learning rate which must be chosen carefully to ensure convergence of the training process.\\
 In the same way, the error is propagated further backwards through the model to adjust the weights of the previous layers. This is done until all the weights have been adjusted. Then, the next batch of training data is passed through the model and the process is repeated. The training process is performed until the weights converge (or until a fixed number of iterations has been reached).\\
 
-A commonly used cost function is the squared error measure:
+A commonly used cost function is the squared error measure (employing the $L^2$ or Euclidean norm):
 \begin{equation}
 E_S = \frac{1}{2} \sum_{j=1}^{M} (t_j - y_j)^2
 \end{equation}

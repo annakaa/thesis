@@ -39,40 +39,8 @@ The described phoneme recognition approaches result in phoneme posteriorgrams, a
 In addition to classic HMM-based lyrics-to-audio alignment, this thesis presents two novel approaches that operate on posteriorgrams: One based on DTW, and one based on Levenshtein distance calculation. This enables them to make use of the new acoustic models. The developed algorithms were submitted to the \textit{MIREX} 2017 challenge for lyrics-to-audio alignment, where the Levenshtein-based approach outperformed the other submissions.
 
 \paragraph{Two first approaches to lyrics retrieval based purely on sung queries}
-The same two approaches for lyrics-to-audio alignment can be applied to the task of lyrics retrieval. This is an application that has only rarely been the subject of research so far. This thesis demonstrates the implementation of the presented methods for retrieval of textual song lyrics from a database with sung queries.
+The same two approaches for lyrics-to-audio alignment can be applied to the task of lyrics retrieval. This is an application that has only rarely been the subject of research so far. This thesis describes the implementation of the presented methods for retrieval of textual song lyrics from a database with sung queries.
 
-\section{Publications}
-The achieved research results have been published in the following conference papers:
-
-\paragraph{Phoneme recognition}
-\begin{itemize}
-\item Anna M. Kruspe, ``Training phoneme models for singing with "songified" speech data'', in \textit{16th International Society for Music Information Retrieval Conference (ISMIR)}, Malaga, Spain, 2015.
-\item Anna M. Kruspe, ``Bootstrapping a system for phoneme recognition and keyword spotting in unaccompanied singing'', in \textit{17th International Society for Music Information Retrieval Conference (ISMIR)}, New York, NY, USA, 2016.
-\end{itemize}
-
-\paragraph{Language identification}
-\begin{itemize}
-\item Anna M. Kruspe, ``Automatic Language Identification for Singing'', in \textit{Mid-Atlantic Student Colloquium on Speech, Language and Learning (MASC-SLL)}, Baltimore, MD, USA, 2013.
-\item Anna M. Kruspe, Jakob Abesser, Christian Dittmar, ``A GMM approach to singing language identification'', in \textit{Proc. of the AES Conference on Semantic Audio}, London, UK, 2014.
-\item Anna M. Kruspe, ``Improving singing language identification through i-vector extraction'', in \textit{Proc. of the 17th Int. Conference on Digital Audio Effects (DAFx-14)}, Erlangen, Germany, 2014.
-\item Anna M. Kruspe, ``Phonotactic Language Identification for Singing'', in \textit{Interspeech}, San Francisco, CA, USA, 2016.
-\end{itemize}
-
-\paragraph{Keyword spotting}
-\begin{itemize}
-\item Anna M. Kruspe, ``Keyword spotting in a-capella singing'', in \textit{15th International Society for Music Information Retrieval Conference (ISMIR)}, Taipei, Taiwan, 2014.
-\item Anna M. Kruspe, ``Keyword spotting in singing with duration-modeled HMMs'', in \textit{European Signal Processing Conference (EUSIPCO)}, Nice, France, 2015.
-\item Anna M. Kruspe, ``Bootstrapping a system for phoneme recognition and keyword spotting in unaccompanied singing'', in \textit{17th International Society for Music Information Retrieval Conference (ISMIR)}, New York, NY, USA, 2016.
-\end{itemize}
-
-\paragraph{Lyrics alignment and retrieval}
-\begin{itemize}
-\item Anna M. Kruspe, ``Retrieval of textual song lyrics from sung inputs'', in \textit{Interspeech}, San Francisco, CA, USA, 2016.
-\item Anna M. Kruspe, ``Automatic B**** Detection'', in \textit{17th International Society for Music Information Retrieval Conference (ISMIR)} (Late-breaking demo), New York, NY, USA, 2016.
-\item Anna M. Kruspe, Jakob Abesser, ``Automatic lyrics alignment and retrieval from singing audio'', in \textit{Proc. of the AES Conference on Semantic Audio} (Late-breaking demo), Erlangen, Germany, 2017.
-\item Anna M. Kruspe, ``Lyrics alignment using HMMs, posteriorgram-based DTW, and phoneme-based Levenshtein alignment'', in \textit{18th International Society for Music Information Retrieval Conference (ISMIR)} (\textit{MIREX} submission), Suzhou, China, 2017.
-\item Anna M. Kruspe, M. Goto, ``Retrieval of song lyrics from sung queries'', submitted to \textit{IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)}, Calgary, Canada, 2018.
-\end{itemize}
 
 \section{Limitations and future work}
 %applications - genre, mood, similarity
@@ -81,11 +49,11 @@ The achieved research results have been published in the following conference pa
 %polyphonic
 
 Suggestions for the individual tasks and approaches are described in the corresponding chapters. This section focuses on the over-all field of ASR for singing.\\
-In general, phoneme recognition is still the major bottleneck for many of the tasks in this field. This thesis demonstrated possible ways to improve this recognition. However, results could still be much higher. Future research could use even larger data sets of singing for training, preferably with more reliable phonetic annotations (e.g. manual annotations). Alternatively, models could be trained in an unsupervised or semi-supervised way with large amounts of unannotated data and small sets of reliably annotated data. New machine learning techniques could be tested as well, such as CNNs, RNNs, or end-to-end models, or methods for unsupervised pre-training like autoencoders.\\
-Unusual or unclear pronunciations, accents, and unusual voices (e.g. children's voices) also lead to unsatisfactory results in many tasks. New models trained on a larger variety of data could be more robust. The same applies to problems with the audio quality or channels and recording conditions not seen during training.\\
+In general, phoneme recognition is still the major bottleneck for many of the described tasks. This thesis shows possible ways to improve this recognition. However, results could still be much higher. Future research approaches may employ even larger data sets of singing for training, preferably with more reliable phonetic annotations (e.g. manual annotations). Alternatively, models could be trained in an unsupervised or semi-supervised way with large amounts of unannotated data and small sets of reliably annotated data. New machine learning techniques could be tested as well, such as CNNs, RNNs, or end-to-end models, or methods for unsupervised pre-training like autoencoders.\\
+Unusual or unclear pronunciations, accents, and unusual voices (e.g. children's voices) also lead to unsatisfactory results in many tasks. New models trained on a larger variety of data would improve robustness. The same applies to problems with the audio quality or channels, and recording conditions not seen during training.\\
 
 Some of the algorithms require exact annotations (e.g. alignment and retrieval). This is not always a given in a real-world scenario, where singers will perform different words, additional vocalizations, unexpected repetitions etc. The actual calculations could be made robust to such changes.\\
 
-Most of the presented approaches have so far only been applied to unaccompanied singing. A major step forward would be the adaptation to polyphonic music. This was already done for alignment and retrieval, but could be improved significantly. There are several possible routes that could be taken. First, acoustic models could be trained on accompanied singing instead. This would require large amounts of realistic training data, and probably more sophisticated models in order to represent the more complex structures. Second, source separation could be integrated to extract the singing track from the audio, and only perform the analysis on this part. Finally, Vocal Activity Detection could be applied beforehand to only analyze the segments where actual singing occurs. In the presented experiments, instrumental solos in particular frequently led to misalignments or recognition errors.\\
+Most of the presented approaches have so far only been applied to unaccompanied singing. A major step forward would be the adaptation to polyphonic music. This was already done for alignment and retrieval, but could be improved significantly. There are several possible routes that future research could take. First, acoustic models could be trained on accompanied singing instead. This would require large amounts of realistic training data, and probably more sophisticated models in order to represent the more complex structures. Second, source separation could be integrated to extract the singing track from the audio, and only perform the analysis on this part. As a third alternative, Vocal Activity Detection could be applied beforehand to only analyze the segments where actual singing occurs. In the presented experiments, instrumental solos in particular frequently led to misalignments or recognition errors.\\
 
-Finally, the developed algorithms could be employed for the applications described in section \ref{sec:intro_motivation}. It would be highly interesting to seem them integrated into other MIR systems, e.g. for genre or regional classification or for mood detection. The other practical scenarios could also make good use of them, for example in karaoke systems, in fingerprinting or audio identification, or in cover song detection. Search algorithms or similarity calculation based on the analyzed characteristics could be used in practical MIR systems.
+Finally, the developed algorithms could be employed for the applications described in section \ref{sec:intro_motivation}. It would be highly interesting to seem them integrated into other MIR systems, e.g. for genre or regional classification or for mood detection. The other practical scenarios could also make good use of them, for example in karaoke systems, in audio identification, or in cover song detection. Search algorithms or similarity calculation based on the analyzed characteristics could be used in practical MIR systems.

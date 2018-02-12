@@ -19,16 +19,7 @@ Language modeling is a field of research unto itself, and is a complex tasks for
 	\end{center}
 \end{figure}
 
- The whole training process then results in an acoustic model, which can be used for classification as shown in figure \ref{fig:process_classification_phones}. As described, classification results in a phoneme posteriorgram. An example is shown in figure \ref{fig:posteriorgram}. The time resolution of the posteriograms in this work is 10ms. Instead of language modeling, many of the following tasks build directly on the posteriogram. For evaluation of the phoneme recognition itself, Viterbi decoding with evenly weighted transitions is performed on the posteriorgrams. Then, the Phoneme Error Rate (PER) and the Weighted Phoneme Error Rate (WPER) are used for assessing the quality. The Phoneme Error Rate is simply the Levenshtein distance between the generated and the expected phoneme sequence where insertions, deletions, and replacements are weighted equally, normalized by the length of the expected sequence:
-  \begin{equation}
-    PER = \frac{D + I + S}{N}
- \end{equation} 
- where $D$ are deletions, $I$ are insertions, and $S$ are substitutions of phonemes and $N$ is the length of the sequence. (The accuracy measure used in some of the state-of-the-art works is the same as $1-PER$; a Word Error Rate can be calculated analogously).\\
-Some works also use a measure called $correct$, which ignores insertions. This makes sense if it is assumed that the phoneme results are used afterwards by an algorithm that is tolerant to insertions. In many cases, such post-processing steps will then also be tolerant to deletions. For cases like this, Hunt suggested a weighted error rate that punishes insertions and deletions less heavily than substitutions \cite{hunt}:
- \begin{equation}
-    Weighted\ PER = \frac{0.5 D + 0.5 I + S}{N}
- \end{equation}  \\
- 
+ The whole training process then results in an acoustic model, which can be used for classification as shown in figure \ref{fig:process_classification_phones}. As described, classification results in a phoneme posteriorgram. An example is shown in figure \ref{fig:posteriorgram}. The time resolution of the posteriograms in this work is 10ms. Instead of language modeling, many of the following tasks build directly on the posteriogram. For evaluation of the phoneme recognition itself, Viterbi decoding with evenly weighted transitions is performed on the posteriorgrams. Then, the Phoneme Error Rate (PER) and the Weighted Phoneme Error Rate (WPER) are used for assessing the quality (see section \ref{subsec:tech_levenshtein}).\\
  \begin{figure}
 	\begin{center}
 		\includegraphics[width=1\textwidth]{images/posteriorgram.png}
@@ -52,7 +43,7 @@ Additionally, Deep Neural Networks (DNN) were trained for comparison with models
 In both cases, 13 MFCCs were extracted, and deltas and double-deltas were calculated, resulting in a feature vector of dimension 39. As the output, the described set of 39 monophones was used.\\
 %output ,mono tri
 % results, align, phone
-The HMMs were used for aligning text lyrics to audio in some of the following approaches. To verify the quality of such an alignment, this was tested on the part of the \textit{ACAP} singing corpus that has phoneme annotations. On average, the alignment error was $0.16$ seconds. A small manual check suggests that this value may be in the range of the agreement of annotators. A closer inspection of the results also shows that the biggest contributions to this error occur because a few segments were heavily misaligned, whereas most of them are just slightly off.\\
+The HMMs were used for aligning text lyrics to audio in some of the following approaches. To verify the quality of such an alignment, this was tested on the part of the \textit{ACAP} singing corpus that has phoneme annotations. On average, the alignment error was $0.16$ seconds. A small manual check suggests that this value may be in the range of the agreement of annotators. A closer inspection of the results also shows that the biggest contributions to this error occur because a few segments were heavily misaligned, whereas most of them are just slightly shifted.\\
 %figure?
 The DNN models were trained to perform phoneme recognition using the Theano framework \cite{theano}. This system was evaluated by first generating phoneme posteriorgrams from the test audio using the DNN models, and then running Viterbi decoding on those to extract phoneme strings. Then, the Phoneme Error Rate and the Weighted Phoneme Error Rate were calculated as described above.\\
 The results for DNN models trained on \textit{TIMIT} are shown in figure \ref{fig:res_timit}. For validation, the model was tested on the test part of \textit{TIMIT}, resulting in a Phoneme Error Rate of $0.4$ and a Weighted Phoneme Error Rate of $0.3$. Lower values on these corpora can be found in literature, but those systems are usually more sophisticated and include language modeling steps and gender- or speaker-adapted models. In this scenario, those values serve as a validation of the recognition ability of the model on unseen data, and as an upper bound for the other results.\\
@@ -95,7 +86,7 @@ It can be assumed that models trained on better-matching conditions (i.e. singin
 % phonerec tested on: timit, acap
 % todo: test on damp
 
-When there is a scarcity of suitable training data, attempts are often made to generate such data artificially from existing data for other conditions. For example, this is often done when models for noisy speech are required \cite{ntimit}\cite{aurora}. Inspired by this, one idea was making existing speech corpora more ``song-like'' and use these modified data sets to train models for phoneme recognition in singing. The \textit{TIMIT} corpus was once again used as a basis for this.\\
+When there is a scarcity of suitable training data, attempts are often made to generate such data artificially from existing data for other conditions. For example, this is often done when models for noisy speech are required \cite{ntimit}\cite{aurora}. Similarly, so-called data augmentation methods are often employed to obtain more training data for machine learning models \cite{augmentation_image}\cite{augmentation_mir}. Inspired by this, one idea was making existing speech corpora more ``song-like'' and use these modified data sets to train models for phoneme recognition in singing. The \textit{TIMIT} corpus was once again used as a basis for this.\\
 
 An overview of the approach is shown in figure \ref{fig:process_songify}. Five variants of the training part of \textit{TIMIT} are generated. MFCC features are then extracted from these new data sets and used to train models.\\
 Similarly, MFCCs are extracted from the \textit{TIMIT} test set and from the \textit{ACAP} data set. The previously trained models are used to recognize phonemes on these test datasets. Phoneme sequences can be generated from the results with Viterbi decoding. Finally, the results are evaluated.

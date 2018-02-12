@@ -68,8 +68,8 @@ Figure \ref{fig:lid_ivectors} shows a rough overview over the i-vector classific
 	\end{center}
 \end{figure*}
 
-A number of features were extracted from each audio file. Table \ref{tab:configs} shows an overview over the various configurations used in training.
-\begin{table*}[h!tbp]
+A number of features were extracted from each audio file. Table \ref{tab:ivec_configs} shows an overview over the various configurations used in training.
+\begin{table}[h!tbp]
 \scriptsize
   \begin{center}
      \begin{tabular}{|c|c|c|}\hline
@@ -84,11 +84,11 @@ A number of features were extracted from each audio file. Table \ref{tab:configs
       COMB & PLP+MFCCDELTA & 99 \\ \hline
     \end{tabular}
   \end{center}
-  \label{tab:configs}
-    \caption{{ Feature configurations used in language identification training.}}
-\end{table*}
+    \caption{{Feature configurations used in language identification training.}}
+  \label{tab:ivec_configs}
+\end{table}
 
-For classification, Multi-Layer Perceptrons (MLPs) and Support Vector Machines (SVMs) are tested. The MLPs are fixed at three layers, with the middle layer having a dimension of 256. Additional layers do not seem to improve the result. A larger middle layer only improves it slightly. The SVM parameters are determined using a grid-search. For each of those classifiers and data sets, all feature combinations listed in table \ref{tab:configs} are tested directly and with i-vector processing. All results are obtained using five-fold cross validation. \\
+For classification, Multi-Layer Perceptrons (MLPs) and Support Vector Machines (SVMs) are tested. The MLPs are fixed at three layers, with the middle layer having a dimension of 256. Additional layers do not seem to improve the result. A larger middle layer only improves it slightly. The SVM parameters are determined using a grid-search. For each of those classifiers and data sets, all feature combinations listed in table \ref{tab:ivec_configs} are tested directly and with i-vector processing. All results are obtained using five-fold cross validation. \\
 
 
 \subsection{Experiments with known speakers}
