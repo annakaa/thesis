@@ -20,7 +20,7 @@ The possibilities for practical use of such technologies are manifold. Such appl
  \item[Improvement of mood detection] Words can be indicatory of specific moods. By exploiting those, mood detection in music could be expanded with an additional dimension.
  \item[Lyrics alignment for karaoke] Automatically aligned lyrics could be used in karaoke systems to enable users to sing any song they want to.
 \item[Lyrics retrieval from databases] Textual lyrics can be retrieved from a database with just a short sung recording as the input. This is, once again, useful for karaoke. 
-\item[Lyrics identification or fingerprinting] It is possible to compute compressed representations of detected lyrics. These could be used to aid in fingerprinting and audio identification (query-by-humming) technologies by utilizing lyrics information in addition to the melodic and harmonic characteristics used so far. 
+\item[Lyrics identification] It is possible to compute compressed representations of detected lyrics. These could be used to aid audio identification (query-by-humming) technologies by utilizing lyrics information in addition to the melodic and harmonic characteristics used so far. 
 \item[Cover song detection by lyrics] In the same vein, alternative or auxiliary technologies for cover song detection through lyrics analysis are possible.
 \item[Lyrics transcription] Given an audio recording, it will eventually be possible to automatically transcribe the full lyrics for users.
 \item[Singing generation] Similar to recent approaches for speech synthesis \cite{wavenet}, ASR technologies for singing could be used to automatically generate singing audio.
@@ -28,7 +28,13 @@ The possibilities for practical use of such technologies are manifold. Such appl
 
 
 \section{Research objectives}
-For this thesis, five topics in speech recognition for singing were researched:
+As described, speech recognition becomes more difficult when applied to singing. This thesis highlights strategies to improve various recognition tasks. There are two main starting points for this improvement:
+\begin{enumerate}
+\item Training better acoustic models for phoneme recognition, which forms the basis of many speech recognition tasks
+\item Making subsequent algorithms for the various tasks more robust to singing
+\end{enumerate}
+
+To show how these improvements can impact speech recognition in singing, five topics were researched for this thesis:
 
 \paragraph{Phoneme recognition}
 Phoneme recognition describes the task of determining the sung sounds (phonemes) occurring in a an audio recording. This forms the basis for many other tasks; first and foremost, lyrics transcription, but also almost all other tasks in this work. Phoneme recognition tends to be the bottleneck component in systems for ASR in singing. Inaccurate results at this step will lead to inaccurate results in the subsequent ones.\\
