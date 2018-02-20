@@ -36,7 +36,7 @@ On the accompanied version of the same data set, the average error is 13.96s and
 \begin{figure}
  \begin{center}
                 \includegraphics[width=0.45\textwidth]{images/res_align_hmm.png}
-               \caption{\textit{MIREX} results on all three data sets using the HMM-based approach.}
+               \caption{\textit{MIREX} results on all three data sets using the HMM-based approach (error bars represent standard error over the tested songs).}
                 \label{fig:results_align_hmm}
                  \end{center}
  \end{figure}
@@ -90,7 +90,7 @@ As a future step, incorporating phoneme transition information (e.g. in the form
 \begin{figure}
  \begin{center}
                 \includegraphics[width=0.5\textwidth]{images/res_align_dtw.png}
-               \caption{\textit{MIREX} results on all three data sets using the DTW-based approach.}
+               \caption{\textit{MIREX} results on all three data sets using the DTW-based approach (error bars represent standard error over the tested songs).}
                 \label{fig:results_align_dtw}
                  \end{center}
  \end{figure}
@@ -116,7 +116,7 @@ In the first retrieval experiment, similarity measures were calculated between t
                 \label{fig:retrieval_dtwres_testM}
         \end{subfigure}
 
-        \caption{Accuracies of the results for lyrics detection on the whole song for the \textit{DampTest} sets using the DTW-based approach with five different acoustic models, and evaluated on the Top-1, -3, and -10 results.}\label{fig:retrieval_dtwres}
+        \caption{Accuracies of the results for lyrics detection on the whole song for the \textit{DampTest} sets using the DTW-based approach with five different acoustic models, and evaluated on the Top-1, -3, and -10 results (error bars represent standard error over the tested queries).}\label{fig:retrieval_dtwres}
 \end{figure}
 
  These results show that phoneme posteriorgrams obtained with models trained on speech data (\textit{TIMIT}) generally produce the lowest results in lyrics retrieval. The difference between the two test sets is especially interesting here: On the male test set, the accuracy for the single best result is $58\%$, while on the female set it is only $39\%$. Previous experiments showed that the phoneme recognition itself performs significantly worse for female singing inputs, which is compounded in the lyrics retrieval results. This may happen because the frequency range of female singing is even further removed from that of speech than the frequency range of male singing is \cite{sundberg}. Even female speech is often performed at the lower end of the female singing frequency range. The frequency range of male singing is better covered when training models on speech recordings (especially when speech recordings of both genders are used).\\
@@ -144,7 +144,7 @@ Then, evaluation was performed as to whether a line from the correct song was re
                 \caption{DampTestM}
                 \label{fig:retrieval_dtwres_testM_line}
        \end{subfigure}
-        \caption{Accuracies of the results for lyrics detection on separate lines of sung lyrics for the \textit{DampTest} sets using the DTW-based approach with five different acoustic models, and evaluated on the Top-1, -3, -10, -50, and -100 results.}\label{fig:retrieval_dtwres_line}
+        \caption{Accuracies of the results for lyrics detection on separate lines of sung lyrics for the \textit{DampTest} sets using the DTW-based approach with five different acoustic models, and evaluated on the Top-1, -3, -10, -50, and -100 results (error bars represent standard error over the tested queries).}\label{fig:retrieval_dtwres_line}
 \end{figure}
 
 Again, a difference between both test sets is visible when generating posteriograms with the \textit{TIMIT} models. The accuracy on the best result is $14\%$ for the male test set, but just $7\%$ for the female test.\\
@@ -246,7 +246,7 @@ The similarity calculation itself is implemented with a modified Levenshtein dis
 \begin{figure}
  \begin{center}
                 \includegraphics[width=0.45\textwidth]{images/res_align_phone.png}
-               \caption{\textit{MIREX} results on all three data sets using the phoneme-based approach.}
+               \caption{\textit{MIREX} results on all three data sets using the phoneme-based approach (error bars represent standard error over the tested songs).}
                 \label{fig:results_align_phone}
                  \end{center}
  \end{figure}
@@ -306,7 +306,7 @@ The accuracies for the Top-3 and Top-10 results follow a similar pattern. For th
 		\label{fig:retrieval_levres_testM}
 	\end{subfigure}
 	
-	\caption{Accuracies of the results for lyrics detection on the whole song for the \textit{DampTest} sets using the phoneme-based approach with five different acoustic models, and evaluated on the Top-1, -3, and -10 results.}\label{fig:retrieval_levres}. 
+	\caption{Accuracies of the results for lyrics detection on the whole song for the \textit{DampTest} sets using the phoneme-based approach with five different acoustic models, and evaluated on the Top-1, -3, and -10 results (error bars represent standard error over the tested queries).}\label{fig:retrieval_levres}. 
 \end{figure}
 
 \begin{figure}
@@ -324,7 +324,7 @@ The accuracies for the Top-3 and Top-10 results follow a similar pattern. For th
 		\caption{DampTestM}
 		\label{fig:retrieval_levres_testM_line}
 	\end{subfigure}
-	\caption{Accuracies of the results for lyrics detection on separate lines of sung lyrics for the \textit{DampTest} sets using the phoneme-based approach with five different acoustic models, and evaluated on the Top-1, -3, -10, -50, and -100 results.}\label{fig:retrieval_levres_line}
+	\caption{Accuracies of the results for lyrics detection on separate lines of sung lyrics for the \textit{DampTest} sets using the phoneme-based approach with five different acoustic models, and evaluated on the Top-1, -3, -10, -50, and -100 results (error bars represent standard error over the tested queries).}\label{fig:retrieval_levres_line}
 \end{figure}
 
 Figure \ref{fig:retrieval_levres_line} shows the analogous results when using single line queries for retrieval. The trend across the different classifiers runs parallel to the whole song results, with the \textit{TimitM} models performing worse than the \textit{TIMIT} models, and both being outperformed by the \textit{DAMP}-based models. The best Top-1 result is $55\%$ for the female test set, and $52\%$ for the male one. For the Top-10 results, the retrieval results are $7\%$ and $67\%$ respectively. Once again, lines with fewer than 10 phonemes were excluded; however, lines can still occur in more than one song. Considering this fact and the previously mentioned interfering factors, this result is already salient. When comparing these results to the ones for the calibration data set, it becomes clear that performance is highly dependent on the quality of the queries. In a practically usable system, users could be asked to enunciate clearly or to perform long segments.

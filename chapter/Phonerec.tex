@@ -48,7 +48,7 @@ The HMMs were used for aligning text lyrics to audio in some of the following ap
 %figure?
 The DNN models were trained to perform phoneme recognition using the Theano framework \cite{theano}. This system was evaluated by first generating phoneme posteriorgrams from the test audio using the DNN models, and then running Viterbi decoding on those to extract phoneme strings. Then, the Phoneme Error Rate and the Weighted Phoneme Error Rate were calculated as described above.\\
 The results for DNN models trained on \textit{TIMIT} are shown in figure \ref{fig:res_timit}. For validation, the model was tested on the test part of \textit{TIMIT}, resulting in a Phoneme Error Rate of $0.4$ and a Weighted Phoneme Error Rate of $0.3$. Lower values on these corpora can be found in literature, but those systems are usually more sophisticated and include language modeling steps and gender- or speaker-adapted models. In this scenario, those values serve as a validation of the recognition ability of the model on unseen data, and as an upper bound for the other results.\\
-On the \textit{ACAP} data set, the Phoneme Error Rate is $1.06$ and the Weighted Phoneme Error rate is $0.8$. Performing the same evaluation on the \textit{DAMP} test data sets generates similar results: A Phoneme Error Rate of $1.26$/$1.29$ (female/male), and a Weighted Phoneme Error Rate of $0.9$. This demonstrates that the performance of models trained on speech leaves room for improvement when used for phoneme recognition in singing. The difference between both singing data sets can be explained by their content: \textit{ACAP} is much smaller, and contains cleaner singing in the sense of both the recording quality and the singing performance. Songs in this data set were performed by professional singers, whereas the \textit{DAMPTest} sets contain recordings by amateurs who do not always enunciate clearly. Additionally, the phoneme annotations for the \textit{DAMPTest} sets were generated from the song lyrics; these do not correspond to the actual performed phonemes in all cases.\\
+On the \textit{ACAP} data set, the Phoneme Error Rate is $0.97$ and the Weighted Phoneme Error rate is $0.76$. Performing the same evaluation on the \textit{DAMP} test data sets generates even worse results: A Phoneme Error Rate of $1.26$/$1.29$ (female/male), and a Weighted Phoneme Error Rate of $0.9$. This demonstrates that the performance of models trained on speech leaves room for improvement when used for phoneme recognition in singing. The difference between both singing data sets can be explained by their content: \textit{ACAP} is much smaller, and contains cleaner singing in the sense of both the recording quality and the singing performance. Songs in this data set were performed by professional singers, whereas the \textit{DAMPTest} sets contain recordings by amateurs who do not always enunciate clearly. Additionally, the phoneme annotations for the \textit{DAMPTest} sets were generated from the song lyrics; these do not correspond to the actual performed phonemes in all cases.\\
 It can be assumed that models trained on better-matching conditions (i.e. singing) would perform much better at this task. The problem with this approach lies in the lack of data sets that can be used for these purposes. In contrast with speech, no large corpora of phonetically annotated singing are available. In the following sections, workarounds for this problem are tested.
 
 \begin{figure*}
@@ -62,7 +62,7 @@ It can be assumed that models trained on better-matching conditions (i.e. singin
 		\includegraphics[width=\textwidth]{images/res_timit_wper.png}
 		\caption{Weighted Phoneme Error Rate}
 	\end{subfigure}
-	\caption{Mean phoneme recognition results on the test data sets using acoustic models trained on \textit{TIMIT}.}\label{fig:res_timit}
+	\caption{Mean phoneme recognition results on the test data sets using acoustic models trained on \textit{TIMIT} (error bars represent standard error over utterances).}\label{fig:res_timit}
 \end{figure*}
 
 
@@ -148,7 +148,7 @@ In detail, the modifications were performed in the following way:
 		\includegraphics[width=\textwidth]{images/res_songify_wper.png}
 		\caption{Weighted Phoneme Error Rate}
 	\end{subfigure}
-	\caption{Mean phoneme recognition results on the test data sets using acoustic models trained on \textit{TIMIT} and augmented versions thereof.}\label{fig:res_songify}
+	\caption{Mean phoneme recognition results on the test data sets using acoustic models trained on \textit{TIMIT} and augmented versions thereof  (error bars represent standard error over utterances).}\label{fig:res_songify}
 \end{figure*}
 The approach was tested on the various test data sets - namely, the test part of \textit{TIMIT}, the \textit{ACAP} data set, and the two test sets selected from the \textit{DAMP} data set. Figure \ref{fig:res_songify} shows the results for the DNN models. As it demonstrates, results for singing are generally worse than for speech. The base result for singing is a Weighted Phoneme Error Rate of $0.8$ for \textit{ACAP}, and of $0.9$ for both \textit{DAMPTestF} and \textit{DAMPTestM} (with a model trained on the original \textit{TIMIT} data set - also see previous section). When comparing the models trained on the various \textit{TIMIT} modifications, an improvement is observed for all variants. In contrast, none of the modifications improve the result on the speech data at all. The base result here is $0.3$. This makes sense since all of the modifications make the training data less similar to the test data set.\\
 On singing, the Weighted Phoneme Error rate falls by $0.1$ to $0.15$ when using models trained on the pitch-shifted data set (\textit{TimitP}), and by up to $0.08$ when using the time-stretched training data (\textit{TimitT}). The improvements for the corpora with both improvements lie in between. Vibrato does not have a strong influence on the result. The higher error rates for \textit{DAMPTest} can, again, be explained with the fact that this data set has more variation in audio and singing quality.\\
@@ -203,7 +203,7 @@ The alignment approach that was used to create the new \textit{DAMP}-based data 
 \begin{figure}
 	\begin{center}
 		\includegraphics[width=.8\textwidth]{images/res_alignment.png}
-		\caption{Mean alignment error in seconds on the \textit{ACAP} data set. \textit{TIMIT} shows the result for the same models used for aligning the new \textit{DAMP}-based data sets.}
+		\caption{Mean alignment error in seconds on the \textit{ACAP} data set. \textit{TIMIT} shows the result for the same models used for aligning the new \textit{DAMP}-based data sets. (Error bars represent standard error over the tested songs).}
 		\label{fig:res_alignment}
 	\end{center}
 \end{figure}
@@ -225,7 +225,7 @@ Finally, a model trained on \textit{DampB} over three iterations was also tested
 		\includegraphics[width=\textwidth]{images/res_phonerec_acap_w.png}
 		\caption{Weighted Phoneme Error Rate}
 	\end{subfigure}
-	\caption{Mean phoneme recognition results on the \textit{ACAP} data set using acoustic models trained on \textit{TIMIT} and the new \textit{DAMP}-based data sets.}\label{fig:res_phonerec_acap}
+	\caption{Mean phoneme recognition results on the \textit{ACAP} data set using acoustic models trained on \textit{TIMIT} and the new \textit{DAMP}-based data sets (error bars represent standard error over utterances).}\label{fig:res_phonerec_acap}
 \end{figure*}
 
 \begin{figure*}
@@ -239,7 +239,7 @@ Finally, a model trained on \textit{DampB} over three iterations was also tested
 		\includegraphics[width=\textwidth]{images/res_phonerec_w.png}
 		\caption{Weighted Phoneme Error Rate}
 	\end{subfigure}
-	\caption{Mean phoneme recognition results on the \textit{DampTest} data sets using acoustic models trained on \textit{TIMIT} and the new \textit{DAMP}-based data sets.}\label{fig:res_phonerec}
+	\caption{Mean phoneme recognition results on the \textit{DampTest} data sets using acoustic models trained on \textit{TIMIT} and the new \textit{DAMP}-based data sets (error bars represent standard error over utterances).}\label{fig:res_phonerec}
 \end{figure*}
 
 
@@ -254,7 +254,7 @@ Finally, a model trained on \textit{DampB} over three iterations was also tested
 		\includegraphics[width=\textwidth]{images/res_phonerec_sizes_w.png}
 		\caption{Weighted Phoneme Error Rate}
 	\end{subfigure}
-	\caption{Mean phoneme recognition results on the \textit{DampTest} data sets using acoustic models trained on \textit{TIMIT} and the new \textit{DAMP}-based data sets in various sizes.}\label{fig:res_phonerec_sizes}
+	\caption{Mean phoneme recognition results on the \textit{DampTest} data sets using acoustic models trained on \textit{TIMIT} and the new \textit{DAMP}-based data sets in various sizes (error bars represent standard error over utterances).}\label{fig:res_phonerec_sizes}
 \end{figure*}
 
 \subsection{Phoneme recognition}
@@ -300,7 +300,7 @@ For most of these issues, more robust phoneme recognizers would be helpful. For 
 % decimating training data still produces good models
 % overtraining???
 % error sources
-In this chapter, new approaches for phoneme recognition in singing were presented. As a starting point, DNN models are trained on the \textit{TIMIT} speech corpus. For verification, these models were evaluated on the test section of \textit{TIMIT}, resulting in a Phoneme Error Rate of $0.4$ and a Weighted Phoneme Error Rate of $0.3$. The results on the \textit{ACAP} singing data set are much worse: A Phoneme Error Rate of $1.06$ and a Weighted Phoneme Error Rate of $0.8$, demonstrating the difficulty of phoneme recognition in singing as opposed to speech. Similarly, the Phoneme Error Rate is $1.28$ on the \textit{DampTest} data sets, with a Weighted Phoneme Error Rate of $0.9$. Generally, results on the \textit{DampTest} sets are worse than on the \textit{ACAP} test set, which presumably happens because the \textit{DampTest} sets are performed by amateurs, whose enunciation is not as clear as that of the professional singers in the \textit{ACAP} set and who may not always sing the correct lyrics. Additionally, the recording quality varies much more, and the annotations contain errors due to the automatic phoneme alignment (as opposed to the more reliable manual annotations of \textit{ACAP}).\\
+In this chapter, new approaches for phoneme recognition in singing were presented. As a starting point, DNN models are trained on the \textit{TIMIT} speech corpus. For verification, these models were evaluated on the test section of \textit{TIMIT}, resulting in a Phoneme Error Rate of $0.4$ and a Weighted Phoneme Error Rate of $0.3$. The results on the \textit{ACAP} singing data set are much worse: A Phoneme Error Rate of $0.97$ and a Weighted Phoneme Error Rate of $0.76$, demonstrating the difficulty of phoneme recognition in singing as opposed to speech. The Phoneme Error Rate is even worse on the \textit{DampTest} data sets at $1.28$, with a Weighted Phoneme Error Rate of $0.9$. Generally, results on the \textit{DampTest} sets are worse than on the \textit{ACAP} test set, which presumably happens because the \textit{DampTest} sets are performed by amateurs, whose enunciation is not as clear as that of the professional singers in the \textit{ACAP} set and who may not always sing the correct lyrics. Additionally, the recording quality varies much more, and the annotations contain errors due to the automatic phoneme alignment (as opposed to the more reliable manual annotations of \textit{ACAP}).\\
 
 In order to better adapt the models to singing, acoustic modifications are performed on the \textit{TIMIT} training data - namely, pitch shifting and time stretching. This increases the Phoneme Error Rate on speech test data (the \textit{TIMIT} test section), but improves results on sung data. Pitch shifting has a stronger effect than time stretching, which might happen because this modification results in actual changed feature data, whereas time stretching mainly produces more frames with feature values similar to or in between the existing ones. On the \textit{ACAP} test data, the lowest Phoneme Error Rate is $0.95$, and the lowest Weighted Phoneme Error Rate is $0.7$ (with the pitch-shifted models). On \textit{DampTest}, those values are decreased to $0.98$ and $0.76$ respectively.\\
 
