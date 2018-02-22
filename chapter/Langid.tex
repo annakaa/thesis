@@ -149,7 +149,7 @@ The \textit{OGIMultilang} corpus is roughly four times as big and more varied th
 MFCC and SDC features did not work quite as well, but did not hurt the result either when combined with PLPs (COMB result). It is interesting to see that the i-vector extraction decreased the results for MFCCs, the feature that worked best without it.\\
 %CHECK!!
 As with all other experiments, the task becomes harder when attempted on singing data. Similar to the \textit{OGIMultilang} corpus, the \textit{YTAcap} corpus provides very complex and varied data. The same effects occur with the direct feature training here, too: RASTA-PLPs with 36 coefficients provide the best results, but the accuracy is not very high at 68\%. i-Vector extraction once again serves to improve the result. The highest results when using i-vector extraction is a 75\% accuracy when using PLP without RASTA processing, or 77\% for the COMB configuration.\\
-The same experiment was also conducted with MLP classifiers (see \cite{kruspe_lid2}), but they generally performed worse than the SVM classifiers. In the case of the \textit{NIST2003LRE} data set, strong overtraining effects were observed.
+The same experiment was also conducted with MLP classifiers (see \cite{kruspe_lid2}), but they generally performed worse than the SVM classifiers. In the case of the small \textit{NIST2003LRE} data set, strong overfitting effects were observed.
 
 \subsection{Experiments with unknown speakers}
 
