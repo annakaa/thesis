@@ -7,7 +7,7 @@
 
 Ever since the widespread introduction of digital formats for music, professional and personal music collections have grown exponentially. Efficient search algorithms are necessary for managing these huge collections. In the past $\sim$15 years, many interesting technologies have been developed to make it easier for users to efficiently search these collections by certain semantic criteria, such as tempo, mood, genre, instruments, etc. This field of research is called Music Information Retrieval (MIR) \cite{incollection:mir}. One characteristic that has not received much research attention yet is the lyrical content of songs, even though this information is useful for many practical applications, and could aid other MIR tasks.\\
 
-On the other hand, Automatic Speech Recognition (ASR) has been an active field of research for more than 60 years now \cite{juang_rabiner_history} and encompasses a large variety of research topics. However, speech recognition algorithms have so far only rarely been adapted to singing. One of the reasons for this seems to be that most of these tasks get harder when using singing because singing data has different characteristics, which are also often more varied than in pure speech \cite{loscos}. For example, the typical fundamental frequency for female speech lies between $165$ and 200Hz, while in singing it can reach more than 1000Hz. Other differences include harmonics, durations, pronunciation, and vibrato.\\
+On the other hand, Automatic Speech Recognition (ASR) has been an active field of research for more than 60 years now \cite{juang_rabiner_history} and encompasses a large variety of research topics. However, speech recognition algorithms have so far only rarely been adapted to singing. One of the reasons for this seems to be that most of these tasks get harder when using singing because singing data has different characteristics, which are also often more varied than in pure speech \cite{loscos}. For example, the typical fundamental frequency for female speech lies between $165$ and 200Hz, while in singing it can reach more than 1000Hz. Other differences include harmonics, durations, pronunciation, and vibrato, as well as difficulties introduced with background music.\\
 
 Generally, both fields of research are strongly related and utilize many of the same approaches and technologies. This overlap, however, has not been explored thoroughly. This work aims to look at this relation more closely, and to apply and adapt ASR technologies to singing.\\
 
@@ -54,7 +54,9 @@ In this thesis, classic HMM-based alignment is first used as an auxiliary techno
 
 \paragraph{Lyrics retrieval}
 As another research topic that has not received much attention so far, lyrics retrieval is the task of finding the correct textual lyrics (and consequently the correct song) in a database given a sung query. This is, again, useful for karaoke systems or generally for voice-based search.\\
-This work presents new approaches for this task that utilize the same technologies as the audio alignment. Compared to the state of the art, these are the first systems that do not require melody information in addition to the lyrics, and also work directly on the detected phonemes without a language modeling step required (which is, in effect, a text search on the detected phrases).
+This work presents new approaches for this task that utilize the same technologies as the audio alignment. Compared to the state of the art, these are the first systems that do not require melody information in addition to the lyrics, and also work directly on the detected phonemes without a language modeling step required (which is, in effect, a text search on the detected phrases).\\
+
+Generally, this thesis focuses on unaccompanied singing in order to determine how much the developed algorithms directly improve results on singing in comparison to speech. Only the alignment task was tested on polyphonic music. Expanding the resulting systems to full songs is an important future step.
 
 \section{Thesis structure}
 The thesis is structured into nine chapters:
@@ -101,6 +103,7 @@ The achieved research results have been published in the following conference pa
 \item Anna M. Kruspe, ``Automatic B**** Detection'', in \textit{17th International Society for Music Information Retrieval Conference (ISMIR)} (Late-breaking demo), New York, NY, USA, 2016.
 \item Anna M. Kruspe, Jakob Abesser, ``Automatic lyrics alignment and retrieval from singing audio'', in \textit{Proc. of the AES Conference on Semantic Audio} (Late-breaking demo), Erlangen, Germany, 2017.
 \item Anna M. Kruspe, ``Lyrics alignment using HMMs, posteriorgram-based DTW, and phoneme-based Levenshtein alignment'', in \textit{18th International Society for Music Information Retrieval Conference (ISMIR)} (\textit{MIREX} submission), Suzhou, China, 2017.
-\item Anna M. Kruspe, M. Goto, ``Retrieval of song lyrics from sung queries'', \textit{IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)}, Calgary, Canada, 2018.
+\item Anna M. Kruspe, Masataka Goto, ``Retrieval of song lyrics from sung queries'', \textit{IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)}, Calgary, Canada, 2018.
+\item Eric J. Humphrey, Rachel M. Bittner, Andrew Demetriou, Sankalp Gulati, Andreas Jansson, Tristan Jehan, Bernhard Lehner, Anna Kruspe, Aparna Kumar, Sravana Reddy, Prem Seetharaman, Luwei Yang, ``Signal Processing for Singing Voice Analysis: Significance, Applications, and Methods''. For consideration in the \textit{IEEE Signal Processing Magazine}, 2018.
 \end{itemize}
 
