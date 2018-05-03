@@ -82,7 +82,7 @@ Similar to the phoneme recognition results from Experiment C, the gender-depende
 
 \subsection{Individual analysis of keyword results}
 %TODO: ACAP??
-Figure \ref{fig:kws_exp3} shows the individual $F_1$ measures for each keyword using the best model (\textit{DampB}), ordered by their occurrence in the \textit{DampTest} sets from high to low (i.e. number of songs which include the song). There is a tendency for more frequent keywords to be detected more accurately. This happens because a high recall is often achievable, while the precision depends very much on the accuracy of the input posteriorgrams. The more frequent a keyword, the easier it also becomes to achieve a higher precision for it.
+Figure \ref{fig:kws_exp3} shows the individual $F_1$ measures for each keyword using the best model (\textit{DampB}), ordered by their occurrence in the \textit{DampTest} sets from high to low (i.e. number of songs which include the keyword). There is a tendency for more frequent keywords to be detected more accurately. This happens because a high recall is often achievable, while the precision depends very much on the accuracy of the input posteriorgrams. The more frequent a keyword, the easier it also becomes to achieve a higher precision for it.
 
 As shown in literature \cite{phdthesis:thambiratnam}, the detection accuracy also depends on the length of the keyword: Keywords with more phonemes are usually easier to detect. This explains the relative peak for ``every" in contrast to ``think" or ``night". Since keyword detection systems tend to perform better for longer words and most of the keywords only have 3 or 4 phonemes, the results achieved so far are especially interesting.
 
@@ -124,7 +124,7 @@ As mentioned above, a high recall is easily achievable with the described approa
 One such source of information are the durations of the detected phonemes. As shown in figure \ref{fig:phoneme_stats}, each phoneme in the \textit{TIMIT} speech database has a fairly fixed duration. In singing, the vowels' durations vary a lot, but the consonants' are still quite predictable. Standard HMMs do not impose any restrictions on the state durations, resulting in a geometric distribution which does not correspond to naturally observed distributions of phoneme durations.\\
 As first described in \cite{ferguson}, introducing restrictions on state durations can improve the recognition results. In \cite{juang}, Juang et al. present two basic approaches for duration modeling in HMMs: Internal duration modeling and Post-processor duration modeling.\\
 
-In both approaches, parametric state duration models for each phoneme need to be calculated first \cite{levinson}. Several distributions has been tested for this task (e.g. Gaussian ones), but Burshtein showed that gamma distributions are best at modeling naturally occurring phoneme duration distributions \cite{burshtein}:
+In both approaches, parametric state duration models for each phoneme need to be calculated first \cite{levinson}. Several distributions have been tested for this task (e.g. Gaussian ones), but Burshtein showed that gamma distributions are best at modeling naturally occurring phoneme duration distributions \cite{burshtein}:
 \begin{equation}\label{eq:d}
 d(\tau) = K \exp \{ - \alpha \tau \} \tau^{p-1}
 \end{equation}

@@ -94,7 +94,7 @@ For classification, Support Vector Machines (SVMs) are tested. The SVM parameter
 
 
 \subsection{Experiments with known speakers}
-In the first experiment, SVM models are trained on randomly selected folds of the training data sets. This means that recordings by the same speaker are spread out between the training and test data sets. In theory, i-vectors could be particularly susceptible to capturing speaker characteristics instead of language characteristics, leading to evaluation results that are not representative of results for unknown speakers. However, this effect is often ignored in literature \cite{Martin2010}, and an argument can be made that partially training models on speaker properties is realistic for some use cases (i.e. when many of the expected speakers for each language are already known).\\
+In the first experiment, SVM models are trained on randomly selected folds of the training data sets. This means that recordings by the same speaker are spread out between the training and test data sets. In theory, i-vectors could be particularly susceptible to capturing speaker characteristics instead of language characteristics, leading to evaluation results that are not representative of results for unknown speakers. However, this effect is often ignored in literature \cite{Martin2010}. There are use cases where taking speaker characteristics into account can actually contribute to the language identification accuracy - i.e., when detection is performed on data where some of the speakers are known in advance.
 
 %\begin{figure}[h]
 %       \centering
