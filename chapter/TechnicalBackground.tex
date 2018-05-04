@@ -14,7 +14,7 @@ In a system for polyphonic music, pre-processing could also include steps for so
 \item[Classification] The trained models can then be used on features extracted from unseen audio data to obtain their annotations (= classes).
 \item[Post-processing] In many tasks, the classification results are not used directly, but processed further. In tasks like alignment and retrieval, for example, phoneme probabilities are matched with symbolic phoneme annotations. In these cases, distance calculation methods as described in section \ref{sec:tech_distances} are required.
 \end{description}
-The implementation of these steps for the actual tasks is described in the individual chapters.
+The implementation of these steps for the actual tasks is described in the individual chapters. Evaluation is performed with measures appropriate for the tasks, which are also described in the individual chapters. Statistical significance is determined using a one-way analysis of variance (ANOVA), and significance levels below 0.1 are reported.
 
 \begin{figure}
 	\begin{center}
