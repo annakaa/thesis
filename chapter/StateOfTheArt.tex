@@ -13,7 +13,7 @@ Singing presents a number of challenges for speech recognition when compared to 
  \item[Higher pronunciation variation] The musical context causes singers to pronounce certain sounds and words differently than if they were speaking them.
  \item[Larger time variations] In singing, sounds are often prolonged for a certain amount of time to fit them to the music. Conversely, they can also be shortened or left out completely.\\
  In order to research this effect more closely, a small experiment was performed on a speech corpus and on a singing data set (\textit{TIMIT} and \textit{ACAP}, see chapter \ref{chap:datasets}): The standard deviations for all the phonemes in each data set were calculated. The result is shown in figure \ref{fig:phoneme_stats}, confirming that the variation in singing is much higher. This is particularly true for vowels.
- \item[Different vocabulary] In musical lyrics, words and phrases often differ from normal conversational script. Certain words and phrases have different probabilities (e.g. a higher focus on emotional topics in singing).
+ \item[Different vocabulary] In musical lyrics, words and phrases often differ from normal conversational script. Certain words and phrases have different probabilities of occurring in speech versus singing (e.g. a higher focus on emotional topics in singing).
  \item[Background music] This is the biggest interfering factor with polyphonic recordings. Harmonic and percussive instruments add a big amount of spectral components to the signal, which lead to confusion in speech recognition algorithms. Ideally, these components should be removed or suppressed in a precursory step. This could be achieved, for example, by employing source separation algorithms. However, such algorithms add additional artifacts to the signal, and may not even be sufficient for this purpose at the current state of research.\\
  Vocal Activity Detection (VAD) could be used as a non-invasive first step in order to discard segments of songs that do not contain singing voices. However, such algorithms often make mistakes in the same cases that are problematic for speech recognition algorithms (e.g. instrumental solos \cite{schlueter2016_ismir}).\\
  For these reasons, most of the experiments in this work were performed on unaccompanied singing. The integration of the mentioned pre-processing algorithms would be a very interesting next step of research.\\
@@ -108,7 +108,7 @@ Chen et al. presented an approach based on MFCC features and Viterbi alignment i
 
 A similar approach which does not require in-depth music analysis was presented by Fujihara et al. in 2006 \cite{fujihara_alignment}. Once again, a straightforward Viterbi alignment method from speech recognition is refined by introducing three singing-specific pre-processing steps: Accompaniment sound reduction, Vocal Activity Detection, and phoneme model adaptation.\\
 For accompaniment reduction, the previously mentioned harmonic re-synthesis algorithm from \cite{fujihara_identification} is used. For Vocal Activity Detection, a HMM is trained on a small set of unaccompanied singing using LPC-derived MFCCs and fundamental frequency ($F_0$) differences as features. The HMM can be parameterized to control the rejection rate. For the phoneme model adaptation, three consecutive steps are tested: Adaptation to a clean singing voice, adaptation to a singing voice segregated with the accompaniment reduction method, and on-the-fly adaptation to a specific singer. MFCC features are used for the Viterbi alignment, which is performed on the vowels and syllabic nasals (\texttt{/m/, /n/, /l/}) only.\\
-Ten Japanese pop songs were used for testing. Evaluation was done one the phrase level by calculating the proportion of the duration of correctly aligned sections to the total duration of the song. For eight of the ten songs, this proportion was $0.9$ or higher when using the complete system, which the authors judge as satisfactory. Generally, the results are lower for performances by female singers, possibly because of the higher $F_0$s. These performances also benefit the most from the Vocal Activity Detection step, even though its performance is also somewhat worse for female singing. All three levels of phoneme model adaptations contribute to the success of the approach.\\
+Ten Japanese pop songs were used for testing. Evaluation was done on the phrase level by calculating the proportion of the duration of correctly aligned sections to the total duration of the song. For eight of the ten songs, this proportion was $0.9$ or higher when using the complete system, which the authors judge as satisfactory. Generally, the results are lower for performances by female singers, possibly because of the higher $F_0$s. These performances also benefit the most from the Vocal Activity Detection step, even though its performance is also somewhat worse for female singing. All three levels of phoneme model adaptations contribute to the success of the approach.\\
 In 2008, the authors improved upon this system with three modifications: Fricative detection, filler models, and new features for the Vocal Activity Detection step \cite{fujihara}. Fricative detection is introduced because the previous system was only based on vowels and nasals, due to the fact that the harmonic re-synthesis discards other consonants. In the new system, fricatives are detected before this step and then retained for the alignment (stop phonemes are not used because they are too short).\\
 The filler model is employed because singers sometimes add extraneous lyrics (like ``la la la'' or ``yeah'') to their performances.\\
 As mentioned above, Vocal Activity Detection does not work as well for female performances because of inaccuracies in the spectral envelope estimation in higher-pitched regions. For this reason, the features are replaced in the new version by comparing the power of the harmonic components directly with those of similar $F_0$ regions.\\
@@ -142,4 +142,13 @@ As described in section \ref{sec:sota_phonerec}, Mesaros et al. developed a soph
 
 
 
-
+\cite{jap_humming}
+\cite{lyriclistplayer}
+\cite{vocarefiner}
+\cite{speechtosinging}
+\cite{speechtosinging2}
+\cite{singing_information_processing}
+\cite{singing_information_processing2}
+\cite{speakbysinging}
+\cite{unisoner}
+\cite{concurrent_f0_phonemes}

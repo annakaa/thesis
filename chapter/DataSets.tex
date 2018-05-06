@@ -11,7 +11,7 @@ The phoneme annotations contain 61 different phonemes and follow a model similar
 As described in \cite{Zue1990}, the data was collected and annotated in a sophisticated process, and verified multiple times. It can therefore be assumed to be correct.
 %wo benutzt?
 
-\subsection{NIST Language identification corpus (NIST203LRE)}
+\subsection{NIST Language identification corpus (NIST2003LRE)}
 The National Institute for Standards and Technology (NIST) regularly runs various speech recognition challenges, one of them being the Language Recognition Evaluation (LRE) task, which is held every two to four years\footnote{\url{https://www.nist.gov/itl/iad/mig/language-recognition}}. To this end, they publish training and evaluation corpora of speech in several languages. They consist of short segments (up to 35 seconds) of free telephone speech by many different speakers. The recordings are mono channel with a sampling rate of 8000Hz.\\
 The corpus for the 2003 challenge was used in this work for comparison of language identification algorithms on speech data \cite{nist2003lre}. Only the English-, German-, and Spanish-language subsets were selected because these languages are covered by the corresponding singing data set. To balance out the languages, 240 recordings were used for each of them, summing up to around 1 hour of material per language. This corpus will be referred to as \textit{NIST2003LRE}.\\
 Since the speakers were instructed to speak their native language, the language annotations can be assumed to be correct. However, the recording quality is not very high, owing to the telephone-based recording process. Additionally, some segments do not contain a large variety of words, either because they are short, because the speaker repeats a word over and over (``okay... okay...''), or because the speaker produces other vocal noises like laughing.
@@ -142,7 +142,7 @@ This is a data set of 90 short lyrics phrases from the \textit{DAMP} data set su
 
 \section{Accompanied singing data sets}
 \subsection{QMUL Expletive data set}\label{subsec:data_qmul}
-This data set consists of 80 popular full songs which were collected at Queen Mary University of London, most of them Hip Hop. 711 instances of 48 expletives were annotated on these songs. In addition, the matching textual, unaligned lyrics were retrieved from the internet. The audio is provided at 44,100kHz sampling rate in stereo, but was also downsampled to 16,000Hz and averaged to a mono track for compatibility with other models. % The considered expletives are listed in appendix \ref{app:expletives}.
+This data set consists of 80 popular full songs which were collected at Queen Mary University of London, most of them Hip Hop. 711 instances of 48 expletives were annotated on these songs. In addition, the matching textual, unaligned lyrics were retrieved from the internet. The audio is provided at 44,100Hz sampling rate in stereo, but was also downsampled to 16,000Hz and averaged to a mono track for compatibility with other models. % The considered expletives are listed in appendix \ref{app:expletives}.
 
 \subsection{Mauch's data set}\label{subsec:data_mauch_alignment}
 This data set was first presented in \cite{mauch_alignment2} and is used for alignment evaluation. It consists of 20 English-language pop songs with singing and accompaniment. Word onsets were manually annotated. This data set will be referred to as \textit{Mauch}.
