@@ -364,11 +364,11 @@ The data flow is shown in figure \ref{fig:expletive_dataflow}.\\
                  \end{center}
  \end{figure}
 
-The alignment is performed using the HMM-based alignment described in section \ref{sec:ret_hmm}, and the DTW alignment from section \ref{sec:ret_post} using the DNN acoustic models trained on \textit{TIMIT} and on \textit{DampB}. Accuracies are then calculated by evaluating how many of the annotated expletives were recognized at their correct timestamps (with various tolerances). The results are shown in figure \ref{fig:expletive_results}.\\
+The alignment is performed using the HMM-based alignment described in section \ref{sec:ret_hmm}, and the DTW alignment from section \ref{sec:ret_post} using the DNN acoustic models trained on \textit{TIMIT} and on \textit{DampB}. Accuracies are then calculated by evaluating how many of the annotated expletives were recognized at their correct timestamps (with various tolerances). The results are shown in figure \ref{fig:expletive_results}. Once again, the model trained on the \textit{DAMP} singing data produces the best results; with a tolerance of 1 second, $92\%$ of the expletives are detected at the correct positions.\\
 
 \begin{figure}
  \begin{center}
-                \includegraphics[width=0.8\textwidth]{images/expletive_results.png}
+                \includegraphics[width=0.5\textwidth]{images/expletive_results_new.png}
                \caption{Results for the expletive detection approach at various tolerances.}
                 \label{fig:expletive_results}
                  \end{center}
@@ -395,7 +395,7 @@ The third approach is also based on posteriorgrams generated with the models fro
 For lyrics retrieval, the extracted phoneme sequence is compared to all the sequences in the lyrics database using the Levenshtein distance, and the result with the lowest distance is selected. On the same test data as above, the approach achieves an accuracy of $94\%$ for whole-song inputs. With line-wise inputs, the accuracy is $54\%$ for the Top-1 result, and $88\%$ for the Top-100. Once again, there is a pronounced difference between the female and male results with models trained on speech, which disappears with singing-based models.
 Tests on a smaller database of hand-selected clean audio samples resulted in much higher accuracies for single-line queries. This suggests that the system can perform much better when provided with clean inputs; this would be feasible in a real-world application.\\
 
-Finally, the HMM and DTW alignments were tested in an application scenario: The extraction of expletives from popular music. To this end, known lyrics were aligned to polyphonic song recordings containing such words. Then, the found time segments were masked with other sounds, or stereo subtraction was performed to remove the singing voice. At a tolerance of $1$s, $92\%$ of the expletives were detected in their correct positions, making the system usable for practical applications.\\
+Finally, the HMM and DTW alignments were tested in an application scenario: The extraction of expletives from popular music. To this end, known lyrics were aligned to polyphonic song recordings containing such words. Then, the found time segments were masked with other sounds, or stereo subtraction was performed to remove the singing voice. At a tolerance of $1$ second, $92\%$ of the expletives were detected in their correct positions, making the system usable for practical applications.\\
 
 In all experiments, analysis of the errors showed the same possible sources as described in section \ref{subsec:error_sources}. Many of them had to do with enunciation issues (clarity, accents, or children's voices) or issues with the recording itself (background music, clipping, extraneous speaking). These problems would not be as prevalent in professional recordings. However, some of them could be fixed with adaptations to the algorithm. In polyphonic alignment experiments, errors also occurred due to prominent instruments, in particular during instrumental solos. As described in section \ref{sec:sota_speechtosinging}, this is also an issue in other MIR tasks related to singing, such as Vocal Activity Detection.\\
 
