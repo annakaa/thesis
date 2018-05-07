@@ -17,15 +17,16 @@ Again, a full transcription of the audio recording is performed, but the full la
 \end{description}
 
 As described in section \ref{sec:sota_speechtosinging}, there are significant differences between speech and singing signals, which means that ASR approaches for keyword spotting cannot simply be transferred to singing. In particular, both LVCSR-based keyword spotting and phonetic search keyword spotting depend heavily on predictable phoneme durations (within certain limits). When a certain word is pronounced, its phonemes will usually have approximately the same duration across speakers. The language model employed in both approaches will take this information into account. However, phoneme durations in singing are not as predictable in speech, as figure \ref{fig:phoneme_stats} demonstrates. For this reason, a simpler acoustic approach using keyword-filler HMMs is employed in this work.\\
-Keyword-filler HMMs have been described in \cite{szoeke} and \cite{jansen}. In general, two separate HMMs are created: One for the requested keyword, and one for all non-keyword regions (=filler). The keyword HMM has a simple left-to-right topology with one state per keyword phoneme, while the filler HMM is a fully connected loop of states for all phonemes. These two HMMs are then joined. Using this composite HMM, Viterbi decoding is performed on the phoneme posteriorgrams. Whenever the Viterbi path passes through the keyword HMM, the keyword is detected. The likelihood of this path can then be compared to an alternative path through the filler HMM, resulting in a detection score. A threshold can be employed to only return highly scored occurrences. Additionally, the parameter $\beta$ can be tuned to adjust the model. It determines the likelihood of transitioning from the filler HMM to the keyword HMM. The whole process is illustrated in figure \ref{fig:kf_hmm}.
 
+Keyword-filler HMMs have been described in \cite{szoeke} and \cite{jansen}. In general, two separate HMMs are created: One for the requested keyword, and one for all non-keyword regions (=filler). The keyword HMM has a simple left-to-right topology with one state per keyword phoneme, while the filler HMM is a fully connected loop of states for all phonemes. These two HMMs are then joined. Using this composite HMM, Viterbi decoding is performed on the phoneme posteriorgrams. Whenever the Viterbi path passes through the keyword HMM, the keyword is detected. The likelihood of this path can then be compared to an alternative path through the filler HMM, resulting in a detection score. A threshold can be employed to only return highly scored occurrences. Additionally, the parameter $\beta$ can be tuned to adjust the model. It determines the likelihood of transitioning from the filler HMM to the keyword HMM. The whole process is illustrated in figure \ref{fig:kf_hmm}.
 \begin{figure}
  \centerline{\framebox{
  \includegraphics[width=.8\textwidth]{images/kw_filler_hmm.png}}}
  \caption{Keyword-filler HMM for the keyword ``greasy" with filler path on the left hand side and two possible keyword pronunciation paths on the right hand side. The parameter $\beta$ determines the transition probability between the filler HMM and the keyword HMM. \cite{jansen}}
  \label{fig:kf_hmm}
 \end{figure}
-Integration with the phoneme recognition system is shown in figure \ref{fig:process_training_kws}. Effectively, the keyword-filler HMM is added as a post-processing step after classification, and thus performed on the posteriorgrams.
+Integration with the phoneme recognition system is shown in figure \ref{fig:process_training_kws}. Effectively, the keyword-filler HMM is added as a post-processing step after classification, and thus performed on the posteriorgrams.\\
+
 \begin{figure}
 	\begin{center}
 		\includegraphics[width=0.8\textwidth]{images/process_classification_kws.png}
@@ -46,7 +47,6 @@ Keyword detection was performed on whole songs, which is a realistic assumption 
 \section{Keyword spotting using keyword-filler HMMs} \label{sec:kws_kwfhmm}
 \subsection{Comparison of acoustic models}
 Phoneme posteriorgrams were generated with the various acoustic models described in section \ref{sec:phonerec_acap}. The results in terms of $F_1$ measure across the whole \textit{DampTest} sets are shown in figure \ref{fig:kws_exp1}. Figure \ref{fig:kws_exp1_acap} shows the results of the same experiment on the small \textit{ACAP} data set.
-
 Across all keywords, a document-wise $F_1$ measure of $0.44$ is obtained using the posteriorgrams generated with the \textit{TIMIT} model on the \textit{DampTest} data sets. This result remains the same for the \textit{TimitM} models trained on ``songified'' speech. In this experiment, using models trained on the \textit{DAMP}-based singing data sets only improves the results marginally, with $F_1$ measures of $0.47$ for the \textit{DampB} model, and $0.46$ with the much smaller \textit{DampBB\_small} model. Surprisingly, in this case, the model trained on the medium-size balanced data set \textit{DampBB} performs a little worse than the smallest one; however, this might just be due to some statistical fluctuation. In general, results on these test data sets are inconclusive. There are several reasons for this: First, the annotations were generated automatically and the keywords were picked from the aligned lyrics. The singers do not always perform or pronounce them correctly. Additionally, the keyword approach can be tuned easily for high recall; then, the precision becomes the deciding factor for $F_1$ calculation. Considering the size of the data set, keyword occurrences are relatively rare, which makes obtaining a high precision more difficult and blurs the $F_1$ measures between approaches.\\
 
 On the hand-annotated \textit{ACAP} test set, the differences are somewhat more pronounced (but still not statistically significant). The $F_1$ measure is $0.48$ for the \textit{TIMIT} model, and rises to $0.52$ with the \textit{DampB} model. The \textit{TimitM} and \textit{DampBB} models both produce $F_1$ measures of $0.49$. The higher over-all values are caused by the more accurate annotations and by the higher-quality singing. Additionally, the data set is much smaller with fewer occurrences of each keyword, which emphasizes both positive and negative tendencies in the detection.\\
@@ -75,17 +75,15 @@ In general, recalls are usually close to $1$, and precisions often in the range 
 \subsection{Gender-specific acoustic models}
 %TODO: ACAP??
 Keyword spotting was also performed on the posteriorgrams generated with the gender-dependent models trained on \textit{DampF} and \textit{DampM} (also described in section \ref{sec:phonerec_acap}). The results are shown in figure \ref{fig:kws_exp2}.
-
 Similar to the phoneme recognition results from Experiment C, the gender-dependent models offer no improvements over the mixed-gender ones of the same size, and are in the same range as the one trained on much more data (\textit{DampB}). The $F_1$ measures for the female test set are $0.48$ for the \textit{DampB} model, and $0.47$ for both the \textit{DampBB} and the \textit{DampFB} model. For the male test set, they are $0.47$ for the \textit{DampB} model, and $0.45$ for the other two.
 
 
 
 \subsection{Individual analysis of keyword results}
 %TODO: ACAP??
-Figure \ref{fig:kws_exp3} shows the individual $F_1$ measures for each keyword using the best model (\textit{DampB}), ordered by their occurrence in the \textit{DampTest} sets from high to low (i.e. number of songs which include the keyword). There is a tendency for more frequent keywords to be detected more accurately. This happens because a high recall is often achievable, while the precision depends very much on the accuracy of the input posteriorgrams. The more frequent a keyword, the easier it also becomes to achieve a higher precision for it.
+Figure \ref{fig:kws_exp3} shows the individual $F_1$ measures for each keyword using the best model (\textit{DampB}), ordered by their occurrence in the \textit{DampTest} sets from high to low (i.e. number of songs which include the keyword). There is a tendency for more frequent keywords to be detected more accurately. This happens because a high recall is often achievable, while the precision depends very much on the accuracy of the input posteriorgrams. The more frequent a keyword, the easier it also becomes to achieve a higher precision for it.\\
 
 As shown in literature \cite{phdthesis:thambiratnam}, the detection accuracy also depends on the length of the keyword: Keywords with more phonemes are usually easier to detect. This explains the relative peak for ``every" in contrast to ``think" or ``night". Since keyword detection systems tend to perform better for longer words and most of the keywords only have 3 or 4 phonemes, the results achieved so far are especially interesting.
-
 One potential source of confusion are sequences of phonemes that overlap with keywords, but are not included in the calculation of the precision. Identically spelled parts of words were included, but split phrases and different spellings were not (e.g. ``away" as part of ``castaway" would be counted, but ``a way" would not be counted as ``away"). This lowers the results artificially and could be an avenue for future improvement. Additionally, only one pronunciation for each keyword was provided, but there may be several possible.
 
 \begin{figure}
@@ -120,8 +118,8 @@ One potential source of confusion are sequences of phonemes that overlap with ke
 
 \section{Keyword spotting using duration-informed keyword-filler HMMs}\label{sec:kws_duration}
 \subsection{Approach}
-As mentioned above, a high recall is easily achievable with the described approach, but the comparatively low precision decreases the over-all result. Therefore, using side information to reject false positives would be a helpful next step.\\
-One such source of information are the durations of the detected phonemes. As shown in figure \ref{fig:phoneme_stats}, each phoneme in the \textit{TIMIT} speech database has a fairly fixed duration. In singing, the vowels' durations vary a lot, but the consonants' are still quite predictable. Standard HMMs do not impose any restrictions on the state durations, resulting in a geometric distribution which does not correspond to naturally observed distributions of phoneme durations.\\
+As mentioned above, a high recall is easily achievable with the described approach, but the comparatively low precision decreases the over-all result. Therefore, using side information to reject false positives would be a helpful next step.
+One such source of information are the durations of the detected phonemes. As shown in figure \ref{fig:phoneme_stats}, each phoneme in the \textit{TIMIT} speech database has a fairly fixed duration. In singing, the vowels' durations vary a lot, but the consonants' are still quite predictable. Standard HMMs do not impose any restrictions on the state durations, resulting in a geometric distribution which does not correspond to naturally observed distributions of phoneme durations.
 As first described in \cite{ferguson}, introducing restrictions on state durations can improve the recognition results. In \cite{juang}, Juang et al. present two basic approaches for duration modeling in HMMs: Internal duration modeling and Post-processor duration modeling.\\
 
 In both approaches, parametric state duration models for each phoneme need to be calculated first \cite{levinson}. Several distributions have been tested for this task (e.g. Gaussian ones), but Burshtein showed that gamma distributions are best at modeling naturally occurring phoneme duration distributions \cite{burshtein}:
@@ -132,7 +130,7 @@ where $\tau = 0,1,2,...$ are the possible state durations in frames and $K$ is a
 \begin{equation}
 \hat{\alpha} = \frac{E \{\tau\}}{VAR\{\tau\}} , \hat{p} = \frac{E^{2} \{\tau\}}{VAR\{\tau\}}
 \end{equation}
-where $E$ is the distribution mean and $VAR$ is the distribution variance. An example is shown in figure \ref{fig:distributions}. In this work, $E$ and $VAR$ are estimated from the phonetically annotated data sets.
+where $E$ is the distribution mean and $VAR$ is the distribution variance. An example is shown in figure \ref{fig:distributions}. In this work, $E$ and $VAR$ are estimated from the phonetically annotated data sets.\\
 
 \begin{figure}
  \begin{center}
@@ -149,6 +147,7 @@ When using post-processor duration modeling, knowledge about plausible phoneme d
  \log \hat{f} = \log f + \gamma \sum_{k=1}^{N} d_{k}(\tau_k) 
 \end{equation}
 where $f$ is the original likelihood of the sequence, $\gamma$ is a weighting factor, $k=1...N$ are the discrete states in the state sequence, $\tau_k$ are their durations, and $d_{k}(\tau_k)$ is, again, the probability of state $k$ being active for the duration $\tau_k$.\\
+
 Using keyword-filler HMMs, only one state sequence per utterance is obtained, which either contains the keyword or not. It is therefore not possible to compare these likelihood scores and equation \ref{eq:pp_ll} cannot be applied directly. To still be able to integrate post-processor duration modeling, the HMM parameters are tuned to obtain a high recall value. Then, the duration likelihood (second half of equation \ref{eq:pp_ll}) is calculated for all found occurrences of the keyword and normalized by the number of states taken into account:
 \begin{equation}
  dl =  \frac{1}{N} \sum_{k=1}^{N} d_{k}(\tau_)
@@ -179,8 +178,7 @@ For the presented results, duration statistics from the \textit{ACAP} data set w
           \end{figure}
 
 
-Results with and without post-processor duration modeling for the \textit{ACAP} data set are shown in figure \ref{fig:kws_exp4_acap}. The same acoustic models as in the previous experiment were tested. As these results show, $F_1$ measures improve for all configurations when post-processor duration modeling is employed (significant with $p<0.1$). The effect is somewhat stronger for the \textit{DAMP} models than for the \textit{TIMIT} model (significant with $p<0.01$). The best result rises from $0.52$ to $0.61$ with the \textit{DampB} model. Analysis of the detailed results shows that the precision can be improved considerably when detected occurrences with implausible phoneme durations are discarded. However, this often also decreases the recall, resulting in the shown $F_1$ results.\\
-
+Results with and without post-processor duration modeling for the \textit{ACAP} data set are shown in figure \ref{fig:kws_exp4_acap}. The same acoustic models as in the previous experiment were tested. As these results show, $F_1$ measures improve for all configurations when post-processor duration modeling is employed (significant with $p<0.1$). The effect is somewhat stronger for the \textit{DAMP} models than for the \textit{TIMIT} model (significant with $p<0.01$). The best result rises from $0.52$ to $0.61$ with the \textit{DampB} model. Analysis of the detailed results shows that the precision can be improved considerably when detected occurrences with implausible phoneme durations are discarded. However, this often also decreases the recall, resulting in the shown $F_1$ results.
 The approach was also tested on the \textit{DampTest} data sets for two acoustic models. $F_1$ measures on these data sets are generally blurry for the reasons described in section \ref{sec:kws_kwfhmm}. In this case, the results are just a little bit higher with post-processor duration modeling.
 
 
@@ -197,12 +195,15 @@ The approach was also tested on the \textit{DampTest} data sets for two acoustic
 
 
 In this chapter, an approach for keyword spotting using the new acoustic models trained on singing was described. Keyword spotting is performed by extracting phoneme posteriorgrams generated with these new models from the audio, and then running them through a keyword-filler HMM to detect 15 keywords. On the \textit{DampTest} data sets, the resulting $F_1$ measure rises from $0.44$ for the models trained on speech (\textit{TIMIT}) to $0.47$ for the new models. In general, results on the \textit{DampTest} data sets are inconclusive because the effect of the different models is shadowed by issues with the test data itself - i.e. automatic and thus possibly inaccurate annotations, amateur singing, and a relatively low frequency of keywords because of the large size of the data sets. On the smaller, hand-annotated \textit{ACAP} test set, the results become clearer: The best $F_1$ measure for the models trained on \textit{TIMIT} is $0.48$, and $0.52$ with those trained on \textit{DampB}.\\
+
 This result is especially interesting because most of the keywords have few phonemes. Gender-dependent models perform similar to mixed-gender models of the same size. Individual analysis of the keyword results shows that keywords that occur more frequently are detected more accurately. This probably happens because the approach is able to obtain high recall easily, but precision is an issue. The more frequent a keyword, the easier obtaining higher precisions becomes. Additionally, keywords with more phonemes are detected more accurately than short ones because there is more information to base detection on.\\
 
 One idea to improve precision was using additional information to discard implausible detections. This idea was tested in a second approach by integrating knowledge about phoneme durations. Means and variances of phoneme durations are calculated from annotated data (in particular, the \textit{ACAP} singing data set), and then occurrences with phoneme durations outside of their gamma distributions were ignored. This approach improved $F_1$ measures by up to $9$ percent points on the \textit{ACAP} test data, with the best result being $0.61$. On the \textit{DampTest} data sets, the effect is still existent, but not very pronounced. This is probably because of the blurriness of the result described above.\\
 
 This approach was only tested with MFCC features. As preliminary experiments suggest \cite{kruspe_kws1}, other features like TRAP or PLP may work better on singing. So-called log-mel filterbank features have also been used successfully with DNNs \cite{hinton}. Another interesting factor is the size and configuration of the classifiers, of which only one was tested (after a small grid search to validate this choice).\\
+
 As in the phoneme recognition experiments, there is not much of a difference between the acoustic model trained on the more than 6,000 songs of the \textit{DAMP} data set and the one trained on only $4\%$ of this data. It would be interesting to find the exact point at which additional training data does not further improve the models. On the evaluation side, a keyword spotting approach that allows for pronunciation variants or sub-words may produce better results. Language modeling might also help to alleviate some of the errors made during phoneme recognition.\\
-These models have not yet been applied to singing with background music, which would be interesting for practical applications. Since this would probably decrease the result when used on big, unlimited data sets, specialized systems would be more manageable, e.g. for specific music styles, sets of songs, keywords, or applications. Searching for whole phrases instead of short keywords could also make the results better usable in practice.\\
-As shown in \cite{mesaros_alignment} and \cite{goto_alignment} and in the next chapter, alignment of textual lyrics and singing already works well. A combined approach that also employs textual information could be very practical.
+
+These models have not yet been applied to singing with background music, which would be interesting for practical applications. Since this would probably decrease the result when used on big, unlimited data sets, specialized systems would be more manageable, e.g. for specific music styles, sets of songs, keywords, or applications. Searching for whole phrases instead of short keywords could also make the results better usable in practice.
+As shown in \cite{mesaros_alignment} and \cite{goto_alignment} and in the next chapter, alignment of textual lyrics and singing already works well. A combined approach that also employs textual information could also be very practical.
 
