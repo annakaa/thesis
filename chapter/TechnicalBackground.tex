@@ -4,10 +4,10 @@
 %audio - pre-processing - feat. extraction - machine learning
 % unseen audio - pre-processing - feat. extraction  - run through model - result
 
-The general procedure for the tasks in this work is shown in figures \ref{fig:process_training} and \ref{fig:process_classification}. Using data sets of audio (speech or singing) and matching annotations, models are trained as outlined in figure \ref{fig:process_training}. Then, these models are used to classify unseen audio data in order to generate annotations for them.\\
+The general procedure for the tasks in this work is shown in figures \ref{fig:process_training} and \ref{fig:process_classification}. Using data sets of audio (speech or singing) and matching annotations, models are trained as outlined in figure \ref{fig:process_training}. Then, these models are used to classify unseen audio data in order to generate annotations for them (figure \ref{fig:process_classification}).\\
 In detail, the necessary steps are:
 \begin{description}
-\item[Pre-processing] For the tasks in this work, pre-processing of the audio data is relatively straightforward and consists of normalization of the signal and averaging to a mono channel. Additionally, the audio is usually downsampled to 16kHz because this is the lowest sampling frequency in most of the data sets, and downsampling is necessary for compatibility, except for the language identification data sets, which were downsampled to 8kHz (more detail on the data sets is given in chapter \ref{chap:datasets}).
+\item[Pre-processing] For the tasks in this work, pre-processing of the audio data is relatively straightforward and consists of normalization of the signal and averaging to a mono channel. Additionally, the audio is usually downsampled to 16kHz because this is the lowest sampling frequency in most of the data sets, and downsampling is necessary for compatibility. The language identification data sets are an exception; they are downsampled to 8kHz (more detail on the data sets is given in chapter \ref{chap:datasets}).
 In a system for polyphonic music, pre-processing could also include steps for source separation or Vocal Activity Detection. As described above, no such steps were integrated due to the focus on unaccompanied singing.
 \item[Feature extraction] The audio signal contains a lot of data that is redundant and irrelevant to the tasks. For this reason, many types of so-called feature representations were developed over the years. The features employed in this work are described in the next section.
 \item[Model training] Using both the audio features and the available annotations, models are trained with machine learning algorithms to gain an implicit understanding of the requested annotations (i.e. classes). In this work, only supervised learning was employed. The machine learning methods are described in section \ref{sec:tech_ml}.
@@ -87,7 +87,7 @@ In this work, 13 coefficients including the 0th coefficient are extracted, with 
 
 
 \subsection{Shifted Delta Cepstrum (SDCs)} 
-Shifted Delta Cepstrum features were first described in \cite{bielefeld} and have since been successfully used for speaker verification and language identification tasks on speech data \cite{torres} \cite{campbell} \cite{allen}. They are calculated on MFCC vectors and take their temporal evolution into account. This has been shown to improve recognition results because speech and singing signals are defined by their temporal contexts. Their configuration is described by the four parameters $N-d-P-k$, where $N$ is the number of cepstral coefficients for each frame, $d$ is the time context (in frames) for the delta calculation, $k$ is the number of delta blocks to use, and $P$ is the shift between consecutive blocks. The delta cepstrals are then calculated as:
+Shifted Delta Cepstrum features were first described in \cite{bielefeld} and have since been successfully used for speaker verification and language identification tasks on speech data \cite{torres}\cite{campbell}\cite{allen}. They are calculated on MFCC vectors and take their temporal evolution into account. This has been shown to improve recognition results because speech and singing signals are defined by their temporal contexts. Their configuration is described by the four parameters $N-d-P-k$, where $N$ is the number of cepstral coefficients for each frame, $d$ is the time context (in frames) for the delta calculation, $k$ is the number of delta blocks to use, and $P$ is the shift between consecutive blocks. The delta cepstrals are then calculated as:
 \begin{equation}
 \Delta c(t) = C(t+iP+d)-C(t+iP-d), 0 \leq i \leq k
 \end{equation}
@@ -103,8 +103,7 @@ with $C = (C_0, C_1, ..., C_{N-1})$ as the previously extracted cepstral coeffic
 
 %TODO: perceptive or perceptual??
 \subsection{Perceptual Linear Predictive features (PLPs)} 
-PLP features, first introduced in \cite{hermansky90}, are also among the most frequently used features in speech processing, next to MFCCs. They are based on the idea to use knowledge about human perception to emphasize important speech information in spectra while minimizing the differences between speakers.\\
-
+PLP features, first introduced in \cite{hermansky90}, are also among the most frequently used features in speech processing, next to MFCCs. They are based on the idea to use knowledge about human perception to emphasize important speech information in spectra while minimizing the differences between speakers.
 \begin{figure}
 	\begin{center}
 		\includegraphics[width=0.8\textwidth]{images/comp_mfcc_plp.png}
@@ -116,7 +115,7 @@ In principle, these ideas are related to those that MFCCs are based on, but know
 \begin{description}
 \item[1. Short-term Fourier transform] As in MFCC extraction, the signal $s$ is segmented into frames, which are then windowed, and the STFT is calculated for each of them. The power spectrum $X$ is used for further processing.
 \item[2. Bark-spectrum calculation] Similar to the Mel-frequency transformation step, the resulting energies $P$ are mapped to a Bark frequency scale, which is also perceptually motivated (resulting in Bark-scaled energies $X_i(\omega)$). As described in \cite{woodland} and \cite{hoenig}, there is no necessity for the particular use of a Bark scale, but it is employed for historic reasons. A comparison of the filters of which Mel  and Bark filterbanks are composed is shown in figure \ref{fig:comp_filterbanks}. Furthermore, the coefficients are logarithmized.
-\item[3. Equal loudness pre-emphasis] The filterbank coefficients are weighted with an equal-loudness curve $E(\omega)$ which simulates the varying sensitivities of human hearing across the frequency range. Figure \ref{fig:eq_loudness} displays such a curve; Makhoul and Cosell presented a numerical approximation \cite{makhoul}. (As mentioned in figure \ref{fig:comp_mfcc_plp}, such a pre-emphasis is sometimes performed as the first step of MFCC calculation as well). This is computed as
+\item[3. Equal loudness pre-emphasis] The filterbank coefficients are weighted with an equal-loudness curve $E(\omega)$ which simulates the varying sensitivities of human hearing across the frequency range. Figure \ref{fig:eq_loudness} displays such a curve; Makhoul and Cosell presented a numerical approximation in \cite{makhoul}. (As mentioned in figure \ref{fig:comp_mfcc_plp}, such a pre-emphasis is sometimes performed as the first step of MFCC calculation as well). This is computed as
 \begin{equation}
 \Xi(\omega) = X_i(\omega) \cdot E(\omega)
 \end{equation}
@@ -149,7 +148,7 @@ In this work, model orders of 13 and 36 are used. Deltas and double-deltas betwe
 
 
 \subsection{TempoRal Patterns (TRAP)} \label{subsec:tech_trap}
-TRAPs were developed by Hermansky \cite{traps1} \cite{traps2} and have also been used successfully in a number of speech recognition tasks. In contrast to MFCCs and PLPs, which, apart from delta calculation, only consider a single spectral frame at a time, TRAPs take the spectral development over time into account. This is visualized in figure \ref{fig:trap_temporal}. To demonstrate the feature's suitability for phoneme classification, examples of mean TRAPs for various phonemes in the 5th critical band are shown in figure \ref{fig:phoneme_traps}.\\
+TRAPs were developed by Hermansky \cite{traps1}\cite{traps2} and have also been used successfully in a number of speech recognition tasks. In contrast to MFCCs and PLPs, which, apart from delta calculation, only consider a single spectral frame at a time, TRAPs take the spectral development over time into account. This is visualized in figure \ref{fig:trap_temporal}. To demonstrate the feature's suitability for phoneme classification, examples of mean TRAPs for various phonemes in the 5th critical band are shown in figure \ref{fig:phoneme_traps}.\\
 
 In \cite{matejka}, a slightly modified method is presented. An overview of the steps necessary for this version of TRAP calculation is given in figure \ref{fig:traps}. In detail, these are:
 \begin{description}
@@ -270,7 +269,7 @@ The Levenshtein distance is often employed to measure the quality of speech reco
  \end{equation} 
  where $D$ are deletions, $I$ are insertions, and $S$ are substitutions of phonemes and $N$ is the length of the sequence. The Phoneme Error Rate can become greater than 1 in cases with more errors than phonemes or words contained in the sequence. (The accuracy measure used in some of the state-of-the-art works is the same as $1-PER$; a Word Error Rate can be calculated analogously).\\
  
-Some works also use a measure called $correct$, which ignores insertions. This makes sense if it is assumed that the phoneme results are used afterwards by an algorithm that is tolerant to insertions. In many cases, such post-processing steps will then also be tolerant to deletions. For cases like this, Hunt suggested a weighted error rate that punishes insertions and deletions less heavily than substitutions \cite{hunt}:
+Some works also use a measure called $correct$, which ignores insertions. This makes sense if it is assumed that the phoneme results are used afterwards by an algorithm that is tolerant to insertions. In many cases, such post-processing steps will then also be tolerant to deletions. For cases like these, Hunt suggested a weighted error rate that punishes insertions and deletions less heavily than substitutions \cite{hunt}:
  \begin{equation}
     Weighted\ PER = \frac{0.5 D + 0.5 I + S}{N}
  \end{equation}  \\
@@ -335,7 +334,7 @@ C = \argmax_{1 \leq j \leq J } p(X | \lambda_j)
 \end{equation}
 In practice, log-probabilities are commonly used for numerical reasons, resulting in the calculation:
 \begin{equation}
-C = \argmax_{1 \leq j \leq J} \sum_{n=1}^N p(x_n | \lambda_j)
+C = \argmax_{1 \leq j \leq J} \sum_{n=1}^N \log p(x_n | \lambda_j)
 \end{equation}
 
 In addition to this direct use for classification, GMMs are often used to model the emission probabilities in Hidden Markov Models; these are then called GMM-HMMs.
@@ -363,13 +362,13 @@ A HMM consists of four basic components:
 \item The observation (= emission) sequence $Y = (y_1, y_2, ..., y_T)$
 \item The hidden state nodes $Q = (q_1, q_2, ..., q_N)$; the sequence of hidden states corresponding to the observation sequence will be denoted as $I = (i_1, i_2, ..., i_T)$ where $i_t \in Q$.
 \item The transition probabilities between the hidden states, defined by a transition matrix $A \in \mathbb{R}^{N x N}$; additionally, the initial state distribution (i.e. the probability of starting in each state) $\pi \in \mathbb{R}^N$
-\item The emission probabilities $B = (b_1(k), b_2(k), ..., b_N(k))$, mapping from the hidden states to the observations. These can, for example, be Gaussians for continuous outputs $y_t$, or conditional probabilities for discrete $y_t$.
+\item The emission probabilities $B = (b_1(k), b_2(k), ..., b_N(k))$, mapping from the hidden states to the observations. These can, for example, be Gaussians for continuous outputs $y_t$ or conditional probabilities for discrete $y_t$.
 \end{itemize}
 The transition probabilities, initial state distribution, and emission probabilities define the model $\lambda$.\\
 
 In the case of speech recognition, the observations are the feature vectors, and the hidden states are the phonemes generating these features. Such a model is visualized in figure \ref{fig:asr_hmm}. Different variants of HMMs can be created by restricting the transition matrix in certain ways; e.g., left-to-right HMMs, which only allow transitions to subsequent states and are often used in speech recognition and handwriting recognition \cite{bishop}. A particularly interesting property of HMMs for speech recognition is their relative invariance to warping along the time axis because states can usually be repeated for arbitrary amounts of time.\\
 
-Three problems commonly need to be solved for problems modeled with HMMs: 
+Three tasks commonly need to be solved for problems modeled with HMMs: 
 \begin{description}
 \item[Evaluation] - i.e., how probable is an observation sequence given this model? In mathematical terms, the probability $P(Y, I | \lambda)$ is sought. The most straightforward way to do this would be to calculate this probability for each possible $Y$ of the length $T$ of the observation sequence, but this is very computationally expensive. For this reason, an algorithm called \textit{forward procedure} is used. A forward variable $\alpha$ representing the probability at time $t$ is introduced:
 \begin{equation}
@@ -400,7 +399,7 @@ The probability of a path being in state $q_i$ at $t$ and making a transition to
 \begin{equation}
 \xi_{t}(i, j) = \frac{\alpha_t(i)a_ij b_j (Y_{t+1} \beta_{t+1}(j)}{P(Y|\lambda)}
 \end{equation}
-This can be used to calculate the expected numbers of transitions and emissions, which can be re-adapted with statistics from the observation sequences and used to adjust $\alpha$ and $\beta$. This process is repeated until convergence.
+This can be used to calculate the expected transitions and emissions, which can be re-adapted with statistics from the observation sequences and used to adjust $\alpha$ and $\beta$. This process is repeated until convergence.
 
 \item[Decoding] - i.e., given an observation sequence, what is the most probable underlying sequence of hidden states? This is particularly interesting for speech recognition since the interpretation here is the detection of the phonemes generating a series of feature vectors.\\
 
@@ -474,7 +473,7 @@ The presented training process is useful for solving two-class problems. For mul
 
 
 \subsection{i-Vector processing}\label{subsec:tech_ivector}
-i-Vector (identity vector) extraction was first introduced in \cite{Dehak2011}, and has since become a state-of-the-art technique for various speech processing tasks, such as speaker verification, speaker recognition, and language identification \cite{Martinez2011}. i-Vector extraction is not a stand-alone training algorithm, but rather a feature post-processing step using unsupervised machine learning. The resulting i-vectors for training examples are used to train other models (instead of the features themselves); during classification, i-vectors are extracted in the same way, and run through this model.\\
+i-Vector (identity vector) extraction was first introduced in \cite{Dehak2011} and has since become a state-of-the-art technique for various speech processing tasks, such as speaker verification, speaker recognition, and language identification \cite{Martinez2011}. i-Vector extraction is not a stand-alone training algorithm, but rather a feature post-processing step using unsupervised machine learning. The resulting i-vectors for training examples are used to train other models (instead of the features themselves); during classification, i-vectors are extracted in the same way and run through this model.\\
 
 The main idea behind i-vectors is that all training examples (e.g. speech utterances) contain some common trends, which effectively add irrelevance to the data during training. Using i-vector extraction, this irrelevance can be filtered out, while only the unique parts of the data relevant to the task at hand remain. The dimensionality of the training data is massively reduced, which also makes the training less computationally expensive. As a side effect, all feature matrices are transformed into i-vectors of equal length, eliminating problems that are caused by varying utterance lengths.\\
 
@@ -494,7 +493,7 @@ N_c(u)=\sum_{t=1}^{L} P(c|y_t,\Omega)
 \begin{equation}
 \widetilde{F_c}(u)=\sum_{t=1}^{L} P(c|y_t,\Omega)(y_t-m_c)
 \end{equation}
-where $u={y_1,y_2,...,y_L}$ denotes an utterance with $L$ frames, $c=1,...,C$ denotes the index of the Gaussian component, $\Omega$ denotes the UBM,  $m_c$ is the mean of the UBM mixture component $c$, and $P(c|y_t,\Omega)$ denotes the posterior probability that the frame $y_t$ was generated by mixture component $c$. As the equation shows, the 1st order statistics are centered around the mean of each mixture component.\\
+where $u={y_1,y_2,...,y_L}$ denotes an utterance with $L$ frames, $c=1,...,C$ denotes the index of the Gaussian component, $\Omega$ denotes the UBM,  $m_c$ is the mean of the UBM mixture component $c$, and $P(c|y_t,\Omega)$ denotes the posterior probability that the frame $y_t$ was generated by mixture component $c$. As the equation shows, the 1st order statistics are centered around the mean of each mixture component.
 \item[3. $T$ matrix training] Using the Baum-Welch statistics for all utterances, the Total Variability Matrix $T$ is now trained iteratively according to:
 \begin{equation}\label{equ:trainT}
 w = (I+T^\top \Sigma^{-1} N (u) T)^{-1}T^\top \Sigma^{-1} \widetilde{F}(u)
@@ -508,7 +507,7 @@ using the Expectation Maximization algorithm.
 
 The introduction of the backpropagation algorithm solved some of these issues and increased the training speed of multilayer networks \cite{werbos}, leading to a wider usage in speech recognition \cite{waibel_hanazawa} and other fields, such as computer vision \cite{srinivas} and Natural Language Processing \cite{goldberg}. However, other algorithms such as SVMs began to produce better results over time and thus overtook Neural Networks in popularity.\\
 
-Over time, processing speed of computers increased, and better strategies and hardware for parallel computing became available. This made the training of networks with many more layers possible, allowing for a much better adaptation to high-dimensional problems \cite{hinton_osindero}. Over the past 10 years, this so-called ``Deep Learning'' has become the state of the art for many machine learning problems \cite{nytimes}\cite{schmidhuber_dl}\cite{deng_hinton_kingsbury}.\\
+Over time, processing speed of computers increased, and better strategies and hardware for parallel computing became available. This made the training of networks with many more layers possible, allowing for a much better adaptation to high-dimensional problems \cite{hinton_osindero}. Over the past 10 years, this so-called ``Deep Learning'' has become the state of the art for many machine learning problems \cite{nytimes}\cite{schmidhuber_dl}\cite{deng_hinton_kingsbury}.
 
 \paragraph{Functionality} Artifical Neural Networks (ANNs) are inspired by ``real'' Neural Networks - i.e. the human brain and nervous system. They consist of neurons, which are nodes that can process inputs and send outputs, and the connections between them. These neurons are grouped in layers: An input layer, an output layer, and a number of hidden layers in between them. Historically, ANNs had no hidden layers at all; this type of ANN was called ``perceptron''. Later, hidden layers were introduced and the resulting networks were called ``Multilayer Perceptrons'' (MLPs).
 %check this!
@@ -561,7 +560,7 @@ y = \frac{1}{1 + e^{-z}}
 \end{equation}
 Neurons of this type are called ``logistic'' neurons. This function is often applied because it generates a smooth, real-valued output and has easy-to-use derivatives, simplifying the training process.\\
 
-Rectified linear units (ReLUs) are also used frequently since they train faster than logistic units and retain more information that is relevant in the middle layers (in particular, this is leads to sparsity for small inputs and a lower risk of vanishing or exploding gradients). The function is shown in figure \ref{fig:activation_relu}:
+Rectified linear units (ReLUs) are also used frequently since they train faster than logistic units and retain more information that is relevant in the middle layers (in particular, this leads to sparsity for small inputs and a lower risk of vanishing or exploding gradients). The function is shown in figure \ref{fig:activation_relu}:
 \begin{equation}
 y = \max(0, z)
 \end{equation}
@@ -569,7 +568,7 @@ In the last layer, a so-called softmax activation function is often applied. Thi
 \begin{equation}
 y_j = \frac{e^{z_j}}{\sum_{k=1}^M e^{z_k}}, 1 \leq j \leq M
 \end{equation}
-where $M$ is the number of output neurons.\\
+where $M$ is the number of output neurons.
 
 \begin{figure}[htbp]
 	\centering
@@ -583,7 +582,7 @@ where $M$ is the number of output neurons.\\
 
 If connections that skip back are allowed in the network, the network is called a Recurrent Neural Network (RNN). These networks are particularly useful for modeling time-dependent series because they have the ability to ``store'' temporal states in their units. However, they were deemed impractical for a long time because they exhibit the exploding/vanishing gradient problem during training \cite{Hochreiter1998}. This problem was solved with the introduction of memory cells in place of neurons, in particular Long Short-Term Memory (LSTM) units \cite{Hochreiter1997} and Gated Recurrent Units (GRU) \cite{Cho2014}. Nowadays, RNNs are being used successfully in a number of research tasks \cite{lstm_sak_senior}.\\
 
-A third type of Neural Network are Convolutional Neural Networks (CNNs). These networks add layers of filters (so-called convolutional layers) before or in between classic fully-connected layers. The parameters of these filters are trained jointly with the other layers. For this reason, CNNs are able to ``learn'' a feature representation of the input. They were first used in image recognition \cite{krizhevsky}, but are now also being used for audio-related tasks such as environmental sound classification \cite{piczak} and ASR \cite{abdelhamid}. A disadvantage of both RNNs and CNNs is the computational complexity of training them, and the requirement for even more training data because they possess even more degrees of freedom than DNNs of comparable sizes.\\
+A third type of Neural Network are Convolutional Neural Networks (CNNs). These networks add layers of filters (so-called convolutional layers) before or in between classic fully-connected layers. The parameters of these filters are trained jointly with the other layers. For this reason, CNNs are able to ``learn'' a feature representation of the input. They were first used in image recognition \cite{krizhevsky}, but are now also being used for audio-related tasks such as environmental sound classification \cite{piczak} and ASR \cite{abdelhamid}. A disadvantage of both RNNs and CNNs is the computational complexity of training them, and the requirement for even more training data because they possess even more degrees of freedom than DNNs of comparable sizes.
 
 \paragraph{Training} Neural Network training is nowadays usually performed via the backpropagation algorithm. This algorithm is based on the calculation of a cost (or error) function $E$, which computes the difference between the network output and the expected output (e.g. the annotated classes in the training data). Then, the partial derivatives of the cost are calculated with regards to the weights, using the outputs and logits for the chain rule:
 \begin{equation}
@@ -593,7 +592,7 @@ Then, the weights are adjusted accordingly:
 \begin{equation}
 \Delta w_{ij} = - \eta \frac{\partial E}{\partial w_{ij}}
 \end{equation}
-where $\eta$ is the so-called learning rate which must be chosen carefully to ensure convergence of the training process. In the same way, the error is propagated further backwards through the model to adjust the weights of the previous layers. This is done until all the weights have been adjusted. Then, the next batch of training data is passed through the model and the process is repeated. The training process is performed until the weights converge (or until a fixed number of iterations has been reached).\\
+where $\eta$ is the so-called learning rate, which must be chosen carefully to ensure convergence of the training process. In the same way, the error is propagated further backwards through the model to adjust the weights of the previous layers. This is done until all the weights have been adjusted. Then, the next batch of training data is passed through the model and the process is repeated. The training process is performed until the weights converge (or until a fixed number of iterations has been reached).\\
 
 A commonly used cost function is the squared error measure (employing the $L^2$ or Euclidean norm):
 \begin{equation}
@@ -622,7 +621,7 @@ E_C = - \sum_{j=1}^M t_j \log y_j
 
 There are several strategies to overcome this problem. One of the most frequently used regularization techniques is dropout: During training, nodes in the network are deactivated randomly, effectively resulting in many different network structures and making the whole network robust to variations in the data. The most crucial point, however, is the amount of data used for training the network. The more variety is available, the lower the risk of overtraining.\\
 
-The so-called ``curse of dimensionality'' is a concept that applies to many machine learning algorithms. However, Goodfellow et al. make an argument that deep models operate on a different level altogether \cite{goodfellow}: Where traditional machine learning methods make an assumption of smoothness of the hidden functions to be represented, deep models actually attempt to model the underlying structures in a distributed way. This means that information about outputs can be learned in a shared way - i.e., if two classes have something in common, the model is also able to represent this fact. Practically, the many degrees of freedom do not lead to ``learning by heart'', but instead allow for an internal representation of highly complex relationships. Goodfellow et al. mention two interpretations of the deep modeling capabilities: Learning a representation composed of simpler representations (e.g. corners defined by edges), or learning sequential steps that build on top of each other (e.g. first locate objects, then segment them, then recognize them). There is also a number of publications that demonstrate better generalization abilities for deeper networks \cite{bengio07}\cite{bengio09}\cite{ciresan}\cite{erhan09}\cite{krizhevsky}\cite{szegedy}. In an experiment in \cite{goodfellow_experiment}, models with three hidden layers overfit at 20 million parameters, while a deep model (11 hidden layers) benefits from more than 60 million. This is because a deep model has the capability to learn the actual explanatory factors behind the? expected outputs (e.g. learning about different genders or whether a person is wearing glasses when modeling faces \cite{radford}).
+The so-called ``curse of dimensionality'' is a concept that applies to many machine learning algorithms. However, Goodfellow et al. make an argument that deep models operate on a different level altogether \cite{goodfellow}: Where traditional machine learning methods make an assumption of smoothness of the hidden functions to be represented, deep models actually attempt to model the underlying structures in a distributed way. This means that information about outputs can be learned in a shared way - i.e., if two classes have something in common, the model is also able to represent this fact. Practically, the many degrees of freedom do not lead to ``learning by heart'', but instead allow for an internal representation of highly complex relationships. Goodfellow et al. mention two interpretations of the deep modeling capabilities: Learning a representation composed of simpler representations (e.g. corners defined by edges), or learning sequential steps that build on top of each other (e.g. first locate objects, then segment them, then recognize them). There is also a number of publications that demonstrate better generalization abilities for deeper networks \cite{bengio07}\cite{bengio09}\cite{ciresan}\cite{erhan09}\cite{krizhevsky}\cite{szegedy}. In an experiment in \cite{goodfellow_experiment}, models with three hidden layers overfit at 20 million parameters, while a deep model (11 hidden layers) benefits from more than 60 million. This is because a deep model has the capability to learn the actual explanatory factors behind the expected outputs (e.g. learning about different genders or whether a person is wearing glasses when modeling faces \cite{radford}).
 
 %!!! hier weiter mit CoD - Goodfellow
 %particularly when seen as feature learning... - non-linear mapping; or representing different features of the input (faces: male vs. female, glasses...)

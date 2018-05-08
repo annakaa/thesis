@@ -54,7 +54,7 @@ In this thesis, classic HMM-based alignment is first used as an auxiliary techno
 
 \paragraph{Lyrics retrieval}
 As another research topic that has not received much attention so far, lyrics retrieval is the task of finding the correct textual lyrics (and consequently the correct song) in a database given a sung query. This is, again, useful for karaoke systems or generally for voice-based search.
-This work presents new approaches for this task that utilize the same technologies as the audio alignment. Compared to the state of the art, these are the first systems that do not require melody information in addition to the lyrics, and also work directly on the detected phonemes without a language modeling step required (which is, in effect, a text search on the detected phrases).\\
+This work presents new approaches for this task that utilize the same technologies as the audio alignment. Compared to the state of the art, these are the first systems that do not require melody information in addition to the lyrics, and also work directly on the detected phonemes without a language modeling step required (which in effect results in a text search on the detected phrases).\\
 
 Generally, this thesis focuses on unaccompanied singing in order to determine how much the developed algorithms directly improve results on singing in comparison to speech. Only the alignment task was tested on polyphonic music. Expanding the resulting systems to full songs is an important future step.
 
@@ -62,7 +62,7 @@ Generally, this thesis focuses on unaccompanied singing in order to determine ho
 The thesis is structured into nine chapters:
 \begin{description}
 \item[1 Introduction] This chapter. Motivates the work and describes the research goals.
-\item[2 Technical background] Describes the various algorithms for feature extraction, machine learning, and distance calculation used throughout this work. Also explains the general system structures of the developed approaches as well as their evaluation.
+\item[2 Technical background] Describes the various algorithms for feature extraction, machine learning, and distance calculation used throughout this work. Also explains the general system structure of the developed approaches.
 \item[3 State of the art] Summarizes existing methods for solving the mentioned research objectives.
 \item[4 Data sets] An overview of the various data sets used for training and testing the developed approaches.
 \item[5 Singing phoneme recognition] Describes the approaches developed for the phoneme recognition task and their evaluation results.
